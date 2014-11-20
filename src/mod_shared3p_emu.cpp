@@ -32,6 +32,7 @@
 #include "Syscalls/Common.h"
 #include "Syscalls/CRCSyscalls.h"
 #include "Syscalls/Meta.h"
+#include "Protocols/unary.h"
 
 
 namespace {
@@ -1470,14 +1471,16 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::eq_bool_vec", &eq_bool_vec<s3p_bool_t> }
 
    // Casting
-  , { "shared3p::conv_bool_to_uint8_vec",  &unary_vec<s3p_bool_t, s3p_uint8_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_uint16_vec", &unary_vec<s3p_bool_t, s3p_uint16_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_uint32_vec", &unary_vec<s3p_bool_t, s3p_uint32_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_uint64_vec", &unary_vec<s3p_bool_t, s3p_uint64_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_int8_vec",  &unary_vec<s3p_bool_t, s3p_int8_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_int16_vec", &unary_vec<s3p_bool_t, s3p_int16_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_int32_vec", &unary_vec<s3p_bool_t, s3p_int32_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_int64_vec", &unary_vec<s3p_bool_t, s3p_int64_t, ConversionToSignedIntegerProtocol> }
+*/
+  , { "shared3p::conv_bool_to_uint8_vec",  &unary_vec<s3p_bool_t, s3p_uint8_t, Conversion> }
+  , { "shared3p::conv_bool_to_uint16_vec", &unary_vec<s3p_bool_t, s3p_uint16_t, Conversion> }
+  , { "shared3p::conv_bool_to_uint32_vec", &unary_vec<s3p_bool_t, s3p_uint32_t, Conversion> }
+  , { "shared3p::conv_bool_to_uint64_vec", &unary_vec<s3p_bool_t, s3p_uint64_t, Conversion> }
+  , { "shared3p::conv_bool_to_int8_vec",  &unary_vec<s3p_bool_t, s3p_int8_t, Conversion> }
+  , { "shared3p::conv_bool_to_int16_vec", &unary_vec<s3p_bool_t, s3p_int16_t, Conversion> }
+  , { "shared3p::conv_bool_to_int32_vec", &unary_vec<s3p_bool_t, s3p_int32_t, Conversion> }
+  , { "shared3p::conv_bool_to_int64_vec", &unary_vec<s3p_bool_t, s3p_int64_t, Conversion> }
+  /*
   , { "shared3p::conv_bool_to_float32_vec", &unary_vec<s3p_bool_t, s3p_float32_t, ConversionToFloatProtocol> }
   , { "shared3p::conv_bool_to_float64_vec", &unary_vec<s3p_bool_t, s3p_float64_t, ConversionToFloatProtocol> }
 
@@ -1631,45 +1634,44 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::lte_uint32_vec", &compare_vec<s3p_uint32_t, ModeLE,  false> }
   , { "shared3p::lte_uint64_vec", &compare_vec<s3p_uint64_t, ModeLE,  false> }
 
-/*
-    // Casting
-  , { "shared3p::conv_float32_to_bool_vec", &unary_vec<s3p_float32_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_float32_to_float64_vec", &unary_vec<s3p_float32_t, s3p_float64_t, ConversionToFloatProtocol> }
-  , { "shared3p::conv_float64_to_bool_vec", &unary_vec<s3p_float64_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_uint8_to_bool_vec",  &unary_vec<s3p_uint8_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_uint16_to_bool_vec", &unary_vec<s3p_uint16_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_uint32_to_bool_vec", &unary_vec<s3p_uint32_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_uint64_to_bool_vec", &unary_vec<s3p_uint64_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_uint8_to_int8_vec",  &unary_vec<s3p_uint8_t, s3p_int8_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint8_to_int16_vec",  &unary_vec<s3p_uint8_t, s3p_int16_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint8_to_int32_vec",  &unary_vec<s3p_uint8_t, s3p_int32_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint8_to_int64_vec",  &unary_vec<s3p_uint8_t, s3p_int64_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint16_to_int8_vec",  &unary_vec<s3p_uint16_t, s3p_int8_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint16_to_int16_vec",  &unary_vec<s3p_uint16_t, s3p_int16_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint16_to_int32_vec",  &unary_vec<s3p_uint16_t, s3p_int32_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint16_to_int64_vec",  &unary_vec<s3p_uint16_t, s3p_int64_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint32_to_int8_vec", &unary_vec<s3p_uint32_t, s3p_int8_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint32_to_int16_vec", &unary_vec<s3p_uint32_t, s3p_int16_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint32_to_int32_vec", &unary_vec<s3p_uint32_t, s3p_int32_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint32_to_int64_vec", &unary_vec<s3p_uint32_t, s3p_int64_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint64_to_int8_vec",  &unary_vec<s3p_uint64_t, s3p_int8_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint64_to_int16_vec",  &unary_vec<s3p_uint64_t, s3p_int16_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint64_to_int32_vec",  &unary_vec<s3p_uint64_t, s3p_int32_t, ConversionToSignedIntegerProtocol> }
-  , { "shared3p::conv_uint64_to_int64_vec",  &unary_vec<s3p_uint64_t, s3p_int64_t, ConversionToSignedIntegerProtocol> }
+ // Casting
+ // , { "shared3p::conv_float32_to_bool_vec", &unary_vec<s3p_float32_t, s3p_bool_t, Conversion> }
+ // , { "shared3p::conv_float32_to_float64_vec", &unary_vec<s3p_float32_t, s3p_float64_t, Conversion> }
+ // , { "shared3p::conv_float64_to_bool_vec", &unary_vec<s3p_float64_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_uint8_to_bool_vec",  &unary_vec<s3p_uint8_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_uint16_to_bool_vec", &unary_vec<s3p_uint16_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_uint32_to_bool_vec", &unary_vec<s3p_uint32_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_uint64_to_bool_vec", &unary_vec<s3p_uint64_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_uint8_to_int8_vec",  &unary_vec<s3p_uint8_t, s3p_int8_t, Conversion> }
+  , { "shared3p::conv_uint8_to_int16_vec",  &unary_vec<s3p_uint8_t, s3p_int16_t, Conversion> }
+  , { "shared3p::conv_uint8_to_int32_vec",  &unary_vec<s3p_uint8_t, s3p_int32_t, Conversion> }
+  , { "shared3p::conv_uint8_to_int64_vec",  &unary_vec<s3p_uint8_t, s3p_int64_t, Conversion> }
+  , { "shared3p::conv_uint16_to_int8_vec",  &unary_vec<s3p_uint16_t, s3p_int8_t, Conversion> }
+  , { "shared3p::conv_uint16_to_int16_vec",  &unary_vec<s3p_uint16_t, s3p_int16_t, Conversion> }
+  , { "shared3p::conv_uint16_to_int32_vec",  &unary_vec<s3p_uint16_t, s3p_int32_t, Conversion> }
+  , { "shared3p::conv_uint16_to_int64_vec",  &unary_vec<s3p_uint16_t, s3p_int64_t, Conversion> }
+  , { "shared3p::conv_uint32_to_int8_vec", &unary_vec<s3p_uint32_t, s3p_int8_t, Conversion> }
+  , { "shared3p::conv_uint32_to_int16_vec", &unary_vec<s3p_uint32_t, s3p_int16_t, Conversion> }
+  , { "shared3p::conv_uint32_to_int32_vec", &unary_vec<s3p_uint32_t, s3p_int32_t, Conversion> }
+  , { "shared3p::conv_uint32_to_int64_vec", &unary_vec<s3p_uint32_t, s3p_int64_t, Conversion> }
+  , { "shared3p::conv_uint64_to_int8_vec",  &unary_vec<s3p_uint64_t, s3p_int8_t, Conversion> }
+  , { "shared3p::conv_uint64_to_int16_vec",  &unary_vec<s3p_uint64_t, s3p_int16_t, Conversion> }
+  , { "shared3p::conv_uint64_to_int32_vec",  &unary_vec<s3p_uint64_t, s3p_int32_t, Conversion> }
+  , { "shared3p::conv_uint64_to_int64_vec",  &unary_vec<s3p_uint64_t, s3p_int64_t, Conversion> }
 
-  , { "shared3p::conv_uint16_to_uint8_vec",  &unary_vec<s3p_uint16_t, s3p_uint8_t, ConvertDownProtocol> }
-  , { "shared3p::conv_uint32_to_uint8_vec",  &unary_vec<s3p_uint32_t, s3p_uint8_t, ConvertDownProtocol> }
-  , { "shared3p::conv_uint32_to_uint16_vec", &unary_vec<s3p_uint32_t, s3p_uint16_t, ConvertDownProtocol> }
-  , { "shared3p::conv_uint64_to_uint8_vec",  &unary_vec<s3p_uint64_t, s3p_uint8_t, ConvertDownProtocol> }
-  , { "shared3p::conv_uint64_to_uint16_vec", &unary_vec<s3p_uint64_t, s3p_uint16_t, ConvertDownProtocol> }
-  , { "shared3p::conv_uint64_to_uint32_vec", &unary_vec<s3p_uint64_t, s3p_uint32_t, ConvertDownProtocol> }
-  , { "shared3p::conv_uint8_to_uint16_vec",  &unary_vec<s3p_uint8_t, s3p_uint16_t, ConvertUpProtocol> }
-  , { "shared3p::conv_uint8_to_uint32_vec",  &unary_vec<s3p_uint8_t, s3p_uint32_t, ConvertUpProtocol> }
-  , { "shared3p::conv_uint8_to_uint64_vec",  &unary_vec<s3p_uint8_t, s3p_uint64_t, ConvertUpProtocol> }
-  , { "shared3p::conv_uint16_to_uint32_vec", &unary_vec<s3p_uint16_t, s3p_uint32_t, ConvertUpProtocol> }
-  , { "shared3p::conv_uint16_to_uint64_vec", &unary_vec<s3p_uint16_t, s3p_uint64_t, ConvertUpProtocol> }
-  , { "shared3p::conv_uint32_to_uint64_vec", &unary_vec<s3p_uint32_t, s3p_uint64_t, ConvertUpProtocol> }
-
+  , { "shared3p::conv_uint16_to_uint8_vec",  &unary_vec<s3p_uint16_t, s3p_uint8_t, Conversion> }
+  , { "shared3p::conv_uint32_to_uint8_vec",  &unary_vec<s3p_uint32_t, s3p_uint8_t, Conversion> }
+  , { "shared3p::conv_uint32_to_uint16_vec", &unary_vec<s3p_uint32_t, s3p_uint16_t, Conversion> }
+  , { "shared3p::conv_uint64_to_uint8_vec",  &unary_vec<s3p_uint64_t, s3p_uint8_t, Conversion> }
+  , { "shared3p::conv_uint64_to_uint16_vec", &unary_vec<s3p_uint64_t, s3p_uint16_t, Conversion> }
+  , { "shared3p::conv_uint64_to_uint32_vec", &unary_vec<s3p_uint64_t, s3p_uint32_t, Conversion> }
+  , { "shared3p::conv_uint8_to_uint16_vec",  &unary_vec<s3p_uint8_t, s3p_uint16_t, Conversion> }
+  , { "shared3p::conv_uint8_to_uint32_vec",  &unary_vec<s3p_uint8_t, s3p_uint32_t, Conversion> }
+  , { "shared3p::conv_uint8_to_uint64_vec",  &unary_vec<s3p_uint8_t, s3p_uint64_t, Conversion> }
+  , { "shared3p::conv_uint16_to_uint32_vec", &unary_vec<s3p_uint16_t, s3p_uint32_t, Conversion> }
+  , { "shared3p::conv_uint16_to_uint64_vec", &unary_vec<s3p_uint16_t, s3p_uint64_t, Conversion> }
+  , { "shared3p::conv_uint32_to_uint64_vec", &unary_vec<s3p_uint32_t, s3p_uint64_t, Conversion> }
+  /*
   , { "shared3p::conv_uint8_to_float32_vec", &unary_vec<s3p_uint8_t, s3p_float32_t,ConversionToFloatProtocol> }
   , { "shared3p::conv_uint8_to_float64_vec", &unary_vec<s3p_uint8_t, s3p_float64_t,ConversionToFloatProtocol> }
   , { "shared3p::conv_uint16_to_float32_vec", &unary_vec<s3p_uint16_t, s3p_float32_t,ConversionToFloatProtocol> }
@@ -1854,29 +1856,29 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::lte_int32_vec", &compare_vec<s3p_int32_t, ModeLE,  false> }
   , { "shared3p::lte_int64_vec", &compare_vec<s3p_int64_t, ModeLE,  false> }
 
-/*
   // Casting
-  , { "shared3p::conv_int8_to_bool_vec",  &unary_vec<s3p_int8_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_int16_to_bool_vec", &unary_vec<s3p_int16_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_int32_to_bool_vec", &unary_vec<s3p_int32_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_int64_to_bool_vec", &unary_vec<s3p_int64_t, s3p_bool_t, ConversionToBooleanProtocol> }
-  , { "shared3p::conv_int8_to_uint8_vec",  &unary_vec<s3p_int8_t, s3p_uint8_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int8_to_uint16_vec",  &unary_vec<s3p_int8_t, s3p_uint16_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int8_to_uint32_vec",  &unary_vec<s3p_int8_t, s3p_uint32_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int8_to_uint64_vec",  &unary_vec<s3p_int8_t, s3p_uint64_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int16_to_uint8_vec",  &unary_vec<s3p_int16_t, s3p_uint8_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int16_to_uint16_vec",  &unary_vec<s3p_int16_t, s3p_uint16_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int16_to_uint32_vec",  &unary_vec<s3p_int16_t, s3p_uint32_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int16_to_uint64_vec",  &unary_vec<s3p_int16_t, s3p_uint64_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int32_to_uint8_vec", &unary_vec<s3p_int32_t, s3p_uint8_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int32_to_uint16_vec", &unary_vec<s3p_int32_t, s3p_uint16_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int32_to_uint32_vec", &unary_vec<s3p_int32_t, s3p_uint32_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int32_to_uint64_vec", &unary_vec<s3p_int32_t, s3p_uint64_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int64_to_uint8_vec",  &unary_vec<s3p_int64_t, s3p_uint8_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int64_to_uint16_vec",  &unary_vec<s3p_int64_t, s3p_uint16_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int64_to_uint32_vec",  &unary_vec<s3p_int64_t, s3p_uint32_t, ConversionToUnsignedIntegerProtocol> }
-  , { "shared3p::conv_int64_to_uint64_vec",  &unary_vec<s3p_int64_t, s3p_uint64_t, ConversionToUnsignedIntegerProtocol> }
+  , { "shared3p::conv_int8_to_bool_vec",  &unary_vec<s3p_int8_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_int16_to_bool_vec", &unary_vec<s3p_int16_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_int32_to_bool_vec", &unary_vec<s3p_int32_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_int64_to_bool_vec", &unary_vec<s3p_int64_t, s3p_bool_t, Conversion> }
+  , { "shared3p::conv_int8_to_uint8_vec",  &unary_vec<s3p_int8_t, s3p_uint8_t, Conversion> }
+  , { "shared3p::conv_int8_to_uint16_vec",  &unary_vec<s3p_int8_t, s3p_uint16_t, Conversion> }
+  , { "shared3p::conv_int8_to_uint32_vec",  &unary_vec<s3p_int8_t, s3p_uint32_t, Conversion> }
+  , { "shared3p::conv_int8_to_uint64_vec",  &unary_vec<s3p_int8_t, s3p_uint64_t, Conversion> }
+  , { "shared3p::conv_int16_to_uint8_vec",  &unary_vec<s3p_int16_t, s3p_uint8_t, Conversion> }
+  , { "shared3p::conv_int16_to_uint16_vec",  &unary_vec<s3p_int16_t, s3p_uint16_t, Conversion> }
+  , { "shared3p::conv_int16_to_uint32_vec",  &unary_vec<s3p_int16_t, s3p_uint32_t, Conversion> }
+  , { "shared3p::conv_int16_to_uint64_vec",  &unary_vec<s3p_int16_t, s3p_uint64_t, Conversion> }
+  , { "shared3p::conv_int32_to_uint8_vec", &unary_vec<s3p_int32_t, s3p_uint8_t, Conversion> }
+  , { "shared3p::conv_int32_to_uint16_vec", &unary_vec<s3p_int32_t, s3p_uint16_t, Conversion> }
+  , { "shared3p::conv_int32_to_uint32_vec", &unary_vec<s3p_int32_t, s3p_uint32_t, Conversion> }
+  , { "shared3p::conv_int32_to_uint64_vec", &unary_vec<s3p_int32_t, s3p_uint64_t, Conversion> }
+  , { "shared3p::conv_int64_to_uint8_vec",  &unary_vec<s3p_int64_t, s3p_uint8_t, Conversion> }
+  , { "shared3p::conv_int64_to_uint16_vec",  &unary_vec<s3p_int64_t, s3p_uint16_t, Conversion> }
+  , { "shared3p::conv_int64_to_uint32_vec",  &unary_vec<s3p_int64_t, s3p_uint32_t, Conversion> }
+  , { "shared3p::conv_int64_to_uint64_vec",  &unary_vec<s3p_int64_t, s3p_uint64_t, Conversion> }
 
+/*
   , { "shared3p::conv_int16_to_int8_vec",  &unary_vec<s3p_int16_t, s3p_int8_t, ConvertDownProtocol> }
   , { "shared3p::conv_int32_to_int8_vec",  &unary_vec<s3p_int32_t, s3p_int8_t, ConvertDownProtocol> }
   , { "shared3p::conv_int32_to_int16_vec", &unary_vec<s3p_int32_t, s3p_int16_t, ConvertDownProtocol> }
@@ -2050,25 +2052,25 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::lte_xor_uint32_vec", &compare_vec<s3p_xor_uint32_t, ModeLE, false> }
   , { "shared3p::lte_xor_uint64_vec", &compare_vec<s3p_xor_uint64_t, ModeLE, false> }
 
-/*
   // Casting
-  , { "shared3p::conv_bool_to_xor_uint8_vec",  &unary_vec<s3p_bool_t, s3p_xor_uint8_t, ConversionToBitwiseUnsignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_xor_uint16_vec", &unary_vec<s3p_bool_t, s3p_xor_uint16_t, ConversionToBitwiseUnsignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_xor_uint32_vec", &unary_vec<s3p_bool_t, s3p_xor_uint32_t, ConversionToBitwiseUnsignedIntegerProtocol> }
-  , { "shared3p::conv_bool_to_xor_uint64_vec", &unary_vec<s3p_bool_t, s3p_xor_uint64_t, ConversionToBitwiseUnsignedIntegerProtocol> }
-  , { "shared3p::conv_xor_uint64_to_xor_uint32_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConvertDownProtocol> }
-  , { "shared3p::conv_xor_uint64_to_xor_uint16_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint16_t, ConvertDownProtocol> }
-  , { "shared3p::conv_xor_uint64_to_xor_uint8_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint8_t, ConvertDownProtocol> }
-  , { "shared3p::conv_xor_uint32_to_xor_uint16_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConvertDownProtocol> }
-  , { "shared3p::conv_xor_uint32_to_xor_uint8_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConvertDownProtocol> }
-  , { "shared3p::conv_xor_uint16_to_xor_uint8_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConvertDownProtocol> }
-  , { "shared3p::conv_xor_uint8_to_xor_uint64_vec", &unary_vec<s3p_xor_uint8_t, s3p_xor_uint64_t, ConvertUpProtocol> }
-  , { "shared3p::conv_xor_uint8_to_xor_uint32_vec", &unary_vec<s3p_xor_uint8_t, s3p_xor_uint32_t, ConvertUpProtocol> }
-  , { "shared3p::conv_xor_uint8_to_xor_uint16_vec", &unary_vec<s3p_xor_uint8_t, s3p_xor_uint16_t, ConvertUpProtocol> }
-  , { "shared3p::conv_xor_uint16_to_xor_uint64_vec", &unary_vec<s3p_xor_uint16_t, s3p_xor_uint64_t, ConvertUpProtocol> }
-  , { "shared3p::conv_xor_uint16_to_xor_uint32_vec", &unary_vec<s3p_xor_uint16_t, s3p_xor_uint32_t, ConvertUpProtocol> }
-  , { "shared3p::conv_xor_uint32_to_xor_uint64_vec", &unary_vec<s3p_xor_uint32_t, s3p_xor_uint64_t, ConvertUpProtocol> }
+  , { "shared3p::conv_bool_to_xor_uint8_vec",  &unary_vec<s3p_bool_t, s3p_xor_uint8_t, Conversion> }
+  , { "shared3p::conv_bool_to_xor_uint16_vec", &unary_vec<s3p_bool_t, s3p_xor_uint16_t, Conversion> }
+  , { "shared3p::conv_bool_to_xor_uint32_vec", &unary_vec<s3p_bool_t, s3p_xor_uint32_t, Conversion> }
+  , { "shared3p::conv_bool_to_xor_uint64_vec", &unary_vec<s3p_bool_t, s3p_xor_uint64_t, Conversion> }
+  , { "shared3p::conv_xor_uint64_to_xor_uint32_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, Conversion> }
+  , { "shared3p::conv_xor_uint64_to_xor_uint16_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint16_t, Conversion> }
+  , { "shared3p::conv_xor_uint64_to_xor_uint8_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint8_t, Conversion> }
+  , { "shared3p::conv_xor_uint32_to_xor_uint16_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, Conversion> }
+  , { "shared3p::conv_xor_uint32_to_xor_uint8_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, Conversion> }
+  , { "shared3p::conv_xor_uint16_to_xor_uint8_vec", &unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, Conversion> }
+  , { "shared3p::conv_xor_uint8_to_xor_uint64_vec", &unary_vec<s3p_xor_uint8_t, s3p_xor_uint64_t, Conversion> }
+  , { "shared3p::conv_xor_uint8_to_xor_uint32_vec", &unary_vec<s3p_xor_uint8_t, s3p_xor_uint32_t, Conversion> }
+  , { "shared3p::conv_xor_uint8_to_xor_uint16_vec", &unary_vec<s3p_xor_uint8_t, s3p_xor_uint16_t, Conversion> }
+  , { "shared3p::conv_xor_uint16_to_xor_uint64_vec", &unary_vec<s3p_xor_uint16_t, s3p_xor_uint64_t, Conversion> }
+  , { "shared3p::conv_xor_uint16_to_xor_uint32_vec", &unary_vec<s3p_xor_uint16_t, s3p_xor_uint32_t, Conversion> }
+  , { "shared3p::conv_xor_uint32_to_xor_uint64_vec", &unary_vec<s3p_xor_uint32_t, s3p_xor_uint64_t, Conversion> }
 
+/*
    // Utilities
   , { "shared3p::randomize_xor_uint8_vec",  &nullary_vec<s3p_xor_uint8_t, RandomizeProtocol> }
   , { "shared3p::randomize_xor_uint16_vec", &nullary_vec<s3p_xor_uint16_t, RandomizeProtocol> }
