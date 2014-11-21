@@ -41,6 +41,57 @@ public:
   }
 };
 
+class __attribute__ ((visibility("internal"))) SumProtocol {
+public:
+  SumProtocol (Shared3pPDPI &pdpi) {}
+public:
+  template <typename DestT, typename SourceT>
+  bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
+        any_value_tag)
+  {
+    const size_t param_size = param.size ();
+    const size_t result_size = result.size ();
+    if (result_size == 0)
+        return false;
+
+    if ((s3p_vec<DestT>*)&param == &result)
+        return true;
+
+    if (param_size == 0) {
+        if (result_size != 1)
+            return false;
+        result[0] = 0;
+        return true;
+    }
+
+    if (param_size % result_size != 0)
+        return false;
+
+    for (size_t i = 0u; i < result_size; ++i) {
+        result[i] = 0;
+    }
+    const size_t subarr_len = param_size / result_size;
+    for (size_t i = 0u; i < param_size; ++i) {
+      result[i / subarr_len] += param[i];
+    }
+
+    return true;
+  }
+
+/*
+  template <typename DestT, typename SourceT>
+  bool invoke (const s3p_vec<SourceT>& param, s3p_vec<s3p_bool_t>& result,
+                                    bool_value_tag)
+  {
+    if (param.size() != result.size())
+      return false;
+    for (size_t i = 0u; i < param.size(); ++i)
+      result[i] = param[i];
+    return true;
+  }
+  */
+};
+
 }
 
 #endif /* MOD_SHARED3P_EMU_PROTOCOLS_UNARY_H */

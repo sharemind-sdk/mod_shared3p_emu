@@ -1463,15 +1463,17 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::and_bool_vec", &binary_arith_vec<s3p_bool_t, ConjunctionProtocol> }
   , { "shared3p::or_bool_vec", &binary_arith_vec<s3p_bool_t, DisjunctionProtocol> }
   , { "shared3p::xor_bool_vec", &binary_arith_vec<s3p_bool_t, XorProtocol> }
+ */
 
    // Arithmetic
   , { "shared3p::sum_bool_vec", &unary_vec<s3p_bool_t, s3p_uint64_t, SumProtocol> }
 
+  /*
    // Comparisons
   , { "shared3p::eq_bool_vec", &eq_bool_vec<s3p_bool_t> }
 
+   */
    // Casting
-*/
   , { "shared3p::conv_bool_to_uint8_vec",  &unary_vec<s3p_bool_t, s3p_uint8_t, Conversion> }
   , { "shared3p::conv_bool_to_uint16_vec", &unary_vec<s3p_bool_t, s3p_uint16_t, Conversion> }
   , { "shared3p::conv_bool_to_uint32_vec", &unary_vec<s3p_bool_t, s3p_uint32_t, Conversion> }
@@ -1554,10 +1556,12 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::add_uint16_vec", &binary_arith_vec<s3p_uint16_t, AdditionProtocol> }
   , { "shared3p::add_uint32_vec", &binary_arith_vec<s3p_uint32_t, AdditionProtocol> }
   , { "shared3p::add_uint64_vec", &binary_arith_vec<s3p_uint64_t, AdditionProtocol> }
+*/
   , { "shared3p::sum_uint8_vec",  &unary_arith_vec<s3p_uint8_t, SumProtocol> }
   , { "shared3p::sum_uint16_vec", &unary_arith_vec<s3p_uint16_t, SumProtocol> }
   , { "shared3p::sum_uint32_vec", &unary_arith_vec<s3p_uint32_t, SumProtocol> }
   , { "shared3p::sum_uint64_vec", &unary_arith_vec<s3p_uint64_t, SumProtocol> }
+/*
   , { "shared3p::product_uint8_vec",  &unary_arith_vec<s3p_uint8_t, ProductProtocol> }
   , { "shared3p::product_uint16_vec", &unary_arith_vec<s3p_uint16_t, ProductProtocol> }
   , { "shared3p::product_uint32_vec", &unary_arith_vec<s3p_uint32_t, ProductProtocol> }
@@ -1808,10 +1812,12 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::add_int16_vec", &binary_arith_vec<s3p_int16_t, AdditionProtocol> }
   , { "shared3p::add_int32_vec", &binary_arith_vec<s3p_int32_t, AdditionProtocol> }
   , { "shared3p::add_int64_vec", &binary_arith_vec<s3p_int64_t, AdditionProtocol> }
+*/
   , { "shared3p::sum_int8_vec",  &unary_arith_vec<s3p_int8_t, SumProtocol> }
   , { "shared3p::sum_int16_vec", &unary_arith_vec<s3p_int16_t, SumProtocol> }
   , { "shared3p::sum_int32_vec", &unary_arith_vec<s3p_int32_t, SumProtocol> }
   , { "shared3p::sum_int64_vec", &unary_arith_vec<s3p_int64_t, SumProtocol> }
+/*
   , { "shared3p::product_int8_vec",  &unary_arith_vec<s3p_int8_t, ProductProtocol> }
   , { "shared3p::product_int16_vec", &unary_arith_vec<s3p_int16_t, ProductProtocol> }
   , { "shared3p::product_int32_vec", &unary_arith_vec<s3p_int32_t, ProductProtocol> }
