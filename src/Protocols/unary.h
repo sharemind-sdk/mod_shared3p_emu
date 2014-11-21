@@ -28,7 +28,6 @@ public:
         result[i] = static_cast<typename value_traits<DestT>::public_type> (param[i]);
     return true;
   }
-};
 
   template <typename DestT, typename SourceT>
   bool invoke (const s3p_vec<SourceT>& param, s3p_vec<s3p_bool_t>& result,
@@ -40,6 +39,7 @@ public:
       result[i] = param[i];
     return true;
   }
+};
 
 }
 
