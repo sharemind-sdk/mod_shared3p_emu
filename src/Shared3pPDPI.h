@@ -17,6 +17,8 @@
 
 namespace sharemind {
 
+class ExecutionModelEvaluator;
+class ExecutionProfiler;
 class Shared3pConfiguration;
 
 class __attribute__ ((visibility("internal"))) Shared3pPDPI {
@@ -30,6 +32,18 @@ public: /* Methods: */
 
     inline const Shared3pConfiguration & pdConfiguration() const
     { return m_pd.configuration(); }
+
+    inline ExecutionModelEvaluator & modelEvaluator()
+    { return m_modelEvaluator; }
+
+    inline const ExecutionModelEvaluator & modelEvaluator() const
+    { return m_modelEvaluator; }
+
+    inline ExecutionProfiler & profiler()
+    { return m_profiler; }
+
+    inline const ExecutionProfiler & profiler() const
+    { return m_profiler; }
 
     template <typename T>
     inline bool isValidHandle(void * hndl) const {
@@ -49,8 +63,11 @@ public: /* Methods: */
 private: /* Fields: */
 
     Shared3pPD & m_pd;
-
     Shared3pConfiguration & m_pdConfiguration;
+
+    ExecutionModelEvaluator & m_modelEvaluator;
+    ExecutionProfiler & m_profiler;
+
     s3p_heap m_heap;
 
 }; /* class Shared3pPDPI { */

@@ -7,6 +7,8 @@
  * code is subject to the appropriate license agreement.
  */
 
+#include <sharemind/ExecutionProfiler.h>
+#include "Facilities/ExecutionModelEvaluator.h"
 #include "Shared3pPDPI.h"
 
 
@@ -15,6 +17,8 @@ namespace sharemind {
 Shared3pPDPI::Shared3pPDPI(Shared3pPD & pd)
     : m_pd(pd)
     , m_pdConfiguration(pd.configuration())
+    , m_modelEvaluator(pd.modelEvaluator())
+    , m_profiler(pd.profiler())
 {}
 
 } /* namespace sharemind { */

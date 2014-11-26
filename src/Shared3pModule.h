@@ -10,12 +10,19 @@
 #ifndef MOD_SHARED3P_EMU_SHARED3PMODULE_H
 #define MOD_SHARED3P_EMU_SHARED3PMODULE_H
 
-#include <LogHard/Backend.h>
-#include <LogHard/Logger.h>
 #include <memory>
 
 
+namespace LogHard {
+
+class Backend;
+class Logger;
+
+} /* namespace LogHard { */
+
 namespace sharemind {
+
+class ExecutionProfiler;
 
 class __attribute__ ((visibility("internal"))) Shared3pModule {
 
@@ -26,12 +33,18 @@ public: /* Methods: */
     const LogHard::Logger & logger() const noexcept
     { return *m_logger; }
 
+    inline ExecutionProfiler & profiler() noexcept
+    { return *m_profiler; }
+
+    inline const ExecutionProfiler & profiler() const noexcept
+    { return *m_profiler; }
+
 private:
 
-    /// \todo Actually, we need to use a single logger over all the pd's
-    /// \todo Also, a logger may be unnecessary anyways, just log to stderr
+    /// \todo Logger and ExecutionProfiler should be in a separate module.
     std::unique_ptr<LogHard::Backend> m_logBackend;
     std::unique_ptr<LogHard::Logger> m_logger;
+    std::unique_ptr<ExecutionProfiler> m_profiler;
 
 }; /* class Shared3pModule { */
 

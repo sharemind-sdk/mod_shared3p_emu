@@ -25,14 +25,14 @@ public: /* Methods: */
 
     bool load(const std::string & filename);
 
-    const std::string & profilingModelsFilename() const noexcept
-    { return m_profilingModelsFilename; }
+    const std::string & modelEvaluatorConfiguration() const noexcept
+    { return m_modelEvaluatorConfiguration; }
 
 private: /* Fields: */
 
     const LogHard::Logger & m_logger;
 
-    std::string m_profilingModelsFilename;
+    std::string m_modelEvaluatorConfiguration;
 
 }; /* class Shared3pConfiguration { */
 

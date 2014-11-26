@@ -7,8 +7,11 @@
  * code is subject to the appropriate license agreement.
  */
 
+#include <LogHard/Backend.h>
+#include <LogHard/Logger.h>
 #include <LogHard/Priority.h>
 #include <sharemind/Exception.h>
+#include <sharemind/ExecutionProfiler.h>
 #include "Shared3pModule.h"
 
 
@@ -18,10 +21,10 @@ class StdErrAppender: public LogHard::Backend::Appender {
 
 private: /* Types: */
 
-    typedef LogHard::Backend::Appender Appender;
-    typedef LogHard::Backend::Appenders Appenders;
-    typedef LogHard::Backend::CFileAppender CFileAppender;
-    typedef LogHard::Priority Priority;
+    using Appender = LogHard::Backend::Appender;
+    using Appenders = LogHard::Backend::Appenders;
+    using CFileAppender = LogHard::Backend::CFileAppender;
+    using Priority = LogHard::Priority;
 
 public: /* Types: */
 
@@ -59,6 +62,8 @@ Shared3pModule::Shared3pModule() {
     m_logBackend.reset(new LogHard::Backend());
     m_logBackend->addAppender(new StdErrAppender());
     m_logger.reset(new LogHard::Logger(*m_logBackend));
+    m_profiler.reset(new ExecutionProfiler(*m_logger));
+    m_profiler->startLog("emulator-profile.csv");
 }
 
 } /* namespace sharemind { */

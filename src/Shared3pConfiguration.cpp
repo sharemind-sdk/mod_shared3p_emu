@@ -13,8 +13,6 @@
 #include "Shared3pConfiguration.h"
 
 
-namespace pt = boost::property_tree;
-
 namespace sharemind {
 
 Shared3pConfiguration::Shared3pConfiguration(const LogHard::Logger & logger)
@@ -23,21 +21,24 @@ Shared3pConfiguration::Shared3pConfiguration(const LogHard::Logger & logger)
 
 bool Shared3pConfiguration::load(const std::string & filename) {
 
-    pt::ptree config;
+    using boost::property_tree::ptree;
+
+    ptree config;
 
     try {
-        pt::read_ini(filename, config);
-        m_profilingModelsFilename = config.get<std::string>("ProtectionDomain.ProfilingModels");
-    } catch (const pt::ini_parser_error & e) {
+        boost::property_tree::read_ini(filename, config);
+        m_modelEvaluatorConfiguration =
+            config.get<std::string>("ProtectionDomain.ModelEvaluatorConfiguration");
+    } catch (const boost::property_tree::ini_parser_error & e) {
         m_logger.error() << "Error while parsing configuration file. "
             << e.message() << " [" << e.filename() << ":"
             << e.line() << "].";
         return false;
-    } catch (const pt::ptree_bad_data & e) {
+    } catch (const boost::property_tree::ptree_bad_data & e) {
         m_logger.error() << "Error while parsing configuration file. Bad data: "
             << e.what();
         return false;
-    } catch (const pt::ptree_bad_path & e) {
+    } catch (const boost::property_tree::ptree_bad_path & e) {
         m_logger.error() << "Error while parsing configuration file. Bad path: "
             << e.what();
         return false;
