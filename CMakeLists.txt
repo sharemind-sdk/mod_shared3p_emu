@@ -93,3 +93,15 @@ TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
 )
 
 INSTALL(TARGETS sharemind_mod_shared3p_emu LIBRARY DESTINATION "lib")
+
+SET(SHAREMIND_MOD_SHARED3P_EMU_DEBUG_FILES
+    "debug_files/shared3p_emu.cfg"
+    "debug_files/shared3p_emu-models.cfg"
+)
+ADD_CUSTOM_TARGET("include_SHAREMIND_MOD_SHARED3P_EMU_DEBUG_FILES_in_IDE" SOURCES
+                  ${SHAREMIND_MOD_SHARED3P_EMU_DEBUG_FILES})
+
+IF(NOT (CMAKE_BUILD_TYPE STREQUAL "Release"))
+    INSTALL(FILES ${SHAREMIND_MOD_SHARED3P_EMU_DEBUG_FILES}
+            DESTINATION "bin")
+ENDIF()
