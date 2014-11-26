@@ -13,8 +13,9 @@
 #include "../Shared3pValueTraits.h"
 
 #include <inttypes.h>
+#include <sharemind/Concat.h>
 #include <sharemind/libmodapi/api_0x1.h>
-#include <cstdio>
+#include <sstream>
 
 namespace sharemind {
 
@@ -139,6 +140,56 @@ inline SharemindModuleApi0x1Error catchModuleApiErrors() noexcept {
     }
 }
 
+/**
+ * Macros for defining named syscalls and their wrappers
+ */
+#define NAMED_SYSCALL(fname,name,args,argc,refs,crefs,retVal,c) \
+    SharemindModuleApi0x1Error fname( \
+            const char * name, \
+            SharemindCodeBlock * args, \
+            size_t argc, \
+            const SharemindModuleApi0x1Reference * refs, \
+            const SharemindModuleApi0x1CReference * crefs, \
+            SharemindCodeBlock * retVal, \
+            SharemindModuleApi0x1SyscallContext * c)
+
+#define NAMED_SYSCALL_WRAPPER(name,...) \
+    [](SharemindCodeBlock * args, \
+       size_t argc, \
+       const SharemindModuleApi0x1Reference * refs, \
+       const SharemindModuleApi0x1CReference * crefs, \
+       SharemindCodeBlock * retVal, \
+       SharemindModuleApi0x1SyscallContext * c) \
+            -> SharemindModuleApi0x1Error \
+    { \
+        return __VA_ARGS__(name, args, argc, refs, crefs, retVal, c); \
+    }
+
+/**
+ * Macros for profiling syscalls
+ */
+/// \todo evaluate() returns double. Make sure we can cast it to UsTime.
+#ifdef SHAREMIND_NETWORK_STATISTICS_ENABLE
+#define PROFILE_SYSCALL(profiler,evaluator,name,parameter) \
+    do { \
+        sharemind::ExecutionModelEvaluator::Model * const timeModel = \
+            evaluator.model("TimeModel", name); \
+        if (timeModel) \
+            (profiler).addSection((name), (parameter), 0u, \
+                    timeModel->evaluate(parameter), \
+                    sharemind::MinerNetworkStatistics(), \
+                    sharemind::MinerNetworkStatistics()); \
+    } while (false)
+#else
+#define PROFILE_SYSCALL(profiler,evaluator,name,parameter) \
+    do { \
+        sharemind::ExecutionModelEvaluator::Model * const timeModel = \
+            evaluator.model("TimeModel", name); \
+        if (timeModel) \
+            (profiler).addSection((name), (parameter), 0u, \
+                    timeModel->evaluate(parameter)); \
+    } while (false)
+#endif
 
 } /* namespace sharemind */
 

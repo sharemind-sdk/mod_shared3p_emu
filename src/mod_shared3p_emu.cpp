@@ -26,13 +26,14 @@
 #include <sharemind/uint128_t.h>
 #include <vector>
 #include <type_traits>
+#include "Facilities/ExecutionModelEvaluator.h"
 #include "Shared3pModule.h"
 #include "Shared3pPDPI.h"
-#include "VMReferences.h"
 #include "Syscalls/Common.h"
 #include "Syscalls/CRCSyscalls.h"
 #include "Syscalls/Meta.h"
 #include "Protocols/unary.h"
+#include "VMReferences.h"
 
 
 namespace {
@@ -642,9 +643,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(store_vec,
  *      Output vector contains shares of multiplication of argument vectors.
  */
 template <typename T, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(mulc_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(mulc_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<3, false, 0, 1>::check(num_args, refs, crefs, returnValue) ||
@@ -674,6 +673,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(mulc_vec,
         for (size_t i = 0u; i < param1.size(); ++i)
             result[i] = param1[i] * param2[i];
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param1.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();
@@ -696,9 +698,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(mulc_vec,
  *      Output vector contains shares of division of argument vectors.
  */
 template <typename T, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(divc_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(divc_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<3u, false, 0u, 1u>::check(num_args, refs, crefs, returnValue) ||
@@ -731,6 +731,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(divc_vec,
             result[i] = param1[i] / param2[i];
         }
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param1.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();
@@ -752,9 +755,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(divc_vec,
  *      Output vector contains shares of modular division of argument vectors.
  */
 template <typename T>
-SHAREMIND_MODULE_API_0x1_SYSCALL(modc_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(modc_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<3u, false, 0u, 1u>::check(num_args, refs, crefs, returnValue) ||
@@ -787,6 +788,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(modc_vec,
             result[i] = param1[i] % param2[i];
         }
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param1.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();
@@ -817,9 +821,7 @@ struct ModeLE {
  *      All vectors are of equal length.
  */
 template <typename T, typename Mode, bool flipParams>
-SHAREMIND_MODULE_API_0x1_SYSCALL(compare_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(compare_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<4>::check(num_args, refs, crefs, returnValue) ||
@@ -852,12 +854,14 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(compare_vec,
         for (size_t i = 0u; i < param1.size(); ++i)
             result[i] = Mode::invoke(param1[i], param2[i]);
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param1.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();
     }
 }
-
 
 /**
  * SysCall: eq_vec<T>
@@ -874,9 +878,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(compare_vec,
  *      At every position the output vector contains shares of booleans denoting equality of inputs at those positions.
  */
 template <typename T>
-SHAREMIND_MODULE_API_0x1_SYSCALL(eq_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(eq_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<4>::check(num_args, refs, crefs, returnValue) ||
@@ -910,6 +912,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(eq_vec,
         for (size_t i = 0u; i < param1.size(); ++i)
             result[i] = param1[i] == param2[i];
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param1.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();
@@ -931,11 +936,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(eq_vec,
  *      At every position the output vector contains shares of booleans denoting equality of inputs at those positions.
  */
 template <typename T>
-SHAREMIND_MODULE_API_0x1_SYSCALL(eq_bool_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(eq_bool_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
-    return eq_vec<s3p_bool_t>(args, num_args, refs, crefs, returnValue, c);
+    return eq_vec<s3p_bool_t>(name, args, num_args, refs, crefs, returnValue, c);
 }
 
 /**
@@ -1617,26 +1620,26 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   */
 
     // Comparisons
-  , { "shared3p::eq_uint8_vec",   &eq_vec<s3p_uint8_t> }
-  , { "shared3p::eq_uint16_vec",  &eq_vec<s3p_uint16_t> }
-  , { "shared3p::eq_uint32_vec",  &eq_vec<s3p_uint32_t> }
-  , { "shared3p::eq_uint64_vec",  &eq_vec<s3p_uint64_t> }
-  , { "shared3p::gt_uint8_vec",   &compare_vec<s3p_uint8_t , ModeLT,  true> }
-  , { "shared3p::gt_uint16_vec",  &compare_vec<s3p_uint16_t, ModeLT,  true> }
-  , { "shared3p::gt_uint32_vec",  &compare_vec<s3p_uint32_t, ModeLT,  true> }
-  , { "shared3p::gt_uint64_vec",  &compare_vec<s3p_uint64_t, ModeLT,  true> }
-  , { "shared3p::gte_uint8_vec",  &compare_vec<s3p_uint8_t , ModeLE,  true> }
-  , { "shared3p::gte_uint16_vec", &compare_vec<s3p_uint16_t, ModeLE,  true> }
-  , { "shared3p::gte_uint32_vec", &compare_vec<s3p_uint32_t, ModeLE,  true> }
-  , { "shared3p::gte_uint64_vec", &compare_vec<s3p_uint64_t, ModeLE,  true> }
-  , { "shared3p::lt_uint8_vec",   &compare_vec<s3p_uint8_t , ModeLT,  false> }
-  , { "shared3p::lt_uint16_vec",  &compare_vec<s3p_uint16_t, ModeLT,  false> }
-  , { "shared3p::lt_uint32_vec",  &compare_vec<s3p_uint32_t, ModeLT,  false> }
-  , { "shared3p::lt_uint64_vec",  &compare_vec<s3p_uint64_t, ModeLT,  false> }
-  , { "shared3p::lte_uint8_vec",  &compare_vec<s3p_uint8_t , ModeLE,  false> }
-  , { "shared3p::lte_uint16_vec", &compare_vec<s3p_uint16_t, ModeLE,  false> }
-  , { "shared3p::lte_uint32_vec", &compare_vec<s3p_uint32_t, ModeLE,  false> }
-  , { "shared3p::lte_uint64_vec", &compare_vec<s3p_uint64_t, ModeLE,  false> }
+  , { "shared3p::eq_uint8_vec",   NAMED_SYSCALL_WRAPPER("eq_uint8_vec", eq_vec<s3p_uint8_t>) }
+  , { "shared3p::eq_uint16_vec",  NAMED_SYSCALL_WRAPPER("eq_uint16_vec", eq_vec<s3p_uint16_t>) }
+  , { "shared3p::eq_uint32_vec",  NAMED_SYSCALL_WRAPPER("eq_uint32_vec", eq_vec<s3p_uint32_t>) }
+  , { "shared3p::eq_uint64_vec",  NAMED_SYSCALL_WRAPPER("eq_uint64_vec", eq_vec<s3p_uint64_t>) }
+  , { "shared3p::gt_uint8_vec",   NAMED_SYSCALL_WRAPPER("gt_uint8_vec", compare_vec<s3p_uint8_t , ModeLT,  true>) }
+  , { "shared3p::gt_uint16_vec",  NAMED_SYSCALL_WRAPPER("gt_uint16_vec", compare_vec<s3p_uint16_t, ModeLT,  true>) }
+  , { "shared3p::gt_uint32_vec",  NAMED_SYSCALL_WRAPPER("gt_uint32_vec", compare_vec<s3p_uint32_t, ModeLT,  true>) }
+  , { "shared3p::gt_uint64_vec",  NAMED_SYSCALL_WRAPPER("gt_uint64_vec", compare_vec<s3p_uint64_t, ModeLT,  true>) }
+  , { "shared3p::gte_uint8_vec",  NAMED_SYSCALL_WRAPPER("gte_uint8_vec", compare_vec<s3p_uint8_t , ModeLE,  true>) }
+  , { "shared3p::gte_uint16_vec", NAMED_SYSCALL_WRAPPER("gte_uint16_vec", compare_vec<s3p_uint16_t, ModeLE,  true>) }
+  , { "shared3p::gte_uint32_vec", NAMED_SYSCALL_WRAPPER("gte_uint32_vec", compare_vec<s3p_uint32_t, ModeLE,  true>) }
+  , { "shared3p::gte_uint64_vec", NAMED_SYSCALL_WRAPPER("gte_uint64_vec", compare_vec<s3p_uint64_t, ModeLE,  true>) }
+  , { "shared3p::lt_uint8_vec",   NAMED_SYSCALL_WRAPPER("lt_uint8_vec", compare_vec<s3p_uint8_t , ModeLT,  false>) }
+  , { "shared3p::lt_uint16_vec",  NAMED_SYSCALL_WRAPPER("lt_uint16_vec", compare_vec<s3p_uint16_t, ModeLT,  false>) }
+  , { "shared3p::lt_uint32_vec",  NAMED_SYSCALL_WRAPPER("lt_uint32_vec", compare_vec<s3p_uint32_t, ModeLT,  false>) }
+  , { "shared3p::lt_uint64_vec",  NAMED_SYSCALL_WRAPPER("lt_uint64_vec", compare_vec<s3p_uint64_t, ModeLT,  false>) }
+  , { "shared3p::lte_uint8_vec",  NAMED_SYSCALL_WRAPPER("lte_uint8_vec", compare_vec<s3p_uint8_t , ModeLE,  false>) }
+  , { "shared3p::lte_uint16_vec", NAMED_SYSCALL_WRAPPER("lte_uint16_vec", compare_vec<s3p_uint16_t, ModeLE,  false>) }
+  , { "shared3p::lte_uint32_vec", NAMED_SYSCALL_WRAPPER("lte_uint32_vec", compare_vec<s3p_uint32_t, ModeLE,  false>) }
+  , { "shared3p::lte_uint64_vec", NAMED_SYSCALL_WRAPPER("lte_uint64_vec", compare_vec<s3p_uint64_t, ModeLE,  false>) }
 
  // Casting
  // , { "shared3p::conv_float32_to_bool_vec", &unary_vec<s3p_float32_t, s3p_bool_t, Conversion> }
@@ -1841,26 +1844,26 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 */
 
   // Comparisons
-  , { "shared3p::eq_int8_vec",   &eq_vec<s3p_int8_t> }
-  , { "shared3p::eq_int16_vec",  &eq_vec<s3p_int16_t> }
-  , { "shared3p::eq_int32_vec",  &eq_vec<s3p_int32_t> }
-  , { "shared3p::eq_int64_vec",  &eq_vec<s3p_int64_t> }
-  , { "shared3p::gt_int8_vec",   &compare_vec<s3p_int8_t , ModeLT,  true> }
-  , { "shared3p::gt_int16_vec",  &compare_vec<s3p_int16_t, ModeLT,  true> }
-  , { "shared3p::gt_int32_vec",  &compare_vec<s3p_int32_t, ModeLT,  true> }
-  , { "shared3p::gt_int64_vec",  &compare_vec<s3p_int64_t, ModeLT,  true> }
-  , { "shared3p::gte_int8_vec",  &compare_vec<s3p_int8_t , ModeLE,  true> }
-  , { "shared3p::gte_int16_vec", &compare_vec<s3p_int16_t, ModeLE,  true> }
-  , { "shared3p::gte_int32_vec", &compare_vec<s3p_int32_t, ModeLE,  true> }
-  , { "shared3p::gte_int64_vec", &compare_vec<s3p_int64_t, ModeLE,  true> }
-  , { "shared3p::lt_int8_vec",   &compare_vec<s3p_int8_t , ModeLT,  false> }
-  , { "shared3p::lt_int16_vec",  &compare_vec<s3p_int16_t, ModeLT,  false> }
-  , { "shared3p::lt_int32_vec",  &compare_vec<s3p_int32_t, ModeLT,  false> }
-  , { "shared3p::lt_int64_vec",  &compare_vec<s3p_int64_t, ModeLT,  false> }
-  , { "shared3p::lte_int8_vec",  &compare_vec<s3p_int8_t , ModeLE,  false> }
-  , { "shared3p::lte_int16_vec", &compare_vec<s3p_int16_t, ModeLE,  false> }
-  , { "shared3p::lte_int32_vec", &compare_vec<s3p_int32_t, ModeLE,  false> }
-  , { "shared3p::lte_int64_vec", &compare_vec<s3p_int64_t, ModeLE,  false> }
+  , { "shared3p::eq_int8_vec",   NAMED_SYSCALL_WRAPPER("eq_int8_vec", eq_vec<s3p_int8_t>) }
+  , { "shared3p::eq_int16_vec",  NAMED_SYSCALL_WRAPPER("eq_int16_vec", eq_vec<s3p_int16_t>) }
+  , { "shared3p::eq_int32_vec",  NAMED_SYSCALL_WRAPPER("eq_int32_vec", eq_vec<s3p_int32_t>) }
+  , { "shared3p::eq_int64_vec",  NAMED_SYSCALL_WRAPPER("eq_int64_vec", eq_vec<s3p_int64_t>) }
+  , { "shared3p::gt_int8_vec",   NAMED_SYSCALL_WRAPPER("gt_int8_vec", compare_vec<s3p_int8_t , ModeLT,  true>) }
+  , { "shared3p::gt_int16_vec",  NAMED_SYSCALL_WRAPPER("gt_int16_vec", compare_vec<s3p_int16_t, ModeLT,  true>) }
+  , { "shared3p::gt_int32_vec",  NAMED_SYSCALL_WRAPPER("gt_int32_vec", compare_vec<s3p_int32_t, ModeLT,  true>) }
+  , { "shared3p::gt_int64_vec",  NAMED_SYSCALL_WRAPPER("gt_int64_vec", compare_vec<s3p_int64_t, ModeLT,  true>) }
+  , { "shared3p::gte_int8_vec",  NAMED_SYSCALL_WRAPPER("gte_int8_vec", compare_vec<s3p_int8_t , ModeLE,  true>) }
+  , { "shared3p::gte_int16_vec", NAMED_SYSCALL_WRAPPER("gte_int16_vec", compare_vec<s3p_int16_t, ModeLE,  true>) }
+  , { "shared3p::gte_int32_vec", NAMED_SYSCALL_WRAPPER("gte_int32_vec", compare_vec<s3p_int32_t, ModeLE,  true>) }
+  , { "shared3p::gte_int64_vec", NAMED_SYSCALL_WRAPPER("gte_int64_vec", compare_vec<s3p_int64_t, ModeLE,  true>) }
+  , { "shared3p::lt_int8_vec",   NAMED_SYSCALL_WRAPPER("lt_int8_vec", compare_vec<s3p_int8_t , ModeLT,  false>) }
+  , { "shared3p::lt_int16_vec",  NAMED_SYSCALL_WRAPPER("lt_int16_vec", compare_vec<s3p_int16_t, ModeLT,  false>) }
+  , { "shared3p::lt_int32_vec",  NAMED_SYSCALL_WRAPPER("lt_int32_vec", compare_vec<s3p_int32_t, ModeLT,  false>) }
+  , { "shared3p::lt_int64_vec",  NAMED_SYSCALL_WRAPPER("lt_int64_vec", compare_vec<s3p_int64_t, ModeLT,  false>) }
+  , { "shared3p::lte_int8_vec",  NAMED_SYSCALL_WRAPPER("lte_int8_vec", compare_vec<s3p_int8_t , ModeLE,  false>) }
+  , { "shared3p::lte_int16_vec", NAMED_SYSCALL_WRAPPER("lte_int16_vec", compare_vec<s3p_int16_t, ModeLE,  false>) }
+  , { "shared3p::lte_int32_vec", NAMED_SYSCALL_WRAPPER("lte_int32_vec", compare_vec<s3p_int32_t, ModeLE,  false>) }
+  , { "shared3p::lte_int64_vec", NAMED_SYSCALL_WRAPPER("lte_int64_vec", compare_vec<s3p_int64_t, ModeLE,  false>) }
 
   // Casting
   , { "shared3p::conv_int8_to_bool_vec",  &unary_vec<s3p_int8_t, s3p_bool_t, Conversion> }
@@ -2037,26 +2040,26 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 */
 
    // Comparisons
-  , { "shared3p::eq_xor_uint8_vec",   &eq_vec<s3p_xor_uint8_t> }
-  , { "shared3p::eq_xor_uint16_vec",  &eq_vec<s3p_xor_uint16_t> }
-  , { "shared3p::eq_xor_uint32_vec",  &eq_vec<s3p_xor_uint32_t> }
-  , { "shared3p::eq_xor_uint64_vec",  &eq_vec<s3p_xor_uint64_t> }
-  , { "shared3p::gt_xor_uint8_vec",   &compare_vec<s3p_xor_uint8_t,  ModeLT, true> }
-  , { "shared3p::gt_xor_uint16_vec",  &compare_vec<s3p_xor_uint16_t, ModeLT, true> }
-  , { "shared3p::gt_xor_uint32_vec",  &compare_vec<s3p_xor_uint32_t, ModeLT, true> }
-  , { "shared3p::gt_xor_uint64_vec",  &compare_vec<s3p_xor_uint64_t, ModeLT, true> }
-  , { "shared3p::gte_xor_uint8_vec",  &compare_vec<s3p_xor_uint8_t,  ModeLE, true> }
-  , { "shared3p::gte_xor_uint16_vec", &compare_vec<s3p_xor_uint16_t, ModeLE, true> }
-  , { "shared3p::gte_xor_uint32_vec", &compare_vec<s3p_xor_uint32_t, ModeLE, true> }
-  , { "shared3p::gte_xor_uint64_vec", &compare_vec<s3p_xor_uint64_t, ModeLE, true> }
-  , { "shared3p::lt_xor_uint8_vec",   &compare_vec<s3p_xor_uint8_t,  ModeLT, false> }
-  , { "shared3p::lt_xor_uint16_vec",  &compare_vec<s3p_xor_uint16_t, ModeLT, false> }
-  , { "shared3p::lt_xor_uint32_vec",  &compare_vec<s3p_xor_uint32_t, ModeLT, false> }
-  , { "shared3p::lt_xor_uint64_vec",  &compare_vec<s3p_xor_uint64_t, ModeLT, false> }
-  , { "shared3p::lte_xor_uint8_vec",  &compare_vec<s3p_xor_uint8_t,  ModeLE, false> }
-  , { "shared3p::lte_xor_uint16_vec", &compare_vec<s3p_xor_uint16_t, ModeLE, false> }
-  , { "shared3p::lte_xor_uint32_vec", &compare_vec<s3p_xor_uint32_t, ModeLE, false> }
-  , { "shared3p::lte_xor_uint64_vec", &compare_vec<s3p_xor_uint64_t, ModeLE, false> }
+  , { "shared3p::eq_xor_uint8_vec",   NAMED_SYSCALL_WRAPPER("eq_xor_uint8_vec", eq_vec<s3p_xor_uint8_t>) }
+  , { "shared3p::eq_xor_uint16_vec",  NAMED_SYSCALL_WRAPPER("eq_xor_uint16_vec", eq_vec<s3p_xor_uint16_t>) }
+  , { "shared3p::eq_xor_uint32_vec",  NAMED_SYSCALL_WRAPPER("eq_xor_uint32_vec", eq_vec<s3p_xor_uint32_t>) }
+  , { "shared3p::eq_xor_uint64_vec",  NAMED_SYSCALL_WRAPPER("eq_xor_uint64_vec", eq_vec<s3p_xor_uint64_t>) }
+  , { "shared3p::gt_xor_uint8_vec",   NAMED_SYSCALL_WRAPPER("gt_xor_uint8_vec", compare_vec<s3p_xor_uint8_t,  ModeLT, true>) }
+  , { "shared3p::gt_xor_uint16_vec",  NAMED_SYSCALL_WRAPPER("gt_xor_uint16_vec", compare_vec<s3p_xor_uint16_t, ModeLT, true>) }
+  , { "shared3p::gt_xor_uint32_vec",  NAMED_SYSCALL_WRAPPER("gt_xor_uint32_vec", compare_vec<s3p_xor_uint32_t, ModeLT, true>) }
+  , { "shared3p::gt_xor_uint64_vec",  NAMED_SYSCALL_WRAPPER("gt_xor_uint64_vec", compare_vec<s3p_xor_uint64_t, ModeLT, true>) }
+  , { "shared3p::gte_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("gte_xor_uint8_vec", compare_vec<s3p_xor_uint8_t,  ModeLE, true>) }
+  , { "shared3p::gte_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint16_vec", compare_vec<s3p_xor_uint16_t, ModeLE, true>) }
+  , { "shared3p::gte_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint32_vec", compare_vec<s3p_xor_uint32_t, ModeLE, true>) }
+  , { "shared3p::gte_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint64_vec", compare_vec<s3p_xor_uint64_t, ModeLE, true>) }
+  , { "shared3p::lt_xor_uint8_vec",   NAMED_SYSCALL_WRAPPER("lt_xor_uint8_vec", compare_vec<s3p_xor_uint8_t,  ModeLT, false>) }
+  , { "shared3p::lt_xor_uint16_vec",  NAMED_SYSCALL_WRAPPER("lt_xor_uint16_vec", compare_vec<s3p_xor_uint16_t, ModeLT, false>) }
+  , { "shared3p::lt_xor_uint32_vec",  NAMED_SYSCALL_WRAPPER("lt_xor_uint32_vec", compare_vec<s3p_xor_uint32_t, ModeLT, false>) }
+  , { "shared3p::lt_xor_uint64_vec",  NAMED_SYSCALL_WRAPPER("lt_xor_uint64_vec", compare_vec<s3p_xor_uint64_t, ModeLT, false>) }
+  , { "shared3p::lte_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("lte_xor_uint8_vec", compare_vec<s3p_xor_uint8_t,  ModeLE, false>) }
+  , { "shared3p::lte_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint16_vec", compare_vec<s3p_xor_uint16_t, ModeLE, false>) }
+  , { "shared3p::lte_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint32_vec", compare_vec<s3p_xor_uint32_t, ModeLE, false>) }
+  , { "shared3p::lte_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint64_vec", compare_vec<s3p_xor_uint64_t, ModeLE, false>) }
 
   // Casting
   , { "shared3p::conv_bool_to_xor_uint8_vec",  &unary_vec<s3p_bool_t, s3p_xor_uint8_t, Conversion> }
@@ -2265,7 +2268,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
    *  Other functions
    */
 
-  , { "shared3p::get_domain_name", &get_domain_name }
+  , { "shared3p::get_domain_name", get_domain_name }
 );
 
 
