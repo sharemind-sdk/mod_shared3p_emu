@@ -24,6 +24,7 @@ ADD_COMPILE_OPTIONS(
 )
 
 FIND_PACKAGE(Boost REQUIRED)
+FIND_PACKAGE(ExprTk REQUIRED)
 FIND_PACKAGE(LogHard REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders REQUIRED)
 FIND_PACKAGE(SharemindLibmodapi REQUIRED)
@@ -31,6 +32,7 @@ FIND_PACKAGE(SharemindLibsoftfloat REQUIRED)
 FIND_PACKAGE(SharemindVmGlobals REQUIRED)
 INCLUDE_DIRECTORIES(
     ${Boost_INCLUDE_DIRS}
+    ${ExprTk_INCLUDE_DIRS}
     ${LogHard_INCLUDE_DIRS}
     ${SharemindCxxHeaders_INCLUDE_DIRS}
     ${SharemindLibmodapi_INCLUDE_DIRS}
@@ -41,15 +43,20 @@ INCLUDE_DIRECTORIES(
 ADD_DEFINITIONS(
     ${LogHard_DEFINITIONS}
     ${SharemindCxxHeaders_DEFINITIONS}
+    ${SharemindLibExecutionProfiler_DEFINITIONS}
     ${SharemindLibmodapi_DEFINITIONS}
     ${SharemindLibsoftfloat_DEFINITIONS}
     ${SharemindVmGlobals_DEFINITIONS}
+    "-Dexprtk_disable_comments"
+    "-Dexprtk_disable_break_continue"
+    "-Dexprtk_disable_enhanced_features"
     "-D__STDC_LIMIT_MACROS"
     "-D__STDC_CONSTANT_MACROS"
     "-D__STDC_FORMAT_MACROS"
 )
 
 SET(SHARED3P_EMU_SOURCES
+    "src/Facilities/ExecutionModelEvaluator.cpp"
     "src/mod_shared3p_emu.cpp"
     "src/Shared3pConfiguration.cpp"
     "src/Shared3pModule.cpp"
@@ -60,6 +67,7 @@ SET(SHARED3P_EMU_SOURCES
 
 SET(SHARED3P_EMU_HEADERS
     "src/BitVector.h"
+    "src/Facilities/ExecutionModelEvaluator.h"
     "src/Shared3pConfiguration.h"
     "src/Shared3pModule.h"
     "src/Shared3pPD.h"
