@@ -26,6 +26,7 @@ class __attribute__ ((visibility("internal"))) Shared3pPDPI {
 public: /* Methods: */
 
     Shared3pPDPI(Shared3pPD & pd);
+    inline ~Shared3pPDPI() noexcept {}
 
     inline const std::string & pdName() const
     { return m_pd.name(); }

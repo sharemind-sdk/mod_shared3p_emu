@@ -37,6 +37,8 @@ public: /* Methods: */
             throw ExpressionCompileException();
     }
 
+    inline ~ExprTkModel() noexcept {}
+
     inline double evaluate(size_t inputSize) const final override {
         constexpr const size_t max =
             sizeof(size_t) >= (std::numeric_limits<double>::digits % 8u == 0

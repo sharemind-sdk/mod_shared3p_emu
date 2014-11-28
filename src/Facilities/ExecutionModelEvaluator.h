@@ -46,7 +46,7 @@ public: /* Types: */
 
     public: /* Methods: */
 
-        virtual ~Model() {}
+        inline virtual ~Model() noexcept {}
         virtual double evaluate(size_t inputSize) const = 0;
 
     }; /* class Model { */
