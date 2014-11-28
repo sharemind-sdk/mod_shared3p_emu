@@ -91,7 +91,8 @@ ExecutionModelEvaluator::ExecutionModelEvaluator(const LogHard::Logger & logger,
                     modelSectionName.size() - 5u)
             {
                 // Check for model constants
-                std::map<std::string, double> constants;
+                typedef std::map<std::string, double> ConstantMap;
+                ConstantMap constants;
 
                 std::ostringstream oss;
                 oss << modelSectionName << "Constant";
@@ -102,8 +103,15 @@ ExecutionModelEvaluator::ExecutionModelEvaluator(const LogHard::Logger & logger,
 
                 if (constSection) {
                     for (const ptree::value_type & constVal : *constSection) {
+                        #if ! SHAREMIND_GCCPR44436
                         if (!constants.emplace(constVal.first,
                                     constVal.second.get_value<double>()).second)
+                        #else
+                        if (!constants.insert(ConstantMap::value_type(
+                                        constVal.first,
+                                        constVal.second.get_value<double>()))
+                                    .second)
+                        #endif
                         {
                             logger.error() << "Duplicate model constants" <<
                                 " in '" << constSectionName << "'.";
@@ -124,7 +132,14 @@ ExecutionModelEvaluator::ExecutionModelEvaluator(const LogHard::Logger & logger,
                                 new ExprTkModel(parser, modelExpression,
                                                 inputSizeVarName, constants));
 
-                        if (!models->emplace(modelName, model.get()).second) {
+                        #if ! SHAREMIND_GCCPR44436
+                        if (!models->emplace(modelName, model.get()).second)
+                        #else
+                        if (!models->insert(
+                                    ModelMap::value_type(modelName,
+                                                         model.get())).second)
+                        #endif
+                        {
                             logger.error() << "Duplicate model expression" <<
                                 " definitions for '" << modelName << "'.";
                             throw ConfigurationException();
@@ -138,7 +153,14 @@ ExecutionModelEvaluator::ExecutionModelEvaluator(const LogHard::Logger & logger,
                     }
                 }
 
-                if (!m_modelTypes.emplace(modelSectionName, models.get()).second) {
+                #if ! SHAREMIND_GCCPR44436
+                if (!m_modelTypes.emplace(modelSectionName, models.get()).second)
+                #else
+                if (!m_modelTypes.insert(
+                            ModelTypeMap::value_type(modelSectionName,
+                                                     models.get())).second)
+                #endif
+                {
                     logger.error() << "Duplicate model type sections" <<
                         " for '" << modelSectionName << "'.";
                     throw ConfigurationException();
