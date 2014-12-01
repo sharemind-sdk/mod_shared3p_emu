@@ -14,9 +14,9 @@
 
 namespace sharemind {
 
-    class __attribute__ ((visibility("internal"))) Conversion {
+    class __attribute__ ((visibility("internal"))) ConversionProtocol {
         public:
-            Conversion (Shared3pPDPI &pdpi) {}
+            ConversionProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             template <typename DestT, typename SourceT>
                 bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
@@ -43,7 +43,7 @@ namespace sharemind {
 
     class __attribute__ ((visibility("internal"))) SumProtocol {
         public:
-            SumProtocol (Shared3pPDPI &pdpi) {}
+            SumProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             template <typename DestT, typename SourceT>
                 bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
@@ -82,7 +82,7 @@ namespace sharemind {
 
     class __attribute__ ((visibility("internal"))) ProductProtocol {
         public:
-            ProductProtocol (Shared3pPDPI &pdpi) {}
+            ProductProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             template <typename DestT, typename SourceT>
                 bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
@@ -121,7 +121,7 @@ namespace sharemind {
 
     class __attribute__ ((visibility("internal"))) NegProtocol {
         public:
-            NegProtocol (Shared3pPDPI &pdpi) {}
+            NegProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             template <typename DestT, typename SourceT>
                 bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
@@ -137,7 +137,7 @@ namespace sharemind {
 
     class __attribute__ ((visibility("internal"))) NotProtocol {
         public:
-            NotProtocol (Shared3pPDPI &pdpi) {}
+            NotProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             bool invoke (const s3p_vec<s3p_bool_t>& param, s3p_vec<s3p_bool_t>& result,
                     any_value_tag)
@@ -152,7 +152,7 @@ namespace sharemind {
 
     class __attribute__ ((visibility("internal"))) BitExtractionProtocol {
         public:
-            BitExtractionProtocol (Shared3pPDPI &pdpi) {}
+            BitExtractionProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             template <typename SourceT>
                 bool invoke (const s3p_vec<SourceT>& param, s3p_vec<s3p_bool_t>& result,
@@ -171,7 +171,7 @@ namespace sharemind {
 
     class __attribute__ ((visibility("internal"))) SignProtocol {
         public:
-            SignProtocol (Shared3pPDPI &pdpi) {}
+            SignProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             template <typename SourceT>
                 bool invoke (const s3p_vec<SourceT>& param, s3p_vec<SourceT>& result,
@@ -188,7 +188,7 @@ namespace sharemind {
 
     class __attribute__ ((visibility("internal"))) AbsoluteValueProtocol {
         public:
-            AbsoluteValueProtocol (Shared3pPDPI &pdpi) {}
+            AbsoluteValueProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             template <typename SourceT>
                 bool invoke (const s3p_vec<SourceT>& param,
