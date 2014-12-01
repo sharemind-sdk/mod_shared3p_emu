@@ -1460,9 +1460,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::declassify_bool_vec", &declassify_vec<s3p_bool_t> }
   , { "shared3p::get_type_size_bool", &get_type_size<s3p_bool_t> }
 
-/*
    // Bit logic
   , { "shared3p::not_bool_vec", &unary_arith_vec<s3p_bool_t, NotProtocol> }
+/*
   , { "shared3p::and_bool_vec", &binary_arith_vec<s3p_bool_t, ConjunctionProtocol> }
   , { "shared3p::or_bool_vec", &binary_arith_vec<s3p_bool_t, DisjunctionProtocol> }
   , { "shared3p::xor_bool_vec", &binary_arith_vec<s3p_bool_t, XorProtocol> }
@@ -1564,7 +1564,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::sum_uint16_vec", &unary_arith_vec<s3p_uint16_t, SumProtocol> }
   , { "shared3p::sum_uint32_vec", &unary_arith_vec<s3p_uint32_t, SumProtocol> }
   , { "shared3p::sum_uint64_vec", &unary_arith_vec<s3p_uint64_t, SumProtocol> }
-/*
   , { "shared3p::product_uint8_vec",  &unary_arith_vec<s3p_uint8_t, ProductProtocol> }
   , { "shared3p::product_uint16_vec", &unary_arith_vec<s3p_uint16_t, ProductProtocol> }
   , { "shared3p::product_uint32_vec", &unary_arith_vec<s3p_uint32_t, ProductProtocol> }
@@ -1573,6 +1572,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::neg_uint16_vec", &unary_arith_vec<s3p_uint16_t, NegProtocol> }
   , { "shared3p::neg_uint32_vec", &unary_arith_vec<s3p_uint32_t, NegProtocol> }
   , { "shared3p::neg_uint64_vec", &unary_arith_vec<s3p_uint64_t, NegProtocol> }
+/*
   , { "shared3p::sub_uint8_vec",  &binary_arith_vec<s3p_uint8_t , SubtractionProtocol> }
   , { "shared3p::sub_uint16_vec", &binary_arith_vec<s3p_uint16_t, SubtractionProtocol> }
   , { "shared3p::sub_uint32_vec", &binary_arith_vec<s3p_uint32_t, SubtractionProtocol> }
@@ -1690,11 +1690,13 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 //, { "shared3p::conv_uint64_to_float32_vec", &unary_vec<s3p_uint64_t, s3p_float32_t, ConversionToFloatProtocol> }
   , { "shared3p::conv_uint64_to_float64_vec", &unary_vec<s3p_uint64_t, s3p_float64_t, ConversionToFloatProtocol> }
 
+*/
   , { "shared3p::bit_extract_xor_uint8_vec", &unary_vec<s3p_xor_uint8_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint16_vec", &unary_vec<s3p_xor_uint16_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint32_vec", &unary_vec<s3p_xor_uint32_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint64_vec", &unary_vec<s3p_xor_uint64_t, s3p_bool_t, BitExtractionProtocol> }
 
+/*
     // Utilities
   , { "shared3p::randomize_uint8_vec",  &nullary_vec<s3p_uint8_t, RandomizeProtocol> }
   , { "shared3p::randomize_uint16_vec", &nullary_vec<s3p_uint16_t, RandomizeProtocol> }
@@ -1820,7 +1822,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::sum_int16_vec", &unary_arith_vec<s3p_int16_t, SumProtocol> }
   , { "shared3p::sum_int32_vec", &unary_arith_vec<s3p_int32_t, SumProtocol> }
   , { "shared3p::sum_int64_vec", &unary_arith_vec<s3p_int64_t, SumProtocol> }
-/*
   , { "shared3p::product_int8_vec",  &unary_arith_vec<s3p_int8_t, ProductProtocol> }
   , { "shared3p::product_int16_vec", &unary_arith_vec<s3p_int16_t, ProductProtocol> }
   , { "shared3p::product_int32_vec", &unary_arith_vec<s3p_int32_t, ProductProtocol> }
@@ -1829,6 +1830,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::neg_int16_vec", &unary_arith_vec<s3p_int16_t, NegProtocol> }
   , { "shared3p::neg_int32_vec", &unary_arith_vec<s3p_int32_t, NegProtocol> }
   , { "shared3p::neg_int64_vec", &unary_arith_vec<s3p_int64_t, NegProtocol> }
+/*
   , { "shared3p::sub_int8_vec",  &binary_arith_vec<s3p_int8_t , SubtractionProtocol> }
   , { "shared3p::sub_int16_vec", &binary_arith_vec<s3p_int16_t, SubtractionProtocol> }
   , { "shared3p::sub_int32_vec", &binary_arith_vec<s3p_int32_t, SubtractionProtocol> }
@@ -1887,21 +1889,21 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::conv_int64_to_uint32_vec",  &unary_vec<s3p_int64_t, s3p_uint32_t, Conversion> }
   , { "shared3p::conv_int64_to_uint64_vec",  &unary_vec<s3p_int64_t, s3p_uint64_t, Conversion> }
 
+  , { "shared3p::conv_int16_to_int8_vec",  &unary_vec<s3p_int16_t, s3p_int8_t, Conversion> }
+  , { "shared3p::conv_int32_to_int8_vec",  &unary_vec<s3p_int32_t, s3p_int8_t, Conversion> }
+  , { "shared3p::conv_int32_to_int16_vec", &unary_vec<s3p_int32_t, s3p_int16_t, Conversion> }
+  , { "shared3p::conv_int64_to_int8_vec",  &unary_vec<s3p_int64_t, s3p_int8_t, Conversion> }
+  , { "shared3p::conv_int64_to_int16_vec", &unary_vec<s3p_int64_t, s3p_int16_t, Conversion> }
+  , { "shared3p::conv_int64_to_int32_vec", &unary_vec<s3p_int64_t, s3p_int32_t, Conversion> }
+
+  , { "shared3p::conv_int8_to_int16_vec",  &unary_vec<s3p_int8_t, s3p_int16_t, Conversion> }
+  , { "shared3p::conv_int8_to_int32_vec",  &unary_vec<s3p_int8_t, s3p_int32_t, Conversion> }
+  , { "shared3p::conv_int8_to_int64_vec",  &unary_vec<s3p_int8_t, s3p_int64_t, Conversion> }
+  , { "shared3p::conv_int16_to_int32_vec", &unary_vec<s3p_int16_t, s3p_int32_t, Conversion> }
+  , { "shared3p::conv_int16_to_int64_vec", &unary_vec<s3p_int16_t, s3p_int64_t, Conversion> }
+  , { "shared3p::conv_int32_to_int64_vec", &unary_vec<s3p_int32_t, s3p_int64_t, Conversion> }
+
 /*
-  , { "shared3p::conv_int16_to_int8_vec",  &unary_vec<s3p_int16_t, s3p_int8_t, ConvertDownProtocol> }
-  , { "shared3p::conv_int32_to_int8_vec",  &unary_vec<s3p_int32_t, s3p_int8_t, ConvertDownProtocol> }
-  , { "shared3p::conv_int32_to_int16_vec", &unary_vec<s3p_int32_t, s3p_int16_t, ConvertDownProtocol> }
-  , { "shared3p::conv_int64_to_int8_vec",  &unary_vec<s3p_int64_t, s3p_int8_t, ConvertDownProtocol> }
-  , { "shared3p::conv_int64_to_int16_vec", &unary_vec<s3p_int64_t, s3p_int16_t, ConvertDownProtocol> }
-  , { "shared3p::conv_int64_to_int32_vec", &unary_vec<s3p_int64_t, s3p_int32_t, ConvertDownProtocol> }
-
-  , { "shared3p::conv_int8_to_int16_vec",  &unary_vec<s3p_int8_t, s3p_int16_t, ConvertUpProtocol> }
-  , { "shared3p::conv_int8_to_int32_vec",  &unary_vec<s3p_int8_t, s3p_int32_t, ConvertUpProtocol> }
-  , { "shared3p::conv_int8_to_int64_vec",  &unary_vec<s3p_int8_t, s3p_int64_t, ConvertUpProtocol> }
-  , { "shared3p::conv_int16_to_int32_vec", &unary_vec<s3p_int16_t, s3p_int32_t, ConvertUpProtocol> }
-  , { "shared3p::conv_int16_to_int64_vec", &unary_vec<s3p_int16_t, s3p_int64_t, ConvertUpProtocol> }
-  , { "shared3p::conv_int32_to_int64_vec", &unary_vec<s3p_int32_t, s3p_int64_t, ConvertUpProtocol> }
-
   , { "shared3p::conv_int8_to_float32_vec", &unary_vec<s3p_int8_t, s3p_float32_t,ConversionToFloatProtocol> }
   , { "shared3p::conv_int8_to_float64_vec", &unary_vec<s3p_int8_t, s3p_float64_t,ConversionToFloatProtocol> }
   , { "shared3p::conv_int16_to_float32_vec", &unary_vec<s3p_int16_t, s3p_float32_t,ConversionToFloatProtocol> }
@@ -1918,6 +1920,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::randomize_int16_vec", &nullary_vec<s3p_int16_t, RandomizeProtocol> }
   , { "shared3p::randomize_int32_vec", &nullary_vec<s3p_int32_t, RandomizeProtocol> }
   , { "shared3p::randomize_int64_vec", &nullary_vec<s3p_int64_t, RandomizeProtocol> }
+*/
 
   // Special functions
   , { "shared3p::sign_int8_vec", &unary_arith_vec<s3p_int8_t, SignProtocol> }
@@ -1929,6 +1932,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::abs_int32_vec", &unary_vec<s3p_int32_t, s3p_uint32_t, AbsoluteValueProtocol> }
   , { "shared3p::abs_int64_vec", &unary_vec<s3p_int64_t, s3p_uint64_t, AbsoluteValueProtocol> }
 
+/*
   // Database functions
   , { "shared3p::vecshuf_int8_vec", &vector_shuffle<s3p_int8_t, false, false> }
   , { "shared3p::vecshuf_int16_vec", &vector_shuffle<s3p_int16_t, false, false> }
