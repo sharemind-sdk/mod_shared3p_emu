@@ -39,8 +39,6 @@ template <> inline uint32_t getStack<s3p_xor_uint32_t>(const SharemindCodeBlock&
 template <> inline uint64_t getStack<s3p_xor_uint64_t>(const SharemindCodeBlock& arg) { return arg.uint64[0]; }
 template <> inline sf_float32 getStack<s3p_float32_t>(const SharemindCodeBlock& arg) { return arg.float32[0]; }
 template <> inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock& arg) { return arg.float64[0]; }
-template <> inline uint32_t getStack<s3p_fix32_t>(const SharemindCodeBlock& arg) { return arg.uint32[0]; }
-template <> inline uint64_t getStack<s3p_fix64_t>(const SharemindCodeBlock& arg) { return arg.uint64[0]; }
 
 /**
  * Basic syscall parameter verification.
