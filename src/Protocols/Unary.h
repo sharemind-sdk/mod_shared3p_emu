@@ -10,6 +10,7 @@
 #ifndef MOD_SHARED3P_EMU_PROTOCOLS_UNARY_H
 #define MOD_SHARED3P_EMU_PROTOCOLS_UNARY_H
 
+#include <algorithm>
 #include "../Shared3pValueTraits.h"
 
 namespace sharemind {
@@ -201,6 +202,41 @@ namespace sharemind {
                     for (size_t i = 0u; i < param.size(); ++i)
                         result[i] = abs(param[i]);
                     return true;
+                }
+    };
+
+    enum MinimumMaximumMode {
+        ModeMin,
+        ModeMax
+    };
+
+template <MinimumMaximumMode mode>
+    class __attribute__ ((visibility("internal"))) MinimumMaximumProtocol {
+        public:
+            MinimumMaximumProtocol (Shared3pPDPI &pdpi) {}
+        public:
+            template <typename T>
+                bool invoke (const s3p_vec<T>& param,
+                                s3p_vec<T>& result,
+                                any_value_tag)
+                {
+                    const size_t result_size = result.size();
+                    const size_t param_size = param.size();
+                    if (result.size() == 0)
+                        return false;
+                    else if (param.size() % result.size() == 0) {
+                        const size_t subarr_len = param_size / result_size;
+                        for (size_t i = 0u; i < param_size; ++i) {
+                            if (i == subarr_len)
+                                continue;
+                            if (mode == ModeMin)
+                                result[i / subarr_len] = std::min(param[i], param[i+1]);
+                            else
+                                result[i / subarr_len] = std::max(param[i], param[i+1]);
+                        }
+                        return true;
+                    }
+                    return false;
                 }
     };
 }

@@ -1547,18 +1547,21 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 /*
   , { "shared3p::max_float32_vec",  &binary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::max_float64_vec",  &binary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> > }
-
+*/
 
   , { "shared3p::vecmin_uint8_vec",  &unary_arith_vec<s3p_uint8_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_uint16_vec", &unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_uint32_vec", &unary_arith_vec<s3p_uint32_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_uint64_vec", &unary_arith_vec<s3p_uint64_t, MinimumMaximumProtocol<ModeMin> > }
+/*
   , { "shared3p::vecmin_float32_vec", &unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_float64_vec", &unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> > }
+*/
   , { "shared3p::vecmax_uint8_vec",  &unary_arith_vec<s3p_uint8_t, MinimumMaximumProtocol<ModeMax> > }
   , { "shared3p::vecmax_uint16_vec", &unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMax> > }
   , { "shared3p::vecmax_uint32_vec", &unary_arith_vec<s3p_uint32_t, MinimumMaximumProtocol<ModeMax> > }
   , { "shared3p::vecmax_uint64_vec", &unary_arith_vec<s3p_uint64_t, MinimumMaximumProtocol<ModeMax> > }
+/*
   , { "shared3p::vecmax_float32_vec", &unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmax_float64_vec", &unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> > }
 
@@ -1945,7 +1948,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::max_xor_uint32_vec", &binary_arith_vec<s3p_xor_uint32_t, MaximumProtocol> }
   , { "shared3p::max_xor_uint64_vec", &binary_arith_vec<s3p_xor_uint64_t, MaximumProtocol> }
 
-/*
   , { "shared3p::vecmin_xor_uint8_vec",  &unary_arith_vec<s3p_xor_uint8_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_xor_uint16_vec", &unary_arith_vec<s3p_xor_uint16_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_xor_uint32_vec", &unary_arith_vec<s3p_xor_uint32_t, MinimumMaximumProtocol<ModeMin> > }
@@ -1954,6 +1956,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::vecmax_xor_uint16_vec", &unary_arith_vec<s3p_xor_uint16_t, MinimumMaximumProtocol<ModeMax> > }
   , { "shared3p::vecmax_xor_uint32_vec", &unary_arith_vec<s3p_xor_uint32_t, MinimumMaximumProtocol<ModeMax> > }
   , { "shared3p::vecmax_xor_uint64_vec", &unary_arith_vec<s3p_xor_uint64_t, MinimumMaximumProtocol<ModeMax> > }
+/*
 
   , { "shared3p::msnzb_xor_uint8_vec", unary_arith_vec<s3p_xor_uint8_t, MostSignificantNonZeroBitProtocol> }
   , { "shared3p::aes128_xor_uint32_vec", &aes_xor_uint32_vec<Aes128Protocol> }
