@@ -70,6 +70,7 @@ SET(SHARED3P_EMU_SOURCES
 SET(SHARED3P_EMU_HEADERS
     "src/BitVector.h"
     "src/Facilities/ExecutionModelEvaluator.h"
+    "src/Protocols/Unary.h"
     "src/Shared3pConfiguration.h"
     "src/Shared3pModule.h"
     "src/Shared3pPD.h"
