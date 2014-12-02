@@ -15,230 +15,227 @@
 
 namespace sharemind {
 
-    class __attribute__ ((visibility("internal"))) ConversionProtocol {
-        public:
-            ConversionProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            template <typename DestT, typename SourceT>
-                bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
-                        any_value_tag)
-                {
-                    if (param.size() != result.size())
-                        return false;
-                    for (size_t i = 0u; i < param.size(); ++i)
-                        result[i] = static_cast<typename value_traits<DestT>::public_type> (param[i]);
-                    return true;
-                }
+class __attribute__ ((visibility("internal"))) ConversionProtocol {
+public: /* Methods: */
 
-            template <typename DestT, typename SourceT>
-                bool invoke (const s3p_vec<SourceT>& param, s3p_vec<s3p_bool_t>& result,
-                        bool_value_tag)
-                {
-                    if (param.size() != result.size())
-                        return false;
-                    for (size_t i = 0u; i < param.size(); ++i)
-                        result[i] = param[i];
-                    return true;
-                }
-    };
+    ConversionProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
 
-    class __attribute__ ((visibility("internal"))) SumProtocol {
-        public:
-            SumProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            template <typename DestT, typename SourceT>
-                bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
-                        any_value_tag)
-                {
-                    const size_t param_size = param.size ();
-                    const size_t result_size = result.size ();
-                    if (result_size == 0)
-                        return false;
+    template <typename DestT, typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result, any_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = static_cast<typename value_traits<DestT>::public_type> (param[i]);
+        return true;
+    }
 
-                    if ((s3p_vec<DestT>*)&param == &result)
-                        return true;
+    template <typename DestT, typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param, s3p_vec<s3p_bool_t>& result, bool_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = param[i];
+        return true;
+    }
+}; /* class ConversionProtocol { */
 
-                    if (param_size == 0) {
-                        if (result_size != 1)
-                            return false;
-                        result[0] = 0;
-                        return true;
-                    }
+class __attribute__ ((visibility("internal"))) SumProtocol {
+public: /* Methods: */
 
-                    if (param_size % result_size != 0)
-                        return false;
+    SumProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
 
-                    for (size_t i = 0u; i < result_size; ++i) {
-                        result[i] = 0;
-                    }
-                    const size_t subarr_len = param_size / result_size;
-                    for (size_t i = 0u; i < param_size; ++i) {
-                        result[i / subarr_len] += param[i];
-                    }
+    template <typename DestT, typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result, any_value_tag)
+    {
+        const size_t param_size = param.size ();
+        const size_t result_size = result.size ();
+        if (result_size == 0)
+            return false;
 
-                    return true;
-                }
+        if ((s3p_vec<DestT>*)&param == &result)
+            return true;
 
-    };
+        if (param_size == 0) {
+            if (result_size != 1)
+                return false;
+            result[0] = 0;
+            return true;
+        }
 
-    class __attribute__ ((visibility("internal"))) ProductProtocol {
-        public:
-            ProductProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            template <typename DestT, typename SourceT>
-                bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
-                        any_value_tag)
-                {
-                    const size_t param_size = param.size ();
-                    const size_t result_size = result.size ();
-                    if (result_size == 0)
-                        return false;
+        if (param_size % result_size != 0)
+            return false;
 
-                    if ((s3p_vec<DestT>*)&param == &result)
-                        return true;
+        for (size_t i = 0u; i < result_size; ++i) {
+            result[i] = 0;
+        }
+        const size_t subarr_len = param_size / result_size;
+        for (size_t i = 0u; i < param_size; ++i) {
+            result[i / subarr_len] += param[i];
+        }
 
-                    if (param_size == 0) {
-                        if (result_size != 1)
-                            return false;
-                        result[0] = 0;
-                        return true;
-                    }
+        return true;
+    }
 
-                    if (param_size % result_size != 0)
-                        return false;
+}; /* class SumProtocol { */
 
-                    for (size_t i = 0u; i < result_size; ++i) {
-                        result[i] = 0;
-                    }
-                    const size_t subarr_len = param_size / result_size;
-                    for (size_t i = 0u; i < param_size; ++i) {
-                        result[i / subarr_len] *= param[i];
-                    }
+class __attribute__ ((visibility("internal"))) ProductProtocol {
+public: /* Methods: */
+    ProductProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
 
-                    return true;
-                }
+    template <typename DestT, typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result, any_value_tag)
+    {
+        const size_t param_size = param.size ();
+        const size_t result_size = result.size ();
+        if (result_size == 0)
+            return false;
 
-    };
+        if ((s3p_vec<DestT>*)&param == &result)
+            return true;
 
-    class __attribute__ ((visibility("internal"))) NegProtocol {
-        public:
-            NegProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            template <typename DestT, typename SourceT>
-                bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result,
-                        any_value_tag)
-                {
-                    if (param.size() != result.size())
-                        return false;
-                    for (size_t i = 0u; i < param.size(); ++i)
-                        result[i] = static_cast<typename value_traits<DestT>::public_type> (- param[i]);
-                    return true;
-                }
-    };
+        if (param_size == 0) {
+            if (result_size != 1)
+                return false;
+            result[0] = 0;
+            return true;
+        }
 
-    class __attribute__ ((visibility("internal"))) NotProtocol {
-        public:
-            NotProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            bool invoke (const s3p_vec<s3p_bool_t>& param, s3p_vec<s3p_bool_t>& result,
-                    any_value_tag)
-            {
-                if (param.size() != result.size())
-                    return false;
-                for (size_t i = 0u; i < param.size(); ++i)
-                    result[i] = !param[i];
-                return true;
-            }
-    };
+        if (param_size % result_size != 0)
+            return false;
 
-    class __attribute__ ((visibility("internal"))) BitExtractionProtocol {
-        public:
-            BitExtractionProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            template <typename SourceT>
-                bool invoke (const s3p_vec<SourceT>& param, s3p_vec<s3p_bool_t>& result,
-                        any_value_tag)
-                {
-                    enum { num_of_bits = value_traits<SourceT>::num_of_bits };
-                    SHAREMIND_STATIC_ASSERT (num_of_bits > 0);
-                    if (result.size () % num_of_bits != 0)
-                        return false;
-                    if (param.size () != result.size () / num_of_bits)
-                        return false;
-                    result.assignBits (param);
-                    return true;
-                }
-    };
+        for (size_t i = 0u; i < result_size; ++i) {
+            result[i] = 0;
+        }
+        const size_t subarr_len = param_size / result_size;
+        for (size_t i = 0u; i < param_size; ++i) {
+            result[i / subarr_len] *= param[i];
+        }
 
-    class __attribute__ ((visibility("internal"))) SignProtocol {
-        public:
-            SignProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            template <typename SourceT>
-                bool invoke (const s3p_vec<SourceT>& param, s3p_vec<SourceT>& result,
-                        numeric_value_tag)
-                {
-                    if (param.size() != result.size())
-                        return false;
+        return true;
+    }
 
-                    for (size_t i = 0u; i < param.size(); ++i)
-                        result[i] = (param[i] > 0) ? 1 : ((param[i] < 0) ? -1 : 0);
-                    return true;
-                }
-    };
+}; /* class ProductProtocol { */
 
-    class __attribute__ ((visibility("internal"))) AbsoluteValueProtocol {
-        public:
-            AbsoluteValueProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            template <typename SourceT>
-                bool invoke (const s3p_vec<SourceT>& param,
-                                s3p_vec<typename respective_unsigned_type<SourceT>::type>& result,
-                                any_value_tag)
-                {
-                    if (param.size() != result.size())
-                        return false;
+class __attribute__ ((visibility("internal"))) NegProtocol {
+public: /* Methods: */
 
-                    for (size_t i = 0u; i < param.size(); ++i)
-                        result[i] = abs(param[i]);
-                    return true;
-                }
-    };
+    NegProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
 
-    enum MinimumMaximumMode {
-        ModeMin,
-        ModeMax
-    };
+    template <typename DestT, typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param, s3p_vec<DestT>& result, any_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = static_cast<typename value_traits<DestT>::public_type> (- param[i]);
+        return true;
+    }
+}; /* class NegProtocol { */
+
+class __attribute__ ((visibility("internal"))) NotProtocol {
+public: /* Methods: */
+
+    NotProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
+
+    bool invoke (const s3p_vec<s3p_bool_t>& param, s3p_vec<s3p_bool_t>& result, any_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = !param[i];
+        return true;
+    }
+}; /* NotProtocol { */
+
+class __attribute__ ((visibility("internal"))) BitExtractionProtocol {
+public: /* Methods: */
+
+    BitExtractionProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
+
+    template <typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param, s3p_vec<s3p_bool_t>& result, any_value_tag)
+    {
+        enum { num_of_bits = value_traits<SourceT>::num_of_bits };
+        SHAREMIND_STATIC_ASSERT (num_of_bits > 0);
+        if (result.size () % num_of_bits != 0)
+            return false;
+        if (param.size () != result.size () / num_of_bits)
+            return false;
+        result.assignBits (param);
+        return true;
+    }
+}; /* BitExtractionProtocol { */
+
+class __attribute__ ((visibility("internal"))) SignProtocol {
+public: /* Methods: */
+
+    SignProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
+
+    template <typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param, s3p_vec<SourceT>& result, numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = (param[i] > 0) ? 1 : ((param[i] < 0) ? -1 : 0);
+        return true;
+    }
+}; /* SignProtocol { */
+
+class __attribute__ ((visibility("internal"))) AbsoluteValueProtocol {
+public: /* Methods: */
+
+    AbsoluteValueProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
+
+    template <typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param,
+                 s3p_vec<typename respective_unsigned_type<SourceT>::type>& result, any_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = abs(param[i]);
+        return true;
+    }
+}; /* class AbsoluteValueProtocol { */
+
+enum MinimumMaximumMode {
+    ModeMin,
+    ModeMax
+};
 
 template <MinimumMaximumMode mode>
-    class __attribute__ ((visibility("internal"))) MinimumMaximumProtocol {
-        public:
-            MinimumMaximumProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
-        public:
-            template <typename T>
-                bool invoke (const s3p_vec<T>& param,
-                                s3p_vec<T>& result,
-                                any_value_tag)
-                {
-                    const size_t result_size = result.size();
-                    const size_t param_size = param.size();
-                    if (result.size() == 0)
-                        return false;
-                    else if (param.size() % result.size() == 0) {
-                        const size_t subarr_len = param_size / result_size;
-                        for (size_t i = 0u; i < param_size; ++i) {
-                            if (i == subarr_len)
-                                continue;
-                            if (mode == ModeMin)
-                                result[i / subarr_len] = std::min(param[i], param[i+1]);
-                            else
-                                result[i / subarr_len] = std::max(param[i], param[i+1]);
-                        }
-                        return true;
-                    }
-                    return false;
+class __attribute__ ((visibility("internal"))) MinimumMaximumProtocol {
+public: /* Methods: */
+
+        MinimumMaximumProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
+
+        template <typename T>
+        bool invoke (const s3p_vec<T>& param, s3p_vec<T>& result, any_value_tag)
+        {
+            const size_t result_size = result.size();
+            const size_t param_size = param.size();
+            if (result.size() == 0)
+                return false;
+            else if (param.size() % result.size() == 0) {
+                const size_t subarr_len = param_size / result_size;
+                for (size_t i = 0u; i < param_size; ++i) {
+                    if (i == subarr_len)
+                        continue;
+                    if (mode == ModeMin)
+                        result[i / subarr_len] = std::min(param[i], param[i+1]);
+                    else
+                        result[i / subarr_len] = std::max(param[i], param[i+1]);
                 }
-    };
+                return true;
+            }
+            return false;
+        }
+}; /* class MinimumMaximumProtocol { */
 
 class __attribute__ ((visibility("internal"))) MostSignificantNonZeroBitProtocol {
 public: /* Methods: */
