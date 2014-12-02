@@ -213,7 +213,7 @@ namespace sharemind {
 template <MinimumMaximumMode mode>
     class __attribute__ ((visibility("internal"))) MinimumMaximumProtocol {
         public:
-            MinimumMaximumProtocol (Shared3pPDPI &pdpi) {}
+            MinimumMaximumProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
         public:
             template <typename T>
                 bool invoke (const s3p_vec<T>& param,

@@ -1395,12 +1395,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::product_uint16_vec", &unary_arith_vec<s3p_uint16_t, ProductProtocol> }
   , { "shared3p::product_uint32_vec", &unary_arith_vec<s3p_uint32_t, ProductProtocol> }
   , { "shared3p::product_uint64_vec", &unary_arith_vec<s3p_uint64_t, ProductProtocol> }
-/*
   , { "shared3p::neg_uint8_vec",  &unary_arith_vec<s3p_uint8_t, NegProtocol> }
   , { "shared3p::neg_uint16_vec", &unary_arith_vec<s3p_uint16_t, NegProtocol> }
   , { "shared3p::neg_uint32_vec", &unary_arith_vec<s3p_uint32_t, NegProtocol> }
   , { "shared3p::neg_uint64_vec", &unary_arith_vec<s3p_uint64_t, NegProtocol> }
-*/
   , { "shared3p::sub_uint8_vec",  &binary_arith_vec<s3p_uint8_t , SubtractionProtocol> }
   , { "shared3p::sub_uint16_vec", &binary_arith_vec<s3p_uint16_t, SubtractionProtocol> }
   , { "shared3p::sub_uint32_vec", &binary_arith_vec<s3p_uint32_t, SubtractionProtocol> }
@@ -1658,12 +1656,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::product_int16_vec", &unary_arith_vec<s3p_int16_t, ProductProtocol> }
   , { "shared3p::product_int32_vec", &unary_arith_vec<s3p_int32_t, ProductProtocol> }
   , { "shared3p::product_int64_vec", &unary_arith_vec<s3p_int64_t, ProductProtocol> }
-/*
   , { "shared3p::neg_int8_vec",  &unary_arith_vec<s3p_int8_t, NegProtocol> }
   , { "shared3p::neg_int16_vec", &unary_arith_vec<s3p_int16_t, NegProtocol> }
   , { "shared3p::neg_int32_vec", &unary_arith_vec<s3p_int32_t, NegProtocol> }
   , { "shared3p::neg_int64_vec", &unary_arith_vec<s3p_int64_t, NegProtocol> }
-*/
   , { "shared3p::sub_int8_vec",  &binary_arith_vec<s3p_int8_t , SubtractionProtocol> }
   , { "shared3p::sub_int16_vec", &binary_arith_vec<s3p_int16_t, SubtractionProtocol> }
   , { "shared3p::sub_int32_vec", &binary_arith_vec<s3p_int32_t, SubtractionProtocol> }
