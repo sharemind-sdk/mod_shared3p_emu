@@ -239,6 +239,46 @@ template <MinimumMaximumMode mode>
                     return false;
                 }
     };
-}
+
+class __attribute__ ((visibility("internal"))) MostSignificantNonZeroBitProtocol {
+public: /* Methods: */
+
+    MostSignificantNonZeroBitProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
+
+    //This should return an number with the most significant non zero bit set and all the rest unset.
+    template <typename SourceT>
+    bool invoke (const s3p_vec<SourceT>& param, s3p_vec<SourceT>& result,
+                 xored_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        enum {
+            log_of_bits = value_traits<SourceT>::log_of_bits,
+            num_of_bits = value_traits<SourceT>::num_of_bits
+        };
+        typedef typename value_traits<SourceT>::share_type share_type;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            share_type value = param[i];
+            size_t count = 0;
+            for (size_t j = 1u; j <= log_of_bits; ++j) {
+                share_type bit = (1 << (num_of_bits >>  j));
+                share_type mask = bit - 1;
+                share_type relmask = (mask << (num_of_bits - (num_of_bits >> j)));
+                if ((value & relmask) == 0) {
+                    count += (1 << (log_of_bits -j));
+                    value <<= (1 << (log_of_bits -j));
+                }
+            }
+            result[i] = 1 << (num_of_bits - count - 1);
+        }
+
+        return true;
+    }
+
+}; /* class MostSignificantNonZeroBitProtocol { */
+
+} /* namespace sharemind { */
 
 #endif /* MOD_SHARED3P_EMU_PROTOCOLS_UNARY_H */
