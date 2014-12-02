@@ -16,7 +16,6 @@
 #include <cstdint>
 #include <cstdlib>
 #include <ostream>
-#include <sharemind/Random/IRandom.h>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
@@ -251,11 +250,13 @@ public: /* Methods: */
         m_num_bits += other.m_num_bits;
     }
 
+    /*
     void randomize (IRandom& rng) {
         if (! empty ()) {
             rng.fillBytes (&m_blocks[0], sizeof (block_type) * num_blocks_ ());
         }
     }
+    */
 
     allocator_type get_allocator () const {
         return m_blocks.get_allocator ();

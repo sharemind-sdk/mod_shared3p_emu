@@ -7,23 +7,13 @@
  * code is subject to the appropriate license agreement.
  */
 
-#include <boost/static_assert.hpp>
 #include <cassert>
 #include <cstdint>
-#include <cstdio>
-#include <cstdlib>
 #include <cstring>
-#include <inttypes.h>
 #include <limits>
-#include <new>
-#include <sharemind/3rdparty/libsoftfloat/softfloat.h>
 #include <sharemind/compiler-support/GccIsNothrowDestructible.h>
 #include <sharemind/ExecutionProfiler.h>
 #include <sharemind/libmodapi/api_0x1.h>
-#include <sharemind/miner/libpd.h>
-#include <sharemind/miner/libprocessfacility.h>
-#include <sharemind/Random/IRandom.h>
-#include <sharemind/uint128_t.h>
 #include <vector>
 #include <type_traits>
 #include "Facilities/ExecutionModelEvaluator.h"
