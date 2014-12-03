@@ -1558,16 +1558,14 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::get_type_size_xor_uint32", &get_type_size<s3p_xor_uint32_t> }
   , { "shared3p::get_type_size_xor_uint64", &get_type_size<s3p_xor_uint64_t> }
 
-/*
-  , { "shared3p::reshare_xor_uint8_to_uint8_vec", &unary_vec<s3p_xor_uint8_t, s3p_uint8_t, ReshareProtocol> }
-  , { "shared3p::reshare_xor_uint16_to_uint16_vec", &unary_vec<s3p_xor_uint16_t, s3p_uint16_t, ReshareProtocol> }
-  , { "shared3p::reshare_xor_uint32_to_uint32_vec", &unary_vec<s3p_xor_uint32_t, s3p_uint32_t, ReshareProtocol> }
-  , { "shared3p::reshare_xor_uint64_to_uint64_vec", &unary_vec<s3p_xor_uint64_t, s3p_uint64_t, ReshareProtocol> }
-  , { "shared3p::reshare_uint8_to_xor_uint8_vec", &unary_vec<s3p_uint8_t, s3p_xor_uint8_t, ReshareProtocol> }
-  , { "shared3p::reshare_uint16_to_xor_uint16_vec", &unary_vec<s3p_uint16_t, s3p_xor_uint16_t, ReshareProtocol> }
-  , { "shared3p::reshare_uint32_to_xor_uint32_vec", &unary_vec<s3p_uint32_t, s3p_xor_uint32_t, ReshareProtocol> }
-  , { "shared3p::reshare_uint64_to_xor_uint64_vec", &unary_vec<s3p_uint64_t, s3p_xor_uint64_t, ReshareProtocol> }
-*/
+  , { "shared3p::reshare_xor_uint8_to_uint8_vec", &unary_vec<s3p_xor_uint8_t, s3p_uint8_t, ConversionProtocol> }
+  , { "shared3p::reshare_xor_uint16_to_uint16_vec", &unary_vec<s3p_xor_uint16_t, s3p_uint16_t, ConversionProtocol> }
+  , { "shared3p::reshare_xor_uint32_to_uint32_vec", &unary_vec<s3p_xor_uint32_t, s3p_uint32_t, ConversionProtocol> }
+  , { "shared3p::reshare_xor_uint64_to_uint64_vec", &unary_vec<s3p_xor_uint64_t, s3p_uint64_t, ConversionProtocol> }
+  , { "shared3p::reshare_uint8_to_xor_uint8_vec", &unary_vec<s3p_uint8_t, s3p_xor_uint8_t, ConversionProtocol> }
+  , { "shared3p::reshare_uint16_to_xor_uint16_vec", &unary_vec<s3p_uint16_t, s3p_xor_uint16_t, ConversionProtocol> }
+  , { "shared3p::reshare_uint32_to_xor_uint32_vec", &unary_vec<s3p_uint32_t, s3p_xor_uint32_t, ConversionProtocol> }
+  , { "shared3p::reshare_uint64_to_xor_uint64_vec", &unary_vec<s3p_uint64_t, s3p_xor_uint64_t, ConversionProtocol> }
 
     // Bitwise operations on xor shared data
   , { "shared3p::xor_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t, BitwiseXorProtocol> }
