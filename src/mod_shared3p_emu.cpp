@@ -617,259 +617,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(store_vec,
     }
 }
 
-
-struct ModeLT {
-    template <typename A, typename B>
-    static inline bool invoke(const A & a, const B & b) noexcept
-    { return a < b; }
-};
-
-struct ModeLE {
-    template <typename A, typename B>
-    static inline bool invoke(const A & a, const B & b) noexcept
-    { return a <= b; }
-};
-
-/**
- * SysCall: compare_vec<T, Protocol, flipParams>
- * Args:
- *      0) uint64[0u]     pd index
- *      1) p[0u]          input handle (lhs)
- *      2) p[0u]          input handle (rhs)
- *      3) p[0u]          output handle
- * Precondition:
- *      All input handles are valid vectors of type T.
- *      All vectors are of equal length.
- */
-template <typename T, typename Mode, bool flipParams>
-NAMED_SYSCALL(compare_vec, name, args, num_args, refs, crefs, returnValue, c)
-{
-    VMHandles handles;
-    if (!SyscallArgs<4>::check(num_args, refs, crefs, returnValue) ||
-        !handles.get(c, args)) {
-        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
-    }
-
-    try {
-        Shared3pPDPI * const pdpi = static_cast<Shared3pPDPI*>(handles.pdpiHandle);
-
-        void * const param1Handle = args[flipParams ? 2u : 1u].p[0u];
-        void * const param2Handle = args[flipParams ? 1u : 2u].p[0u];
-        void * const resultHandle = args[3u].p[0u];
-
-        if (!pdpi->isValidHandle<T>(param1Handle) ||
-            !pdpi->isValidHandle<T>(param2Handle) ||
-            !pdpi->isValidHandle<s3p_bool_t>(resultHandle)) {
-            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-        }
-
-        const s3p_vec<T> & param1 = *static_cast<s3p_vec<T>*>(param1Handle);
-        const s3p_vec<T> & param2 = *static_cast<s3p_vec<T>*>(param2Handle);
-        s3p_vec<s3p_bool_t> & result = *static_cast<s3p_vec<s3p_bool_t>*>(resultHandle);
-
-        if (param1.size() != param2.size() ||
-                param1.size() != result.size())
-            return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
-
-        /// \todo figure out something better
-        for (size_t i = 0u; i < param1.size(); ++i)
-            result[i] = Mode::invoke(param1[i], param2[i]);
-
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
-                        param1.size());
-
-        return SHAREMIND_MODULE_API_0x1_OK;
-    } catch (...) {
-        return catchModuleApiErrors ();
-    }
-}
-
-/**
- * SysCall: eq_vec<T>
- * Args:
- *      0) uint64[0u]     pd index
- *      1) p[0u]          input handle (lhs)
- *      2) p[0u]          input handle (rhs)
- *      3) p[0u]          output handle
- * Precondition:
- *      Both input handles are valid vectors of type T.
- *      Output handle is valid vector of type bool.
- *      All vectors are of equal length.
- * Postcondition:
- *      At every position the output vector contains shares of booleans denoting equality of inputs at those positions.
- */
-template <typename T>
-NAMED_SYSCALL(eq_vec, name, args, num_args, refs, crefs, returnValue, c)
-{
-    VMHandles handles;
-    if (!SyscallArgs<4>::check(num_args, refs, crefs, returnValue) ||
-            !handles.get(c, args))
-    {
-        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
-    }
-
-    try {
-        Shared3pPDPI * const pdpi = static_cast<Shared3pPDPI*>(handles.pdpiHandle);
-
-        void * const lhsHandle = args[1u].p[0u];
-        void * const rhsHandle = args[2u].p[0u];
-        void * const resultHandle = args[3u].p[0u];
-
-        if (!pdpi->isValidHandle<T>(lhsHandle) ||
-                !pdpi->isValidHandle<T>(rhsHandle) ||
-                !pdpi->isValidHandle<s3p_bool_t>(resultHandle))
-        {
-            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-        }
-
-        const s3p_vec<T> & param1 = *static_cast<s3p_vec<T>*>(lhsHandle);
-        const s3p_vec<T> & param2 = *static_cast<s3p_vec<T>*>(rhsHandle);
-        s3p_vec<s3p_bool_t> & result = *static_cast<s3p_vec<s3p_bool_t>*>(resultHandle);
-
-        if (param1.size() != param2.size() ||
-                param1.size() != result.size())
-            return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
-
-        for (size_t i = 0u; i < param1.size(); ++i)
-            result[i] = param1[i] == param2[i];
-
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
-                        param1.size());
-
-        return SHAREMIND_MODULE_API_0x1_OK;
-    } catch (...) {
-        return catchModuleApiErrors ();
-    }
-}
-
-/**
- * SysCall: eq_bool_vec<T>
- * Args:
- *      0) uint64[0u]     pd index
- *      1) p[0u]          input handle (lhs)
- *      2) p[0u]          input handle (rhs)
- *      3) p[0u]          output handle
- * Precondition:
- *      Both input handles are valid vectors of type T.
- *      Output handle is valid vector of type bool.
- *      All vectors are of equal length.
- * Postcondition:
- *      At every position the output vector contains shares of booleans denoting equality of inputs at those positions.
- */
-template <typename T>
-NAMED_SYSCALL(eq_bool_vec, name, args, num_args, refs, crefs, returnValue, c)
-{
-    return eq_vec<s3p_bool_t>(name, args, num_args, refs, crefs, returnValue, c);
-}
-
-/**
- * SysCall: binary_private_public_vec<T, public_type, Protocol>
- * Args:
- *      0) uint64[0u]     pd index
- *      1) p[0u]          vector handle (lhs)
- *      2) p[0u]          output handle
- *      crefs[0u]         rhs vector
- * Precondition:
- *      All handles are valid vectors of type T.
- *      All vectors are of equal length.
- */
-template <typename T, typename public_type, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(binary_private_public_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
-{
-    VMHandles handles;
-    if (!SyscallArgs<3, false, 0, 1>::check(num_args, refs, crefs, returnValue) ||
-        !handles.get(c, args)) {
-        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
-    }
-
-    try {
-        Shared3pPDPI * const pdpi = static_cast<Shared3pPDPI*>(handles.pdpiHandle);
-
-        void * const paramHandle = args[1u].p[0u];
-        void * const resultHandle = args[2u].p[0u];
-        if (!pdpi->isValidHandle<T>(paramHandle) ||
-            !pdpi->isValidHandle<T>(resultHandle)) {
-            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-        }
-
-        const s3p_vec<T> & param1 = *static_cast<s3p_vec<T>*>(paramHandle);
-        const public_type * param2 = static_cast<const public_type*>(crefs[0u].pData);
-        s3p_vec<T> & result = *static_cast<s3p_vec<T>*>(resultHandle);
-
-        if (crefs[0u].size / sizeof(public_type) < param1.size()) {
-            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-        }
-
-        Protocol protocol(*pdpi);
-        if (!protocol.invoke(param1, param2, param2 + param1.size(), result,
-                typename value_traits<T>::value_category())) {
-            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-        }
-
-        return SHAREMIND_MODULE_API_0x1_OK;
-    } catch (...) {
-        return catchModuleApiErrors ();
-    }
-}
-
-/**
- * SysCall: oblivious_choice_vec<C, T, Protocol>
- * Args:
- *      0) uint64[0u]     pd index
- *      1) p[0u]          vector handle (condition)
- *      2) p[0u]          vector handle (first result)
- *      3) p[0u]          vector handle (second result)
- *      4) p[0u]          output handle
- * Precondition:
- *      Condition handle is a valid vector of type C.
- *      Both result handles are valid vectors of type T.
- *      All vectors are of equal length.
- */
-template <typename C, typename T, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(oblivious_choice_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
-{
-    VMHandles handles;
-    if (!SyscallArgs<5>::check(num_args, refs, crefs, returnValue) ||
-        !handles.get(c, args)) {
-        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
-    }
-
-    try {
-        Shared3pPDPI * const pdpi = static_cast<Shared3pPDPI*>(handles.pdpiHandle);
-
-        void * const param1Handle = args[1u].p[0u];
-        void * const param2Handle = args[2u].p[0u];
-        void * const param3Handle = args[3u].p[0u];
-        void * const resultHandle = args[4u].p[0u];
-
-        if (!pdpi->isValidHandle<C>(param1Handle) ||
-                !pdpi->isValidHandle<T>(param2Handle) ||
-                !pdpi->isValidHandle<T>(param3Handle) ||
-                !pdpi->isValidHandle<T>(resultHandle))
-        {
-            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-        }
-
-        const s3p_vec<C> & param1 = *static_cast<s3p_vec<C>*>(param1Handle);
-        const s3p_vec<T> & param2 = *static_cast<s3p_vec<T>*>(param2Handle);
-        const s3p_vec<T> & param3 = *static_cast<s3p_vec<T>*>(param3Handle);
-        s3p_vec<T> & result = *static_cast<s3p_vec<T>*>(resultHandle);
-
-        Protocol obliviousChoiceProtocol(*pdpi);
-        if (!obliviousChoiceProtocol.invoke(param1, param2, param3, result,
-                typename value_traits<T>::value_category()))
-            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-
-        return SHAREMIND_MODULE_API_0x1_OK;
-    } catch (...) {
-        return catchModuleApiErrors ();
-    }
-}
-
 /**
  * SysCall: vector_shuffle<T>
  * Args:
@@ -1270,8 +1017,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
    // Variable management
     { "shared3p::new_bool_vec", &new_vec<s3p_bool_t> }
   , { "shared3p::init_bool_vec", &init_vec<s3p_bool_t> }
-  , { "shared3p::set_shares_bool_vec",  &set_shares<s3p_bool_t> }
-  , { "shared3p::get_shares_bool_vec",  &get_shares<s3p_bool_t> }
+  , { "shared3p::set_shares_bool_vec", &set_shares<s3p_bool_t> }
+  , { "shared3p::get_shares_bool_vec", &get_shares<s3p_bool_t> }
   , { "shared3p::fill_bool_vec", &fill_vec<s3p_bool_t> }
   , { "shared3p::assign_bool_vec", &assign_vec<s3p_bool_t> }
   , { "shared3p::delete_bool_vec", &delete_vec<s3p_bool_t> }
@@ -1290,11 +1037,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
    // Arithmetic
   , { "shared3p::sum_bool_vec", &unary_vec<s3p_bool_t, s3p_uint64_t, SumProtocol> }
 
-  /*
    // Comparisons
-  , { "shared3p::eq_bool_vec", &eq_bool_vec<s3p_bool_t> }
+  , { "shared3p::eq_bool_vec", &binary_vec<s3p_bool_t, s3p_bool_t, s3p_bool_t, EqualityProtocol> }
 
-   */
    // Casting
   , { "shared3p::conv_bool_to_uint8_vec",  &unary_vec<s3p_bool_t, s3p_uint8_t, ConversionProtocol> }
   , { "shared3p::conv_bool_to_uint16_vec", &unary_vec<s3p_bool_t, s3p_uint16_t, ConversionProtocol> }
@@ -1373,7 +1118,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::get_type_size_uint64", &get_type_size<s3p_uint64_t> }
 
     // Unsigned integer arithmetic
-  , { "shared3p::add_uint8_vec",  &binary_arith_vec<s3p_uint8_t , AdditionProtocol> }
+  , { "shared3p::add_uint8_vec",  &binary_arith_vec<s3p_uint8_t, AdditionProtocol> }
   , { "shared3p::add_uint16_vec", &binary_arith_vec<s3p_uint16_t, AdditionProtocol> }
   , { "shared3p::add_uint32_vec", &binary_arith_vec<s3p_uint32_t, AdditionProtocol> }
   , { "shared3p::add_uint64_vec", &binary_arith_vec<s3p_uint64_t, AdditionProtocol> }
@@ -1389,19 +1134,19 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::neg_uint16_vec", &unary_arith_vec<s3p_uint16_t, NegProtocol> }
   , { "shared3p::neg_uint32_vec", &unary_arith_vec<s3p_uint32_t, NegProtocol> }
   , { "shared3p::neg_uint64_vec", &unary_arith_vec<s3p_uint64_t, NegProtocol> }
-  , { "shared3p::sub_uint8_vec",  &binary_arith_vec<s3p_uint8_t , SubtractionProtocol> }
+  , { "shared3p::sub_uint8_vec",  &binary_arith_vec<s3p_uint8_t, SubtractionProtocol> }
   , { "shared3p::sub_uint16_vec", &binary_arith_vec<s3p_uint16_t, SubtractionProtocol> }
   , { "shared3p::sub_uint32_vec", &binary_arith_vec<s3p_uint32_t, SubtractionProtocol> }
   , { "shared3p::sub_uint64_vec", &binary_arith_vec<s3p_uint64_t, SubtractionProtocol> }
-  , { "shared3p::mul_uint8_vec", &binary_arith_vec<s3p_uint8_t , MultiplicationProtocol> }
+  , { "shared3p::mul_uint8_vec",  &binary_arith_vec<s3p_uint8_t, MultiplicationProtocol> }
   , { "shared3p::mul_uint16_vec", &binary_arith_vec<s3p_uint16_t, MultiplicationProtocol> }
   , { "shared3p::mul_uint32_vec", &binary_arith_vec<s3p_uint32_t, MultiplicationProtocol> }
   , { "shared3p::mul_uint64_vec", &binary_arith_vec<s3p_uint64_t, MultiplicationProtocol> }
-  , { "shared3p::div_uint8_vec", &binary_arith_vec<s3p_uint8_t, DivisionProtocol> }
+  , { "shared3p::div_uint8_vec",  &binary_arith_vec<s3p_uint8_t, DivisionProtocol> }
   , { "shared3p::div_uint16_vec", &binary_arith_vec<s3p_uint16_t, DivisionProtocol> }
   , { "shared3p::div_uint32_vec", &binary_arith_vec<s3p_uint32_t, DivisionProtocol> }
   , { "shared3p::div_uint64_vec", &binary_arith_vec<s3p_uint64_t, DivisionProtocol> }
-  , { "shared3p::mod_uint8_vec", &binary_arith_vec<s3p_uint8_t, RemainderProtocol> }
+  , { "shared3p::mod_uint8_vec",  &binary_arith_vec<s3p_uint8_t, RemainderProtocol> }
   , { "shared3p::mod_uint16_vec", &binary_arith_vec<s3p_uint16_t, RemainderProtocol> }
   , { "shared3p::mod_uint32_vec", &binary_arith_vec<s3p_uint32_t, RemainderProtocol> }
   , { "shared3p::mod_uint64_vec", &binary_arith_vec<s3p_uint64_t, RemainderProtocol> }
@@ -1409,52 +1154,36 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::mulc_uint16_vec", &binary_arith_public_vec<s3p_uint16_t, MultiplicationProtocol> }
   , { "shared3p::mulc_uint32_vec", &binary_arith_public_vec<s3p_uint32_t, MultiplicationProtocol> }
   , { "shared3p::mulc_uint64_vec", &binary_arith_public_vec<s3p_uint64_t, MultiplicationProtocol> }
-  , { "shared3p::divc_uint8_vec", &binary_arith_public_vec<s3p_uint8_t, DivisionProtocol> }
+  , { "shared3p::divc_uint8_vec",  &binary_arith_public_vec<s3p_uint8_t, DivisionProtocol> }
   , { "shared3p::divc_uint16_vec", &binary_arith_public_vec<s3p_uint16_t, DivisionProtocol> }
   , { "shared3p::divc_uint32_vec", &binary_arith_public_vec<s3p_uint32_t, DivisionProtocol> }
   , { "shared3p::divc_uint64_vec", &binary_arith_public_vec<s3p_uint64_t, DivisionProtocol> }
-  , { "shared3p::modc_uint8_vec", &binary_arith_public_vec<s3p_uint8_t, RemainderProtocol> }
+  , { "shared3p::modc_uint8_vec",  &binary_arith_public_vec<s3p_uint8_t, RemainderProtocol> }
   , { "shared3p::modc_uint16_vec", &binary_arith_public_vec<s3p_uint16_t, RemainderProtocol> }
   , { "shared3p::modc_uint32_vec", &binary_arith_public_vec<s3p_uint32_t, RemainderProtocol> }
   , { "shared3p::modc_uint64_vec", &binary_arith_public_vec<s3p_uint64_t, RemainderProtocol> }
 
-    // Bit-level operations
-  /*
-  , { "shared3p::shiftlc_uint8_vec", &shiftlc_vec<s3p_uint8_t> }
-  , { "shared3p::shiftlc_uint16_vec", &shiftlc_vec<s3p_uint16_t> }
-  , { "shared3p::shiftlc_uint32_vec", &shiftlc_vec<s3p_uint32_t> }
-  , { "shared3p::shiftlc_uint64_vec", &shiftlc_vec<s3p_uint64_t> }
-  , { "shared3p::shiftrc_uint8_vec", &shiftrc_vec<s3p_uint8_t> }
-  , { "shared3p::shiftrc_uint16_vec", &shiftrc_vec<s3p_uint16_t> }
-  , { "shared3p::shiftrc_uint32_vec", &shiftrc_vec<s3p_uint32_t> }
-  , { "shared3p::shiftrc_uint64_vec", &shiftrc_vec<s3p_uint64_t> }
-  , { "shared3p::bitx_uint8_vec", &shared3p_bitx_uint8_vec }
-  , { "shared3p::bitx_uint16_vec", &shared3p_bitx_uint16_vec }
-  , { "shared3p::bitx_uint32_vec", &shared3p_bitx_uint32_vec }
-  , { "shared3p::bitx_uint64_vec", &shared3p_bitx_uint64_vec }
-  */
-
     // Comparisons
-  , { "shared3p::eq_uint8_vec",   NAMED_SYSCALL_WRAPPER("eq_uint8_vec", eq_vec<s3p_uint8_t>) }
-  , { "shared3p::eq_uint16_vec",  NAMED_SYSCALL_WRAPPER("eq_uint16_vec", eq_vec<s3p_uint16_t>) }
-  , { "shared3p::eq_uint32_vec",  NAMED_SYSCALL_WRAPPER("eq_uint32_vec", eq_vec<s3p_uint32_t>) }
-  , { "shared3p::eq_uint64_vec",  NAMED_SYSCALL_WRAPPER("eq_uint64_vec", eq_vec<s3p_uint64_t>) }
-  , { "shared3p::gt_uint8_vec",   NAMED_SYSCALL_WRAPPER("gt_uint8_vec", compare_vec<s3p_uint8_t , ModeLT,  true>) }
-  , { "shared3p::gt_uint16_vec",  NAMED_SYSCALL_WRAPPER("gt_uint16_vec", compare_vec<s3p_uint16_t, ModeLT,  true>) }
-  , { "shared3p::gt_uint32_vec",  NAMED_SYSCALL_WRAPPER("gt_uint32_vec", compare_vec<s3p_uint32_t, ModeLT,  true>) }
-  , { "shared3p::gt_uint64_vec",  NAMED_SYSCALL_WRAPPER("gt_uint64_vec", compare_vec<s3p_uint64_t, ModeLT,  true>) }
-  , { "shared3p::gte_uint8_vec",  NAMED_SYSCALL_WRAPPER("gte_uint8_vec", compare_vec<s3p_uint8_t , ModeLE,  true>) }
-  , { "shared3p::gte_uint16_vec", NAMED_SYSCALL_WRAPPER("gte_uint16_vec", compare_vec<s3p_uint16_t, ModeLE,  true>) }
-  , { "shared3p::gte_uint32_vec", NAMED_SYSCALL_WRAPPER("gte_uint32_vec", compare_vec<s3p_uint32_t, ModeLE,  true>) }
-  , { "shared3p::gte_uint64_vec", NAMED_SYSCALL_WRAPPER("gte_uint64_vec", compare_vec<s3p_uint64_t, ModeLE,  true>) }
-  , { "shared3p::lt_uint8_vec",   NAMED_SYSCALL_WRAPPER("lt_uint8_vec", compare_vec<s3p_uint8_t , ModeLT,  false>) }
-  , { "shared3p::lt_uint16_vec",  NAMED_SYSCALL_WRAPPER("lt_uint16_vec", compare_vec<s3p_uint16_t, ModeLT,  false>) }
-  , { "shared3p::lt_uint32_vec",  NAMED_SYSCALL_WRAPPER("lt_uint32_vec", compare_vec<s3p_uint32_t, ModeLT,  false>) }
-  , { "shared3p::lt_uint64_vec",  NAMED_SYSCALL_WRAPPER("lt_uint64_vec", compare_vec<s3p_uint64_t, ModeLT,  false>) }
-  , { "shared3p::lte_uint8_vec",  NAMED_SYSCALL_WRAPPER("lte_uint8_vec", compare_vec<s3p_uint8_t , ModeLE,  false>) }
-  , { "shared3p::lte_uint16_vec", NAMED_SYSCALL_WRAPPER("lte_uint16_vec", compare_vec<s3p_uint16_t, ModeLE,  false>) }
-  , { "shared3p::lte_uint32_vec", NAMED_SYSCALL_WRAPPER("lte_uint32_vec", compare_vec<s3p_uint32_t, ModeLE,  false>) }
-  , { "shared3p::lte_uint64_vec", NAMED_SYSCALL_WRAPPER("lte_uint64_vec", compare_vec<s3p_uint64_t, ModeLE,  false>) }
+  , { "shared3p::eq_uint8_vec",  &binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_uint16_vec", &binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_uint32_vec", &binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_uint64_vec", &binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::gt_uint8_vec",  &binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_uint16_vec", &binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_uint32_vec", &binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_uint64_vec", &binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gte_uint8_vec",  &binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_uint16_vec", &binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_uint32_vec", &binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_uint64_vec", &binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::lt_uint8_vec",  &binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_uint16_vec", &binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_uint32_vec", &binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_uint64_vec", &binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lte_uint8_vec",  &binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_uint16_vec", &binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_uint32_vec", &binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_uint64_vec", &binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, LessThanOrEqualProtocol> }
 
  // Casting
  // , { "shared3p::conv_float32_to_bool_vec", &unary_vec<s3p_float32_t, s3p_bool_t, ConversionProtocol> }
@@ -1465,21 +1194,21 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::conv_uint32_to_bool_vec", &unary_vec<s3p_uint32_t, s3p_bool_t, ConversionProtocol> }
   , { "shared3p::conv_uint64_to_bool_vec", &unary_vec<s3p_uint64_t, s3p_bool_t, ConversionProtocol> }
   , { "shared3p::conv_uint8_to_int8_vec",  &unary_vec<s3p_uint8_t, s3p_int8_t, ConversionProtocol> }
-  , { "shared3p::conv_uint8_to_int16_vec",  &unary_vec<s3p_uint8_t, s3p_int16_t, ConversionProtocol> }
-  , { "shared3p::conv_uint8_to_int32_vec",  &unary_vec<s3p_uint8_t, s3p_int32_t, ConversionProtocol> }
-  , { "shared3p::conv_uint8_to_int64_vec",  &unary_vec<s3p_uint8_t, s3p_int64_t, ConversionProtocol> }
-  , { "shared3p::conv_uint16_to_int8_vec",  &unary_vec<s3p_uint16_t, s3p_int8_t, ConversionProtocol> }
-  , { "shared3p::conv_uint16_to_int16_vec",  &unary_vec<s3p_uint16_t, s3p_int16_t, ConversionProtocol> }
-  , { "shared3p::conv_uint16_to_int32_vec",  &unary_vec<s3p_uint16_t, s3p_int32_t, ConversionProtocol> }
-  , { "shared3p::conv_uint16_to_int64_vec",  &unary_vec<s3p_uint16_t, s3p_int64_t, ConversionProtocol> }
-  , { "shared3p::conv_uint32_to_int8_vec", &unary_vec<s3p_uint32_t, s3p_int8_t, ConversionProtocol> }
+  , { "shared3p::conv_uint8_to_int16_vec", &unary_vec<s3p_uint8_t, s3p_int16_t, ConversionProtocol> }
+  , { "shared3p::conv_uint8_to_int32_vec", &unary_vec<s3p_uint8_t, s3p_int32_t, ConversionProtocol> }
+  , { "shared3p::conv_uint8_to_int64_vec", &unary_vec<s3p_uint8_t, s3p_int64_t, ConversionProtocol> }
+  , { "shared3p::conv_uint16_to_int8_vec", &unary_vec<s3p_uint16_t, s3p_int8_t, ConversionProtocol> }
+  , { "shared3p::conv_uint16_to_int16_vec", &unary_vec<s3p_uint16_t, s3p_int16_t, ConversionProtocol> }
+  , { "shared3p::conv_uint16_to_int32_vec", &unary_vec<s3p_uint16_t, s3p_int32_t, ConversionProtocol> }
+  , { "shared3p::conv_uint16_to_int64_vec", &unary_vec<s3p_uint16_t, s3p_int64_t, ConversionProtocol> }
+  , { "shared3p::conv_uint32_to_int8_vec",  &unary_vec<s3p_uint32_t, s3p_int8_t, ConversionProtocol> }
   , { "shared3p::conv_uint32_to_int16_vec", &unary_vec<s3p_uint32_t, s3p_int16_t, ConversionProtocol> }
   , { "shared3p::conv_uint32_to_int32_vec", &unary_vec<s3p_uint32_t, s3p_int32_t, ConversionProtocol> }
   , { "shared3p::conv_uint32_to_int64_vec", &unary_vec<s3p_uint32_t, s3p_int64_t, ConversionProtocol> }
   , { "shared3p::conv_uint64_to_int8_vec",  &unary_vec<s3p_uint64_t, s3p_int8_t, ConversionProtocol> }
-  , { "shared3p::conv_uint64_to_int16_vec",  &unary_vec<s3p_uint64_t, s3p_int16_t, ConversionProtocol> }
-  , { "shared3p::conv_uint64_to_int32_vec",  &unary_vec<s3p_uint64_t, s3p_int32_t, ConversionProtocol> }
-  , { "shared3p::conv_uint64_to_int64_vec",  &unary_vec<s3p_uint64_t, s3p_int64_t, ConversionProtocol> }
+  , { "shared3p::conv_uint64_to_int16_vec", &unary_vec<s3p_uint64_t, s3p_int16_t, ConversionProtocol> }
+  , { "shared3p::conv_uint64_to_int32_vec", &unary_vec<s3p_uint64_t, s3p_int32_t, ConversionProtocol> }
+  , { "shared3p::conv_uint64_to_int64_vec", &unary_vec<s3p_uint64_t, s3p_int64_t, ConversionProtocol> }
 
   , { "shared3p::conv_uint16_to_uint8_vec",  &unary_vec<s3p_uint16_t, s3p_uint8_t, ConversionProtocol> }
   , { "shared3p::conv_uint32_to_uint8_vec",  &unary_vec<s3p_uint32_t, s3p_uint8_t, ConversionProtocol> }
@@ -1506,7 +1235,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::conv_uint64_to_float64_vec", &unary_vec<s3p_uint64_t, s3p_float64_t, ConversionToFloatProtocol> }
 
 */
-  , { "shared3p::bit_extract_xor_uint8_vec", &unary_vec<s3p_xor_uint8_t, s3p_bool_t, BitExtractionProtocol> }
+  , { "shared3p::bit_extract_xor_uint8_vec",  &unary_vec<s3p_xor_uint8_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint16_vec", &unary_vec<s3p_xor_uint16_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint32_vec", &unary_vec<s3p_xor_uint32_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint64_vec", &unary_vec<s3p_xor_uint64_t, s3p_bool_t, BitExtractionProtocol> }
@@ -1524,18 +1253,14 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::min_uint16_vec", &binary_arith_vec<s3p_uint16_t, MinimumProtocol> }
   , { "shared3p::min_uint32_vec", &binary_arith_vec<s3p_uint32_t, MinimumProtocol> }
   , { "shared3p::min_uint64_vec", &binary_arith_vec<s3p_uint64_t, MinimumProtocol> }
-/*
-  , { "shared3p::min_float32_vec",  &binary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> > }
-  , { "shared3p::min_float64_vec",  &binary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> > }
-*/
+  , { "shared3p::min_float32_vec", &binary_arith_vec<s3p_float32_t, MinimumProtocol> }
+  , { "shared3p::min_float64_vec", &binary_arith_vec<s3p_float64_t, MinimumProtocol> }
   , { "shared3p::max_uint8_vec",  &binary_arith_vec<s3p_uint8_t, MaximumProtocol> }
   , { "shared3p::max_uint16_vec", &binary_arith_vec<s3p_uint16_t, MaximumProtocol> }
   , { "shared3p::max_uint32_vec", &binary_arith_vec<s3p_uint32_t, MaximumProtocol> }
   , { "shared3p::max_uint64_vec", &binary_arith_vec<s3p_uint64_t, MaximumProtocol> }
-/*
-  , { "shared3p::max_float32_vec",  &binary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> > }
-  , { "shared3p::max_float64_vec",  &binary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> > }
-*/
+  , { "shared3p::max_float32_vec", &binary_arith_vec<s3p_float32_t, MaximumProtocol> }
+  , { "shared3p::max_float64_vec", &binary_arith_vec<s3p_float64_t, MaximumProtocol> }
 
   , { "shared3p::vecmin_uint8_vec",  &unary_arith_vec<s3p_uint8_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_uint16_vec", &unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMin> > }
@@ -1629,16 +1354,16 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::declassify_int16_vec", &declassify_vec<s3p_int16_t> }
   , { "shared3p::declassify_int32_vec", &declassify_vec<s3p_int32_t> }
   , { "shared3p::declassify_int64_vec", &declassify_vec<s3p_int64_t> }
-  , { "shared3p::get_type_size_int8", &get_type_size<s3p_uint8_t> }
+  , { "shared3p::get_type_size_int8",  &get_type_size<s3p_uint8_t> }
   , { "shared3p::get_type_size_int16", &get_type_size<s3p_uint16_t> }
   , { "shared3p::get_type_size_int32", &get_type_size<s3p_uint32_t> }
   , { "shared3p::get_type_size_int64", &get_type_size<s3p_uint64_t> }
 
-  , { "shared3p::add_int8_vec", &binary_arith_vec<s3p_int8_t , AdditionProtocol> }
+  , { "shared3p::add_int8_vec",  &binary_arith_vec<s3p_int8_t, AdditionProtocol> }
   , { "shared3p::add_int16_vec", &binary_arith_vec<s3p_int16_t, AdditionProtocol> }
   , { "shared3p::add_int32_vec", &binary_arith_vec<s3p_int32_t, AdditionProtocol> }
   , { "shared3p::add_int64_vec", &binary_arith_vec<s3p_int64_t, AdditionProtocol> }
-  , { "shared3p::sum_int8_vec", &unary_arith_vec<s3p_int8_t, SumProtocol> }
+  , { "shared3p::sum_int8_vec",  &unary_arith_vec<s3p_int8_t, SumProtocol> }
   , { "shared3p::sum_int16_vec", &unary_arith_vec<s3p_int16_t, SumProtocol> }
   , { "shared3p::sum_int32_vec", &unary_arith_vec<s3p_int32_t, SumProtocol> }
   , { "shared3p::sum_int64_vec", &unary_arith_vec<s3p_int64_t, SumProtocol> }
@@ -1650,40 +1375,40 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::neg_int16_vec", &unary_arith_vec<s3p_int16_t, NegProtocol> }
   , { "shared3p::neg_int32_vec", &unary_arith_vec<s3p_int32_t, NegProtocol> }
   , { "shared3p::neg_int64_vec", &unary_arith_vec<s3p_int64_t, NegProtocol> }
-  , { "shared3p::sub_int8_vec",  &binary_arith_vec<s3p_int8_t , SubtractionProtocol> }
+  , { "shared3p::sub_int8_vec",  &binary_arith_vec<s3p_int8_t, SubtractionProtocol> }
   , { "shared3p::sub_int16_vec", &binary_arith_vec<s3p_int16_t, SubtractionProtocol> }
   , { "shared3p::sub_int32_vec", &binary_arith_vec<s3p_int32_t, SubtractionProtocol> }
   , { "shared3p::sub_int64_vec", &binary_arith_vec<s3p_int64_t, SubtractionProtocol> }
-  , { "shared3p::mul_int8_vec", &binary_arith_vec<s3p_int8_t , MultiplicationProtocol> }
+  , { "shared3p::mul_int8_vec",  &binary_arith_vec<s3p_int8_t, MultiplicationProtocol> }
   , { "shared3p::mul_int16_vec", &binary_arith_vec<s3p_int16_t, MultiplicationProtocol> }
   , { "shared3p::mul_int32_vec", &binary_arith_vec<s3p_int32_t, MultiplicationProtocol> }
   , { "shared3p::mul_int64_vec", &binary_arith_vec<s3p_int64_t, MultiplicationProtocol> }
-  , { "shared3p::mulc_int8_vec", &binary_arith_public_vec<s3p_int8_t, MultiplicationProtocol> }
+  , { "shared3p::mulc_int8_vec",  &binary_arith_public_vec<s3p_int8_t, MultiplicationProtocol> }
   , { "shared3p::mulc_int16_vec", &binary_arith_public_vec<s3p_int16_t, MultiplicationProtocol> }
   , { "shared3p::mulc_int32_vec", &binary_arith_public_vec<s3p_int32_t, MultiplicationProtocol> }
   , { "shared3p::mulc_int64_vec", &binary_arith_public_vec<s3p_int64_t, MultiplicationProtocol> }
 
   // Comparisons
-  , { "shared3p::eq_int8_vec",   NAMED_SYSCALL_WRAPPER("eq_int8_vec", eq_vec<s3p_int8_t>) }
-  , { "shared3p::eq_int16_vec",  NAMED_SYSCALL_WRAPPER("eq_int16_vec", eq_vec<s3p_int16_t>) }
-  , { "shared3p::eq_int32_vec",  NAMED_SYSCALL_WRAPPER("eq_int32_vec", eq_vec<s3p_int32_t>) }
-  , { "shared3p::eq_int64_vec",  NAMED_SYSCALL_WRAPPER("eq_int64_vec", eq_vec<s3p_int64_t>) }
-  , { "shared3p::gt_int8_vec",   NAMED_SYSCALL_WRAPPER("gt_int8_vec", compare_vec<s3p_int8_t , ModeLT,  true>) }
-  , { "shared3p::gt_int16_vec",  NAMED_SYSCALL_WRAPPER("gt_int16_vec", compare_vec<s3p_int16_t, ModeLT,  true>) }
-  , { "shared3p::gt_int32_vec",  NAMED_SYSCALL_WRAPPER("gt_int32_vec", compare_vec<s3p_int32_t, ModeLT,  true>) }
-  , { "shared3p::gt_int64_vec",  NAMED_SYSCALL_WRAPPER("gt_int64_vec", compare_vec<s3p_int64_t, ModeLT,  true>) }
-  , { "shared3p::gte_int8_vec",  NAMED_SYSCALL_WRAPPER("gte_int8_vec", compare_vec<s3p_int8_t , ModeLE,  true>) }
-  , { "shared3p::gte_int16_vec", NAMED_SYSCALL_WRAPPER("gte_int16_vec", compare_vec<s3p_int16_t, ModeLE,  true>) }
-  , { "shared3p::gte_int32_vec", NAMED_SYSCALL_WRAPPER("gte_int32_vec", compare_vec<s3p_int32_t, ModeLE,  true>) }
-  , { "shared3p::gte_int64_vec", NAMED_SYSCALL_WRAPPER("gte_int64_vec", compare_vec<s3p_int64_t, ModeLE,  true>) }
-  , { "shared3p::lt_int8_vec",   NAMED_SYSCALL_WRAPPER("lt_int8_vec", compare_vec<s3p_int8_t , ModeLT,  false>) }
-  , { "shared3p::lt_int16_vec",  NAMED_SYSCALL_WRAPPER("lt_int16_vec", compare_vec<s3p_int16_t, ModeLT,  false>) }
-  , { "shared3p::lt_int32_vec",  NAMED_SYSCALL_WRAPPER("lt_int32_vec", compare_vec<s3p_int32_t, ModeLT,  false>) }
-  , { "shared3p::lt_int64_vec",  NAMED_SYSCALL_WRAPPER("lt_int64_vec", compare_vec<s3p_int64_t, ModeLT,  false>) }
-  , { "shared3p::lte_int8_vec",  NAMED_SYSCALL_WRAPPER("lte_int8_vec", compare_vec<s3p_int8_t , ModeLE,  false>) }
-  , { "shared3p::lte_int16_vec", NAMED_SYSCALL_WRAPPER("lte_int16_vec", compare_vec<s3p_int16_t, ModeLE,  false>) }
-  , { "shared3p::lte_int32_vec", NAMED_SYSCALL_WRAPPER("lte_int32_vec", compare_vec<s3p_int32_t, ModeLE,  false>) }
-  , { "shared3p::lte_int64_vec", NAMED_SYSCALL_WRAPPER("lte_int64_vec", compare_vec<s3p_int64_t, ModeLE,  false>) }
+  , { "shared3p::eq_int8_vec",  &binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_int16_vec", &binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_int32_vec", &binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_int64_vec", &binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::gt_int8_vec",  &binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_int16_vec", &binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_int32_vec", &binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_int64_vec", &binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gte_int8_vec",  &binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_int16_vec", &binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_int32_vec", &binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_int64_vec", &binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::lt_int8_vec",  &binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_int16_vec", &binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_int32_vec", &binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_int64_vec", &binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lte_int8_vec",  &binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_int16_vec", &binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_int32_vec", &binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_int64_vec", &binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, LessThanOrEqualProtocol> }
 
   // Casting
   , { "shared3p::conv_int8_to_bool_vec",  &unary_vec<s3p_int8_t, s3p_bool_t, ConversionProtocol> }
@@ -1691,21 +1416,21 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::conv_int32_to_bool_vec", &unary_vec<s3p_int32_t, s3p_bool_t, ConversionProtocol> }
   , { "shared3p::conv_int64_to_bool_vec", &unary_vec<s3p_int64_t, s3p_bool_t, ConversionProtocol> }
   , { "shared3p::conv_int8_to_uint8_vec",  &unary_vec<s3p_int8_t, s3p_uint8_t, ConversionProtocol> }
-  , { "shared3p::conv_int8_to_uint16_vec",  &unary_vec<s3p_int8_t, s3p_uint16_t, ConversionProtocol> }
-  , { "shared3p::conv_int8_to_uint32_vec",  &unary_vec<s3p_int8_t, s3p_uint32_t, ConversionProtocol> }
-  , { "shared3p::conv_int8_to_uint64_vec",  &unary_vec<s3p_int8_t, s3p_uint64_t, ConversionProtocol> }
+  , { "shared3p::conv_int8_to_uint16_vec", &unary_vec<s3p_int8_t, s3p_uint16_t, ConversionProtocol> }
+  , { "shared3p::conv_int8_to_uint32_vec", &unary_vec<s3p_int8_t, s3p_uint32_t, ConversionProtocol> }
+  , { "shared3p::conv_int8_to_uint64_vec", &unary_vec<s3p_int8_t, s3p_uint64_t, ConversionProtocol> }
   , { "shared3p::conv_int16_to_uint8_vec",  &unary_vec<s3p_int16_t, s3p_uint8_t, ConversionProtocol> }
-  , { "shared3p::conv_int16_to_uint16_vec",  &unary_vec<s3p_int16_t, s3p_uint16_t, ConversionProtocol> }
-  , { "shared3p::conv_int16_to_uint32_vec",  &unary_vec<s3p_int16_t, s3p_uint32_t, ConversionProtocol> }
-  , { "shared3p::conv_int16_to_uint64_vec",  &unary_vec<s3p_int16_t, s3p_uint64_t, ConversionProtocol> }
-  , { "shared3p::conv_int32_to_uint8_vec", &unary_vec<s3p_int32_t, s3p_uint8_t, ConversionProtocol> }
+  , { "shared3p::conv_int16_to_uint16_vec", &unary_vec<s3p_int16_t, s3p_uint16_t, ConversionProtocol> }
+  , { "shared3p::conv_int16_to_uint32_vec", &unary_vec<s3p_int16_t, s3p_uint32_t, ConversionProtocol> }
+  , { "shared3p::conv_int16_to_uint64_vec", &unary_vec<s3p_int16_t, s3p_uint64_t, ConversionProtocol> }
+  , { "shared3p::conv_int32_to_uint8_vec",  &unary_vec<s3p_int32_t, s3p_uint8_t, ConversionProtocol> }
   , { "shared3p::conv_int32_to_uint16_vec", &unary_vec<s3p_int32_t, s3p_uint16_t, ConversionProtocol> }
   , { "shared3p::conv_int32_to_uint32_vec", &unary_vec<s3p_int32_t, s3p_uint32_t, ConversionProtocol> }
   , { "shared3p::conv_int32_to_uint64_vec", &unary_vec<s3p_int32_t, s3p_uint64_t, ConversionProtocol> }
   , { "shared3p::conv_int64_to_uint8_vec",  &unary_vec<s3p_int64_t, s3p_uint8_t, ConversionProtocol> }
-  , { "shared3p::conv_int64_to_uint16_vec",  &unary_vec<s3p_int64_t, s3p_uint16_t, ConversionProtocol> }
-  , { "shared3p::conv_int64_to_uint32_vec",  &unary_vec<s3p_int64_t, s3p_uint32_t, ConversionProtocol> }
-  , { "shared3p::conv_int64_to_uint64_vec",  &unary_vec<s3p_int64_t, s3p_uint64_t, ConversionProtocol> }
+  , { "shared3p::conv_int64_to_uint16_vec", &unary_vec<s3p_int64_t, s3p_uint16_t, ConversionProtocol> }
+  , { "shared3p::conv_int64_to_uint32_vec", &unary_vec<s3p_int64_t, s3p_uint32_t, ConversionProtocol> }
+  , { "shared3p::conv_int64_to_uint64_vec", &unary_vec<s3p_int64_t, s3p_uint64_t, ConversionProtocol> }
 
   , { "shared3p::conv_int16_to_int8_vec",  &unary_vec<s3p_int16_t, s3p_int8_t, ConversionProtocol> }
   , { "shared3p::conv_int32_to_int8_vec",  &unary_vec<s3p_int32_t, s3p_int8_t, ConversionProtocol> }
@@ -1741,11 +1466,11 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 */
 
   // Special functions
-  , { "shared3p::sign_int8_vec", &unary_arith_vec<s3p_int8_t, SignProtocol> }
+  , { "shared3p::sign_int8_vec",  &unary_arith_vec<s3p_int8_t, SignProtocol> }
   , { "shared3p::sign_int16_vec", &unary_arith_vec<s3p_int16_t, SignProtocol> }
   , { "shared3p::sign_int32_vec", &unary_arith_vec<s3p_int32_t, SignProtocol> }
   , { "shared3p::sign_int64_vec", &unary_arith_vec<s3p_int64_t, SignProtocol> }
-  , { "shared3p::abs_int8_vec", &unary_vec<s3p_int8_t, s3p_uint8_t, AbsoluteValueProtocol> }
+  , { "shared3p::abs_int8_vec",  &unary_vec<s3p_int8_t, s3p_uint8_t, AbsoluteValueProtocol> }
   , { "shared3p::abs_int16_vec", &unary_vec<s3p_int16_t, s3p_uint16_t, AbsoluteValueProtocol> }
   , { "shared3p::abs_int32_vec", &unary_vec<s3p_int32_t, s3p_uint32_t, AbsoluteValueProtocol> }
   , { "shared3p::abs_int64_vec", &unary_vec<s3p_int64_t, s3p_uint64_t, AbsoluteValueProtocol> }
@@ -1827,7 +1552,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::declassify_xor_uint16_vec", &declassify_vec<s3p_xor_uint16_t> }
   , { "shared3p::declassify_xor_uint32_vec", &declassify_vec<s3p_xor_uint32_t> }
   , { "shared3p::declassify_xor_uint64_vec", &declassify_vec<s3p_xor_uint64_t> }
-  , { "shared3p::get_type_size_xor_uint8", &get_type_size<s3p_xor_uint8_t> }
+  , { "shared3p::get_type_size_xor_uint8",  &get_type_size<s3p_xor_uint8_t> }
   , { "shared3p::get_type_size_xor_uint16", &get_type_size<s3p_xor_uint16_t> }
   , { "shared3p::get_type_size_xor_uint32", &get_type_size<s3p_xor_uint32_t> }
   , { "shared3p::get_type_size_xor_uint64", &get_type_size<s3p_xor_uint64_t> }
@@ -1844,15 +1569,15 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 */
 
     // Bitwise operations on xor shared data
-  , { "shared3p::xor_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t , BitwiseXorProtocol> }
+  , { "shared3p::xor_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t, BitwiseXorProtocol> }
   , { "shared3p::xor_xor_uint16_vec", &binary_arith_vec<s3p_xor_uint16_t, BitwiseXorProtocol> }
   , { "shared3p::xor_xor_uint32_vec", &binary_arith_vec<s3p_xor_uint32_t, BitwiseXorProtocol> }
   , { "shared3p::xor_xor_uint64_vec", &binary_arith_vec<s3p_xor_uint64_t, BitwiseXorProtocol> }
-  , { "shared3p::and_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t , BitwiseAndProtocol> }
+  , { "shared3p::and_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t, BitwiseAndProtocol> }
   , { "shared3p::and_xor_uint16_vec", &binary_arith_vec<s3p_xor_uint16_t, BitwiseAndProtocol> }
   , { "shared3p::and_xor_uint32_vec", &binary_arith_vec<s3p_xor_uint32_t, BitwiseAndProtocol> }
   , { "shared3p::and_xor_uint64_vec", &binary_arith_vec<s3p_xor_uint64_t, BitwiseAndProtocol> }
-  , { "shared3p::or_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t , BitwiseOrProtocol> }
+  , { "shared3p::or_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t, BitwiseOrProtocol> }
   , { "shared3p::or_xor_uint16_vec", &binary_arith_vec<s3p_xor_uint16_t, BitwiseOrProtocol> }
   , { "shared3p::or_xor_uint32_vec", &binary_arith_vec<s3p_xor_uint32_t, BitwiseOrProtocol> }
   , { "shared3p::or_xor_uint64_vec", &binary_arith_vec<s3p_xor_uint64_t, BitwiseOrProtocol> }
@@ -1862,26 +1587,26 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::inv_xor_uint64_vec", &unary_arith_vec<s3p_xor_uint64_t, BitwiseInvProtocol> }
 
    // Comparisons
-  , { "shared3p::eq_xor_uint8_vec",   NAMED_SYSCALL_WRAPPER("eq_xor_uint8_vec", eq_vec<s3p_xor_uint8_t>) }
-  , { "shared3p::eq_xor_uint16_vec",  NAMED_SYSCALL_WRAPPER("eq_xor_uint16_vec", eq_vec<s3p_xor_uint16_t>) }
-  , { "shared3p::eq_xor_uint32_vec",  NAMED_SYSCALL_WRAPPER("eq_xor_uint32_vec", eq_vec<s3p_xor_uint32_t>) }
-  , { "shared3p::eq_xor_uint64_vec",  NAMED_SYSCALL_WRAPPER("eq_xor_uint64_vec", eq_vec<s3p_xor_uint64_t>) }
-  , { "shared3p::gt_xor_uint8_vec",   NAMED_SYSCALL_WRAPPER("gt_xor_uint8_vec", compare_vec<s3p_xor_uint8_t,  ModeLT, true>) }
-  , { "shared3p::gt_xor_uint16_vec",  NAMED_SYSCALL_WRAPPER("gt_xor_uint16_vec", compare_vec<s3p_xor_uint16_t, ModeLT, true>) }
-  , { "shared3p::gt_xor_uint32_vec",  NAMED_SYSCALL_WRAPPER("gt_xor_uint32_vec", compare_vec<s3p_xor_uint32_t, ModeLT, true>) }
-  , { "shared3p::gt_xor_uint64_vec",  NAMED_SYSCALL_WRAPPER("gt_xor_uint64_vec", compare_vec<s3p_xor_uint64_t, ModeLT, true>) }
-  , { "shared3p::gte_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("gte_xor_uint8_vec", compare_vec<s3p_xor_uint8_t,  ModeLE, true>) }
-  , { "shared3p::gte_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint16_vec", compare_vec<s3p_xor_uint16_t, ModeLE, true>) }
-  , { "shared3p::gte_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint32_vec", compare_vec<s3p_xor_uint32_t, ModeLE, true>) }
-  , { "shared3p::gte_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint64_vec", compare_vec<s3p_xor_uint64_t, ModeLE, true>) }
-  , { "shared3p::lt_xor_uint8_vec",   NAMED_SYSCALL_WRAPPER("lt_xor_uint8_vec", compare_vec<s3p_xor_uint8_t,  ModeLT, false>) }
-  , { "shared3p::lt_xor_uint16_vec",  NAMED_SYSCALL_WRAPPER("lt_xor_uint16_vec", compare_vec<s3p_xor_uint16_t, ModeLT, false>) }
-  , { "shared3p::lt_xor_uint32_vec",  NAMED_SYSCALL_WRAPPER("lt_xor_uint32_vec", compare_vec<s3p_xor_uint32_t, ModeLT, false>) }
-  , { "shared3p::lt_xor_uint64_vec",  NAMED_SYSCALL_WRAPPER("lt_xor_uint64_vec", compare_vec<s3p_xor_uint64_t, ModeLT, false>) }
-  , { "shared3p::lte_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("lte_xor_uint8_vec", compare_vec<s3p_xor_uint8_t,  ModeLE, false>) }
-  , { "shared3p::lte_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint16_vec", compare_vec<s3p_xor_uint16_t, ModeLE, false>) }
-  , { "shared3p::lte_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint32_vec", compare_vec<s3p_xor_uint32_t, ModeLE, false>) }
-  , { "shared3p::lte_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint64_vec", compare_vec<s3p_xor_uint64_t, ModeLE, false>) }
+  , { "shared3p::eq_xor_uint8_vec",  &binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_xor_uint16_vec", &binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_xor_uint32_vec", &binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_xor_uint64_vec", &binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::gt_xor_uint8_vec",  &binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_xor_uint16_vec", &binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_xor_uint32_vec", &binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gt_xor_uint64_vec", &binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gte_xor_uint8_vec",  &binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_xor_uint16_vec", &binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_xor_uint32_vec", &binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::gte_xor_uint64_vec", &binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::lt_xor_uint8_vec",  &binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_xor_uint16_vec", &binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_xor_uint32_vec", &binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lt_xor_uint64_vec", &binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lte_xor_uint8_vec",  &binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_xor_uint16_vec", &binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_xor_uint32_vec", &binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::lte_xor_uint64_vec", &binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, LessThanOrEqualProtocol> }
 
   // Casting
   , { "shared3p::conv_bool_to_xor_uint8_vec",  &unary_vec<s3p_bool_t, s3p_xor_uint8_t, ConversionProtocol> }
@@ -1907,14 +1632,15 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::randomize_xor_uint16_vec", &nullary_vec<s3p_xor_uint16_t, RandomizeProtocol> }
   , { "shared3p::randomize_xor_uint32_vec", &nullary_vec<s3p_xor_uint32_t, RandomizeProtocol> }
   , { "shared3p::randomize_xor_uint64_vec", &nullary_vec<s3p_xor_uint64_t, RandomizeProtocol> }
-  , { "shared3p::shift_left_xor_uint8_vec", &binary_private_public_vec<s3p_xor_uint8_t, int64_t, LeftShiftProtocol> }
-  , { "shared3p::shift_left_xor_uint16_vec", &binary_private_public_vec<s3p_xor_uint16_t, int64_t, LeftShiftProtocol> }
-  , { "shared3p::shift_left_xor_uint32_vec", &binary_private_public_vec<s3p_xor_uint32_t, int64_t, LeftShiftProtocol> }
-  , { "shared3p::shift_left_xor_uint64_vec", &binary_private_public_vec<s3p_xor_uint64_t, int64_t, LeftShiftProtocol> }
-  , { "shared3p::rotate_left_xor_uint8_vec", &binary_private_public_vec<s3p_xor_uint8_t, int64_t, LeftRotationProtocol> }
-  , { "shared3p::rotate_left_xor_uint16_vec", &binary_private_public_vec<s3p_xor_uint16_t, int64_t, LeftRotationProtocol> }
-  , { "shared3p::rotate_left_xor_uint32_vec", &binary_private_public_vec<s3p_xor_uint32_t, int64_t, LeftRotationProtocol> }
-  , { "shared3p::rotate_left_xor_uint64_vec", &binary_private_public_vec<s3p_xor_uint64_t, int64_t, LeftRotationProtocol> }
+*/
+  , { "shared3p::shift_left_xor_uint8_vec",  &binary_public_vec<s3p_xor_uint8_t, s3p_int64_t, s3p_xor_uint8_t, LeftShiftProtocol> }
+  , { "shared3p::shift_left_xor_uint16_vec", &binary_public_vec<s3p_xor_uint16_t, s3p_int64_t, s3p_xor_uint16_t, LeftShiftProtocol> }
+  , { "shared3p::shift_left_xor_uint32_vec", &binary_public_vec<s3p_xor_uint32_t, s3p_int64_t, s3p_xor_uint32_t, LeftShiftProtocol> }
+  , { "shared3p::shift_left_xor_uint64_vec", &binary_public_vec<s3p_xor_uint64_t, s3p_int64_t, s3p_xor_uint64_t, LeftShiftProtocol> }
+  , { "shared3p::rotate_left_xor_uint8_vec",  &binary_public_vec<s3p_xor_uint8_t, s3p_int64_t, s3p_xor_uint8_t, LeftRotationProtocol> }
+  , { "shared3p::rotate_left_xor_uint16_vec", &binary_public_vec<s3p_xor_uint16_t, s3p_int64_t, s3p_xor_uint16_t, LeftRotationProtocol> }
+  , { "shared3p::rotate_left_xor_uint32_vec", &binary_public_vec<s3p_xor_uint32_t, s3p_int64_t, s3p_xor_uint32_t, LeftRotationProtocol> }
+  , { "shared3p::rotate_left_xor_uint64_vec", &binary_public_vec<s3p_xor_uint64_t, s3p_int64_t, s3p_xor_uint64_t, LeftRotationProtocol> }
 
    // Special functions
   , { "shared3p::choose_xor_uint8_vec", &oblivious_choice_vec<s3p_bool_t, s3p_xor_uint8_t, ObliviousChoiceProtocol> }
@@ -1922,7 +1648,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::choose_xor_uint32_vec", &oblivious_choice_vec<s3p_bool_t, s3p_xor_uint32_t, ObliviousChoiceProtocol> }
   , { "shared3p::choose_xor_uint64_vec", &oblivious_choice_vec<s3p_bool_t, s3p_xor_uint64_t, ObliviousChoiceProtocol> }
 
-*/
   , { "shared3p::min_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t, MinimumProtocol> }
   , { "shared3p::min_xor_uint16_vec", &binary_arith_vec<s3p_xor_uint16_t, MinimumProtocol> }
   , { "shared3p::min_xor_uint32_vec", &binary_arith_vec<s3p_xor_uint32_t, MinimumProtocol> }
@@ -2011,45 +1736,49 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::get_type_size_float64", &get_type_size<s3p_float64_t> }
 
     // Floating point arithmetic
+  , { "shared3p::add_float32_vec", &binary_arith_vec<s3p_float32_t, AdditionProtocol> }
+  , { "shared3p::add_float64_vec", &binary_arith_vec<s3p_float64_t, AdditionProtocol> }
 /*
-  , { "shared3p::add_float32_vec", &binary_arith_vec<s3p_float32_t, FloatAdditionProtocol> }
-  , { "shared3p::add_float64_vec", &binary_arith_vec<s3p_float64_t, FloatAdditionProtocol> }
   , { "shared3p::sum_float32_vec",  &unary_arith_vec<s3p_float32_t, FloatSummationProtocol> }
   , { "shared3p::sum_float64_vec",  &unary_arith_vec<s3p_float64_t, FloatSummationProtocol> }
   , { "shared3p::neg_float32_vec",  &unary_arith_vec<s3p_float32_t, FloatNegationProtocol> }
   , { "shared3p::neg_float64_vec",  &unary_arith_vec<s3p_float64_t, FloatNegationProtocol> }
-  , { "shared3p::sub_float32_vec", &binary_arith_vec<s3p_float32_t, FloatSubtractionProtocol> }
-  , { "shared3p::sub_float64_vec", &binary_arith_vec<s3p_float64_t, FloatSubtractionProtocol> }
-  , { "shared3p::mul_float32_vec", &binary_arith_vec<s3p_float32_t, FloatMultiplicationProtocol> }
-  , { "shared3p::mul_float64_vec", &binary_arith_vec<s3p_float64_t, FloatMultiplicationProtocol> }
+*/
+  , { "shared3p::sub_float32_vec", &binary_arith_vec<s3p_float32_t, SubtractionProtocol> }
+  , { "shared3p::sub_float64_vec", &binary_arith_vec<s3p_float64_t, SubtractionProtocol> }
+  , { "shared3p::mul_float32_vec", &binary_arith_vec<s3p_float32_t, MultiplicationProtocol> }
+  , { "shared3p::mul_float64_vec", &binary_arith_vec<s3p_float64_t, MultiplicationProtocol> }
+/*
   , { "shared3p::inv_float32_vec",  &unary_arith_vec<s3p_float32_t, FloatInverseProtocol> }
   , { "shared3p::inv_float64_vec",  &unary_arith_vec<s3p_float64_t, FloatInverseProtocol> }
-  , { "shared3p::div_float32_vec", &binary_arith_vec<s3p_float32_t, FloatDivisionProtocol> }
-  , { "shared3p::div_float64_vec", &binary_arith_vec<s3p_float64_t, FloatDivisionProtocol> }
-  , { "shared3p::mulc_float32_vec", &mulc_vec<s3p_float32_t, FloatPublicMultiplicationProtocol> }
-  , { "shared3p::mulc_float64_vec", &mulc_vec<s3p_float64_t, FloatPublicMultiplicationProtocol> }
-  , { "shared3p::divc_float32_vec", &divc_vec<s3p_float32_t, FloatPublicDivisionProtocol> }
-  , { "shared3p::divc_float64_vec", &divc_vec<s3p_float64_t, FloatPublicDivisionProtocol> }
+*/
+  , { "shared3p::div_float32_vec", &binary_arith_vec<s3p_float32_t, DivisionProtocol> }
+  , { "shared3p::div_float64_vec", &binary_arith_vec<s3p_float64_t, DivisionProtocol> }
+  , { "shared3p::mulc_float32_vec", &binary_arith_public_vec<s3p_float32_t, MultiplicationProtocol> }
+  , { "shared3p::mulc_float64_vec", &binary_arith_public_vec<s3p_float64_t, MultiplicationProtocol> }
+  , { "shared3p::divc_float32_vec", &binary_arith_public_vec<s3p_float32_t, DivisionProtocol> }
+  , { "shared3p::divc_float64_vec", &binary_arith_public_vec<s3p_float64_t, DivisionProtocol> }
 
     // Floating point comparisons
+/*
   , { "shared3p::isnegligible_float32_vec", &unary_vec<s3p_float32_t, s3p_bool_t, FloatIsNegligibleProtocol> }
   , { "shared3p::isnegligible_float64_vec", &unary_vec<s3p_float64_t, s3p_bool_t, FloatIsNegligibleProtocol> }
-  , { "shared3p::eq_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, FloatEqualityProtocol> }
-  , { "shared3p::eq_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, FloatEqualityProtocol> }
 */
+  , { "shared3p::eq_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, EqualityProtocol> }
+  , { "shared3p::eq_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, EqualityProtocol> }
     /*, { "shared3p::max_float32_vec", &max_vec<s3p_float32_t> }
       , { "shared3p::min_float32_vec", &min_vec<s3p_float32_t> }*/
-/*
-  , { "shared3p::lt_float32_vec", &compare_vec<s3p_float32_t, FloatComparisonProtocol<ModeLT>, false> }
-  , { "shared3p::lte_float32_vec", &compare_vec<s3p_float32_t, FloatComparisonProtocol<ModeLE>, false> }
-  , { "shared3p::gt_float32_vec", &compare_vec<s3p_float32_t, FloatComparisonProtocol<ModeLT>, true> }
-  , { "shared3p::gte_float32_vec", &compare_vec<s3p_float32_t, FloatComparisonProtocol<ModeLE>, true> }
-  , { "shared3p::lt_float64_vec", &compare_vec<s3p_float64_t, FloatComparisonProtocol<ModeLT>, false> }
-  , { "shared3p::lte_float64_vec", &compare_vec<s3p_float64_t, FloatComparisonProtocol<ModeLE>, false> }
-  , { "shared3p::gt_float64_vec", &compare_vec<s3p_float64_t, FloatComparisonProtocol<ModeLT>, true> }
-  , { "shared3p::gte_float64_vec", &compare_vec<s3p_float64_t, FloatComparisonProtocol<ModeLE>, true> }
+  , { "shared3p::lt_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lte_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::gt_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gte_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
+  , { "shared3p::lt_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, LessThanProtocol> }
+  , { "shared3p::lte_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, LessThanOrEqualProtocol> }
+  , { "shared3p::gt_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, GreaterThanProtocol> }
+  , { "shared3p::gte_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
 
    // Casting floating point numbers
+/*
   , { "shared3p::ceiling_float32_vec", &unary_vec<s3p_float32_t, s3p_int32_t, FloatCeilingProtocol> }
   , { "shared3p::ceiling_float64_vec", &unary_vec<s3p_float64_t, s3p_int64_t, FloatCeilingProtocol> }
   , { "shared3p::floor_float32_vec", &unary_vec<s3p_float32_t, s3p_int32_t, FloatFloorProtocol> }
