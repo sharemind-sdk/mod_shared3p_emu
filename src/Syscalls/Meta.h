@@ -267,6 +267,63 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(nullary_vec,
     }
 }
 
+/**
+ * SysCall: ternary_vec<T1, T2, T3, T4, Protocol>
+ * Args:
+ *      0) uint64[0]     pd index
+ *      1) p[0]          first parameter handle
+ *      2) p[1]          second parameter handle
+ *      3) p[1]          third parameter handle
+ *      4) p[3]          output handle
+ * Precondition:
+ *      first parameter handle is a vector of type T1.
+ *      second paremeter handle is a vector of type T2.
+ *      third paremeter handle is a vector of type T3.
+ *      Output handle is a vector of type T4.
+ */
+template <typename T1, typename T2, typename T3, typename T4, typename Protocol>
+SHAREMIND_MODULE_API_0x1_SYSCALL(ternary_vec,
+                                 args, num_args, refs, crefs,
+                                 returnValue, c)
+{
+    VMHandles handles;
+    if (!SyscallArgs<5>::check(num_args, refs, crefs, returnValue) ||
+            !handles.get(c, args))
+    {
+        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
+    }
+
+    try {
+        Shared3pPDPI * const pdpi = static_cast<Shared3pPDPI*>(handles.pdpiHandle);
+
+        void * const param1Handle = args[1u].p[0u];
+        void * const param2Handle = args[2u].p[0u];
+        void * const param3Handle = args[3u].p[0u];
+        void * const resultHandle = args[4u].p[0u];
+
+        if (!pdpi->isValidHandle<T1>(param1Handle) ||
+                !pdpi->isValidHandle<T2>(param2Handle) ||
+                !pdpi->isValidHandle<T3>(param3Handle) ||
+                !pdpi->isValidHandle<T4>(resultHandle))
+        {
+            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+        }
+
+        const s3p_vec<T1> & param1 = *static_cast<s3p_vec<T1>*>(param1Handle);
+        const s3p_vec<T2> & param2 = *static_cast<s3p_vec<T2>*>(param2Handle);
+        const s3p_vec<T3> & param3 = *static_cast<s3p_vec<T3>*>(param3Handle);
+        s3p_vec<T4> & result = *static_cast<s3p_vec<T4>*>(resultHandle);
+
+        Protocol protocol(*pdpi);
+        if (!protocol.invoke(param1, param2, param3, result, typename value_traits<T1>::value_category()))
+            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+
+        return SHAREMIND_MODULE_API_0x1_OK;
+    } catch (...) {
+        return catchModuleApiErrors();
+    }
+}
+
 } /* namespace sharemind */
 
 #endif /* MOD_ADDITIVE3P_SYSCALLS_META_H */

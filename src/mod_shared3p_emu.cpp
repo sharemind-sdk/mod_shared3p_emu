@@ -23,6 +23,7 @@
 #include "Syscalls/CRCSyscalls.h"
 #include "Syscalls/Meta.h"
 #include "Protocols/Binary.h"
+#include "Protocols/Ternary.h"
 #include "Protocols/Unary.h"
 #include "VMReferences.h"
 
@@ -1643,10 +1644,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::rotate_left_xor_uint64_vec", &binary_public_vec<s3p_xor_uint64_t, s3p_int64_t, s3p_xor_uint64_t, LeftRotationProtocol> }
 
    // Special functions
-  , { "shared3p::choose_xor_uint8_vec", &oblivious_choice_vec<s3p_bool_t, s3p_xor_uint8_t, ObliviousChoiceProtocol> }
-  , { "shared3p::choose_xor_uint16_vec", &oblivious_choice_vec<s3p_bool_t, s3p_xor_uint16_t, ObliviousChoiceProtocol> }
-  , { "shared3p::choose_xor_uint32_vec", &oblivious_choice_vec<s3p_bool_t, s3p_xor_uint32_t, ObliviousChoiceProtocol> }
-  , { "shared3p::choose_xor_uint64_vec", &oblivious_choice_vec<s3p_bool_t, s3p_xor_uint64_t, ObliviousChoiceProtocol> }
+  , { "shared3p::choose_xor_uint8_vec",  &ternary_vec<s3p_bool_t, s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_xor_uint8_t, ObliviousChoiceProtocol> }
+  , { "shared3p::choose_xor_uint16_vec", &ternary_vec<s3p_bool_t, s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_xor_uint16_t, ObliviousChoiceProtocol> }
+  , { "shared3p::choose_xor_uint32_vec", &ternary_vec<s3p_bool_t, s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_xor_uint32_t, ObliviousChoiceProtocol> }
+  , { "shared3p::choose_xor_uint64_vec", &ternary_vec<s3p_bool_t, s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_xor_uint64_t, ObliviousChoiceProtocol> }
 
   , { "shared3p::min_xor_uint8_vec",  &binary_arith_vec<s3p_xor_uint8_t, MinimumProtocol> }
   , { "shared3p::min_xor_uint16_vec", &binary_arith_vec<s3p_xor_uint16_t, MinimumProtocol> }
@@ -1789,8 +1790,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::abs_float64_vec", &unary_vec<s3p_float64_t, s3p_float64_t, FloatAbsoluteValueProtocol> }
 
   // Special functions
-  , { "shared3p::choose_float32_vec", &oblivious_choice_vec<s3p_bool_t, s3p_float32_t, ObliviousChoiceProtocol> }
-  , { "shared3p::choose_float64_vec", &oblivious_choice_vec<s3p_bool_t, s3p_float64_t, ObliviousChoiceProtocol> }
+*/
+  , { "shared3p::choose_float32_vec", &ternary_vec<s3p_bool_t, s3p_float32_t, s3p_float32_t, s3p_float32_t, ObliviousChoiceProtocol> }
+  , { "shared3p::choose_float64_vec", &ternary_vec<s3p_bool_t, s3p_float64_t, s3p_float64_t, s3p_float64_t, ObliviousChoiceProtocol> }
+/*
   , { "shared3p::erf_float32_vec", &unary_arith_vec<s3p_float32_t, FloatErrorFunctionProtocol> }
   , { "shared3p::erf_float64_vec", &unary_arith_vec<s3p_float64_t, FloatErrorFunctionProtocol> }
   , { "shared3p::exp_float32_vec", &unary_arith_vec<s3p_float32_t, FloatPowerOfEProtocol> }
