@@ -149,6 +149,22 @@ public: /* Methods: */
     }
 }; /* NotProtocol { */
 
+class __attribute__ ((visibility("internal"))) BitwiseInvProtocol {
+public: /* Methods: */
+
+    BitwiseInvProtocol (Shared3pPDPI &pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke (const s3p_vec<T>& param, s3p_vec<T>& result, xored_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = ~param[i];
+        return true;
+    }
+}; /* BitwiseInvProtocol { */
+
 class __attribute__ ((visibility("internal"))) BitExtractionProtocol {
 public: /* Methods: */
 

@@ -1856,12 +1856,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::or_xor_uint16_vec", &binary_arith_vec<s3p_xor_uint16_t, BitwiseOrProtocol> }
   , { "shared3p::or_xor_uint32_vec", &binary_arith_vec<s3p_xor_uint32_t, BitwiseOrProtocol> }
   , { "shared3p::or_xor_uint64_vec", &binary_arith_vec<s3p_xor_uint64_t, BitwiseOrProtocol> }
-/*
   , { "shared3p::inv_xor_uint8_vec",  &unary_arith_vec<s3p_xor_uint8_t,  BitwiseInvProtocol> }
   , { "shared3p::inv_xor_uint16_vec", &unary_arith_vec<s3p_xor_uint16_t, BitwiseInvProtocol> }
   , { "shared3p::inv_xor_uint32_vec", &unary_arith_vec<s3p_xor_uint32_t, BitwiseInvProtocol> }
   , { "shared3p::inv_xor_uint64_vec", &unary_arith_vec<s3p_xor_uint64_t, BitwiseInvProtocol> }
-*/
 
    // Comparisons
   , { "shared3p::eq_xor_uint8_vec",   NAMED_SYSCALL_WRAPPER("eq_xor_uint8_vec", eq_vec<s3p_xor_uint8_t>) }
