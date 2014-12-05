@@ -11,6 +11,7 @@
 #include "Facilities/ExecutionModelEvaluator.h"
 #include "Shared3pModule.h"
 #include "Shared3pPD.h"
+#include "RandomFacility.h"
 
 
 namespace sharemind {
@@ -32,6 +33,9 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
     } catch (const ExecutionModelEvaluator::ConfigurationException &) {
         throw ConfigurationException();
     }
+
+    m_randomFacility.reset(new RandomFacility);
+    m_randomFacility->Seed();
 }
 
 Shared3pPD::~Shared3pPD() = default;

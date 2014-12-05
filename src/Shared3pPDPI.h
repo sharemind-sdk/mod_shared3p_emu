@@ -14,11 +14,11 @@
 #include "Shared3pValueHeap.h"
 #include "Shared3pVector.h"
 
-
 namespace sharemind {
 
 class ExecutionModelEvaluator;
 class ExecutionProfiler;
+class IRandom;
 class Shared3pConfiguration;
 
 class __attribute__ ((visibility("internal"))) Shared3pPDPI {
@@ -46,6 +46,12 @@ public: /* Methods: */
     inline const ExecutionProfiler & profiler() const
     { return m_profiler; }
 
+    inline IRandom & rng()
+    { return m_rng; }
+
+    inline const IRandom & rng() const
+    { return m_rng; }
+
     template <typename T>
     inline bool isValidHandle(void * hndl) const {
         return m_heap.check<T>(hndl);
@@ -68,6 +74,8 @@ private: /* Fields: */
 
     ExecutionModelEvaluator & m_modelEvaluator;
     ExecutionProfiler & m_profiler;
+
+    IRandom & m_rng;
 
     s3p_heap m_heap;
 

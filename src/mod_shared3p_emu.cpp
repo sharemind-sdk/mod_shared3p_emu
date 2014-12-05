@@ -25,6 +25,7 @@
 #include "Protocols/Binary.h"
 #include "Protocols/Ternary.h"
 #include "Protocols/Unary.h"
+#include "Protocols/Randomize.h"
 #include "VMReferences.h"
 
 
@@ -1241,7 +1242,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::bit_extract_xor_uint32_vec", &unary_vec<s3p_xor_uint32_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint64_vec", &unary_vec<s3p_xor_uint64_t, s3p_bool_t, BitExtractionProtocol> }
 
-/*
     // Utilities
   , { "shared3p::randomize_uint8_vec",  &nullary_vec<s3p_uint8_t, RandomizeProtocol> }
   , { "shared3p::randomize_uint16_vec", &nullary_vec<s3p_uint16_t, RandomizeProtocol> }
@@ -1249,7 +1249,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::randomize_uint64_vec", &nullary_vec<s3p_uint64_t, RandomizeProtocol> }
 
     // Special functions
-*/
   , { "shared3p::min_uint8_vec",  &binary_arith_vec<s3p_uint8_t, MinimumProtocol> }
   , { "shared3p::min_uint16_vec", &binary_arith_vec<s3p_uint16_t, MinimumProtocol> }
   , { "shared3p::min_uint32_vec", &binary_arith_vec<s3p_uint32_t, MinimumProtocol> }

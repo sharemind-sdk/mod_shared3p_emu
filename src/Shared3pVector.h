@@ -14,6 +14,7 @@
 #include <cassert>
 #include <cstdint>
 #include <iterator>
+#include <sharemind/Random/IRandom.h>
 #include <vector>
 #include "BitVector.h"
 #include "Shared3pValueTraits.h"
@@ -386,13 +387,11 @@ public: /* Methods: */
     }
 
 
-    /*
     inline void randomize(IRandom & rng) {
         if (!empty()) {
             rng.fillBlock(begin_ptr (), end_ptr ());
         }
     }
-    */
 
     void setBit (size_type i, bool value) {
         BOOST_STATIC_ASSERT(T::num_of_bits != 0);
@@ -479,9 +478,7 @@ public: /* Methods: */
         m_vector.clear_and_release ();
     }
 
-    /*
     inline void randomize (IRandom& rng) { m_vector.randomize (rng); }
-    */
 
     s3p_vec& operator &= (const s3p_vec& other) { m_vector &= other.m_vector; return *this; }
     s3p_vec& operator ^= (const s3p_vec& other) { m_vector ^= other.m_vector; return *this; }
