@@ -1054,10 +1054,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   /*
   , { "shared3p::conv_bool_to_float32_vec", &unary_vec<s3p_bool_t, s3p_float32_t, ConversionToFloatProtocol> }
   , { "shared3p::conv_bool_to_float64_vec", &unary_vec<s3p_bool_t, s3p_float64_t, ConversionToFloatProtocol> }
+*/
 
    // Utilities
   , { "shared3p::randomize_bool_vec",  &nullary_vec<s3p_bool_t, RandomizeProtocol> }
-*/
 
    // Database functions
    /*, { "shared3p::vecshuf_bool_vec", &vector_shuffle<s3p_bool_t, false, false> }
@@ -1457,13 +1457,13 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   // See ConversionToFloatProtocol.h
   //, { "shared3p::conv_uint64_to_float32_vec", &unary_vec<s3p_uint64_t, s3p_float32_t, ConversionToFloatProtocol> }
   , { "shared3p::conv_int64_to_float64_vec", &unary_vec<s3p_int64_t, s3p_float64_t, ConversionToFloatProtocol> }
+*/
 
   // Utilities
   , { "shared3p::randomize_int8_vec",  &nullary_vec<s3p_int8_t, RandomizeProtocol> }
   , { "shared3p::randomize_int16_vec", &nullary_vec<s3p_int16_t, RandomizeProtocol> }
   , { "shared3p::randomize_int32_vec", &nullary_vec<s3p_int32_t, RandomizeProtocol> }
   , { "shared3p::randomize_int64_vec", &nullary_vec<s3p_int64_t, RandomizeProtocol> }
-*/
 
   // Special functions
   , { "shared3p::sign_int8_vec",  &unary_arith_vec<s3p_int8_t, SignProtocol> }
@@ -1624,13 +1624,12 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::conv_xor_uint16_to_xor_uint32_vec", &unary_vec<s3p_xor_uint16_t, s3p_xor_uint32_t, ConversionProtocol> }
   , { "shared3p::conv_xor_uint32_to_xor_uint64_vec", &unary_vec<s3p_xor_uint32_t, s3p_xor_uint64_t, ConversionProtocol> }
 
-/*
    // Utilities
   , { "shared3p::randomize_xor_uint8_vec",  &nullary_vec<s3p_xor_uint8_t, RandomizeProtocol> }
   , { "shared3p::randomize_xor_uint16_vec", &nullary_vec<s3p_xor_uint16_t, RandomizeProtocol> }
   , { "shared3p::randomize_xor_uint32_vec", &nullary_vec<s3p_xor_uint32_t, RandomizeProtocol> }
   , { "shared3p::randomize_xor_uint64_vec", &nullary_vec<s3p_xor_uint64_t, RandomizeProtocol> }
-*/
+
   , { "shared3p::shift_left_xor_uint8_vec",  &binary_public_vec<s3p_xor_uint8_t, s3p_int64_t, s3p_xor_uint8_t, LeftShiftProtocol> }
   , { "shared3p::shift_left_xor_uint16_vec", &binary_public_vec<s3p_xor_uint16_t, s3p_int64_t, s3p_xor_uint16_t, LeftShiftProtocol> }
   , { "shared3p::shift_left_xor_uint32_vec", &binary_public_vec<s3p_xor_uint32_t, s3p_int64_t, s3p_xor_uint32_t, LeftShiftProtocol> }
