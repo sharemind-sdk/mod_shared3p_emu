@@ -462,7 +462,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(classify_vec,
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        for (size_t i = 0u; i < src.size(); ++i)
+        for (size_t i = 0u; i < dest.size(); ++i)
             dest[i] = src[i];
 
         return SHAREMIND_MODULE_API_0x1_OK;
