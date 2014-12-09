@@ -632,7 +632,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(vector_shuffle,
                                  args, num_args, refs, crefs,
                                  returnValue, c)
 {
-    /*
     BOOST_STATIC_ASSERT(!InverseShuffle || NeedKey);
 
     VMHandles handles;
@@ -685,7 +684,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(vector_shuffle,
     } catch (...) {
         return catchModuleApiErrors ();
     }
-    */
     return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 }
 
@@ -704,7 +702,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(matrix_shuffle,
                                  args, num_args, refs, crefs,
                                  returnValue, c)
 {
-    /*
     BOOST_STATIC_ASSERT(!InverseShuffle || NeedKey);
 
     VMHandles handles;
@@ -764,7 +761,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(matrix_shuffle,
     } catch (...) {
         return catchModuleApiErrors ();
     }
-    */
     return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 }
 
@@ -1060,10 +1056,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::randomize_bool_vec",  &nullary_vec<s3p_bool_t, RandomizeProtocol> }
 
    // Database functions
-   /*, { "shared3p::vecshuf_bool_vec", &vector_shuffle<s3p_bool_t, false, false> }
+   , { "shared3p::vecshuf_bool_vec", &vector_shuffle<s3p_bool_t, false, false> }
    , { "shared3p::vecshufkey_bool_vec", &vector_shuffle<s3p_bool_t, true, false> }
    , { "shared3p::matshuf_bool_vec", &matrix_shuffle<s3p_bool_t, false, false> }
-   , { "shared3p::matshufkey_boo_vec", &matrix_shuffle<s3p_bool_t, true, false> }*/
+   , { "shared3p::matshufkey_boo_vec", &matrix_shuffle<s3p_bool_t, true, false> }
 
   /**
    *  Additively shared unsigned integers
@@ -1277,6 +1273,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 /*
   , { "shared3p::vecmax_float32_vec", &unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmax_float64_vec", &unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> > }
+*/
 
   // Database functions
   , { "shared3p::vecshuf_uint8_vec", &vector_shuffle<s3p_uint8_t, false, false> }
@@ -1303,7 +1300,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::matshufinv_uint16_vec", &matrix_shuffle<s3p_uint16_t, true, true> }
   , { "shared3p::matshufinv_uint32_vec", &matrix_shuffle<s3p_uint32_t, true, true> }
   , { "shared3p::matshufinv_uint64_vec", &matrix_shuffle<s3p_uint64_t, true, true> }
-*/
 
   /**
    *  Additively shared signed integers
@@ -1475,7 +1471,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::abs_int32_vec", &unary_vec<s3p_int32_t, s3p_uint32_t, AbsoluteValueProtocol> }
   , { "shared3p::abs_int64_vec", &unary_vec<s3p_int64_t, s3p_uint64_t, AbsoluteValueProtocol> }
 
-/*
   // Database functions
   , { "shared3p::vecshuf_int8_vec", &vector_shuffle<s3p_int8_t, false, false> }
   , { "shared3p::vecshuf_int16_vec", &vector_shuffle<s3p_int16_t, false, false> }
@@ -1501,7 +1496,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::matshufinv_int16_vec", &matrix_shuffle<s3p_int16_t, true, true> }
   , { "shared3p::matshufinv_int32_vec", &matrix_shuffle<s3p_int32_t, true, true> }
   , { "shared3p::matshufinv_int64_vec", &matrix_shuffle<s3p_int64_t, true, true> }
-*/
 
   /**
    *  Bitwise shared unsigned integers
@@ -1674,6 +1668,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::aes128_test", &aes_test<Aes128Protocol> }
   , { "shared3p::crc16_xor_vec", &crc_xor_vec<CRCMode16> }
   , { "shared3p::crc32_xor_vec", &crc_xor_vec<CRCMode32> }
+*/
 
    // Database functions
   , { "shared3p::vecshuf_xor_uint8_vec", &vector_shuffle<s3p_xor_uint8_t, false, false> }
@@ -1700,7 +1695,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::matshufinv_xor_uint16_vec", &matrix_shuffle<s3p_xor_uint16_t, true, true> }
   , { "shared3p::matshufinv_xor_uint32_vec", &matrix_shuffle<s3p_xor_uint32_t, true, true> }
   , { "shared3p::matshufinv_xor_uint64_vec", &matrix_shuffle<s3p_xor_uint64_t, true, true> }
-*/
 
   /**
    *  Floating point numbers
@@ -1800,6 +1794,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::sin_float64_vec", &unary_arith_vec<s3p_float64_t, FloatSineProtocol> }
   , { "shared3p::sqrt_float32_vec", &unary_arith_vec<s3p_float32_t, FloatSquareRootProtocol> }
   , { "shared3p::sqrt_float64_vec", &unary_arith_vec<s3p_float64_t, FloatSquareRootProtocol> }
+*/
 
   // Database functions
   , { "shared3p::vecshuf_float32_vec", &vector_shuffle<s3p_float32_t, false, false> }
@@ -1814,7 +1809,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::matshufkey_float64_vec", &matrix_shuffle<s3p_float64_t, true, false> }
   , { "shared3p::matshufinv_float32_vec", &matrix_shuffle<s3p_float32_t, true, true> }
   , { "shared3p::matshufinv_float64_vec", &matrix_shuffle<s3p_float64_t, true, true> }
-*/
 
   /**
    *  Other functions
