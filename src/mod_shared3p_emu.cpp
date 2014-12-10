@@ -1666,9 +1666,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 //  , { "shared3p::aes192_xor_uint32_vec_expand_key", &aes_xor_uint32_vec_expand_key<Aes192Protocol> }
 //  , { "shared3p::aes256_xor_uint32_vec_expand_key", &aes_xor_uint32_vec_expand_key<Aes256Protocol> }
   , { "shared3p::aes128_test", &aes_test<Aes128Protocol> }
+*/
   , { "shared3p::crc16_xor_vec", &crc_xor_vec<CRCMode16> }
   , { "shared3p::crc32_xor_vec", &crc_xor_vec<CRCMode32> }
-*/
 
    // Database functions
   , { "shared3p::vecshuf_xor_uint8_vec", &vector_shuffle<s3p_xor_uint8_t, false, false> }

@@ -11,7 +11,6 @@
 #define MOD_ADDITIVE3P_SYSCALLS_CRCSYSCALLS_H
 
 #include <sharemind/libmodapi/api_0x1.h>
-//#include "../Protocols/ProtocolHelperMacros.h"
 
 namespace sharemind {
 
