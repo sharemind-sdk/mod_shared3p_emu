@@ -15,6 +15,9 @@
 
 namespace sharemind {
 
+/** \todo Why public_type? Public type is what the VM uses. Private type is what
+the protection domain uses (e.g. the protocols).  */
+
 class __attribute__ ((visibility("internal"))) ConversionProtocol {
 public: /* Methods: */
 
@@ -78,6 +81,42 @@ public: /* Methods: */
         return true;
     }
 
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        const size_t param_size = param.size ();
+        const size_t result_size = result.size ();
+        if (result_size == 0)
+            return false;
+
+        if (&param == &result)
+            return true;
+
+        if (param_size == 0) {
+            if (result_size != 1)
+                return false;
+            result[0] = 0;
+            return true;
+        }
+
+        if (param_size % result_size != 0)
+            return false;
+
+        for (size_t i = 0u; i < result_size; ++i)
+            result[i] = 0;
+
+        const size_t subarr_len = param_size / result_size;
+        for (size_t i = 0u; i < param_size; ++i) {
+            const auto rv = sf_float_add(result[i / subarr_len], param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i / subarr_len] = rv.result;
+        }
+
+        return true;
+    }
+
 }; /* class SumProtocol { */
 
 class __attribute__ ((visibility("internal"))) ProductProtocol {
@@ -132,6 +171,20 @@ public: /* Methods: */
             result[i] = static_cast<typename value_traits<DestT>::public_type> (- param[i]);
         return true;
     }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float_neg(param[i]);
+
+        return true;
+    }
+
 }; /* class NegProtocol { */
 
 class __attribute__ ((visibility("internal"))) NotProtocol {
@@ -380,6 +433,29 @@ public: /* Methods: */
             if (iv.fpu_state & sf_fpu_state_exception_mask)
                 return false;
             result[i] = iv.result;
+        }
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatInverseProtocol {
+public: /* Methods: */
+
+    FloatInverseProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_inv(param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i] = rv.result;
         }
 
         return true;

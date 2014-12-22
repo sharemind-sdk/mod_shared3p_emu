@@ -118,6 +118,18 @@ sf_result64f sf_float_floor(sf_float64 a,
     return sf_float64_floor(a, fpuState);
 }
 
+sf_result32f sf_float_inv(sf_float32 a,
+                          sf_fpu_state fpuState = sf_fpu_state_default)
+{
+    return sf_float32_div(0x3f800000, a, fpuState);
+}
+
+sf_result64f sf_float_inv(sf_float64 a,
+                          sf_fpu_state fpuState = sf_fpu_state_default)
+{
+    return sf_float64_div(0x3ff0000000000000, a, fpuState);
+}
+
 sf_resultFlag sf_float_le(sf_float32 a, sf_float32 b,
                           sf_fpu_state fpuState = sf_fpu_state_default)
 {
@@ -165,6 +177,9 @@ sf_result64f sf_float_mul(sf_float64 a, sf_float64 b,
 {
     return sf_float64_mul(a, b, fpuState);
 }
+
+sf_float32 sf_float_neg(sf_float32 a) { return sf_float32_neg(a); }
+sf_float64 sf_float_neg(sf_float64 a) { return sf_float64_neg(a); }
 
 sf_result32f sf_float_sin(sf_float32 a,
                           sf_fpu_state fpuState = sf_fpu_state_default)

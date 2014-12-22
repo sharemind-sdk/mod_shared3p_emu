@@ -1683,20 +1683,16 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
     // Floating point arithmetic
   , { "shared3p::add_float32_vec", &binary_arith_vec<s3p_float32_t, AdditionProtocol> }
   , { "shared3p::add_float64_vec", &binary_arith_vec<s3p_float64_t, AdditionProtocol> }
-/*
-  , { "shared3p::sum_float32_vec",  &unary_arith_vec<s3p_float32_t, FloatSummationProtocol> }
-  , { "shared3p::sum_float64_vec",  &unary_arith_vec<s3p_float64_t, FloatSummationProtocol> }
-  , { "shared3p::neg_float32_vec",  &unary_arith_vec<s3p_float32_t, FloatNegationProtocol> }
-  , { "shared3p::neg_float64_vec",  &unary_arith_vec<s3p_float64_t, FloatNegationProtocol> }
-*/
+  , { "shared3p::sum_float32_vec", &unary_arith_vec<s3p_float32_t, SumProtocol> }
+  , { "shared3p::sum_float64_vec", &unary_arith_vec<s3p_float64_t, SumProtocol> }
+  , { "shared3p::neg_float32_vec", &unary_arith_vec<s3p_float32_t, NegProtocol> }
+  , { "shared3p::neg_float64_vec", &unary_arith_vec<s3p_float64_t, NegProtocol> }
   , { "shared3p::sub_float32_vec", &binary_arith_vec<s3p_float32_t, SubtractionProtocol> }
   , { "shared3p::sub_float64_vec", &binary_arith_vec<s3p_float64_t, SubtractionProtocol> }
   , { "shared3p::mul_float32_vec", &binary_arith_vec<s3p_float32_t, MultiplicationProtocol> }
   , { "shared3p::mul_float64_vec", &binary_arith_vec<s3p_float64_t, MultiplicationProtocol> }
-/*
-  , { "shared3p::inv_float32_vec",  &unary_arith_vec<s3p_float32_t, FloatInverseProtocol> }
-  , { "shared3p::inv_float64_vec",  &unary_arith_vec<s3p_float64_t, FloatInverseProtocol> }
-*/
+  , { "shared3p::inv_float32_vec", &unary_arith_vec<s3p_float32_t, FloatInverseProtocol> }
+  , { "shared3p::inv_float64_vec", &unary_arith_vec<s3p_float64_t, FloatInverseProtocol> }
   , { "shared3p::div_float32_vec", &binary_arith_vec<s3p_float32_t, DivisionProtocol> }
   , { "shared3p::div_float64_vec", &binary_arith_vec<s3p_float64_t, DivisionProtocol> }
   , { "shared3p::mulc_float32_vec", &binary_arith_public_vec<s3p_float32_t, MultiplicationProtocol> }
