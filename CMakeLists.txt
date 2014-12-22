@@ -65,7 +65,6 @@ ADD_DEFINITIONS(
 SET(SHARED3P_EMU_SOURCES
     "src/Facilities/ExecutionModelEvaluator.cpp"
     "src/mod_shared3p_emu.cpp"
-#    "src/Protocols/CRCProtocol.cpp"
     "src/RandomFacility.cpp"
     "src/Shared3pConfiguration.cpp"
     "src/Shared3pModule.cpp"
@@ -79,7 +78,7 @@ SET(SHARED3P_EMU_HEADERS
     "src/Facilities/ExecutionModelEvaluator.h"
     "src/Protocols/AESProtocol.h"
     "src/Protocols/Binary.h"
-#    "src/Protocols/CRCProtocol.h"
+    "src/Protocols/CRCProtocol.h"
     "src/Protocols/Randomize.h"
     "src/Protocols/SoftFloatUtility.h"
     "src/Protocols/Ternary.h"
