@@ -25,6 +25,7 @@ ADD_COMPILE_OPTIONS(
 
 FIND_PACKAGE(Boost REQUIRED)
 FIND_PACKAGE(ExprTk REQUIRED)
+FIND_PACKAGE(Cryptopp REQUIRED)
 FIND_PACKAGE(LogHard REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
@@ -34,6 +35,7 @@ FIND_PACKAGE(SharemindVmGlobals REQUIRED)
 INCLUDE_DIRECTORIES(
     ${Boost_INCLUDE_DIRS}
     ${ExprTk_INCLUDE_DIRS}
+    ${CRYPTOPP_INCLUDE_DIRS}
     ${LogHard_INCLUDE_DIRS}
     ${SharemindCxxHeaders_INCLUDE_DIRS}
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
@@ -91,6 +93,7 @@ SET(SHARED3P_EMU_HEADERS
 
 ADD_LIBRARY(sharemind_mod_shared3p_emu MODULE ${SHARED3P_EMU_SOURCES} ${SHARED3P_EMU_HEADERS})
 TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
+    ${CRYPTOPP_LIBRARIES}
     ${LogHard_LIBRARIES}
     ${SharemindCxxHeaders_LIBRARIES}
     ${SharemindLibExecutionProfiler_LIBRARIES}

@@ -22,6 +22,7 @@
 #include "Syscalls/Common.h"
 #include "Syscalls/CRCSyscalls.h"
 #include "Syscalls/Meta.h"
+#include "Protocols/AESProtocol.h"
 #include "Protocols/Binary.h"
 #include "Protocols/Ternary.h"
 #include "Protocols/Unary.h"
@@ -787,7 +788,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(aes_xor_uint32_vec,
                                  args, num_args, refs, crefs,
                                  returnValue, c)
 {
-    /*
     VMHandles handles;
     if (!SyscallArgs<4>::check(num_args, refs, crefs, returnValue) ||
         !handles.get(c, args))
@@ -825,12 +825,11 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(aes_xor_uint32_vec,
 
         SCOPED_SECTION_VM (pdpi->profiler(), sid,
                            "PROTOCOL_AES_ENCRYPTION", inputVec.size());
-        Protocol(*pdpi).processWithExpandedKey(inputVec, keyVec, outputVec);
+        Protocol().processWithExpandedKey(inputVec, keyVec, outputVec);
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();
     }
-    */
     return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 }
 
@@ -854,7 +853,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(aes_xor_uint32_vec_expand_key,
                                  args, num_args, refs, crefs,
                                  returnValue, c)
 {
-    /*
     VMHandles handles;
     if (!SyscallArgs<3>::check(num_args, refs, crefs, returnValue) ||
         !handles.get(c, args))
@@ -889,53 +887,11 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(aes_xor_uint32_vec_expand_key,
         SCOPED_SECTION_VM (pdpi->profiler(), sid,
                            "PROTOCOL_AES_KEY_EXPANSION", inputVec.size());
 
-        Protocol(*pdpi).expandAesKey(inputVec, outputVec);
+        Protocol().expandAesKey(inputVec, outputVec);
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();
     }
-    */
-    return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-}
-
-/**
- * SysCall: aes_test
- * Args:
- *      None
- * Precondition:
- *      None
- * Postcondition:
- *      Returns whether the call was successful
- */
-template <class Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(aes_test,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
-{
-    /*
-    VMHandles handles;
-    if (!SyscallArgs<3u>::check(num_args, refs, crefs, returnValue) ||
-        !handles.get(c, args))
-    {
-        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
-    }
-
-    try {
-        Shared3pPDPI * const pdpi = static_cast<Shared3pPDPI*>(handles.pdpiHandle);
-
-        Protocol aesProtocol(*pdpi);
-        BOOST_STATIC_ASSERT(sizeof(uint64_t) <= sizeof(size_t));
-        const size_t numberOfIterations = args[1u].uint64[0u];
-        const bool result = numberOfIterations > 0u
-                            ? aesProtocol.test(numberOfIterations, args[2u].uint64[0u])
-                            : true;
-        if (returnValue)
-            returnValue->uint64[0u] = result;
-        return SHAREMIND_MODULE_API_0x1_OK;
-    } catch (...) {
-        return catchModuleApiErrors ();
-    }
-    */
     return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 }
 
@@ -1658,15 +1614,13 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::vecmax_xor_uint64_vec", &unary_arith_vec<s3p_xor_uint64_t, MinimumMaximumProtocol<ModeMax> > }
 
   , { "shared3p::msnzb_xor_uint8_vec", unary_arith_vec<s3p_xor_uint8_t, MostSignificantNonZeroBitProtocol> }
-/*
+
   , { "shared3p::aes128_xor_uint32_vec", &aes_xor_uint32_vec<Aes128Protocol> }
-//  , { "shared3p::aes192_xor_uint32_vec", &aes_xor_uint32_vec<Aes192Protocol> }
-//  , { "shared3p::aes256_xor_uint32_vec", &aes_xor_uint32_vec<Aes256Protocol> }
+  , { "shared3p::aes192_xor_uint32_vec", &aes_xor_uint32_vec<Aes192Protocol> }
+  , { "shared3p::aes256_xor_uint32_vec", &aes_xor_uint32_vec<Aes256Protocol> }
   , { "shared3p::aes128_xor_uint32_vec_expand_key", &aes_xor_uint32_vec_expand_key<Aes128Protocol> }
-//  , { "shared3p::aes192_xor_uint32_vec_expand_key", &aes_xor_uint32_vec_expand_key<Aes192Protocol> }
-//  , { "shared3p::aes256_xor_uint32_vec_expand_key", &aes_xor_uint32_vec_expand_key<Aes256Protocol> }
-  , { "shared3p::aes128_test", &aes_test<Aes128Protocol> }
-*/
+  , { "shared3p::aes192_xor_uint32_vec_expand_key", &aes_xor_uint32_vec_expand_key<Aes192Protocol> }
+  , { "shared3p::aes256_xor_uint32_vec_expand_key", &aes_xor_uint32_vec_expand_key<Aes256Protocol> }
   , { "shared3p::crc16_xor_vec", &crc_xor_vec<CRCMode16> }
   , { "shared3p::crc32_xor_vec", &crc_xor_vec<CRCMode32> }
 
