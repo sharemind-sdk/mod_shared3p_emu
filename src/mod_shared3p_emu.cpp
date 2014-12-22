@@ -1705,10 +1705,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::divc_float64_vec", &binary_arith_public_vec<s3p_float64_t, DivisionProtocol> }
 
     // Floating point comparisons
-/*
   , { "shared3p::isnegligible_float32_vec", &unary_vec<s3p_float32_t, s3p_bool_t, FloatIsNegligibleProtocol> }
   , { "shared3p::isnegligible_float64_vec", &unary_vec<s3p_float64_t, s3p_bool_t, FloatIsNegligibleProtocol> }
-*/
   , { "shared3p::eq_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, EqualityProtocol> }
   , { "shared3p::eq_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, EqualityProtocol> }
     /*, { "shared3p::max_float32_vec", &max_vec<s3p_float32_t> }
@@ -1723,7 +1721,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::gte_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, GreaterThanOrEqualProtocol> }
 
    // Casting floating point numbers
-/*
   , { "shared3p::ceiling_float32_vec", &unary_vec<s3p_float32_t, s3p_int32_t, FloatCeilingProtocol> }
   , { "shared3p::ceiling_float64_vec", &unary_vec<s3p_float64_t, s3p_int64_t, FloatCeilingProtocol> }
   , { "shared3p::floor_float32_vec", &unary_vec<s3p_float32_t, s3p_int32_t, FloatFloorProtocol> }
@@ -1734,10 +1731,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::abs_float64_vec", &unary_vec<s3p_float64_t, s3p_float64_t, FloatAbsoluteValueProtocol> }
 
   // Special functions
-*/
   , { "shared3p::choose_float32_vec", &ternary_vec<s3p_bool_t, s3p_float32_t, s3p_float32_t, s3p_float32_t, ObliviousChoiceProtocol> }
   , { "shared3p::choose_float64_vec", &ternary_vec<s3p_bool_t, s3p_float64_t, s3p_float64_t, s3p_float64_t, ObliviousChoiceProtocol> }
-/*
   , { "shared3p::erf_float32_vec", &unary_arith_vec<s3p_float32_t, FloatErrorFunctionProtocol> }
   , { "shared3p::erf_float64_vec", &unary_arith_vec<s3p_float64_t, FloatErrorFunctionProtocol> }
   , { "shared3p::exp_float32_vec", &unary_arith_vec<s3p_float32_t, FloatPowerOfEProtocol> }
@@ -1748,7 +1743,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::sin_float64_vec", &unary_arith_vec<s3p_float64_t, FloatSineProtocol> }
   , { "shared3p::sqrt_float32_vec", &unary_arith_vec<s3p_float32_t, FloatSquareRootProtocol> }
   , { "shared3p::sqrt_float64_vec", &unary_arith_vec<s3p_float64_t, FloatSquareRootProtocol> }
-*/
 
   // Database functions
   , { "shared3p::vecshuf_float32_vec", &vector_shuffle<s3p_float32_t, false, false> }

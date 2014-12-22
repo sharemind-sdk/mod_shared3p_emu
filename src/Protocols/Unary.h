@@ -292,6 +292,213 @@ public: /* Methods: */
 
 }; /* class MostSignificantNonZeroBitProtocol { */
 
+class __attribute__ ((visibility("internal"))) FloatAbsoluteValueProtocol {
+public: /* Methods: */
+
+    FloatAbsoluteValueProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float_abs(param[i]);
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatCeilingProtocol {
+public: /* Methods: */
+
+    FloatCeilingProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T, typename U>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<U> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_ceil(param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            const auto iv = sf_float_to_int(rv.result);
+            if (iv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i] = iv.result;
+        }
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatErrorFunctionProtocol {
+public: /* Methods: */
+
+    FloatErrorFunctionProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_erf(param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i] = rv.result;
+        }
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatFloorProtocol {
+public: /* Methods: */
+
+    FloatFloorProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T, typename U>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<U> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_floor(param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            const auto iv = sf_float_to_int(rv.result);
+            if (iv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i] = iv.result;
+        }
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatIsNegligibleProtocol {
+public: /* Methods: */
+
+    FloatIsNegligibleProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<s3p_bool_t> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto exp = static_cast<size_t>(sf_float_exponent(param[i]));
+            result[i] = exp <= (T::bias - 20u);
+        }
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatNaturalLogarithmProtocol {
+public: /* Methods: */
+
+    FloatNaturalLogarithmProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_log(param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i] = rv.result;
+        }
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatPowerOfEProtocol {
+public: /* Methods: */
+
+    FloatPowerOfEProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_exp(param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i] = rv.result;
+        }
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatSineProtocol {
+public: /* Methods: */
+
+    FloatSineProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_sin(param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i] = rv.result;
+        }
+
+        return true;
+    }
+};
+
+class __attribute__ ((visibility("internal"))) FloatSquareRootProtocol {
+public: /* Methods: */
+
+    FloatSquareRootProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<T> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_sqrt(param[i]);
+            if (rv.fpu_state & sf_fpu_state_exception_mask)
+                return false;
+            result[i] = rv.result;
+        }
+
+        return true;
+    }
+};
+
 } /* namespace sharemind { */
 
 #endif /* MOD_SHARED3P_EMU_PROTOCOLS_UNARY_H */

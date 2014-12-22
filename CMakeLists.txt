@@ -31,6 +31,7 @@ FIND_PACKAGE(SharemindCxxHeaders REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
 FIND_PACKAGE(SharemindLibmodapi REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloat REQUIRED)
+FIND_PACKAGE(SharemindLibsoftfloatMath REQUIRED)
 FIND_PACKAGE(SharemindVmGlobals REQUIRED)
 INCLUDE_DIRECTORIES(
     ${Boost_INCLUDE_DIRS}
@@ -41,6 +42,7 @@ INCLUDE_DIRECTORIES(
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
     ${SharemindLibmodapi_INCLUDE_DIRS}
     ${SharemindLibsoftfloat_INCLUDE_DIRS}
+    ${SharemindLibsoftfloatMath_INCLUDE_DIRS}
     ${SharemindVmGlobals_INCLUDE_DIRS}
 )
 
@@ -50,6 +52,7 @@ ADD_DEFINITIONS(
     ${SharemindLibExecutionProfiler_DEFINITIONS}
     ${SharemindLibmodapi_DEFINITIONS}
     ${SharemindLibsoftfloat_DEFINITIONS}
+    ${SharemindLibsoftfloatMath_DEFINITIONS}
     ${SharemindVmGlobals_DEFINITIONS}
     "-Dexprtk_disable_comments"
     "-Dexprtk_disable_break_continue"
@@ -98,6 +101,7 @@ TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
     ${SharemindCxxHeaders_LIBRARIES}
     ${SharemindLibExecutionProfiler_LIBRARIES}
     ${SharemindLibsoftfloat_LIBRARIES}
+    ${SharemindLibsoftfloatMath_LIBRARIES}
     ${SharemindVmGlobals_LIBRARIES}
 )
 

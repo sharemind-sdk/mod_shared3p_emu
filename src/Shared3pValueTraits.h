@@ -233,6 +233,7 @@ struct __attribute__ ((visibility("internal"))) s3p_float32_t {
     static constexpr uint8_t heap_type_id = 0xcu;
     static constexpr size_t num_of_bits = 32u;
     static constexpr size_t log_of_bits = 5u;
+    static constexpr size_t bias = (1u << 7u) - 1u;
 };
 
 struct __attribute__ ((visibility("internal"))) s3p_float64_t {
@@ -242,6 +243,7 @@ struct __attribute__ ((visibility("internal"))) s3p_float64_t {
     static constexpr uint8_t heap_type_id = 0xdu;
     static constexpr size_t num_of_bits = 64u;
     static constexpr size_t log_of_bits = 6u;
+    static constexpr size_t bias = (1u << 10u) - 1u;
 };
 
 
