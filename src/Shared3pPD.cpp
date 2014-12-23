@@ -9,9 +9,9 @@
 
 #include <sharemind/ExecutionProfiler.h>
 #include "Facilities/ExecutionModelEvaluator.h"
+#include "Facilities/RandomFacility.h"
 #include "Shared3pModule.h"
 #include "Shared3pPD.h"
-#include "RandomFacility.h"
 
 
 namespace sharemind {
