@@ -1003,10 +1003,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::conv_bool_to_int16_vec", &unary_vec<s3p_bool_t, s3p_int16_t, ConversionProtocol> }
   , { "shared3p::conv_bool_to_int32_vec", &unary_vec<s3p_bool_t, s3p_int32_t, ConversionProtocol> }
   , { "shared3p::conv_bool_to_int64_vec", &unary_vec<s3p_bool_t, s3p_int64_t, ConversionProtocol> }
-  /*
-  , { "shared3p::conv_bool_to_float32_vec", &unary_vec<s3p_bool_t, s3p_float32_t, ConversionToFloatProtocol> }
-  , { "shared3p::conv_bool_to_float64_vec", &unary_vec<s3p_bool_t, s3p_float64_t, ConversionToFloatProtocol> }
-*/
+  , { "shared3p::conv_bool_to_float32_vec", &unary_vec<s3p_bool_t, s3p_float32_t, ConversionProtocol> }
+  , { "shared3p::conv_bool_to_float64_vec", &unary_vec<s3p_bool_t, s3p_float64_t, ConversionProtocol> }
 
    // Utilities
   , { "shared3p::randomize_bool_vec",  &nullary_vec<s3p_bool_t, RandomizeProtocol> }
@@ -1140,9 +1138,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::lte_uint64_vec", &binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, LessThanOrEqualProtocol> }
 
  // Casting
- // , { "shared3p::conv_float32_to_bool_vec", &unary_vec<s3p_float32_t, s3p_bool_t, ConversionProtocol> }
- // , { "shared3p::conv_float32_to_float64_vec", &unary_vec<s3p_float32_t, s3p_float64_t, ConversionProtocol> }
- // , { "shared3p::conv_float64_to_bool_vec", &unary_vec<s3p_float64_t, s3p_bool_t, ConversionProtocol> }
+  , { "shared3p::conv_float32_to_bool_vec", &unary_vec<s3p_float32_t, s3p_bool_t, ConversionProtocol> }
+  , { "shared3p::conv_float32_to_float64_vec", &unary_vec<s3p_float32_t, s3p_float64_t, ConversionProtocol> }
+  , { "shared3p::conv_float64_to_bool_vec", &unary_vec<s3p_float64_t, s3p_bool_t, ConversionProtocol> }
   , { "shared3p::conv_uint8_to_bool_vec",  &unary_vec<s3p_uint8_t, s3p_bool_t, ConversionProtocol> }
   , { "shared3p::conv_uint16_to_bool_vec", &unary_vec<s3p_uint16_t, s3p_bool_t, ConversionProtocol> }
   , { "shared3p::conv_uint32_to_bool_vec", &unary_vec<s3p_uint32_t, s3p_bool_t, ConversionProtocol> }
@@ -1176,19 +1174,14 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::conv_uint16_to_uint32_vec", &unary_vec<s3p_uint16_t, s3p_uint32_t, ConversionProtocol> }
   , { "shared3p::conv_uint16_to_uint64_vec", &unary_vec<s3p_uint16_t, s3p_uint64_t, ConversionProtocol> }
   , { "shared3p::conv_uint32_to_uint64_vec", &unary_vec<s3p_uint32_t, s3p_uint64_t, ConversionProtocol> }
-  /*
-  , { "shared3p::conv_uint8_to_float32_vec", &unary_vec<s3p_uint8_t, s3p_float32_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_uint8_to_float64_vec", &unary_vec<s3p_uint8_t, s3p_float64_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_uint16_to_float32_vec", &unary_vec<s3p_uint16_t, s3p_float32_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_uint16_to_float64_vec", &unary_vec<s3p_uint16_t, s3p_float64_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_uint32_to_float32_vec", &unary_vec<s3p_uint32_t, s3p_float32_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_uint32_to_float64_vec", &unary_vec<s3p_uint32_t, s3p_float64_t, ConversionToFloatProtocol> }
-  // This syscall is disabled until we can add precision to it.
-  // See ConversionToFloatProtocol.h
-//, { "shared3p::conv_uint64_to_float32_vec", &unary_vec<s3p_uint64_t, s3p_float32_t, ConversionToFloatProtocol> }
-  , { "shared3p::conv_uint64_to_float64_vec", &unary_vec<s3p_uint64_t, s3p_float64_t, ConversionToFloatProtocol> }
+  , { "shared3p::conv_uint8_to_float32_vec", &unary_vec<s3p_uint8_t, s3p_float32_t, ConversionProtocol> }
+  , { "shared3p::conv_uint8_to_float64_vec", &unary_vec<s3p_uint8_t, s3p_float64_t, ConversionProtocol> }
+  , { "shared3p::conv_uint16_to_float32_vec", &unary_vec<s3p_uint16_t, s3p_float32_t, ConversionProtocol> }
+  , { "shared3p::conv_uint16_to_float64_vec", &unary_vec<s3p_uint16_t, s3p_float64_t, ConversionProtocol> }
+  , { "shared3p::conv_uint32_to_float32_vec", &unary_vec<s3p_uint32_t, s3p_float32_t, ConversionProtocol> }
+  , { "shared3p::conv_uint32_to_float64_vec", &unary_vec<s3p_uint32_t, s3p_float64_t, ConversionProtocol> }
+  , { "shared3p::conv_uint64_to_float64_vec", &unary_vec<s3p_uint64_t, s3p_float64_t, ConversionProtocol> }
 
-*/
   , { "shared3p::bit_extract_xor_uint8_vec",  &unary_vec<s3p_xor_uint8_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint16_vec", &unary_vec<s3p_xor_uint16_t, s3p_bool_t, BitExtractionProtocol> }
   , { "shared3p::bit_extract_xor_uint32_vec", &unary_vec<s3p_xor_uint32_t, s3p_bool_t, BitExtractionProtocol> }
@@ -1218,18 +1211,14 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::vecmin_uint16_vec", &unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_uint32_vec", &unary_arith_vec<s3p_uint32_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_uint64_vec", &unary_arith_vec<s3p_uint64_t, MinimumMaximumProtocol<ModeMin> > }
-/*
   , { "shared3p::vecmin_float32_vec", &unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmin_float64_vec", &unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> > }
-*/
   , { "shared3p::vecmax_uint8_vec",  &unary_arith_vec<s3p_uint8_t, MinimumMaximumProtocol<ModeMax> > }
   , { "shared3p::vecmax_uint16_vec", &unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMax> > }
   , { "shared3p::vecmax_uint32_vec", &unary_arith_vec<s3p_uint32_t, MinimumMaximumProtocol<ModeMax> > }
   , { "shared3p::vecmax_uint64_vec", &unary_arith_vec<s3p_uint64_t, MinimumMaximumProtocol<ModeMax> > }
-/*
   , { "shared3p::vecmax_float32_vec", &unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> > }
   , { "shared3p::vecmax_float64_vec", &unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> > }
-*/
 
   // Database functions
   , { "shared3p::vecshuf_uint8_vec", &vector_shuffle<s3p_uint8_t, false, false> }
@@ -1398,18 +1387,13 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::conv_int16_to_int64_vec", &unary_vec<s3p_int16_t, s3p_int64_t, ConversionProtocol> }
   , { "shared3p::conv_int32_to_int64_vec", &unary_vec<s3p_int32_t, s3p_int64_t, ConversionProtocol> }
 
-/*
-  , { "shared3p::conv_int8_to_float32_vec", &unary_vec<s3p_int8_t, s3p_float32_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_int8_to_float64_vec", &unary_vec<s3p_int8_t, s3p_float64_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_int16_to_float32_vec", &unary_vec<s3p_int16_t, s3p_float32_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_int16_to_float64_vec", &unary_vec<s3p_int16_t, s3p_float64_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_int32_to_float32_vec", &unary_vec<s3p_int32_t, s3p_float32_t,ConversionToFloatProtocol> }
-  , { "shared3p::conv_int32_to_float64_vec", &unary_vec<s3p_int32_t, s3p_float64_t, ConversionToFloatProtocol> }
-  // This syscall is disabled until we can add precision to it.
-  // See ConversionToFloatProtocol.h
-  //, { "shared3p::conv_uint64_to_float32_vec", &unary_vec<s3p_uint64_t, s3p_float32_t, ConversionToFloatProtocol> }
-  , { "shared3p::conv_int64_to_float64_vec", &unary_vec<s3p_int64_t, s3p_float64_t, ConversionToFloatProtocol> }
-*/
+  , { "shared3p::conv_int8_to_float32_vec", &unary_vec<s3p_int8_t, s3p_float32_t, ConversionProtocol> }
+  , { "shared3p::conv_int8_to_float64_vec", &unary_vec<s3p_int8_t, s3p_float64_t, ConversionProtocol> }
+  , { "shared3p::conv_int16_to_float32_vec", &unary_vec<s3p_int16_t, s3p_float32_t, ConversionProtocol> }
+  , { "shared3p::conv_int16_to_float64_vec", &unary_vec<s3p_int16_t, s3p_float64_t, ConversionProtocol> }
+  , { "shared3p::conv_int32_to_float32_vec", &unary_vec<s3p_int32_t, s3p_float32_t, ConversionProtocol> }
+  , { "shared3p::conv_int32_to_float64_vec", &unary_vec<s3p_int32_t, s3p_float64_t, ConversionProtocol> }
+  , { "shared3p::conv_int64_to_float64_vec", &unary_vec<s3p_int64_t, s3p_float64_t, ConversionProtocol> }
 
   // Utilities
   , { "shared3p::randomize_int8_vec",  &nullary_vec<s3p_int8_t, RandomizeProtocol> }
@@ -1705,8 +1689,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::isnegligible_float64_vec", &unary_vec<s3p_float64_t, s3p_bool_t, FloatIsNegligibleProtocol> }
   , { "shared3p::eq_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, EqualityProtocol> }
   , { "shared3p::eq_float64_vec", &binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, EqualityProtocol> }
-    /*, { "shared3p::max_float32_vec", &max_vec<s3p_float32_t> }
-      , { "shared3p::min_float32_vec", &min_vec<s3p_float32_t> }*/
   , { "shared3p::lt_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, LessThanProtocol> }
   , { "shared3p::lte_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, LessThanOrEqualProtocol> }
   , { "shared3p::gt_float32_vec", &binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, GreaterThanProtocol> }
@@ -1723,8 +1705,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::floor_float64_vec", &unary_vec<s3p_float64_t, s3p_int64_t, FloatFloorProtocol> }
 
   // Floating point absolute value
-  , { "shared3p::abs_float32_vec", &unary_vec<s3p_float32_t, s3p_float32_t, FloatAbsoluteValueProtocol> }
-  , { "shared3p::abs_float64_vec", &unary_vec<s3p_float64_t, s3p_float64_t, FloatAbsoluteValueProtocol> }
+  , { "shared3p::abs_float32_vec", &unary_vec<s3p_float32_t, s3p_float32_t, AbsoluteValueProtocol> }
+  , { "shared3p::abs_float64_vec", &unary_vec<s3p_float64_t, s3p_float64_t, AbsoluteValueProtocol> }
 
   // Special functions
   , { "shared3p::choose_float32_vec", &ternary_vec<s3p_bool_t, s3p_float32_t, s3p_float32_t, s3p_float32_t, ObliviousChoiceProtocol> }
