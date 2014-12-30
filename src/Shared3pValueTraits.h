@@ -154,7 +154,7 @@ struct __attribute__ ((visibility("internal"))) s3p_uint256_t {
 
 struct __attribute__ ((visibility("internal"))) s3p_int8_t {
     typedef signed_value_tag value_category;
-    typedef uint8_t share_type;
+    typedef int8_t share_type;
     typedef int8_t public_type;
     static constexpr uint8_t heap_type_id = 0xdu;
     static constexpr size_t num_of_bits = 8u;
@@ -163,7 +163,7 @@ struct __attribute__ ((visibility("internal"))) s3p_int8_t {
 
 struct __attribute__ ((visibility("internal"))) s3p_int16_t {
     typedef signed_value_tag value_category;
-    typedef uint16_t share_type;
+    typedef int16_t share_type;
     typedef int16_t public_type;
     static constexpr uint8_t heap_type_id = 0xeu;
     static constexpr size_t num_of_bits = 16u;
@@ -172,7 +172,7 @@ struct __attribute__ ((visibility("internal"))) s3p_int16_t {
 
 struct __attribute__ ((visibility("internal"))) s3p_int32_t {
     typedef signed_value_tag value_category;
-    typedef uint32_t share_type;
+    typedef int32_t share_type;
     typedef int32_t public_type;
     static constexpr uint8_t heap_type_id = 0xfu;
     static constexpr size_t num_of_bits = 32u;
@@ -181,7 +181,7 @@ struct __attribute__ ((visibility("internal"))) s3p_int32_t {
 
 struct __attribute__ ((visibility("internal"))) s3p_int64_t {
     typedef signed_value_tag value_category;
-    typedef uint64_t share_type;
+    typedef int64_t share_type;
     typedef int64_t public_type;
     static constexpr uint8_t heap_type_id = 0x10u;
     static constexpr size_t num_of_bits = 64u;
