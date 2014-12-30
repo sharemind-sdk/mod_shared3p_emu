@@ -218,6 +218,28 @@ public: /* Methods: */
 
 }; /* class ConversionProtocol { */
 
+class __attribute__ ((visibility("internal"))) FloatCeilingProtocol {
+public: /* Methods: */
+
+    FloatCeilingProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T, typename U>
+    bool invoke(const s3p_vec<T> & param, s3p_vec<U> & result,
+                float_numeric_value_tag)
+    {
+        if (param.size() != result.size())
+            return false;
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            const auto rv = sf_float_ceil(param[i]);
+            const auto iv = sf_float_to_int(rv.result);
+            result[i] = iv.result;
+        }
+
+        return true;
+    }
+};
+
 class __attribute__ ((visibility("internal"))) FloatErrorFunctionProtocol {
 public: /* Methods: */
 
@@ -709,32 +731,6 @@ public: /* Methods: */
     }
 
 }; /* class SumProtocol { */
-
-class __attribute__ ((visibility("internal"))) FloatCeilingProtocol {
-public: /* Methods: */
-
-    FloatCeilingProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
-
-    template <typename T, typename U>
-    bool invoke(const s3p_vec<T> & param, s3p_vec<U> & result,
-                float_numeric_value_tag)
-    {
-        if (param.size() != result.size())
-            return false;
-
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_ceil(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            const auto iv = sf_float_to_int(rv.result);
-            if (iv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = iv.result;
-        }
-
-        return true;
-    }
-};
 
 } /* namespace sharemind { */
 
