@@ -80,7 +80,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(binary_vec,
  * Args:
  *      0) uint64[0]     pd index
  *      1) p[0]          LHS handle
- *      2) p[0]          RHS handle
  *      2) p[0]          output handle
  * Precondition:
  *      LHS handle is a vector of type T1.
@@ -114,10 +113,6 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(binary_public_vec,
         const s3p_vec<T1> & param1 = *static_cast<s3p_vec<T1>*>(lhsHandle);
         const immutable_vm_vec<T2> param2(crefs[0u]);
         s3p_vec<T3> & result = *static_cast<s3p_vec<T3>*>(resultHandle);
-
-        if (param1.size() <= crefs[0u].size / sizeof(T2) ||
-                param1.size() != result.size())
-            return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
 
         Protocol protocol(*pdpi);
         if (!protocol.invoke(param1, param2, result, typename value_traits<T1>::value_category()))
