@@ -42,12 +42,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_add(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_add(param1[i], param2[i]).result;
 
         return true;
     }
@@ -170,12 +166,13 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_div(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
+        for (size_t i = 0u; i < param2.size(); ++i) {
+            if (param2[i] == 0x0)
                 return false;
-            result[i] = rv.result;
         }
+
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_div(param1[i], param2[i]).result;
 
         return true;
     }
@@ -205,12 +202,13 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_div(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
+        for (size_t i = 0u; i < param2.size(); ++i) {
+            if (param2[i] == 0x0)
                 return false;
-            result[i] = rv.result;
         }
+
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_div(param1[i], param2[i]).result;
 
         return true;
     }
@@ -242,12 +240,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_div(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_eq(param1[i], param2[i]).result;
 
         return true;
     }
@@ -279,12 +273,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_lt(param2[i], param1[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_lt(param2[i], param1[i]).result;
 
         return true;
     }
@@ -316,12 +306,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_le(param2[i], param1[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_le(param2[i], param1[i]).result;
 
         return true;
     }
@@ -423,12 +409,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_lt(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_lt(param1[i], param2[i]).result;
 
         return true;
     }
@@ -460,12 +442,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_le(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_le(param1[i], param2[i]).result;
 
         return true;
     }
@@ -497,12 +475,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_lt(param2[i], param1[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result ? param1[i] : param2[i];
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_lt(param2[i], param1[i]).result ? param1[i] : param2[i];
 
         return true;
     }
@@ -534,12 +508,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_lt(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result ? param1[i] : param2[i];
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_lt(param1[i], param2[i]).result ? param1[i] : param2[i];
 
         return true;
     }
@@ -571,12 +541,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_mul(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_mul(param1[i], param2[i]).result;
 
         return true;
     }
@@ -601,12 +567,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_mul(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_mul(param1[i], param2[i]).result;
 
         return true;
     }
@@ -681,12 +643,8 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param1.size(); ++i) {
-            const auto rv = sf_float_sub(param1[i], param2[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param1.size(); ++i)
+            result[i] = sf_float_sub(param1[i], param2[i]).result;
 
         return true;
     }

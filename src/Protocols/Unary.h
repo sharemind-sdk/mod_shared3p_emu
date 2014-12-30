@@ -117,12 +117,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_val_to_float32(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_val_to_float32(param[i]).result;
 
         return true;
     }
@@ -134,13 +130,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv =
-                sf_float32_to_val<typename s3p_vec<T>::value_type>(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float32_to_val<typename s3p_vec<T>::value_type>(param[i]).result;
 
         return true;
     }
@@ -152,13 +143,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float32_to_float64(param[i],
-                                                  sf_fpu_state_default);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float32_to_float64(param[i], sf_fpu_state_default).result;
 
         return true;
     }
@@ -170,12 +156,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_val_to_float64(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_val_to_float64(param[i]).result;
 
         return true;
     }
@@ -187,13 +169,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv =
-                sf_float64_to_val<typename s3p_vec<T>::value_type>(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float64_to_val<typename s3p_vec<T>::value_type>(param[i]).result;
 
         return true;
     }
@@ -205,13 +182,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float64_to_float32(param[i],
-                                                  sf_fpu_state_default);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float64_to_float32(param[i], sf_fpu_state_default).result;
 
         return true;
     }
@@ -252,12 +224,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_erf(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float_erf(param[i]).result;
 
         return true;
     }
@@ -277,11 +245,7 @@ public: /* Methods: */
 
         for (size_t i = 0u; i < param.size(); ++i) {
             const auto rv = sf_float_floor(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
             const auto iv = sf_float_to_int(rv.result);
-            if (iv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
             result[i] = iv.result;
         }
 
@@ -301,12 +265,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_inv(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float_inv(param[i]).result;
 
         return true;
     }
@@ -327,7 +287,7 @@ public: /* Methods: */
 
         for (size_t i = 0u; i < param.size(); ++i) {
             const auto exp = static_cast<size_t>(sf_float_exponent(param[i]));
-            result[i] = exp <= (T::bias - 20u);
+            result[i] = exp <= (T::bias - 20u); /// \todo
         }
 
         return true;
@@ -346,12 +306,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_log(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float_log(param[i]).result;
 
         return true;
     }
@@ -369,12 +325,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_exp(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float_exp(param[i]).result;
 
         return true;
     }
@@ -392,12 +344,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_sin(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float_sin(param[i]).result;
 
         return true;
     }
@@ -415,12 +363,8 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_sqrt(param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i] = rv.result;
-        }
+        for (size_t i = 0u; i < param.size(); ++i)
+            result[i] = sf_float_sqrt(param[i]).result;
 
         return true;
     }
@@ -481,34 +425,21 @@ public: /* Methods: */
 
         const size_t subarr_len = param_size / result_size;
 
-        /// \todo does not seem like a very good way to do this
-        class FpuException : public std::exception {};
-
         auto comp = [](typename s3p_vec<T>::value_type const & a,
                        typename s3p_vec<T>::value_type const & b)
-        {
-            const auto rv = sf_float_lt(a, b);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                throw FpuException();
+            { return sf_float_lt(a, b).result != 0u; };
 
-            return rv.result != 0u;
-        };
-
-        try {
-            auto offset = param.cbegin();
-            for (size_t i = 0u; i < result_size; ++i) {
-                if (mode == ModeMin) {
-                    result[i] = *std::min_element(offset, offset + subarr_len,
-                                                  comp);
-                } else {
-                    result[i] = *std::max_element(offset, offset + subarr_len,
-                                                  comp);
-                }
-
-                offset += subarr_len;
+        auto offset = param.cbegin();
+        for (size_t i = 0u; i < result_size; ++i) {
+            if (mode == ModeMin) {
+                result[i] =
+                    *std::min_element(offset, offset + subarr_len, comp);
+            } else {
+                result[i] =
+                    *std::max_element(offset, offset + subarr_len, comp);
             }
-        } catch (const FpuException &) {
-            return false;
+
+            offset += subarr_len;
         }
 
         return true;
@@ -720,12 +651,8 @@ public: /* Methods: */
             result[i] = 0;
 
         const size_t subarr_len = param_size / result_size;
-        for (size_t i = 0u; i < param_size; ++i) {
-            const auto rv = sf_float_add(result[i / subarr_len], param[i]);
-            if (rv.fpu_state & sf_fpu_state_exception_mask)
-                return false;
-            result[i / subarr_len] = rv.result;
-        }
+        for (size_t i = 0u; i < param_size; ++i)
+            result[i / subarr_len] = sf_float_add(result[i / subarr_len], param[i]).result;
 
         return true;
     }
