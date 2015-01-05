@@ -54,9 +54,7 @@ CRCModeInfo<CRCMode16>::share_type CRCModeInfo<CRCMode16>::table[256];
 CRCModeInfo<CRCMode32>::share_type CRCModeInfo<CRCMode32>::table[256];
 
 template <CRCMode mode>
-SHAREMIND_MODULE_API_0x1_SYSCALL(crc_xor_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(crc_xor_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<3>::check(num_args, refs, crefs, returnValue) ||
@@ -89,6 +87,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(crc_xor_vec,
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
+        PROFILE_SYSCALL(pdpi.profiler(), pdpi.modelEvaluator(), name,
+                        inputVec.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (const std::bad_alloc &) {
         return SHAREMIND_MODULE_API_0x1_OUT_OF_MEMORY;
@@ -102,13 +103,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(crc_xor_vec,
  * Explicitly instantiate system calls:
  */
 
-template SHAREMIND_MODULE_API_0x1_SYSCALL(crc_xor_vec<CRCMode16>,
-                                          args, num_args, refs, crefs,
-                                          returnValue, c);
-
-template SHAREMIND_MODULE_API_0x1_SYSCALL(crc_xor_vec<CRCMode32>,
-                                          args, num_args, refs, crefs,
-                                          returnValue, c);
+template NAMED_SYSCALL(crc_xor_vec<CRCMode16>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+template NAMED_SYSCALL(crc_xor_vec<CRCMode32>,
+                       name, args, num_args, refs, crefs, returnValue, c);
 
 
 } /* namespace sharemind */

@@ -11,6 +11,7 @@
 #define MOD_ADDITIVE3P_SYSCALLS_CRCSYSCALLS_H
 
 #include <sharemind/libmodapi/api_0x1.h>
+#include "Common.h"
 
 namespace sharemind {
 
@@ -27,9 +28,8 @@ enum CRCMode {
  *      2) p[0]          output handle
  */
 template <CRCMode mode>
-SHAREMIND_MODULE_API_0x1_SYSCALL(crc_xor_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c) __attribute__ ((visibility("internal")));
+NAMED_SYSCALL(crc_xor_vec, name, args, num_args, refs, crefs, returnValue, c)
+    __attribute__ ((visibility("internal")));
 
 } /* namespace sharemind */
 

@@ -16,10 +16,10 @@
 #include "../Shared3pPDPI.h"
 #include "../VMReferences.h"
 
+
 /**
  * Meta-syscalls for many common cases.
  */
-
 
 namespace sharemind {
 
@@ -36,9 +36,7 @@ namespace sharemind {
  *      Output handle is a vector of type T3.
  */
 template <typename T1, typename T2, typename T3, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(binary_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(binary_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<4>::check(num_args, refs, crefs, returnValue) ||
@@ -69,6 +67,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(binary_vec,
         if (!protocol.invoke(param1, param2, result, typename value_traits<T1>::value_category()))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param1.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors();
@@ -87,9 +88,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(binary_vec,
  *      Output handle is a vector of type T3.
  */
 template <typename T1, typename T2, typename T3, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(binary_public_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(binary_public_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<3, false, 0u, 1u>::check(num_args, refs, crefs, returnValue) ||
@@ -118,6 +117,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(binary_public_vec,
         if (!protocol.invoke(param1, param2, result, typename value_traits<T1>::value_category()))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param1.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors();
@@ -135,11 +137,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(binary_public_vec,
  *      All handles are valid vectors of type T.
  */
 template <typename T, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(binary_arith_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(binary_arith_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
-    return binary_vec<T, T, T, Protocol>(args, num_args, refs, crefs, returnValue, c);
+    return binary_vec<T, T, T, Protocol>(name, args, num_args, refs, crefs, returnValue, c);
 }
 
 /**
@@ -153,11 +153,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(binary_arith_vec,
  *      All handles are valid vectors of type T.
  */
 template <typename T, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(binary_arith_public_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(binary_arith_public_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
-    return binary_public_vec<T, T, T, Protocol>(args, num_args, refs, crefs, returnValue, c);
+    return binary_public_vec<T, T, T, Protocol>(name, args, num_args, refs, crefs, returnValue, c);
 }
 
 /**
@@ -171,9 +169,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(binary_arith_public_vec,
  *      Output handle is a vector of type L.
  */
 template <typename T, typename L, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(unary_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(unary_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<3>::check(num_args, refs, crefs, returnValue) ||
@@ -201,6 +197,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(unary_vec,
         if (!protocol.invoke(param, result, typename value_traits<T>::value_category()))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors();
@@ -217,9 +216,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(unary_vec,
  *      Both handles are valid vectors of type T.
  */
 template <typename T, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(unary_arith_vec, args, num_args, refs, crefs, returnValue, c)
+NAMED_SYSCALL(unary_arith_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
-    return unary_vec<T, T, Protocol>(args, num_args, refs, crefs, returnValue, c);
+    return unary_vec<T, T, Protocol>(name, args, num_args, refs, crefs, returnValue, c);
 }
 
 /**
@@ -231,9 +230,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(unary_arith_vec, args, num_args, refs, crefs, r
  *      Output handle is valid vectors of type T.
  */
 template <typename T, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(nullary_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(nullary_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<2>::check(num_args, refs, crefs, returnValue) ||
@@ -256,6 +253,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(nullary_vec,
         if (!Protocol(*pdpi).invoke(result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        result.size());
+
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors();
@@ -277,9 +277,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(nullary_vec,
  *      Output handle is a vector of type T4.
  */
 template <typename T1, typename T2, typename T3, typename T4, typename Protocol>
-SHAREMIND_MODULE_API_0x1_SYSCALL(ternary_vec,
-                                 args, num_args, refs, crefs,
-                                 returnValue, c)
+NAMED_SYSCALL(ternary_vec, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
     if (!SyscallArgs<5>::check(num_args, refs, crefs, returnValue) ||
@@ -312,6 +310,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(ternary_vec,
         Protocol protocol(*pdpi);
         if (!protocol.invoke(param1, param2, param3, result, typename value_traits<T1>::value_category()))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        param1.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
