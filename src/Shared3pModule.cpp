@@ -58,12 +58,11 @@ public: /* Methods: */
 
 namespace sharemind {
 
-Shared3pModule::Shared3pModule() {
+Shared3pModule::Shared3pModule(ExecutionProfiler & profiler) : m_profiler(profiler) {
     m_logBackend.reset(new LogHard::Backend());
     m_logBackend->addAppender(new StdErrAppender());
     m_logger.reset(new LogHard::Logger(*m_logBackend));
-    m_profiler.reset(new ExecutionProfiler(*m_logger));
-    m_profiler->startLog("emulator-profile.csv");
+    m_profiler.startLog("emulator-profile.csv");
 }
 
 } /* namespace sharemind { */

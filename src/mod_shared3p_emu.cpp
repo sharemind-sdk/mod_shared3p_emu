@@ -928,12 +928,19 @@ SHAREMIND_MODULE_API_MODULE_INFO("shared3p",
 SHAREMIND_MODULE_API_0x1_INITIALIZER(c) __attribute__ ((visibility("default")));
 SHAREMIND_MODULE_API_0x1_INITIALIZER(c) {
     assert(c);
+    const SharemindModuleApi0x1Facility * const fexecutionprofiler
+            = c->getModuleFacility(c, "Profiler");
+    if (!fexecutionprofiler || !fexecutionprofiler->facility)
+        return SHAREMIND_MODULE_API_0x1_MISSING_FACILITY;
+
+    sharemind::ExecutionProfiler * const executionProfilerFacility =
+        static_cast<sharemind::ExecutionProfiler *>(fexecutionprofiler->facility);
 
     /*
      Initialize the module handle
     */
     try {
-        c->moduleHandle = new sharemind::Shared3pModule();
+        c->moduleHandle = new sharemind::Shared3pModule(*executionProfilerFacility);
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();

@@ -28,23 +28,23 @@ class __attribute__ ((visibility("internal"))) Shared3pModule {
 
 public: /* Methods: */
 
-    Shared3pModule();
+    Shared3pModule(ExecutionProfiler & m_profiler);
 
     const LogHard::Logger & logger() const noexcept
     { return *m_logger; }
 
     inline ExecutionProfiler & profiler() noexcept
-    { return *m_profiler; }
+    { return m_profiler; }
 
     inline const ExecutionProfiler & profiler() const noexcept
-    { return *m_profiler; }
+    { return m_profiler; }
 
 private:
 
     /// \todo Logger and ExecutionProfiler should be in a separate module.
     std::unique_ptr<LogHard::Backend> m_logBackend;
     std::unique_ptr<LogHard::Logger> m_logger;
-    std::unique_ptr<ExecutionProfiler> m_profiler;
+    ExecutionProfiler & m_profiler;
 
 }; /* class Shared3pModule { */
 
