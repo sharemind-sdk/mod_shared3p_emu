@@ -62,7 +62,6 @@ Shared3pModule::Shared3pModule(ExecutionProfiler & profiler) : m_profiler(profil
     m_logBackend.reset(new LogHard::Backend());
     m_logBackend->addAppender(new StdErrAppender());
     m_logger.reset(new LogHard::Logger(*m_logBackend));
-    m_profiler.startLog("emulator-profile.csv");
 }
 
 } /* namespace sharemind { */
