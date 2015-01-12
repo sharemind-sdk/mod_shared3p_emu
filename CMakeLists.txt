@@ -27,33 +27,33 @@ FIND_PACKAGE(Boost REQUIRED)
 FIND_PACKAGE(ExprTk REQUIRED)
 FIND_PACKAGE(Cryptopp REQUIRED)
 FIND_PACKAGE(LogHard REQUIRED)
+FIND_PACKAGE(SharemindCHeaders REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
 FIND_PACKAGE(SharemindLibmodapi REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloat REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloatMath REQUIRED)
-FIND_PACKAGE(SharemindVmGlobals REQUIRED)
 INCLUDE_DIRECTORIES(
     ${Boost_INCLUDE_DIRS}
     ${ExprTk_INCLUDE_DIRS}
     ${CRYPTOPP_INCLUDE_DIRS}
     ${LogHard_INCLUDE_DIRS}
+    ${SharemindCHeaders_INCLUDE_DIRS}
     ${SharemindCxxHeaders_INCLUDE_DIRS}
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
     ${SharemindLibmodapi_INCLUDE_DIRS}
     ${SharemindLibsoftfloat_INCLUDE_DIRS}
     ${SharemindLibsoftfloatMath_INCLUDE_DIRS}
-    ${SharemindVmGlobals_INCLUDE_DIRS}
 )
 
 ADD_DEFINITIONS(
     ${LogHard_DEFINITIONS}
+    ${SharemindCHeaders_DEFINITIONS}
     ${SharemindCxxHeaders_DEFINITIONS}
     ${SharemindLibExecutionProfiler_DEFINITIONS}
     ${SharemindLibmodapi_DEFINITIONS}
     ${SharemindLibsoftfloat_DEFINITIONS}
     ${SharemindLibsoftfloatMath_DEFINITIONS}
-    ${SharemindVmGlobals_DEFINITIONS}
     "-Dexprtk_disable_comments"
     "-Dexprtk_disable_break_continue"
     "-Dexprtk_disable_enhanced_features"
@@ -101,11 +101,11 @@ ADD_LIBRARY(sharemind_mod_shared3p_emu MODULE ${SHARED3P_EMU_SOURCES} ${SHARED3P
 TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
     ${CRYPTOPP_LIBRARIES}
     ${LogHard_LIBRARIES}
+    ${SharemindCHeaders_LIBRARIES}
     ${SharemindCxxHeaders_LIBRARIES}
     ${SharemindLibExecutionProfiler_LIBRARIES}
     ${SharemindLibsoftfloat_LIBRARIES}
     ${SharemindLibsoftfloatMath_LIBRARIES}
-    ${SharemindVmGlobals_LIBRARIES}
 )
 
 INSTALL(TARGETS sharemind_mod_shared3p_emu LIBRARY DESTINATION "lib")
