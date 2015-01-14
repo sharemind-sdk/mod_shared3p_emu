@@ -552,7 +552,7 @@ public: /* Methods: */
     ProductProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
 
     template <typename T, typename U>
-    bool invoke(const s3p_vec<T> & param, s3p_vec<U> & result, any_value_tag) {
+    bool invoke(const s3p_vec<T> & param, s3p_vec<U> & result, numeric_value_tag) {
         const size_t param_size = param.size ();
         const size_t result_size = result.size ();
         if (result_size == 0u)
@@ -569,7 +569,7 @@ public: /* Methods: */
             return false;
 
         for (size_t i = 0u; i < result_size; ++i) {
-            result[i] = 0;
+            result[i] = 1;
         }
 
         const size_t subarr_len = param_size / result_size;
