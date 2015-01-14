@@ -616,13 +616,6 @@ public: /* Methods: */
         if (result_size == 0u)
             return false;
 
-        if (param_size == 0u) {
-            if (result_size != 1)
-                return false;
-            result[0] = 0;
-            return true;
-        }
-
         if (param_size % result_size != 0u)
             return false;
 
@@ -646,13 +639,6 @@ public: /* Methods: */
         const size_t result_size = result.size ();
         if (result_size == 0u)
             return false;
-
-        if (param_size == 0u) {
-            if (result_size != 1)
-                return false;
-            result[0] = 0;
-            return true;
-        }
 
         if (param_size % result_size != 0u)
             return false;
