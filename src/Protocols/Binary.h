@@ -191,7 +191,7 @@ public: /* Methods: */
     bool invoke(const s3p_vec<T> & param1, const immutable_vm_vec<T> & param2,
                 s3p_vec<T> & result, numeric_value_tag)
     {
-        if (param1.size() != param2.size() || param1.size() != result.size())
+        if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
         for (size_t i = 0u; i < param2.size(); ++i) {
@@ -209,7 +209,7 @@ public: /* Methods: */
     bool invoke(const s3p_vec<T> & param1, const immutable_vm_vec<T> & param2,
                 s3p_vec<T> & result, float_numeric_value_tag)
     {
-        if (param1.size() != param2.size() || param1.size() != result.size())
+        if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
         for (size_t i = 0u; i < param2.size(); ++i) {
@@ -335,7 +335,7 @@ public: /* Methods: */
                 s3p_vec<T> & result,
                 xored_numeric_value_tag)
     {
-        if (param1.size() != param2.size() || param1.size() != result.size())
+        if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
         constexpr const size_t n =
@@ -370,7 +370,7 @@ public: /* Methods: */
                 s3p_vec<T> & result,
                 xored_numeric_value_tag)
     {
-        if (param1.size() != param2.size() || param1.size() != result.size())
+        if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
         constexpr const size_t n =
@@ -561,7 +561,7 @@ public: /* Methods: */
     bool invoke(const s3p_vec<T> & param1, const immutable_vm_vec<T> & param2,
                 s3p_vec<T> & result, numeric_value_tag)
     {
-        if (param1.size() != param2.size() || param1.size() != result.size())
+        if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
         for (size_t i = 0u; i < param1.size(); ++i)
@@ -574,7 +574,7 @@ public: /* Methods: */
     bool invoke(const s3p_vec<T> & param1, const immutable_vm_vec<T> & param2,
                 s3p_vec<T> & result, float_numeric_value_tag)
     {
-        if (param1.size() != param2.size() || param1.size() != result.size())
+        if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
         for (size_t i = 0u; i < param1.size(); ++i)
@@ -612,7 +612,7 @@ public: /* Methods: */
     bool invoke(const s3p_vec<T> & param1, const immutable_vm_vec<T> & param2,
                 s3p_vec<T> & result, numeric_value_tag)
     {
-        if (param1.size() != param2.size() || param1.size() != result.size())
+        if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
         for (size_t i = 0u; i < param2.size(); ++i) {
