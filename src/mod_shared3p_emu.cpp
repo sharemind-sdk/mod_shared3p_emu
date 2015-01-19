@@ -973,6 +973,501 @@ SHAREMIND_MODULE_API_0x1_DEINITIALIZER(c) {
     }
 }
 
+/*
+ * Define wrappers for named syscalls
+ */
+NAMED_SYSCALL_WRAPPER(not_bool_vec, unary_arith_vec<s3p_bool_t, NotProtocol>)
+NAMED_SYSCALL_WRAPPER(and_bool_vec, binary_arith_vec<s3p_bool_t, BitwiseAndProtocol>)
+NAMED_SYSCALL_WRAPPER(or_bool_vec, binary_arith_vec<s3p_bool_t, BitwiseOrProtocol>)
+NAMED_SYSCALL_WRAPPER(xor_bool_vec, binary_arith_vec<s3p_bool_t, BitwiseXorProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_bool_vec, unary_vec<s3p_bool_t, s3p_uint64_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_bool_vec, binary_vec<s3p_bool_t, s3p_bool_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_uint8_vec, unary_vec<s3p_bool_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_uint16_vec, unary_vec<s3p_bool_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_uint32_vec, unary_vec<s3p_bool_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_uint64_vec, unary_vec<s3p_bool_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_int8_vec, unary_vec<s3p_bool_t, s3p_int8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_int16_vec, unary_vec<s3p_bool_t, s3p_int16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_int32_vec, unary_vec<s3p_bool_t, s3p_int32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_int64_vec, unary_vec<s3p_bool_t, s3p_int64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_float32_vec, unary_vec<s3p_bool_t, s3p_float32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_float64_vec, unary_vec<s3p_bool_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_bool_vec, nullary_vec<s3p_bool_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(vecshuf_bool_vec, vector_shuffle<s3p_bool_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_bool_vec, vector_shuffle<s3p_bool_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_bool_vec, matrix_shuffle<s3p_bool_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_boo_vec, matrix_shuffle<s3p_bool_t, true, false>)
+NAMED_SYSCALL_WRAPPER(add_uint8_vec, binary_arith_vec<s3p_uint8_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(add_uint16_vec, binary_arith_vec<s3p_uint16_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(add_uint32_vec, binary_arith_vec<s3p_uint32_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(add_uint64_vec, binary_arith_vec<s3p_uint64_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_uint8_vec, unary_arith_vec<s3p_uint8_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_uint16_vec, unary_arith_vec<s3p_uint16_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_uint32_vec, unary_arith_vec<s3p_uint32_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_uint64_vec, unary_arith_vec<s3p_uint64_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(product_uint8_vec, unary_arith_vec<s3p_uint8_t, ProductProtocol>)
+NAMED_SYSCALL_WRAPPER(product_uint16_vec, unary_arith_vec<s3p_uint16_t, ProductProtocol>)
+NAMED_SYSCALL_WRAPPER(product_uint32_vec, unary_arith_vec<s3p_uint32_t, ProductProtocol>)
+NAMED_SYSCALL_WRAPPER(product_uint64_vec, unary_arith_vec<s3p_uint64_t, ProductProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_uint8_vec, unary_arith_vec<s3p_uint8_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_uint16_vec, unary_arith_vec<s3p_uint16_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_uint32_vec, unary_arith_vec<s3p_uint32_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_uint64_vec, unary_arith_vec<s3p_uint64_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_uint8_vec, binary_arith_vec<s3p_uint8_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_uint16_vec, binary_arith_vec<s3p_uint16_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_uint32_vec, binary_arith_vec<s3p_uint32_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_uint64_vec, binary_arith_vec<s3p_uint64_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_uint8_vec, binary_arith_vec<s3p_uint8_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_uint16_vec, binary_arith_vec<s3p_uint16_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_uint32_vec, binary_arith_vec<s3p_uint32_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_uint64_vec, binary_arith_vec<s3p_uint64_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(div_uint8_vec, binary_arith_vec<s3p_uint8_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(div_uint16_vec, binary_arith_vec<s3p_uint16_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(div_uint32_vec, binary_arith_vec<s3p_uint32_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(div_uint64_vec, binary_arith_vec<s3p_uint64_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(mod_uint8_vec, binary_arith_vec<s3p_uint8_t, RemainderProtocol>)
+NAMED_SYSCALL_WRAPPER(mod_uint16_vec, binary_arith_vec<s3p_uint16_t, RemainderProtocol>)
+NAMED_SYSCALL_WRAPPER(mod_uint32_vec, binary_arith_vec<s3p_uint32_t, RemainderProtocol>)
+NAMED_SYSCALL_WRAPPER(mod_uint64_vec, binary_arith_vec<s3p_uint64_t, RemainderProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_uint8_vec, binary_arith_public_vec<s3p_uint8_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_uint16_vec, binary_arith_public_vec<s3p_uint16_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_uint32_vec, binary_arith_public_vec<s3p_uint32_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_uint64_vec, binary_arith_public_vec<s3p_uint64_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(divc_uint8_vec, binary_arith_public_vec<s3p_uint8_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(divc_uint16_vec, binary_arith_public_vec<s3p_uint16_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(divc_uint32_vec, binary_arith_public_vec<s3p_uint32_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(divc_uint64_vec, binary_arith_public_vec<s3p_uint64_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(modc_uint8_vec, binary_arith_public_vec<s3p_uint8_t, RemainderProtocol>)
+NAMED_SYSCALL_WRAPPER(modc_uint16_vec, binary_arith_public_vec<s3p_uint16_t, RemainderProtocol>)
+NAMED_SYSCALL_WRAPPER(modc_uint32_vec, binary_arith_public_vec<s3p_uint32_t, RemainderProtocol>)
+NAMED_SYSCALL_WRAPPER(modc_uint64_vec, binary_arith_public_vec<s3p_uint64_t, RemainderProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_uint8_vec, binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_uint16_vec, binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_uint32_vec, binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_uint64_vec, binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_uint8_vec, binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_uint16_vec, binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_uint32_vec, binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_uint64_vec, binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_uint8_vec, binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_uint16_vec, binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_uint32_vec, binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_uint64_vec, binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_uint8_vec, binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_uint16_vec, binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_uint32_vec, binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_uint64_vec, binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_uint8_vec, binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_uint16_vec, binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_uint32_vec, binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_uint64_vec, binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_float32_to_bool_vec, unary_vec<s3p_float32_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_float32_to_float64_vec, unary_vec<s3p_float32_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_float64_to_bool_vec, unary_vec<s3p_float64_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_bool_vec, unary_vec<s3p_uint8_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_bool_vec, unary_vec<s3p_uint16_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_bool_vec, unary_vec<s3p_uint32_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_bool_vec, unary_vec<s3p_uint64_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_int8_vec, unary_vec<s3p_uint8_t, s3p_int8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_int16_vec, unary_vec<s3p_uint8_t, s3p_int16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_int32_vec, unary_vec<s3p_uint8_t, s3p_int32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_int64_vec, unary_vec<s3p_uint8_t, s3p_int64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_int8_vec, unary_vec<s3p_uint16_t, s3p_int8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_int16_vec, unary_vec<s3p_uint16_t, s3p_int16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_int32_vec, unary_vec<s3p_uint16_t, s3p_int32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_int64_vec, unary_vec<s3p_uint16_t, s3p_int64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_int8_vec, unary_vec<s3p_uint32_t, s3p_int8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_int16_vec, unary_vec<s3p_uint32_t, s3p_int16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_int32_vec, unary_vec<s3p_uint32_t, s3p_int32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_int64_vec, unary_vec<s3p_uint32_t, s3p_int64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_int8_vec, unary_vec<s3p_uint64_t, s3p_int8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_int16_vec, unary_vec<s3p_uint64_t, s3p_int16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_int32_vec, unary_vec<s3p_uint64_t, s3p_int32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_int64_vec, unary_vec<s3p_uint64_t, s3p_int64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_uint8_vec, unary_vec<s3p_uint16_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_uint8_vec, unary_vec<s3p_uint32_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_uint16_vec, unary_vec<s3p_uint32_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_uint8_vec, unary_vec<s3p_uint64_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_uint16_vec, unary_vec<s3p_uint64_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_uint32_vec, unary_vec<s3p_uint64_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_uint16_vec, unary_vec<s3p_uint8_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_uint32_vec, unary_vec<s3p_uint8_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_uint64_vec, unary_vec<s3p_uint8_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_uint32_vec, unary_vec<s3p_uint16_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_uint64_vec, unary_vec<s3p_uint16_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_uint64_vec, unary_vec<s3p_uint32_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_float32_vec, unary_vec<s3p_uint8_t, s3p_float32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint8_to_float64_vec, unary_vec<s3p_uint8_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_float32_vec, unary_vec<s3p_uint16_t, s3p_float32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint16_to_float64_vec, unary_vec<s3p_uint16_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_float32_vec, unary_vec<s3p_uint32_t, s3p_float32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint32_to_float64_vec, unary_vec<s3p_uint32_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_float64_vec, unary_vec<s3p_uint64_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(bit_extract_xor_uint8_vec, unary_vec<s3p_xor_uint8_t, s3p_bool_t, BitExtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(bit_extract_xor_uint16_vec, unary_vec<s3p_xor_uint16_t, s3p_bool_t, BitExtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(bit_extract_xor_uint32_vec, unary_vec<s3p_xor_uint32_t, s3p_bool_t, BitExtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(bit_extract_xor_uint64_vec, unary_vec<s3p_xor_uint64_t, s3p_bool_t, BitExtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_uint8_vec, nullary_vec<s3p_uint8_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_uint16_vec, nullary_vec<s3p_uint16_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_uint32_vec, nullary_vec<s3p_uint32_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_uint64_vec, nullary_vec<s3p_uint64_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(min_uint8_vec, binary_arith_vec<s3p_uint8_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(min_uint16_vec, binary_arith_vec<s3p_uint16_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(min_uint32_vec, binary_arith_vec<s3p_uint32_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(min_uint64_vec, binary_arith_vec<s3p_uint64_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(min_float32_vec, binary_arith_vec<s3p_float32_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(min_float64_vec, binary_arith_vec<s3p_float64_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_uint8_vec, binary_arith_vec<s3p_uint8_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_uint16_vec, binary_arith_vec<s3p_uint16_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_uint32_vec, binary_arith_vec<s3p_uint32_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_uint64_vec, binary_arith_vec<s3p_uint64_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_float32_vec, binary_arith_vec<s3p_float32_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_float64_vec, binary_arith_vec<s3p_float64_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(vecmin_uint8_vec, unary_arith_vec<s3p_uint8_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmin_uint16_vec, unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmin_uint32_vec, unary_arith_vec<s3p_uint32_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmin_uint64_vec, unary_arith_vec<s3p_uint64_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmin_float32_vec, unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmin_float64_vec, unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmax_uint8_vec, unary_arith_vec<s3p_uint8_t, MinimumMaximumProtocol<ModeMax> >)
+NAMED_SYSCALL_WRAPPER(vecmax_uint16_vec, unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMax> >)
+NAMED_SYSCALL_WRAPPER(vecmax_uint32_vec, unary_arith_vec<s3p_uint32_t, MinimumMaximumProtocol<ModeMax> >)
+NAMED_SYSCALL_WRAPPER(vecmax_uint64_vec, unary_arith_vec<s3p_uint64_t, MinimumMaximumProtocol<ModeMax> >)
+NAMED_SYSCALL_WRAPPER(vecmax_float32_vec, unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmax_float64_vec, unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecshuf_uint8_vec, vector_shuffle<s3p_uint8_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_uint16_vec, vector_shuffle<s3p_uint16_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_uint32_vec, vector_shuffle<s3p_uint32_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_uint64_vec, vector_shuffle<s3p_uint64_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_uint8_vec, vector_shuffle<s3p_uint8_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_uint16_vec, vector_shuffle<s3p_uint16_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_uint32_vec, vector_shuffle<s3p_uint32_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_uint64_vec, vector_shuffle<s3p_uint64_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_uint8_vec, vector_shuffle<s3p_uint8_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_uint16_vec, vector_shuffle<s3p_uint16_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_uint32_vec, vector_shuffle<s3p_uint32_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_uint64_vec, vector_shuffle<s3p_uint64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshuf_uint8_vec, matrix_shuffle<s3p_uint8_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_uint16_vec, matrix_shuffle<s3p_uint16_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_uint32_vec, matrix_shuffle<s3p_uint32_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_uint64_vec, matrix_shuffle<s3p_uint64_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_uint8_vec, matrix_shuffle<s3p_uint8_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_uint16_vec, matrix_shuffle<s3p_uint16_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_uint32_vec, matrix_shuffle<s3p_uint32_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_uint64_vec, matrix_shuffle<s3p_uint64_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufinv_uint8_vec, matrix_shuffle<s3p_uint8_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_uint16_vec, matrix_shuffle<s3p_uint16_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_uint32_vec, matrix_shuffle<s3p_uint32_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_uint64_vec, matrix_shuffle<s3p_uint64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(add_int8_vec, binary_arith_vec<s3p_int8_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(add_int16_vec, binary_arith_vec<s3p_int16_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(add_int32_vec, binary_arith_vec<s3p_int32_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(add_int64_vec, binary_arith_vec<s3p_int64_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_int8_vec, unary_arith_vec<s3p_int8_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_int16_vec, unary_arith_vec<s3p_int16_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_int32_vec, unary_arith_vec<s3p_int32_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_int64_vec, unary_arith_vec<s3p_int64_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(product_int8_vec, unary_arith_vec<s3p_int8_t, ProductProtocol>)
+NAMED_SYSCALL_WRAPPER(product_int16_vec, unary_arith_vec<s3p_int16_t, ProductProtocol>)
+NAMED_SYSCALL_WRAPPER(product_int32_vec, unary_arith_vec<s3p_int32_t, ProductProtocol>)
+NAMED_SYSCALL_WRAPPER(product_int64_vec, unary_arith_vec<s3p_int64_t, ProductProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_int8_vec, unary_arith_vec<s3p_int8_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_int16_vec, unary_arith_vec<s3p_int16_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_int32_vec, unary_arith_vec<s3p_int32_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_int64_vec, unary_arith_vec<s3p_int64_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_int8_vec, binary_arith_vec<s3p_int8_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_int16_vec, binary_arith_vec<s3p_int16_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_int32_vec, binary_arith_vec<s3p_int32_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_int64_vec, binary_arith_vec<s3p_int64_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_int8_vec, binary_arith_vec<s3p_int8_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_int16_vec, binary_arith_vec<s3p_int16_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_int32_vec, binary_arith_vec<s3p_int32_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_int64_vec, binary_arith_vec<s3p_int64_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_int8_vec, binary_arith_public_vec<s3p_int8_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_int16_vec, binary_arith_public_vec<s3p_int16_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_int32_vec, binary_arith_public_vec<s3p_int32_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_int64_vec, binary_arith_public_vec<s3p_int64_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_int8_vec, binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_int16_vec, binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_int32_vec, binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_int64_vec, binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_int8_vec, binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_int16_vec, binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_int32_vec, binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_int64_vec, binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_int8_vec, binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_int16_vec, binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_int32_vec, binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_int64_vec, binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_int8_vec, binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_int16_vec, binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_int32_vec, binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_int64_vec, binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_int8_vec, binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_int16_vec, binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_int32_vec, binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_int64_vec, binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_bool_vec, unary_vec<s3p_int8_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_bool_vec, unary_vec<s3p_int16_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_bool_vec, unary_vec<s3p_int32_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_bool_vec, unary_vec<s3p_int64_t, s3p_bool_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_uint8_vec, unary_vec<s3p_int8_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_uint16_vec, unary_vec<s3p_int8_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_uint32_vec, unary_vec<s3p_int8_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_uint64_vec, unary_vec<s3p_int8_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_uint8_vec, unary_vec<s3p_int16_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_uint16_vec, unary_vec<s3p_int16_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_uint32_vec, unary_vec<s3p_int16_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_uint64_vec, unary_vec<s3p_int16_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_uint8_vec, unary_vec<s3p_int32_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_uint16_vec, unary_vec<s3p_int32_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_uint32_vec, unary_vec<s3p_int32_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_uint64_vec, unary_vec<s3p_int32_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_uint8_vec, unary_vec<s3p_int64_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_uint16_vec, unary_vec<s3p_int64_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_uint32_vec, unary_vec<s3p_int64_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_uint64_vec, unary_vec<s3p_int64_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_int8_vec, unary_vec<s3p_int16_t, s3p_int8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_int8_vec, unary_vec<s3p_int32_t, s3p_int8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_int16_vec, unary_vec<s3p_int32_t, s3p_int16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_int8_vec, unary_vec<s3p_int64_t, s3p_int8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_int16_vec, unary_vec<s3p_int64_t, s3p_int16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_int32_vec, unary_vec<s3p_int64_t, s3p_int32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_int16_vec, unary_vec<s3p_int8_t, s3p_int16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_int32_vec, unary_vec<s3p_int8_t, s3p_int32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_int64_vec, unary_vec<s3p_int8_t, s3p_int64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_int32_vec, unary_vec<s3p_int16_t, s3p_int32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_int64_vec, unary_vec<s3p_int16_t, s3p_int64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_int64_vec, unary_vec<s3p_int32_t, s3p_int64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_float32_vec, unary_vec<s3p_int8_t, s3p_float32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int8_to_float64_vec, unary_vec<s3p_int8_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_float32_vec, unary_vec<s3p_int16_t, s3p_float32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int16_to_float64_vec, unary_vec<s3p_int16_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_float32_vec, unary_vec<s3p_int32_t, s3p_float32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int32_to_float64_vec, unary_vec<s3p_int32_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_float64_vec, unary_vec<s3p_int64_t, s3p_float64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_int8_vec, nullary_vec<s3p_int8_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_int16_vec, nullary_vec<s3p_int16_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_int32_vec, nullary_vec<s3p_int32_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_int64_vec, nullary_vec<s3p_int64_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(sign_int8_vec, unary_arith_vec<s3p_int8_t, SignProtocol>)
+NAMED_SYSCALL_WRAPPER(sign_int16_vec, unary_arith_vec<s3p_int16_t, SignProtocol>)
+NAMED_SYSCALL_WRAPPER(sign_int32_vec, unary_arith_vec<s3p_int32_t, SignProtocol>)
+NAMED_SYSCALL_WRAPPER(sign_int64_vec, unary_arith_vec<s3p_int64_t, SignProtocol>)
+NAMED_SYSCALL_WRAPPER(abs_int8_vec, unary_vec<s3p_int8_t, s3p_uint8_t, AbsoluteValueProtocol>)
+NAMED_SYSCALL_WRAPPER(abs_int16_vec, unary_vec<s3p_int16_t, s3p_uint16_t, AbsoluteValueProtocol>)
+NAMED_SYSCALL_WRAPPER(abs_int32_vec, unary_vec<s3p_int32_t, s3p_uint32_t, AbsoluteValueProtocol>)
+NAMED_SYSCALL_WRAPPER(abs_int64_vec, unary_vec<s3p_int64_t, s3p_uint64_t, AbsoluteValueProtocol>)
+NAMED_SYSCALL_WRAPPER(vecshuf_int8_vec, vector_shuffle<s3p_int8_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_int16_vec, vector_shuffle<s3p_int16_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_int32_vec, vector_shuffle<s3p_int32_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_int64_vec, vector_shuffle<s3p_int64_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_int8_vec, vector_shuffle<s3p_int8_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_int16_vec, vector_shuffle<s3p_int16_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_int32_vec, vector_shuffle<s3p_int32_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_int64_vec, vector_shuffle<s3p_int64_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_int8_vec, vector_shuffle<s3p_int8_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_int16_vec, vector_shuffle<s3p_int16_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_int32_vec, vector_shuffle<s3p_int32_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_int64_vec, vector_shuffle<s3p_int64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshuf_int8_vec, matrix_shuffle<s3p_int8_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_int16_vec, matrix_shuffle<s3p_int16_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_int32_vec, matrix_shuffle<s3p_int32_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_int64_vec, matrix_shuffle<s3p_int64_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_int8_vec, matrix_shuffle<s3p_int8_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_int16_vec, matrix_shuffle<s3p_int16_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_int32_vec, matrix_shuffle<s3p_int32_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_int64_vec, matrix_shuffle<s3p_int64_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufinv_int8_vec, matrix_shuffle<s3p_int8_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_int16_vec, matrix_shuffle<s3p_int16_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_int32_vec, matrix_shuffle<s3p_int32_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_int64_vec, matrix_shuffle<s3p_int64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(reshare_xor_uint8_to_uint8_vec, unary_vec<s3p_xor_uint8_t, s3p_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(reshare_xor_uint16_to_uint16_vec, unary_vec<s3p_xor_uint16_t, s3p_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(reshare_xor_uint32_to_uint32_vec, unary_vec<s3p_xor_uint32_t, s3p_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(reshare_xor_uint64_to_uint64_vec, unary_vec<s3p_xor_uint64_t, s3p_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(reshare_uint8_to_xor_uint8_vec, unary_vec<s3p_uint8_t, s3p_xor_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(reshare_uint16_to_xor_uint16_vec, unary_vec<s3p_uint16_t, s3p_xor_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(reshare_uint32_to_xor_uint32_vec, unary_vec<s3p_uint32_t, s3p_xor_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(reshare_uint64_to_xor_uint64_vec, unary_vec<s3p_uint64_t, s3p_xor_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(xor_xor_uint8_vec, binary_arith_vec<s3p_xor_uint8_t, BitwiseXorProtocol>)
+NAMED_SYSCALL_WRAPPER(xor_xor_uint16_vec, binary_arith_vec<s3p_xor_uint16_t, BitwiseXorProtocol>)
+NAMED_SYSCALL_WRAPPER(xor_xor_uint32_vec, binary_arith_vec<s3p_xor_uint32_t, BitwiseXorProtocol>)
+NAMED_SYSCALL_WRAPPER(xor_xor_uint64_vec, binary_arith_vec<s3p_xor_uint64_t, BitwiseXorProtocol>)
+NAMED_SYSCALL_WRAPPER(and_xor_uint8_vec, binary_arith_vec<s3p_xor_uint8_t, BitwiseAndProtocol>)
+NAMED_SYSCALL_WRAPPER(and_xor_uint16_vec, binary_arith_vec<s3p_xor_uint16_t, BitwiseAndProtocol>)
+NAMED_SYSCALL_WRAPPER(and_xor_uint32_vec, binary_arith_vec<s3p_xor_uint32_t, BitwiseAndProtocol>)
+NAMED_SYSCALL_WRAPPER(and_xor_uint64_vec, binary_arith_vec<s3p_xor_uint64_t, BitwiseAndProtocol>)
+NAMED_SYSCALL_WRAPPER(or_xor_uint8_vec, binary_arith_vec<s3p_xor_uint8_t, BitwiseOrProtocol>)
+NAMED_SYSCALL_WRAPPER(or_xor_uint16_vec, binary_arith_vec<s3p_xor_uint16_t, BitwiseOrProtocol>)
+NAMED_SYSCALL_WRAPPER(or_xor_uint32_vec, binary_arith_vec<s3p_xor_uint32_t, BitwiseOrProtocol>)
+NAMED_SYSCALL_WRAPPER(or_xor_uint64_vec, binary_arith_vec<s3p_xor_uint64_t, BitwiseOrProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_xor_uint8_vec, unary_arith_vec<s3p_xor_uint8_t,  BitwiseInvProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_xor_uint16_vec, unary_arith_vec<s3p_xor_uint16_t, BitwiseInvProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_xor_uint32_vec, unary_arith_vec<s3p_xor_uint32_t, BitwiseInvProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_xor_uint64_vec, unary_arith_vec<s3p_xor_uint64_t, BitwiseInvProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_xor_uint8_vec, binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_xor_uint16_vec, binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_xor_uint32_vec, binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_xor_uint64_vec, binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_xor_uint8_vec, binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_xor_uint16_vec, binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_xor_uint32_vec, binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_xor_uint64_vec, binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_xor_uint8_vec, binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_xor_uint16_vec, binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_xor_uint32_vec, binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_xor_uint64_vec, binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_xor_uint8_vec, binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_xor_uint16_vec, binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_xor_uint32_vec, binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_xor_uint64_vec, binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_xor_uint8_vec, binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_xor_uint16_vec, binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_xor_uint32_vec, binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_xor_uint64_vec, binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_xor_uint8_vec, unary_vec<s3p_bool_t, s3p_xor_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_xor_uint16_vec, unary_vec<s3p_bool_t, s3p_xor_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_xor_uint32_vec, unary_vec<s3p_bool_t, s3p_xor_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_bool_to_xor_uint64_vec, unary_vec<s3p_bool_t, s3p_xor_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint64_to_xor_uint32_vec, unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint64_to_xor_uint16_vec, unary_vec<s3p_xor_uint64_t, s3p_xor_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint64_to_xor_uint8_vec, unary_vec<s3p_xor_uint64_t, s3p_xor_uint8_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint32_to_xor_uint16_vec, unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint32_to_xor_uint8_vec, unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint16_to_xor_uint8_vec, unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint8_to_xor_uint64_vec, unary_vec<s3p_xor_uint8_t, s3p_xor_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint8_to_xor_uint32_vec, unary_vec<s3p_xor_uint8_t, s3p_xor_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint8_to_xor_uint16_vec, unary_vec<s3p_xor_uint8_t, s3p_xor_uint16_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint16_to_xor_uint64_vec, unary_vec<s3p_xor_uint16_t, s3p_xor_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint16_to_xor_uint32_vec, unary_vec<s3p_xor_uint16_t, s3p_xor_uint32_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(conv_xor_uint32_to_xor_uint64_vec, unary_vec<s3p_xor_uint32_t, s3p_xor_uint64_t, ConversionProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_xor_uint8_vec, nullary_vec<s3p_xor_uint8_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_xor_uint16_vec, nullary_vec<s3p_xor_uint16_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_xor_uint32_vec, nullary_vec<s3p_xor_uint32_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(randomize_xor_uint64_vec, nullary_vec<s3p_xor_uint64_t, RandomizeProtocol>)
+NAMED_SYSCALL_WRAPPER(shift_left_xor_uint8_vec, binary_public_vec<s3p_xor_uint8_t, s3p_int64_t, s3p_xor_uint8_t, LeftShiftProtocol>)
+NAMED_SYSCALL_WRAPPER(shift_left_xor_uint16_vec, binary_public_vec<s3p_xor_uint16_t, s3p_int64_t, s3p_xor_uint16_t, LeftShiftProtocol>)
+NAMED_SYSCALL_WRAPPER(shift_left_xor_uint32_vec, binary_public_vec<s3p_xor_uint32_t, s3p_int64_t, s3p_xor_uint32_t, LeftShiftProtocol>)
+NAMED_SYSCALL_WRAPPER(shift_left_xor_uint64_vec, binary_public_vec<s3p_xor_uint64_t, s3p_int64_t, s3p_xor_uint64_t, LeftShiftProtocol>)
+NAMED_SYSCALL_WRAPPER(rotate_left_xor_uint8_vec, binary_public_vec<s3p_xor_uint8_t, s3p_int64_t, s3p_xor_uint8_t, LeftRotationProtocol>)
+NAMED_SYSCALL_WRAPPER(rotate_left_xor_uint16_vec, binary_public_vec<s3p_xor_uint16_t, s3p_int64_t, s3p_xor_uint16_t, LeftRotationProtocol>)
+NAMED_SYSCALL_WRAPPER(rotate_left_xor_uint32_vec, binary_public_vec<s3p_xor_uint32_t, s3p_int64_t, s3p_xor_uint32_t, LeftRotationProtocol>)
+NAMED_SYSCALL_WRAPPER(rotate_left_xor_uint64_vec, binary_public_vec<s3p_xor_uint64_t, s3p_int64_t, s3p_xor_uint64_t, LeftRotationProtocol>)
+NAMED_SYSCALL_WRAPPER(choose_xor_uint8_vec, ternary_vec<s3p_bool_t, s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_xor_uint8_t, ObliviousChoiceProtocol>)
+NAMED_SYSCALL_WRAPPER(choose_xor_uint16_vec, ternary_vec<s3p_bool_t, s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_xor_uint16_t, ObliviousChoiceProtocol>)
+NAMED_SYSCALL_WRAPPER(choose_xor_uint32_vec, ternary_vec<s3p_bool_t, s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_xor_uint32_t, ObliviousChoiceProtocol>)
+NAMED_SYSCALL_WRAPPER(choose_xor_uint64_vec, ternary_vec<s3p_bool_t, s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_xor_uint64_t, ObliviousChoiceProtocol>)
+NAMED_SYSCALL_WRAPPER(min_xor_uint8_vec, binary_arith_vec<s3p_xor_uint8_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(min_xor_uint16_vec, binary_arith_vec<s3p_xor_uint16_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(min_xor_uint32_vec, binary_arith_vec<s3p_xor_uint32_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(min_xor_uint64_vec, binary_arith_vec<s3p_xor_uint64_t, MinimumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_xor_uint8_vec, binary_arith_vec<s3p_xor_uint8_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_xor_uint16_vec, binary_arith_vec<s3p_xor_uint16_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_xor_uint32_vec, binary_arith_vec<s3p_xor_uint32_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(max_xor_uint64_vec, binary_arith_vec<s3p_xor_uint64_t, MaximumProtocol>)
+NAMED_SYSCALL_WRAPPER(vecmin_xor_uint8_vec, unary_arith_vec<s3p_xor_uint8_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmin_xor_uint16_vec, unary_arith_vec<s3p_xor_uint16_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmin_xor_uint32_vec, unary_arith_vec<s3p_xor_uint32_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmin_xor_uint64_vec, unary_arith_vec<s3p_xor_uint64_t, MinimumMaximumProtocol<ModeMin> >)
+NAMED_SYSCALL_WRAPPER(vecmax_xor_uint8_vec, unary_arith_vec<s3p_xor_uint8_t, MinimumMaximumProtocol<ModeMax> >)
+NAMED_SYSCALL_WRAPPER(vecmax_xor_uint16_vec, unary_arith_vec<s3p_xor_uint16_t, MinimumMaximumProtocol<ModeMax> >)
+NAMED_SYSCALL_WRAPPER(vecmax_xor_uint32_vec, unary_arith_vec<s3p_xor_uint32_t, MinimumMaximumProtocol<ModeMax> >)
+NAMED_SYSCALL_WRAPPER(vecmax_xor_uint64_vec, unary_arith_vec<s3p_xor_uint64_t, MinimumMaximumProtocol<ModeMax> >)
+NAMED_SYSCALL_WRAPPER(msnzb_xor_uint8_vec, unary_arith_vec<s3p_xor_uint8_t, MostSignificantNonZeroBitProtocol>)
+NAMED_SYSCALL_WRAPPER(aes128_xor_uint32_vec, aes_xor_uint32_vec<Aes128Protocol>)
+NAMED_SYSCALL_WRAPPER(aes192_xor_uint32_vec, aes_xor_uint32_vec<Aes192Protocol>)
+NAMED_SYSCALL_WRAPPER(aes256_xor_uint32_vec, aes_xor_uint32_vec<Aes256Protocol>)
+NAMED_SYSCALL_WRAPPER(aes128_xor_uint32_vec_expand_key, aes_xor_uint32_vec_expand_key<Aes128Protocol>)
+NAMED_SYSCALL_WRAPPER(aes192_xor_uint32_vec_expand_key, aes_xor_uint32_vec_expand_key<Aes192Protocol>)
+NAMED_SYSCALL_WRAPPER(aes256_xor_uint32_vec_expand_key, aes_xor_uint32_vec_expand_key<Aes256Protocol>)
+NAMED_SYSCALL_WRAPPER(crc16_xor_vec, crc_xor_vec<CRCMode16>)
+NAMED_SYSCALL_WRAPPER(crc32_xor_vec, crc_xor_vec<CRCMode32>)
+NAMED_SYSCALL_WRAPPER(vecshuf_xor_uint8_vec, vector_shuffle<s3p_xor_uint8_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_xor_uint16_vec, vector_shuffle<s3p_xor_uint16_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_xor_uint32_vec, vector_shuffle<s3p_xor_uint32_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_xor_uint64_vec, vector_shuffle<s3p_xor_uint64_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_xor_uint8_vec, vector_shuffle<s3p_xor_uint8_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_xor_uint16_vec, vector_shuffle<s3p_xor_uint16_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_xor_uint32_vec, vector_shuffle<s3p_xor_uint32_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_xor_uint64_vec, vector_shuffle<s3p_xor_uint64_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_xor_uint8_vec, vector_shuffle<s3p_xor_uint8_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_xor_uint16_vec, vector_shuffle<s3p_xor_uint16_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_xor_uint32_vec, vector_shuffle<s3p_xor_uint32_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_xor_uint64_vec, vector_shuffle<s3p_xor_uint64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshuf_xor_uint8_vec, matrix_shuffle<s3p_xor_uint8_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_xor_uint16_vec, matrix_shuffle<s3p_xor_uint16_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_xor_uint32_vec, matrix_shuffle<s3p_xor_uint32_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_xor_uint64_vec, matrix_shuffle<s3p_xor_uint64_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_xor_uint8_vec, matrix_shuffle<s3p_xor_uint8_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_xor_uint16_vec, matrix_shuffle<s3p_xor_uint16_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_xor_uint32_vec, matrix_shuffle<s3p_xor_uint32_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_xor_uint64_vec, matrix_shuffle<s3p_xor_uint64_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufinv_xor_uint8_vec, matrix_shuffle<s3p_xor_uint8_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_xor_uint16_vec, matrix_shuffle<s3p_xor_uint16_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_xor_uint32_vec, matrix_shuffle<s3p_xor_uint32_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_xor_uint64_vec, matrix_shuffle<s3p_xor_uint64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(add_float32_vec, binary_arith_vec<s3p_float32_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(add_float64_vec, binary_arith_vec<s3p_float64_t, AdditionProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_float32_vec, unary_arith_vec<s3p_float32_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(sum_float64_vec, unary_arith_vec<s3p_float64_t, SumProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_float32_vec, unary_arith_vec<s3p_float32_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(neg_float64_vec, unary_arith_vec<s3p_float64_t, NegProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_float32_vec, binary_arith_vec<s3p_float32_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(sub_float64_vec, binary_arith_vec<s3p_float64_t, SubtractionProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_float32_vec, binary_arith_vec<s3p_float32_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_float64_vec, binary_arith_vec<s3p_float64_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_float32_vec, unary_arith_vec<s3p_float32_t, FloatInverseProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_float64_vec, unary_arith_vec<s3p_float64_t, FloatInverseProtocol>)
+NAMED_SYSCALL_WRAPPER(div_float32_vec, binary_arith_vec<s3p_float32_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(div_float64_vec, binary_arith_vec<s3p_float64_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_float32_vec, binary_arith_public_vec<s3p_float32_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mulc_float64_vec, binary_arith_public_vec<s3p_float64_t, MultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(divc_float32_vec, binary_arith_public_vec<s3p_float32_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(divc_float64_vec, binary_arith_public_vec<s3p_float64_t, DivisionProtocol>)
+NAMED_SYSCALL_WRAPPER(isnegligible_float32_vec, unary_vec<s3p_float32_t, s3p_bool_t, FloatIsNegligibleProtocol>)
+NAMED_SYSCALL_WRAPPER(isnegligible_float64_vec, unary_vec<s3p_float64_t, s3p_bool_t, FloatIsNegligibleProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_float32_vec, binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(eq_float64_vec, binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, EqualityProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_float32_vec, binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_float32_vec, binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_float32_vec, binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_float32_vec, binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(lt_float64_vec, binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, LessThanProtocol>)
+NAMED_SYSCALL_WRAPPER(lte_float64_vec, binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, LessThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(gt_float64_vec, binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, GreaterThanProtocol>)
+NAMED_SYSCALL_WRAPPER(gte_float64_vec, binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, GreaterThanOrEqualProtocol>)
+NAMED_SYSCALL_WRAPPER(ceiling_float32_vec, unary_vec<s3p_float32_t, s3p_int32_t, FloatCeilingProtocol>)
+NAMED_SYSCALL_WRAPPER(ceiling_float64_vec, unary_vec<s3p_float64_t, s3p_int64_t, FloatCeilingProtocol>)
+NAMED_SYSCALL_WRAPPER(floor_float32_vec, unary_vec<s3p_float32_t, s3p_int32_t, FloatFloorProtocol>)
+NAMED_SYSCALL_WRAPPER(floor_float64_vec, unary_vec<s3p_float64_t, s3p_int64_t, FloatFloorProtocol>)
+NAMED_SYSCALL_WRAPPER(abs_float32_vec, unary_vec<s3p_float32_t, s3p_float32_t, AbsoluteValueProtocol>)
+NAMED_SYSCALL_WRAPPER(abs_float64_vec, unary_vec<s3p_float64_t, s3p_float64_t, AbsoluteValueProtocol>)
+NAMED_SYSCALL_WRAPPER(choose_float32_vec, ternary_vec<s3p_bool_t, s3p_float32_t, s3p_float32_t, s3p_float32_t, ObliviousChoiceProtocol>)
+NAMED_SYSCALL_WRAPPER(choose_float64_vec, ternary_vec<s3p_bool_t, s3p_float64_t, s3p_float64_t, s3p_float64_t, ObliviousChoiceProtocol>)
+NAMED_SYSCALL_WRAPPER(erf_float32_vec, unary_arith_vec<s3p_float32_t, FloatErrorFunctionProtocol>)
+NAMED_SYSCALL_WRAPPER(erf_float64_vec, unary_arith_vec<s3p_float64_t, FloatErrorFunctionProtocol>)
+NAMED_SYSCALL_WRAPPER(exp_float32_vec, unary_arith_vec<s3p_float32_t, FloatPowerOfEProtocol>)
+NAMED_SYSCALL_WRAPPER(exp_float64_vec, unary_arith_vec<s3p_float64_t, FloatPowerOfEProtocol>)
+NAMED_SYSCALL_WRAPPER(ln_float32_vec, unary_arith_vec<s3p_float32_t, FloatNaturalLogarithmProtocol>)
+NAMED_SYSCALL_WRAPPER(ln_float64_vec, unary_arith_vec<s3p_float64_t, FloatNaturalLogarithmProtocol>)
+NAMED_SYSCALL_WRAPPER(sin_float32_vec, unary_arith_vec<s3p_float32_t, FloatSineProtocol>)
+NAMED_SYSCALL_WRAPPER(sin_float64_vec, unary_arith_vec<s3p_float64_t, FloatSineProtocol>)
+NAMED_SYSCALL_WRAPPER(sqrt_float32_vec, unary_arith_vec<s3p_float32_t, FloatSquareRootProtocol>)
+NAMED_SYSCALL_WRAPPER(sqrt_float64_vec, unary_arith_vec<s3p_float64_t, FloatSquareRootProtocol>)
+NAMED_SYSCALL_WRAPPER(vecshuf_float32_vec, vector_shuffle<s3p_float32_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshuf_float64_vec, vector_shuffle<s3p_float64_t, false, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_float32_vec, vector_shuffle<s3p_float32_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufkey_float64_vec, vector_shuffle<s3p_float64_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_float32_vec, vector_shuffle<s3p_float32_t, true, true>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_float64_vec, vector_shuffle<s3p_float64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshuf_float32_vec, matrix_shuffle<s3p_float32_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshuf_float64_vec, matrix_shuffle<s3p_float64_t, false, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_float32_vec, matrix_shuffle<s3p_float32_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufkey_float64_vec, matrix_shuffle<s3p_float64_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufinv_float32_vec, matrix_shuffle<s3p_float32_t, true, true>)
+NAMED_SYSCALL_WRAPPER(matshufinv_float64_vec, matrix_shuffle<s3p_float64_t, true, true>)
+
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 
   /**
@@ -994,37 +1489,37 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::get_type_size_bool", &get_type_size<s3p_bool_t> }
 
    // Bit logic
-  , { "shared3p::not_bool_vec", NAMED_SYSCALL_WRAPPER("not_bool_vec", unary_arith_vec<s3p_bool_t, NotProtocol>) }
-  , { "shared3p::and_bool_vec", NAMED_SYSCALL_WRAPPER("and_bool_vec", binary_arith_vec<s3p_bool_t, BitwiseAndProtocol>) }
-  , { "shared3p::or_bool_vec", NAMED_SYSCALL_WRAPPER("or_bool_vec", binary_arith_vec<s3p_bool_t, BitwiseOrProtocol>) }
-  , { "shared3p::xor_bool_vec", NAMED_SYSCALL_WRAPPER("xor_bool_vec", binary_arith_vec<s3p_bool_t, BitwiseXorProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::not_bool_vec", not_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::and_bool_vec", and_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::or_bool_vec", or_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::xor_bool_vec", xor_bool_vec)
 
    // Arithmetic
-  , { "shared3p::sum_bool_vec", NAMED_SYSCALL_WRAPPER("sum_bool_vec", unary_vec<s3p_bool_t, s3p_uint64_t, SumProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_bool_vec", sum_bool_vec)
 
    // Comparisons
-  , { "shared3p::eq_bool_vec", NAMED_SYSCALL_WRAPPER("eq_bool_vec", binary_vec<s3p_bool_t, s3p_bool_t, s3p_bool_t, EqualityProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_bool_vec", eq_bool_vec)
 
    // Casting
-  , { "shared3p::conv_bool_to_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_bool_to_uint8_vec", unary_vec<s3p_bool_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_uint16_vec", unary_vec<s3p_bool_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_uint32_vec", unary_vec<s3p_bool_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_uint64_vec", unary_vec<s3p_bool_t, s3p_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_int8_vec",  NAMED_SYSCALL_WRAPPER("conv_bool_to_int8_vec", unary_vec<s3p_bool_t, s3p_int8_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_int16_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_int16_vec", unary_vec<s3p_bool_t, s3p_int16_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_int32_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_int32_vec", unary_vec<s3p_bool_t, s3p_int32_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_int64_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_int64_vec", unary_vec<s3p_bool_t, s3p_int64_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_float32_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_float32_vec", unary_vec<s3p_bool_t, s3p_float32_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_float64_vec", unary_vec<s3p_bool_t, s3p_float64_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_uint8_vec",  conv_bool_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_uint16_vec", conv_bool_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_uint32_vec", conv_bool_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_uint64_vec", conv_bool_to_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_int8_vec",  conv_bool_to_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_int16_vec", conv_bool_to_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_int32_vec", conv_bool_to_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_int64_vec", conv_bool_to_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_float32_vec", conv_bool_to_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_float64_vec", conv_bool_to_float64_vec)
 
    // Utilities
-  , { "shared3p::randomize_bool_vec",  NAMED_SYSCALL_WRAPPER("randomize_bool_vec", nullary_vec<s3p_bool_t, RandomizeProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_bool_vec",  randomize_bool_vec)
 
    // Database functions
-   , { "shared3p::vecshuf_bool_vec", NAMED_SYSCALL_WRAPPER("vecshuf_bool_vec", vector_shuffle<s3p_bool_t, false, false>) }
-   , { "shared3p::vecshufkey_bool_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_bool_vec", vector_shuffle<s3p_bool_t, true, false>) }
-   , { "shared3p::matshuf_bool_vec", NAMED_SYSCALL_WRAPPER("matshuf_bool_vec", matrix_shuffle<s3p_bool_t, false, false>) }
-   , { "shared3p::matshufkey_boo_vec", NAMED_SYSCALL_WRAPPER("matshufkey_boo_vec", matrix_shuffle<s3p_bool_t, true, false>) }
+   , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_bool_vec", vecshuf_bool_vec)
+   , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_bool_vec", vecshufkey_bool_vec)
+   , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_bool_vec", matshuf_bool_vec)
+   , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_boo_vec", matshufkey_boo_vec)
 
   /**
    *  Additively shared unsigned integers
@@ -1081,181 +1576,181 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::get_type_size_uint64", &get_type_size<s3p_uint64_t> }
 
     // Unsigned integer arithmetic
-  , { "shared3p::add_uint8_vec",  NAMED_SYSCALL_WRAPPER("add_uint8_vec", binary_arith_vec<s3p_uint8_t, AdditionProtocol>) }
-  , { "shared3p::add_uint16_vec", NAMED_SYSCALL_WRAPPER("add_uint16_vec", binary_arith_vec<s3p_uint16_t, AdditionProtocol>) }
-  , { "shared3p::add_uint32_vec", NAMED_SYSCALL_WRAPPER("add_uint32_vec", binary_arith_vec<s3p_uint32_t, AdditionProtocol>) }
-  , { "shared3p::add_uint64_vec", NAMED_SYSCALL_WRAPPER("add_uint64_vec", binary_arith_vec<s3p_uint64_t, AdditionProtocol>) }
-  , { "shared3p::sum_uint8_vec",  NAMED_SYSCALL_WRAPPER("sum_uint8_vec", unary_arith_vec<s3p_uint8_t, SumProtocol>) }
-  , { "shared3p::sum_uint16_vec", NAMED_SYSCALL_WRAPPER("sum_uint16_vec", unary_arith_vec<s3p_uint16_t, SumProtocol>) }
-  , { "shared3p::sum_uint32_vec", NAMED_SYSCALL_WRAPPER("sum_uint32_vec", unary_arith_vec<s3p_uint32_t, SumProtocol>) }
-  , { "shared3p::sum_uint64_vec", NAMED_SYSCALL_WRAPPER("sum_uint64_vec", unary_arith_vec<s3p_uint64_t, SumProtocol>) }
-  , { "shared3p::product_uint8_vec",  NAMED_SYSCALL_WRAPPER("product_uint8_vec", unary_arith_vec<s3p_uint8_t, ProductProtocol>) }
-  , { "shared3p::product_uint16_vec", NAMED_SYSCALL_WRAPPER("product_uint16_vec", unary_arith_vec<s3p_uint16_t, ProductProtocol>) }
-  , { "shared3p::product_uint32_vec", NAMED_SYSCALL_WRAPPER("product_uint32_vec", unary_arith_vec<s3p_uint32_t, ProductProtocol>) }
-  , { "shared3p::product_uint64_vec", NAMED_SYSCALL_WRAPPER("product_uint64_vec", unary_arith_vec<s3p_uint64_t, ProductProtocol>) }
-  , { "shared3p::neg_uint8_vec",  NAMED_SYSCALL_WRAPPER("neg_uint8_vec", unary_arith_vec<s3p_uint8_t, NegProtocol>) }
-  , { "shared3p::neg_uint16_vec", NAMED_SYSCALL_WRAPPER("neg_uint16_vec", unary_arith_vec<s3p_uint16_t, NegProtocol>) }
-  , { "shared3p::neg_uint32_vec", NAMED_SYSCALL_WRAPPER("neg_uint32_vec", unary_arith_vec<s3p_uint32_t, NegProtocol>) }
-  , { "shared3p::neg_uint64_vec", NAMED_SYSCALL_WRAPPER("neg_uint64_vec", unary_arith_vec<s3p_uint64_t, NegProtocol>) }
-  , { "shared3p::sub_uint8_vec",  NAMED_SYSCALL_WRAPPER("sub_uint8_vec", binary_arith_vec<s3p_uint8_t, SubtractionProtocol>) }
-  , { "shared3p::sub_uint16_vec", NAMED_SYSCALL_WRAPPER("sub_uint16_vec", binary_arith_vec<s3p_uint16_t, SubtractionProtocol>) }
-  , { "shared3p::sub_uint32_vec", NAMED_SYSCALL_WRAPPER("sub_uint32_vec", binary_arith_vec<s3p_uint32_t, SubtractionProtocol>) }
-  , { "shared3p::sub_uint64_vec", NAMED_SYSCALL_WRAPPER("sub_uint64_vec", binary_arith_vec<s3p_uint64_t, SubtractionProtocol>) }
-  , { "shared3p::mul_uint8_vec",  NAMED_SYSCALL_WRAPPER("mul_uint8_vec", binary_arith_vec<s3p_uint8_t, MultiplicationProtocol>) }
-  , { "shared3p::mul_uint16_vec", NAMED_SYSCALL_WRAPPER("mul_uint16_vec", binary_arith_vec<s3p_uint16_t, MultiplicationProtocol>) }
-  , { "shared3p::mul_uint32_vec", NAMED_SYSCALL_WRAPPER("mul_uint32_vec", binary_arith_vec<s3p_uint32_t, MultiplicationProtocol>) }
-  , { "shared3p::mul_uint64_vec", NAMED_SYSCALL_WRAPPER("mul_uint64_vec", binary_arith_vec<s3p_uint64_t, MultiplicationProtocol>) }
-  , { "shared3p::div_uint8_vec",  NAMED_SYSCALL_WRAPPER("div_uint8_vec", binary_arith_vec<s3p_uint8_t, DivisionProtocol>) }
-  , { "shared3p::div_uint16_vec", NAMED_SYSCALL_WRAPPER("div_uint16_vec", binary_arith_vec<s3p_uint16_t, DivisionProtocol>) }
-  , { "shared3p::div_uint32_vec", NAMED_SYSCALL_WRAPPER("div_uint32_vec", binary_arith_vec<s3p_uint32_t, DivisionProtocol>) }
-  , { "shared3p::div_uint64_vec", NAMED_SYSCALL_WRAPPER("div_uint64_vec", binary_arith_vec<s3p_uint64_t, DivisionProtocol>) }
-  , { "shared3p::mod_uint8_vec",  NAMED_SYSCALL_WRAPPER("mod_uint8_vec", binary_arith_vec<s3p_uint8_t, RemainderProtocol>) }
-  , { "shared3p::mod_uint16_vec", NAMED_SYSCALL_WRAPPER("mod_uint16_vec", binary_arith_vec<s3p_uint16_t, RemainderProtocol>) }
-  , { "shared3p::mod_uint32_vec", NAMED_SYSCALL_WRAPPER("mod_uint32_vec", binary_arith_vec<s3p_uint32_t, RemainderProtocol>) }
-  , { "shared3p::mod_uint64_vec", NAMED_SYSCALL_WRAPPER("mod_uint64_vec", binary_arith_vec<s3p_uint64_t, RemainderProtocol>) }
-  , { "shared3p::mulc_uint8_vec", NAMED_SYSCALL_WRAPPER("mulc_uint8_vec", binary_arith_public_vec<s3p_uint8_t, MultiplicationProtocol>) }
-  , { "shared3p::mulc_uint16_vec", NAMED_SYSCALL_WRAPPER("mulc_uint16_vec", binary_arith_public_vec<s3p_uint16_t, MultiplicationProtocol>) }
-  , { "shared3p::mulc_uint32_vec", NAMED_SYSCALL_WRAPPER("mulc_uint32_vec", binary_arith_public_vec<s3p_uint32_t, MultiplicationProtocol>) }
-  , { "shared3p::mulc_uint64_vec", NAMED_SYSCALL_WRAPPER("mulc_uint64_vec", binary_arith_public_vec<s3p_uint64_t, MultiplicationProtocol>) }
-  , { "shared3p::divc_uint8_vec",  NAMED_SYSCALL_WRAPPER("divc_uint8_vec", binary_arith_public_vec<s3p_uint8_t, DivisionProtocol>) }
-  , { "shared3p::divc_uint16_vec", NAMED_SYSCALL_WRAPPER("divc_uint16_vec", binary_arith_public_vec<s3p_uint16_t, DivisionProtocol>) }
-  , { "shared3p::divc_uint32_vec", NAMED_SYSCALL_WRAPPER("divc_uint32_vec", binary_arith_public_vec<s3p_uint32_t, DivisionProtocol>) }
-  , { "shared3p::divc_uint64_vec", NAMED_SYSCALL_WRAPPER("divc_uint64_vec", binary_arith_public_vec<s3p_uint64_t, DivisionProtocol>) }
-  , { "shared3p::modc_uint8_vec",  NAMED_SYSCALL_WRAPPER("modc_uint8_vec", binary_arith_public_vec<s3p_uint8_t, RemainderProtocol>) }
-  , { "shared3p::modc_uint16_vec", NAMED_SYSCALL_WRAPPER("modc_uint16_vec", binary_arith_public_vec<s3p_uint16_t, RemainderProtocol>) }
-  , { "shared3p::modc_uint32_vec", NAMED_SYSCALL_WRAPPER("modc_uint32_vec", binary_arith_public_vec<s3p_uint32_t, RemainderProtocol>) }
-  , { "shared3p::modc_uint64_vec", NAMED_SYSCALL_WRAPPER("modc_uint64_vec", binary_arith_public_vec<s3p_uint64_t, RemainderProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_uint8_vec",  add_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_uint16_vec", add_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_uint32_vec", add_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_uint64_vec", add_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_uint8_vec",  sum_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_uint16_vec", sum_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_uint32_vec", sum_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_uint64_vec", sum_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::product_uint8_vec",  product_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::product_uint16_vec", product_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::product_uint32_vec", product_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::product_uint64_vec", product_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_uint8_vec",  neg_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_uint16_vec", neg_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_uint32_vec", neg_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_uint64_vec", neg_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_uint8_vec",  sub_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_uint16_vec", sub_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_uint32_vec", sub_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_uint64_vec", sub_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_uint8_vec",  mul_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_uint16_vec", mul_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_uint32_vec", mul_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_uint64_vec", mul_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::div_uint8_vec",  div_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::div_uint16_vec", div_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::div_uint32_vec", div_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::div_uint64_vec", div_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mod_uint8_vec",  mod_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mod_uint16_vec", mod_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mod_uint32_vec", mod_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mod_uint64_vec", mod_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_uint8_vec", mulc_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_uint16_vec", mulc_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_uint32_vec", mulc_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_uint64_vec", mulc_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::divc_uint8_vec",  divc_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::divc_uint16_vec", divc_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::divc_uint32_vec", divc_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::divc_uint64_vec", divc_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::modc_uint8_vec",  modc_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::modc_uint16_vec", modc_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::modc_uint32_vec", modc_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::modc_uint64_vec", modc_uint64_vec)
 
     // Comparisons
-  , { "shared3p::eq_uint8_vec",  NAMED_SYSCALL_WRAPPER("eq_uint8_vec", binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_uint16_vec", NAMED_SYSCALL_WRAPPER("eq_uint16_vec", binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_uint32_vec", NAMED_SYSCALL_WRAPPER("eq_uint32_vec", binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_uint64_vec", NAMED_SYSCALL_WRAPPER("eq_uint64_vec", binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::gt_uint8_vec",  NAMED_SYSCALL_WRAPPER("gt_uint8_vec", binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_uint16_vec", NAMED_SYSCALL_WRAPPER("gt_uint16_vec", binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_uint32_vec", NAMED_SYSCALL_WRAPPER("gt_uint32_vec", binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_uint64_vec", NAMED_SYSCALL_WRAPPER("gt_uint64_vec", binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gte_uint8_vec",  NAMED_SYSCALL_WRAPPER("gte_uint8_vec", binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_uint16_vec", NAMED_SYSCALL_WRAPPER("gte_uint16_vec", binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_uint32_vec", NAMED_SYSCALL_WRAPPER("gte_uint32_vec", binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_uint64_vec", NAMED_SYSCALL_WRAPPER("gte_uint64_vec", binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::lt_uint8_vec",  NAMED_SYSCALL_WRAPPER("lt_uint8_vec", binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_uint16_vec", NAMED_SYSCALL_WRAPPER("lt_uint16_vec", binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_uint32_vec", NAMED_SYSCALL_WRAPPER("lt_uint32_vec", binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_uint64_vec", NAMED_SYSCALL_WRAPPER("lt_uint64_vec", binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lte_uint8_vec",  NAMED_SYSCALL_WRAPPER("lte_uint8_vec", binary_vec<s3p_uint8_t, s3p_uint8_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_uint16_vec", NAMED_SYSCALL_WRAPPER("lte_uint16_vec", binary_vec<s3p_uint16_t, s3p_uint16_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_uint32_vec", NAMED_SYSCALL_WRAPPER("lte_uint32_vec", binary_vec<s3p_uint32_t, s3p_uint32_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_uint64_vec", NAMED_SYSCALL_WRAPPER("lte_uint64_vec", binary_vec<s3p_uint64_t, s3p_uint64_t, s3p_bool_t, LessThanOrEqualProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_uint8_vec",  eq_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_uint16_vec", eq_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_uint32_vec", eq_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_uint64_vec", eq_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_uint8_vec",  gt_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_uint16_vec", gt_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_uint32_vec", gt_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_uint64_vec", gt_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_uint8_vec",  gte_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_uint16_vec", gte_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_uint32_vec", gte_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_uint64_vec", gte_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_uint8_vec",  lt_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_uint16_vec", lt_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_uint32_vec", lt_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_uint64_vec", lt_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_uint8_vec",  lte_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_uint16_vec", lte_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_uint32_vec", lte_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_uint64_vec", lte_uint64_vec)
 
  // Casting
-  , { "shared3p::conv_float32_to_bool_vec", NAMED_SYSCALL_WRAPPER("conv_float32_to_bool_vec", unary_vec<s3p_float32_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_float32_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_float32_to_float64_vec", unary_vec<s3p_float32_t, s3p_float64_t, ConversionProtocol>) }
-  , { "shared3p::conv_float64_to_bool_vec", NAMED_SYSCALL_WRAPPER("conv_float64_to_bool_vec", unary_vec<s3p_float64_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_bool_vec",  NAMED_SYSCALL_WRAPPER("conv_uint8_to_bool_vec", unary_vec<s3p_uint8_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_bool_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_bool_vec", unary_vec<s3p_uint16_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_bool_vec", NAMED_SYSCALL_WRAPPER("conv_uint32_to_bool_vec", unary_vec<s3p_uint32_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_bool_vec", NAMED_SYSCALL_WRAPPER("conv_uint64_to_bool_vec", unary_vec<s3p_uint64_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_int8_vec",  NAMED_SYSCALL_WRAPPER("conv_uint8_to_int8_vec", unary_vec<s3p_uint8_t, s3p_int8_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_int16_vec", NAMED_SYSCALL_WRAPPER("conv_uint8_to_int16_vec", unary_vec<s3p_uint8_t, s3p_int16_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_int32_vec", NAMED_SYSCALL_WRAPPER("conv_uint8_to_int32_vec", unary_vec<s3p_uint8_t, s3p_int32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_int64_vec", NAMED_SYSCALL_WRAPPER("conv_uint8_to_int64_vec", unary_vec<s3p_uint8_t, s3p_int64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_int8_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_int8_vec", unary_vec<s3p_uint16_t, s3p_int8_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_int16_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_int16_vec", unary_vec<s3p_uint16_t, s3p_int16_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_int32_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_int32_vec", unary_vec<s3p_uint16_t, s3p_int32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_int64_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_int64_vec", unary_vec<s3p_uint16_t, s3p_int64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_int8_vec",  NAMED_SYSCALL_WRAPPER("conv_uint32_to_int8_vec", unary_vec<s3p_uint32_t, s3p_int8_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_int16_vec", NAMED_SYSCALL_WRAPPER("conv_uint32_to_int16_vec", unary_vec<s3p_uint32_t, s3p_int16_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_int32_vec", NAMED_SYSCALL_WRAPPER("conv_uint32_to_int32_vec", unary_vec<s3p_uint32_t, s3p_int32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_int64_vec", NAMED_SYSCALL_WRAPPER("conv_uint32_to_int64_vec", unary_vec<s3p_uint32_t, s3p_int64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_int8_vec",  NAMED_SYSCALL_WRAPPER("conv_uint64_to_int8_vec", unary_vec<s3p_uint64_t, s3p_int8_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_int16_vec", NAMED_SYSCALL_WRAPPER("conv_uint64_to_int16_vec", unary_vec<s3p_uint64_t, s3p_int16_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_int32_vec", NAMED_SYSCALL_WRAPPER("conv_uint64_to_int32_vec", unary_vec<s3p_uint64_t, s3p_int32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_int64_vec", NAMED_SYSCALL_WRAPPER("conv_uint64_to_int64_vec", unary_vec<s3p_uint64_t, s3p_int64_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_float32_to_bool_vec", conv_float32_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_float32_to_float64_vec", conv_float32_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_float64_to_bool_vec", conv_float64_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_bool_vec",  conv_uint8_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_bool_vec", conv_uint16_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_bool_vec", conv_uint32_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_bool_vec", conv_uint64_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_int8_vec",  conv_uint8_to_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_int16_vec", conv_uint8_to_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_int32_vec", conv_uint8_to_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_int64_vec", conv_uint8_to_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_int8_vec", conv_uint16_to_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_int16_vec", conv_uint16_to_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_int32_vec", conv_uint16_to_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_int64_vec", conv_uint16_to_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_int8_vec",  conv_uint32_to_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_int16_vec", conv_uint32_to_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_int32_vec", conv_uint32_to_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_int64_vec", conv_uint32_to_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_int8_vec",  conv_uint64_to_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_int16_vec", conv_uint64_to_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_int32_vec", conv_uint64_to_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_int64_vec", conv_uint64_to_int64_vec)
 
-  , { "shared3p::conv_uint16_to_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_uint16_to_uint8_vec", unary_vec<s3p_uint16_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_uint32_to_uint8_vec", unary_vec<s3p_uint32_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_uint32_to_uint16_vec", unary_vec<s3p_uint32_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_uint64_to_uint8_vec", unary_vec<s3p_uint64_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_uint64_to_uint16_vec", unary_vec<s3p_uint64_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_uint64_to_uint32_vec", unary_vec<s3p_uint64_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_uint16_vec",  NAMED_SYSCALL_WRAPPER("conv_uint8_to_uint16_vec", unary_vec<s3p_uint8_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_uint32_vec",  NAMED_SYSCALL_WRAPPER("conv_uint8_to_uint32_vec", unary_vec<s3p_uint8_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_uint64_vec",  NAMED_SYSCALL_WRAPPER("conv_uint8_to_uint64_vec", unary_vec<s3p_uint8_t, s3p_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_uint32_vec", unary_vec<s3p_uint16_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_uint64_vec", unary_vec<s3p_uint16_t, s3p_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_uint32_to_uint64_vec", unary_vec<s3p_uint32_t, s3p_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_float32_vec", NAMED_SYSCALL_WRAPPER("conv_uint8_to_float32_vec", unary_vec<s3p_uint8_t, s3p_float32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint8_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_uint8_to_float64_vec", unary_vec<s3p_uint8_t, s3p_float64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_float32_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_float32_vec", unary_vec<s3p_uint16_t, s3p_float32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint16_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_uint16_to_float64_vec", unary_vec<s3p_uint16_t, s3p_float64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_float32_vec", NAMED_SYSCALL_WRAPPER("conv_uint32_to_float32_vec", unary_vec<s3p_uint32_t, s3p_float32_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint32_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_uint32_to_float64_vec", unary_vec<s3p_uint32_t, s3p_float64_t, ConversionProtocol>) }
-  , { "shared3p::conv_uint64_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_uint64_to_float64_vec", unary_vec<s3p_uint64_t, s3p_float64_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_uint8_vec",  conv_uint16_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_uint8_vec",  conv_uint32_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_uint16_vec", conv_uint32_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_uint8_vec",  conv_uint64_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_uint16_vec", conv_uint64_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_uint32_vec", conv_uint64_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_uint16_vec",  conv_uint8_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_uint32_vec",  conv_uint8_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_uint64_vec",  conv_uint8_to_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_uint32_vec", conv_uint16_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_uint64_vec", conv_uint16_to_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_uint64_vec", conv_uint32_to_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_float32_vec", conv_uint8_to_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint8_to_float64_vec", conv_uint8_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_float32_vec", conv_uint16_to_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint16_to_float64_vec", conv_uint16_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_float32_vec", conv_uint32_to_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_float64_vec", conv_uint32_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_float64_vec", conv_uint64_to_float64_vec)
 
-  , { "shared3p::bit_extract_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("bit_extract_xor_uint8_vec", unary_vec<s3p_xor_uint8_t, s3p_bool_t, BitExtractionProtocol>) }
-  , { "shared3p::bit_extract_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("bit_extract_xor_uint16_vec", unary_vec<s3p_xor_uint16_t, s3p_bool_t, BitExtractionProtocol>) }
-  , { "shared3p::bit_extract_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("bit_extract_xor_uint32_vec", unary_vec<s3p_xor_uint32_t, s3p_bool_t, BitExtractionProtocol>) }
-  , { "shared3p::bit_extract_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("bit_extract_xor_uint64_vec", unary_vec<s3p_xor_uint64_t, s3p_bool_t, BitExtractionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::bit_extract_xor_uint8_vec",  bit_extract_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::bit_extract_xor_uint16_vec", bit_extract_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::bit_extract_xor_uint32_vec", bit_extract_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::bit_extract_xor_uint64_vec", bit_extract_xor_uint64_vec)
 
     // Utilities
-  , { "shared3p::randomize_uint8_vec",  NAMED_SYSCALL_WRAPPER("randomize_uint8_vec", nullary_vec<s3p_uint8_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_uint16_vec", NAMED_SYSCALL_WRAPPER("randomize_uint16_vec", nullary_vec<s3p_uint16_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_uint32_vec", NAMED_SYSCALL_WRAPPER("randomize_uint32_vec", nullary_vec<s3p_uint32_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_uint64_vec", NAMED_SYSCALL_WRAPPER("randomize_uint64_vec", nullary_vec<s3p_uint64_t, RandomizeProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_uint8_vec",  randomize_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_uint16_vec", randomize_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_uint32_vec", randomize_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_uint64_vec", randomize_uint64_vec)
 
     // Special functions
-  , { "shared3p::min_uint8_vec",  NAMED_SYSCALL_WRAPPER("min_uint8_vec", binary_arith_vec<s3p_uint8_t, MinimumProtocol>) }
-  , { "shared3p::min_uint16_vec", NAMED_SYSCALL_WRAPPER("min_uint16_vec", binary_arith_vec<s3p_uint16_t, MinimumProtocol>) }
-  , { "shared3p::min_uint32_vec", NAMED_SYSCALL_WRAPPER("min_uint32_vec", binary_arith_vec<s3p_uint32_t, MinimumProtocol>) }
-  , { "shared3p::min_uint64_vec", NAMED_SYSCALL_WRAPPER("min_uint64_vec", binary_arith_vec<s3p_uint64_t, MinimumProtocol>) }
-  , { "shared3p::min_float32_vec", NAMED_SYSCALL_WRAPPER("min_float32_vec", binary_arith_vec<s3p_float32_t, MinimumProtocol>) }
-  , { "shared3p::min_float64_vec", NAMED_SYSCALL_WRAPPER("min_float64_vec", binary_arith_vec<s3p_float64_t, MinimumProtocol>) }
-  , { "shared3p::max_uint8_vec",  NAMED_SYSCALL_WRAPPER("max_uint8_vec", binary_arith_vec<s3p_uint8_t, MaximumProtocol>) }
-  , { "shared3p::max_uint16_vec", NAMED_SYSCALL_WRAPPER("max_uint16_vec", binary_arith_vec<s3p_uint16_t, MaximumProtocol>) }
-  , { "shared3p::max_uint32_vec", NAMED_SYSCALL_WRAPPER("max_uint32_vec", binary_arith_vec<s3p_uint32_t, MaximumProtocol>) }
-  , { "shared3p::max_uint64_vec", NAMED_SYSCALL_WRAPPER("max_uint64_vec", binary_arith_vec<s3p_uint64_t, MaximumProtocol>) }
-  , { "shared3p::max_float32_vec", NAMED_SYSCALL_WRAPPER("max_float32_vec", binary_arith_vec<s3p_float32_t, MaximumProtocol>) }
-  , { "shared3p::max_float64_vec", NAMED_SYSCALL_WRAPPER("max_float64_vec", binary_arith_vec<s3p_float64_t, MaximumProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_uint8_vec",  min_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_uint16_vec", min_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_uint32_vec", min_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_uint64_vec", min_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_float32_vec", min_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_float64_vec", min_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_uint8_vec",  max_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_uint16_vec", max_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_uint32_vec", max_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_uint64_vec", max_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_float32_vec", max_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_float64_vec", max_float64_vec)
 
-  , { "shared3p::vecmin_uint8_vec",  NAMED_SYSCALL_WRAPPER("vecmin_uint8_vec", unary_arith_vec<s3p_uint8_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmin_uint16_vec", NAMED_SYSCALL_WRAPPER("vecmin_uint16_vec", unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmin_uint32_vec", NAMED_SYSCALL_WRAPPER("vecmin_uint32_vec", unary_arith_vec<s3p_uint32_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmin_uint64_vec", NAMED_SYSCALL_WRAPPER("vecmin_uint64_vec", unary_arith_vec<s3p_uint64_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmin_float32_vec", NAMED_SYSCALL_WRAPPER("vecmin_float32_vec", unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmin_float64_vec", NAMED_SYSCALL_WRAPPER("vecmin_float64_vec", unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmax_uint8_vec",  NAMED_SYSCALL_WRAPPER("vecmax_uint8_vec", unary_arith_vec<s3p_uint8_t, MinimumMaximumProtocol<ModeMax> >) }
-  , { "shared3p::vecmax_uint16_vec", NAMED_SYSCALL_WRAPPER("vecmax_uint16_vec", unary_arith_vec<s3p_uint16_t, MinimumMaximumProtocol<ModeMax> >) }
-  , { "shared3p::vecmax_uint32_vec", NAMED_SYSCALL_WRAPPER("vecmax_uint32_vec", unary_arith_vec<s3p_uint32_t, MinimumMaximumProtocol<ModeMax> >) }
-  , { "shared3p::vecmax_uint64_vec", NAMED_SYSCALL_WRAPPER("vecmax_uint64_vec", unary_arith_vec<s3p_uint64_t, MinimumMaximumProtocol<ModeMax> >) }
-  , { "shared3p::vecmax_float32_vec", NAMED_SYSCALL_WRAPPER("vecmax_float32_vec", unary_arith_vec<s3p_float32_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmax_float64_vec", NAMED_SYSCALL_WRAPPER("vecmax_float64_vec", unary_arith_vec<s3p_float64_t, MinimumMaximumProtocol<ModeMin> >) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_uint8_vec",  vecmin_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_uint16_vec", vecmin_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_uint32_vec", vecmin_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_uint64_vec", vecmin_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_float32_vec", vecmin_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_float64_vec", vecmin_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_uint8_vec",  vecmax_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_uint16_vec", vecmax_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_uint32_vec", vecmax_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_uint64_vec", vecmax_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_float32_vec", vecmax_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_float64_vec", vecmax_float64_vec)
 
   // Database functions
-  , { "shared3p::vecshuf_uint8_vec", NAMED_SYSCALL_WRAPPER("vecshuf_uint8_vec", vector_shuffle<s3p_uint8_t, false, false>) }
-  , { "shared3p::vecshuf_uint16_vec", NAMED_SYSCALL_WRAPPER("vecshuf_uint16_vec", vector_shuffle<s3p_uint16_t, false, false>) }
-  , { "shared3p::vecshuf_uint32_vec", NAMED_SYSCALL_WRAPPER("vecshuf_uint32_vec", vector_shuffle<s3p_uint32_t, false, false>) }
-  , { "shared3p::vecshuf_uint64_vec", NAMED_SYSCALL_WRAPPER("vecshuf_uint64_vec", vector_shuffle<s3p_uint64_t, false, false>) }
-  , { "shared3p::vecshufkey_uint8_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_uint8_vec", vector_shuffle<s3p_uint8_t, true, false>) }
-  , { "shared3p::vecshufkey_uint16_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_uint16_vec", vector_shuffle<s3p_uint16_t, true, false>) }
-  , { "shared3p::vecshufkey_uint32_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_uint32_vec", vector_shuffle<s3p_uint32_t, true, false>) }
-  , { "shared3p::vecshufkey_uint64_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_uint64_vec", vector_shuffle<s3p_uint64_t, true, false>) }
-  , { "shared3p::vecshufinv_uint8_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_uint8_vec", vector_shuffle<s3p_uint8_t, true, true>) }
-  , { "shared3p::vecshufinv_uint16_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_uint16_vec", vector_shuffle<s3p_uint16_t, true, true>) }
-  , { "shared3p::vecshufinv_uint32_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_uint32_vec", vector_shuffle<s3p_uint32_t, true, true>) }
-  , { "shared3p::vecshufinv_uint64_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_uint64_vec", vector_shuffle<s3p_uint64_t, true, true>) }
-  , { "shared3p::matshuf_uint8_vec", NAMED_SYSCALL_WRAPPER("matshuf_uint8_vec", matrix_shuffle<s3p_uint8_t, false, false>) }
-  , { "shared3p::matshuf_uint16_vec", NAMED_SYSCALL_WRAPPER("matshuf_uint16_vec", matrix_shuffle<s3p_uint16_t, false, false>) }
-  , { "shared3p::matshuf_uint32_vec", NAMED_SYSCALL_WRAPPER("matshuf_uint32_vec", matrix_shuffle<s3p_uint32_t, false, false>) }
-  , { "shared3p::matshuf_uint64_vec", NAMED_SYSCALL_WRAPPER("matshuf_uint64_vec", matrix_shuffle<s3p_uint64_t, false, false>) }
-  , { "shared3p::matshufkey_uint8_vec", NAMED_SYSCALL_WRAPPER("matshufkey_uint8_vec", matrix_shuffle<s3p_uint8_t, true, false>) }
-  , { "shared3p::matshufkey_uint16_vec", NAMED_SYSCALL_WRAPPER("matshufkey_uint16_vec", matrix_shuffle<s3p_uint16_t, true, false>) }
-  , { "shared3p::matshufkey_uint32_vec", NAMED_SYSCALL_WRAPPER("matshufkey_uint32_vec", matrix_shuffle<s3p_uint32_t, true, false>) }
-  , { "shared3p::matshufkey_uint64_vec", NAMED_SYSCALL_WRAPPER("matshufkey_uint64_vec", matrix_shuffle<s3p_uint64_t, true, false>) }
-  , { "shared3p::matshufinv_uint8_vec", NAMED_SYSCALL_WRAPPER("matshufinv_uint8_vec", matrix_shuffle<s3p_uint8_t, true, true>) }
-  , { "shared3p::matshufinv_uint16_vec", NAMED_SYSCALL_WRAPPER("matshufinv_uint16_vec", matrix_shuffle<s3p_uint16_t, true, true>) }
-  , { "shared3p::matshufinv_uint32_vec", NAMED_SYSCALL_WRAPPER("matshufinv_uint32_vec", matrix_shuffle<s3p_uint32_t, true, true>) }
-  , { "shared3p::matshufinv_uint64_vec", NAMED_SYSCALL_WRAPPER("matshufinv_uint64_vec", matrix_shuffle<s3p_uint64_t, true, true>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_uint8_vec", vecshuf_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_uint16_vec", vecshuf_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_uint32_vec", vecshuf_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_uint64_vec", vecshuf_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_uint8_vec", vecshufkey_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_uint16_vec", vecshufkey_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_uint32_vec", vecshufkey_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_uint64_vec", vecshufkey_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_uint8_vec", vecshufinv_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_uint16_vec", vecshufinv_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_uint32_vec", vecshufinv_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_uint64_vec", vecshufinv_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_uint8_vec", matshuf_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_uint16_vec", matshuf_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_uint32_vec", matshuf_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_uint64_vec", matshuf_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_uint8_vec", matshufkey_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_uint16_vec", matshufkey_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_uint32_vec", matshufkey_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_uint64_vec", matshufkey_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_uint8_vec", matshufinv_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_uint16_vec", matshufinv_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_uint32_vec", matshufinv_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_uint64_vec", matshufinv_uint64_vec)
 
   /**
    *  Additively shared signed integers
@@ -1311,142 +1806,142 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::get_type_size_int32", &get_type_size<s3p_uint32_t> }
   , { "shared3p::get_type_size_int64", &get_type_size<s3p_uint64_t> }
 
-  , { "shared3p::add_int8_vec",  NAMED_SYSCALL_WRAPPER("add_int8_vec", binary_arith_vec<s3p_int8_t, AdditionProtocol>) }
-  , { "shared3p::add_int16_vec", NAMED_SYSCALL_WRAPPER("add_int16_vec", binary_arith_vec<s3p_int16_t, AdditionProtocol>) }
-  , { "shared3p::add_int32_vec", NAMED_SYSCALL_WRAPPER("add_int32_vec", binary_arith_vec<s3p_int32_t, AdditionProtocol>) }
-  , { "shared3p::add_int64_vec", NAMED_SYSCALL_WRAPPER("add_int64_vec", binary_arith_vec<s3p_int64_t, AdditionProtocol>) }
-  , { "shared3p::sum_int8_vec",  NAMED_SYSCALL_WRAPPER("sum_int8_vec", unary_arith_vec<s3p_int8_t, SumProtocol>) }
-  , { "shared3p::sum_int16_vec", NAMED_SYSCALL_WRAPPER("sum_int16_vec", unary_arith_vec<s3p_int16_t, SumProtocol>) }
-  , { "shared3p::sum_int32_vec", NAMED_SYSCALL_WRAPPER("sum_int32_vec", unary_arith_vec<s3p_int32_t, SumProtocol>) }
-  , { "shared3p::sum_int64_vec", NAMED_SYSCALL_WRAPPER("sum_int64_vec", unary_arith_vec<s3p_int64_t, SumProtocol>) }
-  , { "shared3p::product_int8_vec",  NAMED_SYSCALL_WRAPPER("product_int8_vec", unary_arith_vec<s3p_int8_t, ProductProtocol>) }
-  , { "shared3p::product_int16_vec", NAMED_SYSCALL_WRAPPER("product_int16_vec", unary_arith_vec<s3p_int16_t, ProductProtocol>) }
-  , { "shared3p::product_int32_vec", NAMED_SYSCALL_WRAPPER("product_int32_vec", unary_arith_vec<s3p_int32_t, ProductProtocol>) }
-  , { "shared3p::product_int64_vec", NAMED_SYSCALL_WRAPPER("product_int64_vec", unary_arith_vec<s3p_int64_t, ProductProtocol>) }
-  , { "shared3p::neg_int8_vec",  NAMED_SYSCALL_WRAPPER("neg_int8_vec", unary_arith_vec<s3p_int8_t, NegProtocol>) }
-  , { "shared3p::neg_int16_vec", NAMED_SYSCALL_WRAPPER("neg_int16_vec", unary_arith_vec<s3p_int16_t, NegProtocol>) }
-  , { "shared3p::neg_int32_vec", NAMED_SYSCALL_WRAPPER("neg_int32_vec", unary_arith_vec<s3p_int32_t, NegProtocol>) }
-  , { "shared3p::neg_int64_vec", NAMED_SYSCALL_WRAPPER("neg_int64_vec", unary_arith_vec<s3p_int64_t, NegProtocol>) }
-  , { "shared3p::sub_int8_vec",  NAMED_SYSCALL_WRAPPER("sub_int8_vec", binary_arith_vec<s3p_int8_t, SubtractionProtocol>) }
-  , { "shared3p::sub_int16_vec", NAMED_SYSCALL_WRAPPER("sub_int16_vec", binary_arith_vec<s3p_int16_t, SubtractionProtocol>) }
-  , { "shared3p::sub_int32_vec", NAMED_SYSCALL_WRAPPER("sub_int32_vec", binary_arith_vec<s3p_int32_t, SubtractionProtocol>) }
-  , { "shared3p::sub_int64_vec", NAMED_SYSCALL_WRAPPER("sub_int64_vec", binary_arith_vec<s3p_int64_t, SubtractionProtocol>) }
-  , { "shared3p::mul_int8_vec",  NAMED_SYSCALL_WRAPPER("mul_int8_vec", binary_arith_vec<s3p_int8_t, MultiplicationProtocol>) }
-  , { "shared3p::mul_int16_vec", NAMED_SYSCALL_WRAPPER("mul_int16_vec", binary_arith_vec<s3p_int16_t, MultiplicationProtocol>) }
-  , { "shared3p::mul_int32_vec", NAMED_SYSCALL_WRAPPER("mul_int32_vec", binary_arith_vec<s3p_int32_t, MultiplicationProtocol>) }
-  , { "shared3p::mul_int64_vec", NAMED_SYSCALL_WRAPPER("mul_int64_vec", binary_arith_vec<s3p_int64_t, MultiplicationProtocol>) }
-  , { "shared3p::mulc_int8_vec",  NAMED_SYSCALL_WRAPPER("mulc_int8_vec", binary_arith_public_vec<s3p_int8_t, MultiplicationProtocol>) }
-  , { "shared3p::mulc_int16_vec", NAMED_SYSCALL_WRAPPER("mulc_int16_vec", binary_arith_public_vec<s3p_int16_t, MultiplicationProtocol>) }
-  , { "shared3p::mulc_int32_vec", NAMED_SYSCALL_WRAPPER("mulc_int32_vec", binary_arith_public_vec<s3p_int32_t, MultiplicationProtocol>) }
-  , { "shared3p::mulc_int64_vec", NAMED_SYSCALL_WRAPPER("mulc_int64_vec", binary_arith_public_vec<s3p_int64_t, MultiplicationProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_int8_vec",  add_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_int16_vec", add_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_int32_vec", add_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_int64_vec", add_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_int8_vec",  sum_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_int16_vec", sum_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_int32_vec", sum_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_int64_vec", sum_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::product_int8_vec",  product_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::product_int16_vec", product_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::product_int32_vec", product_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::product_int64_vec", product_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_int8_vec",  neg_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_int16_vec", neg_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_int32_vec", neg_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_int64_vec", neg_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_int8_vec",  sub_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_int16_vec", sub_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_int32_vec", sub_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_int64_vec", sub_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_int8_vec",  mul_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_int16_vec", mul_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_int32_vec", mul_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_int64_vec", mul_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_int8_vec",  mulc_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_int16_vec", mulc_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_int32_vec", mulc_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_int64_vec", mulc_int64_vec)
 
   // Comparisons
-  , { "shared3p::eq_int8_vec",  NAMED_SYSCALL_WRAPPER("eq_int8_vec", binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_int16_vec", NAMED_SYSCALL_WRAPPER("eq_int16_vec", binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_int32_vec", NAMED_SYSCALL_WRAPPER("eq_int32_vec", binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_int64_vec", NAMED_SYSCALL_WRAPPER("eq_int64_vec", binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::gt_int8_vec",  NAMED_SYSCALL_WRAPPER("gt_int8_vec", binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_int16_vec", NAMED_SYSCALL_WRAPPER("gt_int16_vec", binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_int32_vec", NAMED_SYSCALL_WRAPPER("gt_int32_vec", binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_int64_vec", NAMED_SYSCALL_WRAPPER("gt_int64_vec", binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gte_int8_vec",  NAMED_SYSCALL_WRAPPER("gte_int8_vec", binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_int16_vec", NAMED_SYSCALL_WRAPPER("gte_int16_vec", binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_int32_vec", NAMED_SYSCALL_WRAPPER("gte_int32_vec", binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_int64_vec", NAMED_SYSCALL_WRAPPER("gte_int64_vec", binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::lt_int8_vec",  NAMED_SYSCALL_WRAPPER("lt_int8_vec", binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_int16_vec", NAMED_SYSCALL_WRAPPER("lt_int16_vec", binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_int32_vec", NAMED_SYSCALL_WRAPPER("lt_int32_vec", binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_int64_vec", NAMED_SYSCALL_WRAPPER("lt_int64_vec", binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lte_int8_vec",  NAMED_SYSCALL_WRAPPER("lte_int8_vec", binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_int16_vec", NAMED_SYSCALL_WRAPPER("lte_int16_vec", binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_int32_vec", NAMED_SYSCALL_WRAPPER("lte_int32_vec", binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_int64_vec", NAMED_SYSCALL_WRAPPER("lte_int64_vec", binary_vec<s3p_int64_t, s3p_int64_t, s3p_bool_t, LessThanOrEqualProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_int8_vec",  eq_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_int16_vec", eq_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_int32_vec", eq_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_int64_vec", eq_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_int8_vec",  gt_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_int16_vec", gt_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_int32_vec", gt_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_int64_vec", gt_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_int8_vec",  gte_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_int16_vec", gte_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_int32_vec", gte_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_int64_vec", gte_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_int8_vec",  lt_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_int16_vec", lt_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_int32_vec", lt_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_int64_vec", lt_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_int8_vec",  lte_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_int16_vec", lte_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_int32_vec", lte_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_int64_vec", lte_int64_vec)
 
   // Casting
-  , { "shared3p::conv_int8_to_bool_vec",  NAMED_SYSCALL_WRAPPER("conv_int8_to_bool_vec", unary_vec<s3p_int8_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_bool_vec", NAMED_SYSCALL_WRAPPER("conv_int16_to_bool_vec", unary_vec<s3p_int16_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_bool_vec", NAMED_SYSCALL_WRAPPER("conv_int32_to_bool_vec", unary_vec<s3p_int32_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_bool_vec", NAMED_SYSCALL_WRAPPER("conv_int64_to_bool_vec", unary_vec<s3p_int64_t, s3p_bool_t, ConversionProtocol>) }
-  , { "shared3p::conv_int8_to_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_int8_to_uint8_vec", unary_vec<s3p_int8_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_int8_to_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_int8_to_uint16_vec", unary_vec<s3p_int8_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_int8_to_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_int8_to_uint32_vec", unary_vec<s3p_int8_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int8_to_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_int8_to_uint64_vec", unary_vec<s3p_int8_t, s3p_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_int16_to_uint8_vec", unary_vec<s3p_int16_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_int16_to_uint16_vec", unary_vec<s3p_int16_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_int16_to_uint32_vec", unary_vec<s3p_int16_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_int16_to_uint64_vec", unary_vec<s3p_int16_t, s3p_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_int32_to_uint8_vec", unary_vec<s3p_int32_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_int32_to_uint16_vec", unary_vec<s3p_int32_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_int32_to_uint32_vec", unary_vec<s3p_int32_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_int32_to_uint64_vec", unary_vec<s3p_int32_t, s3p_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_int64_to_uint8_vec", unary_vec<s3p_int64_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_int64_to_uint16_vec", unary_vec<s3p_int64_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_int64_to_uint32_vec", unary_vec<s3p_int64_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_int64_to_uint64_vec", unary_vec<s3p_int64_t, s3p_uint64_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_bool_vec",  conv_int8_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_bool_vec", conv_int16_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_bool_vec", conv_int32_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_bool_vec", conv_int64_to_bool_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_uint8_vec",  conv_int8_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_uint16_vec", conv_int8_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_uint32_vec", conv_int8_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_uint64_vec", conv_int8_to_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_uint8_vec",  conv_int16_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_uint16_vec", conv_int16_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_uint32_vec", conv_int16_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_uint64_vec", conv_int16_to_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_uint8_vec",  conv_int32_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_uint16_vec", conv_int32_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_uint32_vec", conv_int32_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_uint64_vec", conv_int32_to_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_uint8_vec",  conv_int64_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_uint16_vec", conv_int64_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_uint32_vec", conv_int64_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_uint64_vec", conv_int64_to_uint64_vec)
 
-  , { "shared3p::conv_int16_to_int8_vec",  NAMED_SYSCALL_WRAPPER("conv_int16_to_int8_vec", unary_vec<s3p_int16_t, s3p_int8_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_int8_vec",  NAMED_SYSCALL_WRAPPER("conv_int32_to_int8_vec", unary_vec<s3p_int32_t, s3p_int8_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_int16_vec", NAMED_SYSCALL_WRAPPER("conv_int32_to_int16_vec", unary_vec<s3p_int32_t, s3p_int16_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_int8_vec",  NAMED_SYSCALL_WRAPPER("conv_int64_to_int8_vec", unary_vec<s3p_int64_t, s3p_int8_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_int16_vec", NAMED_SYSCALL_WRAPPER("conv_int64_to_int16_vec", unary_vec<s3p_int64_t, s3p_int16_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_int32_vec", NAMED_SYSCALL_WRAPPER("conv_int64_to_int32_vec", unary_vec<s3p_int64_t, s3p_int32_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_int8_vec",  conv_int16_to_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_int8_vec",  conv_int32_to_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_int16_vec", conv_int32_to_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_int8_vec",  conv_int64_to_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_int16_vec", conv_int64_to_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_int32_vec", conv_int64_to_int32_vec)
 
-  , { "shared3p::conv_int8_to_int16_vec",  NAMED_SYSCALL_WRAPPER("conv_int8_to_int16_vec", unary_vec<s3p_int8_t, s3p_int16_t, ConversionProtocol>) }
-  , { "shared3p::conv_int8_to_int32_vec",  NAMED_SYSCALL_WRAPPER("conv_int8_to_int32_vec", unary_vec<s3p_int8_t, s3p_int32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int8_to_int64_vec",  NAMED_SYSCALL_WRAPPER("conv_int8_to_int64_vec", unary_vec<s3p_int8_t, s3p_int64_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_int32_vec", NAMED_SYSCALL_WRAPPER("conv_int16_to_int32_vec", unary_vec<s3p_int16_t, s3p_int32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_int64_vec", NAMED_SYSCALL_WRAPPER("conv_int16_to_int64_vec", unary_vec<s3p_int16_t, s3p_int64_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_int64_vec", NAMED_SYSCALL_WRAPPER("conv_int32_to_int64_vec", unary_vec<s3p_int32_t, s3p_int64_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_int16_vec",  conv_int8_to_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_int32_vec",  conv_int8_to_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_int64_vec",  conv_int8_to_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_int32_vec", conv_int16_to_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_int64_vec", conv_int16_to_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_int64_vec", conv_int32_to_int64_vec)
 
-  , { "shared3p::conv_int8_to_float32_vec", NAMED_SYSCALL_WRAPPER("conv_int8_to_float32_vec", unary_vec<s3p_int8_t, s3p_float32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int8_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_int8_to_float64_vec", unary_vec<s3p_int8_t, s3p_float64_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_float32_vec", NAMED_SYSCALL_WRAPPER("conv_int16_to_float32_vec", unary_vec<s3p_int16_t, s3p_float32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int16_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_int16_to_float64_vec", unary_vec<s3p_int16_t, s3p_float64_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_float32_vec", NAMED_SYSCALL_WRAPPER("conv_int32_to_float32_vec", unary_vec<s3p_int32_t, s3p_float32_t, ConversionProtocol>) }
-  , { "shared3p::conv_int32_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_int32_to_float64_vec", unary_vec<s3p_int32_t, s3p_float64_t, ConversionProtocol>) }
-  , { "shared3p::conv_int64_to_float64_vec", NAMED_SYSCALL_WRAPPER("conv_int64_to_float64_vec", unary_vec<s3p_int64_t, s3p_float64_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_float32_vec", conv_int8_to_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int8_to_float64_vec", conv_int8_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_float32_vec", conv_int16_to_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int16_to_float64_vec", conv_int16_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_float32_vec", conv_int32_to_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_float64_vec", conv_int32_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_float64_vec", conv_int64_to_float64_vec)
 
   // Utilities
-  , { "shared3p::randomize_int8_vec",  NAMED_SYSCALL_WRAPPER("randomize_int8_vec", nullary_vec<s3p_int8_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_int16_vec", NAMED_SYSCALL_WRAPPER("randomize_int16_vec", nullary_vec<s3p_int16_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_int32_vec", NAMED_SYSCALL_WRAPPER("randomize_int32_vec", nullary_vec<s3p_int32_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_int64_vec", NAMED_SYSCALL_WRAPPER("randomize_int64_vec", nullary_vec<s3p_int64_t, RandomizeProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_int8_vec",  randomize_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_int16_vec", randomize_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_int32_vec", randomize_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_int64_vec", randomize_int64_vec)
 
   // Special functions
-  , { "shared3p::sign_int8_vec",  NAMED_SYSCALL_WRAPPER("sign_int8_vec", unary_arith_vec<s3p_int8_t, SignProtocol>) }
-  , { "shared3p::sign_int16_vec", NAMED_SYSCALL_WRAPPER("sign_int16_vec", unary_arith_vec<s3p_int16_t, SignProtocol>) }
-  , { "shared3p::sign_int32_vec", NAMED_SYSCALL_WRAPPER("sign_int32_vec", unary_arith_vec<s3p_int32_t, SignProtocol>) }
-  , { "shared3p::sign_int64_vec", NAMED_SYSCALL_WRAPPER("sign_int64_vec", unary_arith_vec<s3p_int64_t, SignProtocol>) }
-  , { "shared3p::abs_int8_vec",  NAMED_SYSCALL_WRAPPER("abs_int8_vec", unary_vec<s3p_int8_t, s3p_uint8_t, AbsoluteValueProtocol>) }
-  , { "shared3p::abs_int16_vec", NAMED_SYSCALL_WRAPPER("abs_int16_vec", unary_vec<s3p_int16_t, s3p_uint16_t, AbsoluteValueProtocol>) }
-  , { "shared3p::abs_int32_vec", NAMED_SYSCALL_WRAPPER("abs_int32_vec", unary_vec<s3p_int32_t, s3p_uint32_t, AbsoluteValueProtocol>) }
-  , { "shared3p::abs_int64_vec", NAMED_SYSCALL_WRAPPER("abs_int64_vec", unary_vec<s3p_int64_t, s3p_uint64_t, AbsoluteValueProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::sign_int8_vec",  sign_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sign_int16_vec", sign_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sign_int32_vec", sign_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sign_int64_vec", sign_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::abs_int8_vec",  abs_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::abs_int16_vec", abs_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::abs_int32_vec", abs_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::abs_int64_vec", abs_int64_vec)
 
   // Database functions
-  , { "shared3p::vecshuf_int8_vec", NAMED_SYSCALL_WRAPPER("vecshuf_int8_vec", vector_shuffle<s3p_int8_t, false, false>) }
-  , { "shared3p::vecshuf_int16_vec", NAMED_SYSCALL_WRAPPER("vecshuf_int16_vec", vector_shuffle<s3p_int16_t, false, false>) }
-  , { "shared3p::vecshuf_int32_vec", NAMED_SYSCALL_WRAPPER("vecshuf_int32_vec", vector_shuffle<s3p_int32_t, false, false>) }
-  , { "shared3p::vecshuf_int64_vec", NAMED_SYSCALL_WRAPPER("vecshuf_int64_vec", vector_shuffle<s3p_int64_t, false, false>) }
-  , { "shared3p::vecshufkey_int8_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_int8_vec", vector_shuffle<s3p_int8_t, true, false>) }
-  , { "shared3p::vecshufkey_int16_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_int16_vec", vector_shuffle<s3p_int16_t, true, false>) }
-  , { "shared3p::vecshufkey_int32_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_int32_vec", vector_shuffle<s3p_int32_t, true, false>) }
-  , { "shared3p::vecshufkey_int64_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_int64_vec", vector_shuffle<s3p_int64_t, true, false>) }
-  , { "shared3p::vecshufinv_int8_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_int8_vec", vector_shuffle<s3p_int8_t, true, true>) }
-  , { "shared3p::vecshufinv_int16_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_int16_vec", vector_shuffle<s3p_int16_t, true, true>) }
-  , { "shared3p::vecshufinv_int32_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_int32_vec", vector_shuffle<s3p_int32_t, true, true>) }
-  , { "shared3p::vecshufinv_int64_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_int64_vec", vector_shuffle<s3p_int64_t, true, true>) }
-  , { "shared3p::matshuf_int8_vec", NAMED_SYSCALL_WRAPPER("matshuf_int8_vec", matrix_shuffle<s3p_int8_t, false, false>) }
-  , { "shared3p::matshuf_int16_vec", NAMED_SYSCALL_WRAPPER("matshuf_int16_vec", matrix_shuffle<s3p_int16_t, false, false>) }
-  , { "shared3p::matshuf_int32_vec", NAMED_SYSCALL_WRAPPER("matshuf_int32_vec", matrix_shuffle<s3p_int32_t, false, false>) }
-  , { "shared3p::matshuf_int64_vec", NAMED_SYSCALL_WRAPPER("matshuf_int64_vec", matrix_shuffle<s3p_int64_t, false, false>) }
-  , { "shared3p::matshufkey_int8_vec", NAMED_SYSCALL_WRAPPER("matshufkey_int8_vec", matrix_shuffle<s3p_int8_t, true, false>) }
-  , { "shared3p::matshufkey_int16_vec", NAMED_SYSCALL_WRAPPER("matshufkey_int16_vec", matrix_shuffle<s3p_int16_t, true, false>) }
-  , { "shared3p::matshufkey_int32_vec", NAMED_SYSCALL_WRAPPER("matshufkey_int32_vec", matrix_shuffle<s3p_int32_t, true, false>) }
-  , { "shared3p::matshufkey_int64_vec", NAMED_SYSCALL_WRAPPER("matshufkey_int64_vec", matrix_shuffle<s3p_int64_t, true, false>) }
-  , { "shared3p::matshufinv_int8_vec", NAMED_SYSCALL_WRAPPER("matshufinv_int8_vec", matrix_shuffle<s3p_int8_t, true, true>) }
-  , { "shared3p::matshufinv_int16_vec", NAMED_SYSCALL_WRAPPER("matshufinv_int16_vec", matrix_shuffle<s3p_int16_t, true, true>) }
-  , { "shared3p::matshufinv_int32_vec", NAMED_SYSCALL_WRAPPER("matshufinv_int32_vec", matrix_shuffle<s3p_int32_t, true, true>) }
-  , { "shared3p::matshufinv_int64_vec", NAMED_SYSCALL_WRAPPER("matshufinv_int64_vec", matrix_shuffle<s3p_int64_t, true, true>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_int8_vec", vecshuf_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_int16_vec", vecshuf_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_int32_vec", vecshuf_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_int64_vec", vecshuf_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_int8_vec", vecshufkey_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_int16_vec", vecshufkey_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_int32_vec", vecshufkey_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_int64_vec", vecshufkey_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_int8_vec", vecshufinv_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_int16_vec", vecshufinv_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_int32_vec", vecshufinv_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_int64_vec", vecshufinv_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_int8_vec", matshuf_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_int16_vec", matshuf_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_int32_vec", matshuf_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_int64_vec", matshuf_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_int8_vec", matshufkey_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_int16_vec", matshufkey_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_int32_vec", matshufkey_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_int64_vec", matshufkey_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_int8_vec", matshufinv_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_int16_vec", matshufinv_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_int32_vec", matshufinv_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_int64_vec", matshufinv_int64_vec)
 
   /**
    *  Bitwise shared unsigned integers
@@ -1502,148 +1997,148 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::get_type_size_xor_uint32", &get_type_size<s3p_xor_uint32_t> }
   , { "shared3p::get_type_size_xor_uint64", &get_type_size<s3p_xor_uint64_t> }
 
-  , { "shared3p::reshare_xor_uint8_to_uint8_vec", NAMED_SYSCALL_WRAPPER("reshare_xor_uint8_to_uint8_vec", unary_vec<s3p_xor_uint8_t, s3p_uint8_t, ConversionProtocol>) }
-  , { "shared3p::reshare_xor_uint16_to_uint16_vec", NAMED_SYSCALL_WRAPPER("reshare_xor_uint16_to_uint16_vec", unary_vec<s3p_xor_uint16_t, s3p_uint16_t, ConversionProtocol>) }
-  , { "shared3p::reshare_xor_uint32_to_uint32_vec", NAMED_SYSCALL_WRAPPER("reshare_xor_uint32_to_uint32_vec", unary_vec<s3p_xor_uint32_t, s3p_uint32_t, ConversionProtocol>) }
-  , { "shared3p::reshare_xor_uint64_to_uint64_vec", NAMED_SYSCALL_WRAPPER("reshare_xor_uint64_to_uint64_vec", unary_vec<s3p_xor_uint64_t, s3p_uint64_t, ConversionProtocol>) }
-  , { "shared3p::reshare_uint8_to_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("reshare_uint8_to_xor_uint8_vec", unary_vec<s3p_uint8_t, s3p_xor_uint8_t, ConversionProtocol>) }
-  , { "shared3p::reshare_uint16_to_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("reshare_uint16_to_xor_uint16_vec", unary_vec<s3p_uint16_t, s3p_xor_uint16_t, ConversionProtocol>) }
-  , { "shared3p::reshare_uint32_to_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("reshare_uint32_to_xor_uint32_vec", unary_vec<s3p_uint32_t, s3p_xor_uint32_t, ConversionProtocol>) }
-  , { "shared3p::reshare_uint64_to_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("reshare_uint64_to_xor_uint64_vec", unary_vec<s3p_uint64_t, s3p_xor_uint64_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_xor_uint8_to_uint8_vec", reshare_xor_uint8_to_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_xor_uint16_to_uint16_vec", reshare_xor_uint16_to_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_xor_uint32_to_uint32_vec", reshare_xor_uint32_to_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_xor_uint64_to_uint64_vec", reshare_xor_uint64_to_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_uint8_to_xor_uint8_vec", reshare_uint8_to_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_uint16_to_xor_uint16_vec", reshare_uint16_to_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_uint32_to_xor_uint32_vec", reshare_uint32_to_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_uint64_to_xor_uint64_vec", reshare_uint64_to_xor_uint64_vec)
 
     // Bitwise operations on xor shared data
-  , { "shared3p::xor_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("xor_xor_uint8_vec", binary_arith_vec<s3p_xor_uint8_t, BitwiseXorProtocol>) }
-  , { "shared3p::xor_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("xor_xor_uint16_vec", binary_arith_vec<s3p_xor_uint16_t, BitwiseXorProtocol>) }
-  , { "shared3p::xor_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("xor_xor_uint32_vec", binary_arith_vec<s3p_xor_uint32_t, BitwiseXorProtocol>) }
-  , { "shared3p::xor_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("xor_xor_uint64_vec", binary_arith_vec<s3p_xor_uint64_t, BitwiseXorProtocol>) }
-  , { "shared3p::and_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("and_xor_uint8_vec", binary_arith_vec<s3p_xor_uint8_t, BitwiseAndProtocol>) }
-  , { "shared3p::and_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("and_xor_uint16_vec", binary_arith_vec<s3p_xor_uint16_t, BitwiseAndProtocol>) }
-  , { "shared3p::and_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("and_xor_uint32_vec", binary_arith_vec<s3p_xor_uint32_t, BitwiseAndProtocol>) }
-  , { "shared3p::and_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("and_xor_uint64_vec", binary_arith_vec<s3p_xor_uint64_t, BitwiseAndProtocol>) }
-  , { "shared3p::or_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("or_xor_uint8_vec", binary_arith_vec<s3p_xor_uint8_t, BitwiseOrProtocol>) }
-  , { "shared3p::or_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("or_xor_uint16_vec", binary_arith_vec<s3p_xor_uint16_t, BitwiseOrProtocol>) }
-  , { "shared3p::or_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("or_xor_uint32_vec", binary_arith_vec<s3p_xor_uint32_t, BitwiseOrProtocol>) }
-  , { "shared3p::or_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("or_xor_uint64_vec", binary_arith_vec<s3p_xor_uint64_t, BitwiseOrProtocol>) }
-  , { "shared3p::inv_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("inv_xor_uint8_vec", unary_arith_vec<s3p_xor_uint8_t,  BitwiseInvProtocol>) }
-  , { "shared3p::inv_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("inv_xor_uint16_vec", unary_arith_vec<s3p_xor_uint16_t, BitwiseInvProtocol>) }
-  , { "shared3p::inv_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("inv_xor_uint32_vec", unary_arith_vec<s3p_xor_uint32_t, BitwiseInvProtocol>) }
-  , { "shared3p::inv_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("inv_xor_uint64_vec", unary_arith_vec<s3p_xor_uint64_t, BitwiseInvProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::xor_xor_uint8_vec",  xor_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::xor_xor_uint16_vec", xor_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::xor_xor_uint32_vec", xor_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::xor_xor_uint64_vec", xor_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::and_xor_uint8_vec",  and_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::and_xor_uint16_vec", and_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::and_xor_uint32_vec", and_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::and_xor_uint64_vec", and_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::or_xor_uint8_vec",  or_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::or_xor_uint16_vec", or_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::or_xor_uint32_vec", or_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::or_xor_uint64_vec", or_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_xor_uint8_vec",  inv_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_xor_uint16_vec", inv_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_xor_uint32_vec", inv_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_xor_uint64_vec", inv_xor_uint64_vec)
 
    // Comparisons
-  , { "shared3p::eq_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("eq_xor_uint8_vec", binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("eq_xor_uint16_vec", binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("eq_xor_uint32_vec", binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("eq_xor_uint64_vec", binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::gt_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("gt_xor_uint8_vec", binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("gt_xor_uint16_vec", binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("gt_xor_uint32_vec", binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gt_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("gt_xor_uint64_vec", binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gte_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("gte_xor_uint8_vec", binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint16_vec", binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint32_vec", binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::gte_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("gte_xor_uint64_vec", binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::lt_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("lt_xor_uint8_vec", binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("lt_xor_uint16_vec", binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("lt_xor_uint32_vec", binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lt_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("lt_xor_uint64_vec", binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lte_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("lte_xor_uint8_vec", binary_vec<s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint16_vec", binary_vec<s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint32_vec", binary_vec<s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::lte_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("lte_xor_uint64_vec", binary_vec<s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_bool_t, LessThanOrEqualProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_xor_uint8_vec",  eq_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_xor_uint16_vec", eq_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_xor_uint32_vec", eq_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_xor_uint64_vec", eq_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_xor_uint8_vec",  gt_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_xor_uint16_vec", gt_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_xor_uint32_vec", gt_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_xor_uint64_vec", gt_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_xor_uint8_vec",  gte_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_xor_uint16_vec", gte_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_xor_uint32_vec", gte_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_xor_uint64_vec", gte_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_xor_uint8_vec",  lt_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_xor_uint16_vec", lt_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_xor_uint32_vec", lt_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_xor_uint64_vec", lt_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_xor_uint8_vec",  lte_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_xor_uint16_vec", lte_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_xor_uint32_vec", lte_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_xor_uint64_vec", lte_xor_uint64_vec)
 
   // Casting
-  , { "shared3p::conv_bool_to_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("conv_bool_to_xor_uint8_vec", unary_vec<s3p_bool_t, s3p_xor_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_xor_uint16_vec", unary_vec<s3p_bool_t, s3p_xor_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_xor_uint32_vec", unary_vec<s3p_bool_t, s3p_xor_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_bool_to_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_bool_to_xor_uint64_vec", unary_vec<s3p_bool_t, s3p_xor_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint64_to_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint64_to_xor_uint32_vec", unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint64_to_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint64_to_xor_uint16_vec", unary_vec<s3p_xor_uint64_t, s3p_xor_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint64_to_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint64_to_xor_uint8_vec", unary_vec<s3p_xor_uint64_t, s3p_xor_uint8_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint32_to_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint32_to_xor_uint16_vec", unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint32_to_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint32_to_xor_uint8_vec", unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint16_to_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint16_to_xor_uint8_vec", unary_vec<s3p_xor_uint64_t, s3p_xor_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint8_to_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint8_to_xor_uint64_vec", unary_vec<s3p_xor_uint8_t, s3p_xor_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint8_to_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint8_to_xor_uint32_vec", unary_vec<s3p_xor_uint8_t, s3p_xor_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint8_to_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint8_to_xor_uint16_vec", unary_vec<s3p_xor_uint8_t, s3p_xor_uint16_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint16_to_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint16_to_xor_uint64_vec", unary_vec<s3p_xor_uint16_t, s3p_xor_uint64_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint16_to_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint16_to_xor_uint32_vec", unary_vec<s3p_xor_uint16_t, s3p_xor_uint32_t, ConversionProtocol>) }
-  , { "shared3p::conv_xor_uint32_to_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("conv_xor_uint32_to_xor_uint64_vec", unary_vec<s3p_xor_uint32_t, s3p_xor_uint64_t, ConversionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_xor_uint8_vec",  conv_bool_to_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_xor_uint16_vec", conv_bool_to_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_xor_uint32_vec", conv_bool_to_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_bool_to_xor_uint64_vec", conv_bool_to_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint64_to_xor_uint32_vec", conv_xor_uint64_to_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint64_to_xor_uint16_vec", conv_xor_uint64_to_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint64_to_xor_uint8_vec", conv_xor_uint64_to_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint32_to_xor_uint16_vec", conv_xor_uint32_to_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint32_to_xor_uint8_vec", conv_xor_uint32_to_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint16_to_xor_uint8_vec", conv_xor_uint16_to_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint8_to_xor_uint64_vec", conv_xor_uint8_to_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint8_to_xor_uint32_vec", conv_xor_uint8_to_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint8_to_xor_uint16_vec", conv_xor_uint8_to_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint16_to_xor_uint64_vec", conv_xor_uint16_to_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint16_to_xor_uint32_vec", conv_xor_uint16_to_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_xor_uint32_to_xor_uint64_vec", conv_xor_uint32_to_xor_uint64_vec)
 
    // Utilities
-  , { "shared3p::randomize_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("randomize_xor_uint8_vec", nullary_vec<s3p_xor_uint8_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("randomize_xor_uint16_vec", nullary_vec<s3p_xor_uint16_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("randomize_xor_uint32_vec", nullary_vec<s3p_xor_uint32_t, RandomizeProtocol>) }
-  , { "shared3p::randomize_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("randomize_xor_uint64_vec", nullary_vec<s3p_xor_uint64_t, RandomizeProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_xor_uint8_vec",  randomize_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_xor_uint16_vec", randomize_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_xor_uint32_vec", randomize_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::randomize_xor_uint64_vec", randomize_xor_uint64_vec)
 
-  , { "shared3p::shift_left_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("shift_left_xor_uint8_vec", binary_public_vec<s3p_xor_uint8_t, s3p_int64_t, s3p_xor_uint8_t, LeftShiftProtocol>) }
-  , { "shared3p::shift_left_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("shift_left_xor_uint16_vec", binary_public_vec<s3p_xor_uint16_t, s3p_int64_t, s3p_xor_uint16_t, LeftShiftProtocol>) }
-  , { "shared3p::shift_left_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("shift_left_xor_uint32_vec", binary_public_vec<s3p_xor_uint32_t, s3p_int64_t, s3p_xor_uint32_t, LeftShiftProtocol>) }
-  , { "shared3p::shift_left_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("shift_left_xor_uint64_vec", binary_public_vec<s3p_xor_uint64_t, s3p_int64_t, s3p_xor_uint64_t, LeftShiftProtocol>) }
-  , { "shared3p::rotate_left_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("rotate_left_xor_uint8_vec", binary_public_vec<s3p_xor_uint8_t, s3p_int64_t, s3p_xor_uint8_t, LeftRotationProtocol>) }
-  , { "shared3p::rotate_left_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("rotate_left_xor_uint16_vec", binary_public_vec<s3p_xor_uint16_t, s3p_int64_t, s3p_xor_uint16_t, LeftRotationProtocol>) }
-  , { "shared3p::rotate_left_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("rotate_left_xor_uint32_vec", binary_public_vec<s3p_xor_uint32_t, s3p_int64_t, s3p_xor_uint32_t, LeftRotationProtocol>) }
-  , { "shared3p::rotate_left_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("rotate_left_xor_uint64_vec", binary_public_vec<s3p_xor_uint64_t, s3p_int64_t, s3p_xor_uint64_t, LeftRotationProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::shift_left_xor_uint8_vec",  shift_left_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::shift_left_xor_uint16_vec", shift_left_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::shift_left_xor_uint32_vec", shift_left_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::shift_left_xor_uint64_vec", shift_left_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::rotate_left_xor_uint8_vec",  rotate_left_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::rotate_left_xor_uint16_vec", rotate_left_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::rotate_left_xor_uint32_vec", rotate_left_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::rotate_left_xor_uint64_vec", rotate_left_xor_uint64_vec)
 
    // Special functions
-  , { "shared3p::choose_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("choose_xor_uint8_vec", ternary_vec<s3p_bool_t, s3p_xor_uint8_t, s3p_xor_uint8_t, s3p_xor_uint8_t, ObliviousChoiceProtocol>) }
-  , { "shared3p::choose_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("choose_xor_uint16_vec", ternary_vec<s3p_bool_t, s3p_xor_uint16_t, s3p_xor_uint16_t, s3p_xor_uint16_t, ObliviousChoiceProtocol>) }
-  , { "shared3p::choose_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("choose_xor_uint32_vec", ternary_vec<s3p_bool_t, s3p_xor_uint32_t, s3p_xor_uint32_t, s3p_xor_uint32_t, ObliviousChoiceProtocol>) }
-  , { "shared3p::choose_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("choose_xor_uint64_vec", ternary_vec<s3p_bool_t, s3p_xor_uint64_t, s3p_xor_uint64_t, s3p_xor_uint64_t, ObliviousChoiceProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::choose_xor_uint8_vec",  choose_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::choose_xor_uint16_vec", choose_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::choose_xor_uint32_vec", choose_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::choose_xor_uint64_vec", choose_xor_uint64_vec)
 
-  , { "shared3p::min_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("min_xor_uint8_vec", binary_arith_vec<s3p_xor_uint8_t, MinimumProtocol>) }
-  , { "shared3p::min_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("min_xor_uint16_vec", binary_arith_vec<s3p_xor_uint16_t, MinimumProtocol>) }
-  , { "shared3p::min_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("min_xor_uint32_vec", binary_arith_vec<s3p_xor_uint32_t, MinimumProtocol>) }
-  , { "shared3p::min_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("min_xor_uint64_vec", binary_arith_vec<s3p_xor_uint64_t, MinimumProtocol>) }
-  , { "shared3p::max_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("max_xor_uint8_vec", binary_arith_vec<s3p_xor_uint8_t, MaximumProtocol>) }
-  , { "shared3p::max_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("max_xor_uint16_vec", binary_arith_vec<s3p_xor_uint16_t, MaximumProtocol>) }
-  , { "shared3p::max_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("max_xor_uint32_vec", binary_arith_vec<s3p_xor_uint32_t, MaximumProtocol>) }
-  , { "shared3p::max_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("max_xor_uint64_vec", binary_arith_vec<s3p_xor_uint64_t, MaximumProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_xor_uint8_vec",  min_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_xor_uint16_vec", min_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_xor_uint32_vec", min_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::min_xor_uint64_vec", min_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_xor_uint8_vec",  max_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_xor_uint16_vec", max_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_xor_uint32_vec", max_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::max_xor_uint64_vec", max_xor_uint64_vec)
 
-  , { "shared3p::vecmin_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("vecmin_xor_uint8_vec", unary_arith_vec<s3p_xor_uint8_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmin_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("vecmin_xor_uint16_vec", unary_arith_vec<s3p_xor_uint16_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmin_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("vecmin_xor_uint32_vec", unary_arith_vec<s3p_xor_uint32_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmin_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("vecmin_xor_uint64_vec", unary_arith_vec<s3p_xor_uint64_t, MinimumMaximumProtocol<ModeMin> >) }
-  , { "shared3p::vecmax_xor_uint8_vec",  NAMED_SYSCALL_WRAPPER("vecmax_xor_uint8_vec", unary_arith_vec<s3p_xor_uint8_t, MinimumMaximumProtocol<ModeMax> >) }
-  , { "shared3p::vecmax_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("vecmax_xor_uint16_vec", unary_arith_vec<s3p_xor_uint16_t, MinimumMaximumProtocol<ModeMax> >) }
-  , { "shared3p::vecmax_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("vecmax_xor_uint32_vec", unary_arith_vec<s3p_xor_uint32_t, MinimumMaximumProtocol<ModeMax> >) }
-  , { "shared3p::vecmax_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("vecmax_xor_uint64_vec", unary_arith_vec<s3p_xor_uint64_t, MinimumMaximumProtocol<ModeMax> >) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_xor_uint8_vec",  vecmin_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_xor_uint16_vec", vecmin_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_xor_uint32_vec", vecmin_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmin_xor_uint64_vec", vecmin_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_xor_uint8_vec",  vecmax_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_xor_uint16_vec", vecmax_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_xor_uint32_vec", vecmax_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecmax_xor_uint64_vec", vecmax_xor_uint64_vec)
 
-  , { "shared3p::msnzb_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("msnzb_xor_uint8_vec", unary_arith_vec<s3p_xor_uint8_t, MostSignificantNonZeroBitProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::msnzb_xor_uint8_vec", msnzb_xor_uint8_vec)
 
-  , { "shared3p::aes128_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("aes128_xor_uint32_vec", aes_xor_uint32_vec<Aes128Protocol>) }
-  , { "shared3p::aes192_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("aes192_xor_uint32_vec", aes_xor_uint32_vec<Aes192Protocol>) }
-  , { "shared3p::aes256_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("aes256_xor_uint32_vec", aes_xor_uint32_vec<Aes256Protocol>) }
-  , { "shared3p::aes128_xor_uint32_vec_expand_key", NAMED_SYSCALL_WRAPPER("aes128_xor_uint32_vec_expand_key", aes_xor_uint32_vec_expand_key<Aes128Protocol>) }
-  , { "shared3p::aes192_xor_uint32_vec_expand_key", NAMED_SYSCALL_WRAPPER("aes192_xor_uint32_vec_expand_key", aes_xor_uint32_vec_expand_key<Aes192Protocol>) }
-  , { "shared3p::aes256_xor_uint32_vec_expand_key", NAMED_SYSCALL_WRAPPER("aes256_xor_uint32_vec_expand_key", aes_xor_uint32_vec_expand_key<Aes256Protocol>) }
-  , { "shared3p::crc16_xor_vec", NAMED_SYSCALL_WRAPPER("crc16_xor_vec", crc_xor_vec<CRCMode16>) }
-  , { "shared3p::crc32_xor_vec", NAMED_SYSCALL_WRAPPER("crc32_xor_vec", crc_xor_vec<CRCMode32>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::aes128_xor_uint32_vec", aes128_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::aes192_xor_uint32_vec", aes192_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::aes256_xor_uint32_vec", aes256_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::aes128_xor_uint32_vec_expand_key", aes128_xor_uint32_vec_expand_key)
+  , NAMED_SYSCALL_DEFINITION("shared3p::aes192_xor_uint32_vec_expand_key", aes192_xor_uint32_vec_expand_key)
+  , NAMED_SYSCALL_DEFINITION("shared3p::aes256_xor_uint32_vec_expand_key", aes256_xor_uint32_vec_expand_key)
+  , NAMED_SYSCALL_DEFINITION("shared3p::crc16_xor_vec", crc16_xor_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::crc32_xor_vec", crc32_xor_vec)
 
    // Database functions
-  , { "shared3p::vecshuf_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("vecshuf_xor_uint8_vec", vector_shuffle<s3p_xor_uint8_t, false, false>) }
-  , { "shared3p::vecshuf_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("vecshuf_xor_uint16_vec", vector_shuffle<s3p_xor_uint16_t, false, false>) }
-  , { "shared3p::vecshuf_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("vecshuf_xor_uint32_vec", vector_shuffle<s3p_xor_uint32_t, false, false>) }
-  , { "shared3p::vecshuf_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("vecshuf_xor_uint64_vec", vector_shuffle<s3p_xor_uint64_t, false, false>) }
-  , { "shared3p::vecshufkey_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_xor_uint8_vec", vector_shuffle<s3p_xor_uint8_t, true, false>) }
-  , { "shared3p::vecshufkey_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_xor_uint16_vec", vector_shuffle<s3p_xor_uint16_t, true, false>) }
-  , { "shared3p::vecshufkey_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_xor_uint32_vec", vector_shuffle<s3p_xor_uint32_t, true, false>) }
-  , { "shared3p::vecshufkey_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_xor_uint64_vec", vector_shuffle<s3p_xor_uint64_t, true, false>) }
-  , { "shared3p::vecshufinv_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_xor_uint8_vec", vector_shuffle<s3p_xor_uint8_t, true, true>) }
-  , { "shared3p::vecshufinv_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_xor_uint16_vec", vector_shuffle<s3p_xor_uint16_t, true, true>) }
-  , { "shared3p::vecshufinv_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_xor_uint32_vec", vector_shuffle<s3p_xor_uint32_t, true, true>) }
-  , { "shared3p::vecshufinv_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_xor_uint64_vec", vector_shuffle<s3p_xor_uint64_t, true, true>) }
-  , { "shared3p::matshuf_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("matshuf_xor_uint8_vec", matrix_shuffle<s3p_xor_uint8_t, false, false>) }
-  , { "shared3p::matshuf_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("matshuf_xor_uint16_vec", matrix_shuffle<s3p_xor_uint16_t, false, false>) }
-  , { "shared3p::matshuf_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("matshuf_xor_uint32_vec", matrix_shuffle<s3p_xor_uint32_t, false, false>) }
-  , { "shared3p::matshuf_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("matshuf_xor_uint64_vec", matrix_shuffle<s3p_xor_uint64_t, false, false>) }
-  , { "shared3p::matshufkey_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("matshufkey_xor_uint8_vec", matrix_shuffle<s3p_xor_uint8_t, true, false>) }
-  , { "shared3p::matshufkey_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("matshufkey_xor_uint16_vec", matrix_shuffle<s3p_xor_uint16_t, true, false>) }
-  , { "shared3p::matshufkey_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("matshufkey_xor_uint32_vec", matrix_shuffle<s3p_xor_uint32_t, true, false>) }
-  , { "shared3p::matshufkey_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("matshufkey_xor_uint64_vec", matrix_shuffle<s3p_xor_uint64_t, true, false>) }
-  , { "shared3p::matshufinv_xor_uint8_vec", NAMED_SYSCALL_WRAPPER("matshufinv_xor_uint8_vec", matrix_shuffle<s3p_xor_uint8_t, true, true>) }
-  , { "shared3p::matshufinv_xor_uint16_vec", NAMED_SYSCALL_WRAPPER("matshufinv_xor_uint16_vec", matrix_shuffle<s3p_xor_uint16_t, true, true>) }
-  , { "shared3p::matshufinv_xor_uint32_vec", NAMED_SYSCALL_WRAPPER("matshufinv_xor_uint32_vec", matrix_shuffle<s3p_xor_uint32_t, true, true>) }
-  , { "shared3p::matshufinv_xor_uint64_vec", NAMED_SYSCALL_WRAPPER("matshufinv_xor_uint64_vec", matrix_shuffle<s3p_xor_uint64_t, true, true>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_xor_uint8_vec", vecshuf_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_xor_uint16_vec", vecshuf_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_xor_uint32_vec", vecshuf_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_xor_uint64_vec", vecshuf_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_xor_uint8_vec", vecshufkey_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_xor_uint16_vec", vecshufkey_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_xor_uint32_vec", vecshufkey_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_xor_uint64_vec", vecshufkey_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_xor_uint8_vec", vecshufinv_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_xor_uint16_vec", vecshufinv_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_xor_uint32_vec", vecshufinv_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_xor_uint64_vec", vecshufinv_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_xor_uint8_vec", matshuf_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_xor_uint16_vec", matshuf_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_xor_uint32_vec", matshuf_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_xor_uint64_vec", matshuf_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_xor_uint8_vec", matshufkey_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_xor_uint16_vec", matshufkey_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_xor_uint32_vec", matshufkey_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_xor_uint64_vec", matshufkey_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_xor_uint8_vec", matshufinv_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_xor_uint16_vec", matshufinv_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_xor_uint32_vec", matshufinv_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_xor_uint64_vec", matshufinv_xor_uint64_vec)
 
   /**
    *  Floating point numbers
@@ -1676,76 +2171,76 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , { "shared3p::get_type_size_float64", &get_type_size<s3p_float64_t> }
 
     // Floating point arithmetic
-  , { "shared3p::add_float32_vec", NAMED_SYSCALL_WRAPPER("add_float32_vec", binary_arith_vec<s3p_float32_t, AdditionProtocol>) }
-  , { "shared3p::add_float64_vec", NAMED_SYSCALL_WRAPPER("add_float64_vec", binary_arith_vec<s3p_float64_t, AdditionProtocol>) }
-  , { "shared3p::sum_float32_vec", NAMED_SYSCALL_WRAPPER("sum_float32_vec", unary_arith_vec<s3p_float32_t, SumProtocol>) }
-  , { "shared3p::sum_float64_vec", NAMED_SYSCALL_WRAPPER("sum_float64_vec", unary_arith_vec<s3p_float64_t, SumProtocol>) }
-  , { "shared3p::neg_float32_vec", NAMED_SYSCALL_WRAPPER("neg_float32_vec", unary_arith_vec<s3p_float32_t, NegProtocol>) }
-  , { "shared3p::neg_float64_vec", NAMED_SYSCALL_WRAPPER("neg_float64_vec", unary_arith_vec<s3p_float64_t, NegProtocol>) }
-  , { "shared3p::sub_float32_vec", NAMED_SYSCALL_WRAPPER("sub_float32_vec", binary_arith_vec<s3p_float32_t, SubtractionProtocol>) }
-  , { "shared3p::sub_float64_vec", NAMED_SYSCALL_WRAPPER("sub_float64_vec", binary_arith_vec<s3p_float64_t, SubtractionProtocol>) }
-  , { "shared3p::mul_float32_vec", NAMED_SYSCALL_WRAPPER("mul_float32_vec", binary_arith_vec<s3p_float32_t, MultiplicationProtocol>) }
-  , { "shared3p::mul_float64_vec", NAMED_SYSCALL_WRAPPER("mul_float64_vec", binary_arith_vec<s3p_float64_t, MultiplicationProtocol>) }
-  , { "shared3p::inv_float32_vec", NAMED_SYSCALL_WRAPPER("inv_float32_vec", unary_arith_vec<s3p_float32_t, FloatInverseProtocol>) }
-  , { "shared3p::inv_float64_vec", NAMED_SYSCALL_WRAPPER("inv_float64_vec", unary_arith_vec<s3p_float64_t, FloatInverseProtocol>) }
-  , { "shared3p::div_float32_vec", NAMED_SYSCALL_WRAPPER("div_float32_vec", binary_arith_vec<s3p_float32_t, DivisionProtocol>) }
-  , { "shared3p::div_float64_vec", NAMED_SYSCALL_WRAPPER("div_float64_vec", binary_arith_vec<s3p_float64_t, DivisionProtocol>) }
-  , { "shared3p::mulc_float32_vec", NAMED_SYSCALL_WRAPPER("mulc_float32_vec", binary_arith_public_vec<s3p_float32_t, MultiplicationProtocol>) }
-  , { "shared3p::mulc_float64_vec", NAMED_SYSCALL_WRAPPER("mulc_float64_vec", binary_arith_public_vec<s3p_float64_t, MultiplicationProtocol>) }
-  , { "shared3p::divc_float32_vec", NAMED_SYSCALL_WRAPPER("divc_float32_vec", binary_arith_public_vec<s3p_float32_t, DivisionProtocol>) }
-  , { "shared3p::divc_float64_vec", NAMED_SYSCALL_WRAPPER("divc_float64_vec", binary_arith_public_vec<s3p_float64_t, DivisionProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_float32_vec", add_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::add_float64_vec", add_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_float32_vec", sum_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_float64_vec", sum_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_float32_vec", neg_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::neg_float64_vec", neg_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_float32_vec", sub_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sub_float64_vec", sub_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_float32_vec", mul_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_float64_vec", mul_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_float32_vec", inv_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_float64_vec", inv_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::div_float32_vec", div_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::div_float64_vec", div_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_float32_vec", mulc_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mulc_float64_vec", mulc_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::divc_float32_vec", divc_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::divc_float64_vec", divc_float64_vec)
 
     // Floating point comparisons
-  , { "shared3p::isnegligible_float32_vec", NAMED_SYSCALL_WRAPPER("isnegligible_float32_vec", unary_vec<s3p_float32_t, s3p_bool_t, FloatIsNegligibleProtocol>) }
-  , { "shared3p::isnegligible_float64_vec", NAMED_SYSCALL_WRAPPER("isnegligible_float64_vec", unary_vec<s3p_float64_t, s3p_bool_t, FloatIsNegligibleProtocol>) }
-  , { "shared3p::eq_float32_vec", NAMED_SYSCALL_WRAPPER("eq_float32_vec", binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::eq_float64_vec", NAMED_SYSCALL_WRAPPER("eq_float64_vec", binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, EqualityProtocol>) }
-  , { "shared3p::lt_float32_vec", NAMED_SYSCALL_WRAPPER("lt_float32_vec", binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lte_float32_vec", NAMED_SYSCALL_WRAPPER("lte_float32_vec", binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::gt_float32_vec", NAMED_SYSCALL_WRAPPER("gt_float32_vec", binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gte_float32_vec", NAMED_SYSCALL_WRAPPER("gte_float32_vec", binary_vec<s3p_float32_t, s3p_float32_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
-  , { "shared3p::lt_float64_vec", NAMED_SYSCALL_WRAPPER("lt_float64_vec", binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, LessThanProtocol>) }
-  , { "shared3p::lte_float64_vec", NAMED_SYSCALL_WRAPPER("lte_float64_vec", binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, LessThanOrEqualProtocol>) }
-  , { "shared3p::gt_float64_vec", NAMED_SYSCALL_WRAPPER("gt_float64_vec", binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, GreaterThanProtocol>) }
-  , { "shared3p::gte_float64_vec", NAMED_SYSCALL_WRAPPER("gte_float64_vec", binary_vec<s3p_float64_t, s3p_float64_t, s3p_bool_t, GreaterThanOrEqualProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::isnegligible_float32_vec", isnegligible_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::isnegligible_float64_vec", isnegligible_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_float32_vec", eq_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::eq_float64_vec", eq_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_float32_vec", lt_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_float32_vec", lte_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_float32_vec", gt_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_float32_vec", gte_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lt_float64_vec", lt_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::lte_float64_vec", lte_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gt_float64_vec", gt_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gte_float64_vec", gte_float64_vec)
 
    // Casting floating point numbers
-  , { "shared3p::ceiling_float32_vec", NAMED_SYSCALL_WRAPPER("ceiling_float32_vec", unary_vec<s3p_float32_t, s3p_int32_t, FloatCeilingProtocol>) }
-  , { "shared3p::ceiling_float64_vec", NAMED_SYSCALL_WRAPPER("ceiling_float64_vec", unary_vec<s3p_float64_t, s3p_int64_t, FloatCeilingProtocol>) }
-  , { "shared3p::floor_float32_vec", NAMED_SYSCALL_WRAPPER("floor_float32_vec", unary_vec<s3p_float32_t, s3p_int32_t, FloatFloorProtocol>) }
-  , { "shared3p::floor_float64_vec", NAMED_SYSCALL_WRAPPER("floor_float64_vec", unary_vec<s3p_float64_t, s3p_int64_t, FloatFloorProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::ceiling_float32_vec", ceiling_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::ceiling_float64_vec", ceiling_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::floor_float32_vec", floor_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::floor_float64_vec", floor_float64_vec)
 
   // Floating point absolute value
-  , { "shared3p::abs_float32_vec", NAMED_SYSCALL_WRAPPER("abs_float32_vec", unary_vec<s3p_float32_t, s3p_float32_t, AbsoluteValueProtocol>) }
-  , { "shared3p::abs_float64_vec", NAMED_SYSCALL_WRAPPER("abs_float64_vec", unary_vec<s3p_float64_t, s3p_float64_t, AbsoluteValueProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::abs_float32_vec", abs_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::abs_float64_vec", abs_float64_vec)
 
   // Special functions
-  , { "shared3p::choose_float32_vec", NAMED_SYSCALL_WRAPPER("choose_float32_vec", ternary_vec<s3p_bool_t, s3p_float32_t, s3p_float32_t, s3p_float32_t, ObliviousChoiceProtocol>) }
-  , { "shared3p::choose_float64_vec", NAMED_SYSCALL_WRAPPER("choose_float64_vec", ternary_vec<s3p_bool_t, s3p_float64_t, s3p_float64_t, s3p_float64_t, ObliviousChoiceProtocol>) }
-  , { "shared3p::erf_float32_vec", NAMED_SYSCALL_WRAPPER("erf_float32_vec", unary_arith_vec<s3p_float32_t, FloatErrorFunctionProtocol>) }
-  , { "shared3p::erf_float64_vec", NAMED_SYSCALL_WRAPPER("erf_float64_vec", unary_arith_vec<s3p_float64_t, FloatErrorFunctionProtocol>) }
-  , { "shared3p::exp_float32_vec", NAMED_SYSCALL_WRAPPER("exp_float32_vec", unary_arith_vec<s3p_float32_t, FloatPowerOfEProtocol>) }
-  , { "shared3p::exp_float64_vec", NAMED_SYSCALL_WRAPPER("exp_float64_vec", unary_arith_vec<s3p_float64_t, FloatPowerOfEProtocol>) }
-  , { "shared3p::ln_float32_vec", NAMED_SYSCALL_WRAPPER("ln_float32_vec", unary_arith_vec<s3p_float32_t, FloatNaturalLogarithmProtocol>) }
-  , { "shared3p::ln_float64_vec", NAMED_SYSCALL_WRAPPER("ln_float64_vec", unary_arith_vec<s3p_float64_t, FloatNaturalLogarithmProtocol>) }
-  , { "shared3p::sin_float32_vec", NAMED_SYSCALL_WRAPPER("sin_float32_vec", unary_arith_vec<s3p_float32_t, FloatSineProtocol>) }
-  , { "shared3p::sin_float64_vec", NAMED_SYSCALL_WRAPPER("sin_float64_vec", unary_arith_vec<s3p_float64_t, FloatSineProtocol>) }
-  , { "shared3p::sqrt_float32_vec", NAMED_SYSCALL_WRAPPER("sqrt_float32_vec", unary_arith_vec<s3p_float32_t, FloatSquareRootProtocol>) }
-  , { "shared3p::sqrt_float64_vec", NAMED_SYSCALL_WRAPPER("sqrt_float64_vec", unary_arith_vec<s3p_float64_t, FloatSquareRootProtocol>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::choose_float32_vec", choose_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::choose_float64_vec", choose_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::erf_float32_vec", erf_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::erf_float64_vec", erf_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::exp_float32_vec", exp_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::exp_float64_vec", exp_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::ln_float32_vec", ln_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::ln_float64_vec", ln_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sin_float32_vec", sin_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sin_float64_vec", sin_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sqrt_float32_vec", sqrt_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sqrt_float64_vec", sqrt_float64_vec)
 
   // Database functions
-  , { "shared3p::vecshuf_float32_vec", NAMED_SYSCALL_WRAPPER("vecshuf_float32_vec", vector_shuffle<s3p_float32_t, false, false>) }
-  , { "shared3p::vecshuf_float64_vec", NAMED_SYSCALL_WRAPPER("vecshuf_float64_vec", vector_shuffle<s3p_float64_t, false, false>) }
-  , { "shared3p::vecshufkey_float32_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_float32_vec", vector_shuffle<s3p_float32_t, true, false>) }
-  , { "shared3p::vecshufkey_float64_vec", NAMED_SYSCALL_WRAPPER("vecshufkey_float64_vec", vector_shuffle<s3p_float64_t, true, false>) }
-  , { "shared3p::vecshufinv_float32_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_float32_vec", vector_shuffle<s3p_float32_t, true, true>) }
-  , { "shared3p::vecshufinv_float64_vec", NAMED_SYSCALL_WRAPPER("vecshufinv_float64_vec", vector_shuffle<s3p_float64_t, true, true>) }
-  , { "shared3p::matshuf_float32_vec", NAMED_SYSCALL_WRAPPER("matshuf_float32_vec", matrix_shuffle<s3p_float32_t, false, false>) }
-  , { "shared3p::matshuf_float64_vec", NAMED_SYSCALL_WRAPPER("matshuf_float64_vec", matrix_shuffle<s3p_float64_t, false, false>) }
-  , { "shared3p::matshufkey_float32_vec", NAMED_SYSCALL_WRAPPER("matshufkey_float32_vec", matrix_shuffle<s3p_float32_t, true, false>) }
-  , { "shared3p::matshufkey_float64_vec", NAMED_SYSCALL_WRAPPER("matshufkey_float64_vec", matrix_shuffle<s3p_float64_t, true, false>) }
-  , { "shared3p::matshufinv_float32_vec", NAMED_SYSCALL_WRAPPER("matshufinv_float32_vec", matrix_shuffle<s3p_float32_t, true, true>) }
-  , { "shared3p::matshufinv_float64_vec", NAMED_SYSCALL_WRAPPER("matshufinv_float64_vec", matrix_shuffle<s3p_float64_t, true, true>) }
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_float32_vec", vecshuf_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_float64_vec", vecshuf_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_float32_vec", vecshufkey_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_float64_vec", vecshufkey_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_float32_vec", vecshufinv_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_float64_vec", vecshufinv_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_float32_vec", matshuf_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_float64_vec", matshuf_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_float32_vec", matshufkey_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_float64_vec", matshufkey_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_float32_vec", matshufinv_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_float64_vec", matshufinv_float64_vec)
 
   /**
    *  Other functions

@@ -21,6 +21,7 @@
 #define MOD_ADDITIVE3P_SYSCALLS_COMMON_H
 
 #include <inttypes.h>
+#include <sharemind/compiler-support/GccPR55015.h>
 #include <sharemind/Concat.h>
 #include <sharemind/ExecutionProfiler.h>
 #include <sharemind/libmodapi/api_0x1.h>
@@ -163,8 +164,24 @@ inline SharemindModuleApi0x1Error catchModuleApiErrors() noexcept {
             SharemindCodeBlock * retVal, \
             SharemindModuleApi0x1SyscallContext * c)
 
+#if SHAREMIND_GCCPR55015
 #define NAMED_SYSCALL_WRAPPER(name,...) \
-    [](SharemindCodeBlock * args, \
+    SharemindModuleApi0x1Error name( \
+        SharemindCodeBlock * args, \
+        size_t argc, \
+        const SharemindModuleApi0x1Reference * refs, \
+        const SharemindModuleApi0x1CReference * crefs, \
+        SharemindCodeBlock * retVal, \
+        SharemindModuleApi0x1SyscallContext * c) \
+    { \
+        return __VA_ARGS__((#name), args, argc, refs, crefs, retVal, c); \
+    }
+
+#define NAMED_SYSCALL_DEFINITION(signature,fptr) \
+  { (signature), &(fptr) }
+#else /* SHAREMIND_GCCPR55015 */
+#define NAMED_SYSCALL_WRAPPER(name,...) \
+    auto name = [](SharemindCodeBlock * args, \
        size_t argc, \
        const SharemindModuleApi0x1Reference * refs, \
        const SharemindModuleApi0x1CReference * crefs, \
@@ -172,8 +189,13 @@ inline SharemindModuleApi0x1Error catchModuleApiErrors() noexcept {
        SharemindModuleApi0x1SyscallContext * c) \
             -> SharemindModuleApi0x1Error \
     { \
-        return __VA_ARGS__(name, args, argc, refs, crefs, retVal, c); \
-    }
+        return __VA_ARGS__((#name), args, argc, refs, crefs, retVal, c); \
+    };
+
+#define NAMED_SYSCALL_DEFINITION(signature,fptr) \
+  { (signature), (fptr) }
+#endif /* SHAREMIND_GCCPR55015 */
+
 
 /**
  * Macros for profiling syscalls
