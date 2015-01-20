@@ -20,6 +20,7 @@
 #ifndef MOD_SHARED3P_EMU_PROTOCOLS_SOFTFLOATURILITY_H
 #define MOD_SHARED3P_EMU_PROTOCOLS_SOFTFLOATURILITY_H
 
+#include <sharemind/static_assert.h>
 #include <sharemind/3rdparty/libsoftfloat/softfloat.h>
 #include <sharemind/3rdparty/libsoftfloat_math/sf_abs.h>
 #include <sharemind/3rdparty/libsoftfloat_math/sf_ceil.h>
@@ -28,8 +29,6 @@
 #include <sharemind/3rdparty/libsoftfloat_math/sf_floor.h>
 #include <sharemind/3rdparty/libsoftfloat_math/sf_log.h>
 #include <sharemind/3rdparty/libsoftfloat_math/sf_sin.h>
-
-/// \todo internal
 
 
 namespace sharemind {
@@ -51,7 +50,15 @@ sf_result32f sf_val_to_float32(uint16_t a, sf_fpu_state fpu = sf_fpu_state_defau
 sf_result32f sf_val_to_float32(uint32_t a, sf_fpu_state fpu = sf_fpu_state_default)
 { return sf_int64_to_float32(a, fpu); }
 sf_result32f sf_val_to_float32(uint64_t a, sf_fpu_state fpu = sf_fpu_state_default)
-{ return sf_int64_to_float32(a, fpu); }
+{
+    /// \todo Replace this workaround with a proper solution.
+    sf_result32f rv;
+    const float f = static_cast<float>(a);
+    SHAREMIND_STATIC_ASSERT(sizeof(decltype(rv.result)) == sizeof(float));
+    memcpy(&rv.result, &f, sizeof(float));
+    rv.fpu_state = fpu;
+    return rv;
+}
 
 sf_result64f sf_val_to_float64(bool a, sf_fpu_state fpu = sf_fpu_state_default)
 { return { a ? 0x3ff0000000000000u : 0x0u, fpu }; }
@@ -70,7 +77,15 @@ sf_result64f sf_val_to_float64(uint16_t a, sf_fpu_state fpu = sf_fpu_state_defau
 sf_result64f sf_val_to_float64(uint32_t a, sf_fpu_state fpu = sf_fpu_state_default)
 { return sf_int64_to_float64(a, fpu); }
 sf_result64f sf_val_to_float64(uint64_t a, sf_fpu_state fpu = sf_fpu_state_default)
-{ return sf_int64_to_float64(a, fpu); }
+{
+    /// \todo Replace this workaround with a proper solution.
+    sf_result64f rv;
+    const double d = static_cast<double>(a);
+    SHAREMIND_STATIC_ASSERT(sizeof(decltype(rv.result)) == sizeof(double));
+    memcpy(&rv.result, &d, sizeof(double));
+    rv.fpu_state = fpu;
+    return rv;
+}
 
 template <typename T>
 struct sf_result {
