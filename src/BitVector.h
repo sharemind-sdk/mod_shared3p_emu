@@ -20,7 +20,6 @@
 #ifndef MOD_SHARED3P_EMU_BITVECTOR_H
 #define MOD_SHARED3P_EMU_BITVECTOR_H
 
-#include <boost/static_assert.hpp>
 #include <cassert>
 #include <cstddef>
 #include <cstdint>

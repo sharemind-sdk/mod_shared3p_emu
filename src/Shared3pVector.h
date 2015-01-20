@@ -20,10 +20,10 @@
 #ifndef MOD_SHARED3P_EMU_SHARED3PVECTOR_H
 #define MOD_SHARED3P_EMU_SHARED3PVECTOR_H
 
-#include <boost/static_assert.hpp>
 #include <cassert>
 #include <cstdint>
 #include <iterator>
+#include <sharemind/static_assert.h>
 #include <sharemind/Random/IRandom.h>
 #include <vector>
 #include "BitVector.h"
@@ -404,7 +404,7 @@ public: /* Methods: */
     }
 
     void setBit (size_type i, bool value) {
-        BOOST_STATIC_ASSERT(T::num_of_bits != 0);
+        SHAREMIND_STATIC_ASSERT(T::num_of_bits != 0);
         const size_type block_index = i / T::num_of_bits;
         const value_type mask = value_type (1) << (i % T::num_of_bits);
         assert (block_index < m_vector.size ());
@@ -416,7 +416,7 @@ public: /* Methods: */
     }
 
     inline bool getBit (size_type i) {
-        BOOST_STATIC_ASSERT(T::num_of_bits != 0);
+        SHAREMIND_STATIC_ASSERT(T::num_of_bits != 0);
         const size_type bit_index = i % T::num_of_bits;
         const size_type block_index = i / T::num_of_bits;
         assert (block_index < m_vector.size ());

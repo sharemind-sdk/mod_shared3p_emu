@@ -24,6 +24,7 @@
 #include <sharemind/compiler-support/GccIsNothrowDestructible.h>
 #include <sharemind/ExecutionProfiler.h>
 #include <sharemind/libmodapi/api_0x1.h>
+#include <sharemind/static_assert.h>
 #include <vector>
 #include <type_traits>
 #include "Shared3pModule.h"
@@ -640,7 +641,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(store_vec,
 template <typename T, bool NeedKey, bool InverseShuffle>
 NAMED_SYSCALL(vector_shuffle, name, args, num_args, refs, crefs, returnValue, c)
 {
-    BOOST_STATIC_ASSERT(!InverseShuffle || NeedKey);
+    SHAREMIND_STATIC_ASSERT(!InverseShuffle || NeedKey);
 
     VMHandles handles;
     if (!SyscallArgs<NeedKey ? 3u : 2u>::check(num_args, refs, crefs, returnValue) ||
@@ -708,7 +709,7 @@ NAMED_SYSCALL(vector_shuffle, name, args, num_args, refs, crefs, returnValue, c)
 template <typename T, bool NeedKey, bool InverseShuffle>
 NAMED_SYSCALL(matrix_shuffle, name, args, num_args, refs, crefs, returnValue, c)
 {
-    BOOST_STATIC_ASSERT(!InverseShuffle || NeedKey);
+    SHAREMIND_STATIC_ASSERT(!InverseShuffle || NeedKey);
 
     VMHandles handles;
     if (!SyscallArgs<NeedKey ? 4 : 3>::check(num_args, refs, crefs, returnValue) ||
@@ -2312,8 +2313,7 @@ SHAREMIND_MODULE_API_0x1_PDPI_SHUTDOWN(shared3p_emu_PDPI_shutdown, w) {
     assert(w->pdHandle);
     assert(w->pdProcessHandle);
 
-    static_assert(std::is_nothrow_destructible<sharemind::Shared3pPDPI>::value,
-                "~Shared3pPDPI() not noexcept!");
+    SHAREMIND_STATIC_ASSERT(std::is_nothrow_destructible<sharemind::Shared3pPDPI>::value);
     delete static_cast<sharemind::Shared3pPDPI *>(w->pdProcessHandle);
     #ifndef NDEBUG
     w->pdProcessHandle = nullptr; // Not needed, but may help debugging.
