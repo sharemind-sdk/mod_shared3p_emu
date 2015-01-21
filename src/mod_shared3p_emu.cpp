@@ -21,6 +21,7 @@
 #include <cstdint>
 #include <cstring>
 #include <limits>
+#include <LogHard/Logger.h>
 #include <sharemind/compiler-support/GccIsNothrowDestructible.h>
 #include <sharemind/ExecutionProfiler.h>
 #include <sharemind/libmodapi/api_0x1.h>
@@ -939,19 +940,30 @@ SHAREMIND_MODULE_API_MODULE_INFO("shared3p",
 SHAREMIND_MODULE_API_0x1_INITIALIZER(c) __attribute__ ((visibility("default")));
 SHAREMIND_MODULE_API_0x1_INITIALIZER(c) {
     assert(c);
-    const SharemindModuleApi0x1Facility * const fexecutionprofiler
-            = c->getModuleFacility(c, "Profiler");
-    if (!fexecutionprofiler || !fexecutionprofiler->facility)
+
+    const SharemindModuleApi0x1Facility * const flogger =
+            c->getModuleFacility(c, "Logger");
+
+    if (!flogger || !flogger->facility)
         return SHAREMIND_MODULE_API_0x1_MISSING_FACILITY;
 
-    sharemind::ExecutionProfiler * const executionProfilerFacility =
-        static_cast<sharemind::ExecutionProfiler *>(fexecutionprofiler->facility);
+    const SharemindModuleApi0x1Facility * const fprofiler =
+            c->getModuleFacility(c, "Profiler");
+
+    if (!fprofiler || !fprofiler->facility)
+        return SHAREMIND_MODULE_API_0x1_MISSING_FACILITY;
+
+    const LogHard::Logger & logger =
+        *static_cast<LogHard::Logger *>(flogger->facility);
+
+    sharemind::ExecutionProfiler & profiler =
+        *static_cast<sharemind::ExecutionProfiler *>(fprofiler->facility);
 
     /*
      Initialize the module handle
     */
     try {
-        c->moduleHandle = new sharemind::Shared3pModule(*executionProfilerFacility);
+        c->moduleHandle = new sharemind::Shared3pModule(logger, profiler);
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
         return catchModuleApiErrors ();

@@ -23,12 +23,7 @@
 #include <memory>
 
 
-namespace LogHard {
-
-class Backend;
-class Logger;
-
-} /* namespace LogHard { */
+namespace LogHard { class Logger; }
 
 namespace sharemind {
 
@@ -38,10 +33,11 @@ class __attribute__ ((visibility("internal"))) Shared3pModule {
 
 public: /* Methods: */
 
-    Shared3pModule(ExecutionProfiler & m_profiler);
+    Shared3pModule(const LogHard::Logger & logger,
+                   ExecutionProfiler & m_profiler);
 
     const LogHard::Logger & logger() const noexcept
-    { return *m_logger; }
+    { return m_logger; }
 
     inline ExecutionProfiler & profiler() noexcept
     { return m_profiler; }
@@ -51,9 +47,7 @@ public: /* Methods: */
 
 private:
 
-    /// \todo Logger and ExecutionProfiler should be in a separate module.
-    std::unique_ptr<LogHard::Backend> m_logBackend;
-    std::unique_ptr<LogHard::Logger> m_logger;
+    const LogHard::Logger & m_logger;
     ExecutionProfiler & m_profiler;
 
 }; /* class Shared3pModule { */
