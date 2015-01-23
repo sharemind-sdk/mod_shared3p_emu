@@ -35,10 +35,10 @@
 #include "Syscalls/Meta.h"
 #include "Protocols/AESProtocol.h"
 #include "Protocols/Binary.h"
+#include "Protocols/MatrixShufflingProtocol.h"
 #include "Protocols/Nullary.h"
 #include "Protocols/Ternary.h"
 #include "Protocols/Unary.h"
-#include "Protocols/Randomize.h"
 #include "VMReferences.h"
 
 
