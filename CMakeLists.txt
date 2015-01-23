@@ -74,8 +74,8 @@ ADD_DEFINITIONS(
 )
 
 SET(SHARED3P_EMU_SOURCES
+    "src/Facilities/CxxRandomEngine.cpp"
     "src/Facilities/ExecutionModelEvaluator.cpp"
-    "src/Facilities/RandomFacility.cpp"
     "src/mod_shared3p_emu.cpp"
     "src/Shared3pConfiguration.cpp"
     "src/Shared3pModule.cpp"
@@ -86,8 +86,8 @@ SET(SHARED3P_EMU_SOURCES
 
 SET(SHARED3P_EMU_HEADERS
     "src/BitVector.h"
+    "src/Facilities/CxxRandomEngine.h"
     "src/Facilities/ExecutionModelEvaluator.h"
-    "src/Facilities/RandomFacility.h"
     "src/Protocols/AESProtocol.h"
     "src/Protocols/Binary.h"
     "src/Protocols/CRCProtocol.h"

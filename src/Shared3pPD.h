@@ -29,8 +29,8 @@ namespace sharemind {
 
 class ExecutionProfiler;
 class ExecutionModelEvaluator;
-class Shared3pModule;
 class IRandom;
+class Shared3pModule;
 
 class __attribute__ ((visibility("internal"))) Shared3pPD {
 
@@ -68,11 +68,11 @@ public: /* Methods: */
     inline const ExecutionProfiler & profiler() const
     { return m_profiler; }
 
-    inline IRandom & randomFacility()
-    { return *m_randomFacility; }
+    inline IRandom & rng()
+    { return *m_rng; }
 
-    inline const IRandom & randomFacility() const
-    { return *m_randomFacility; }
+    inline const IRandom & rng() const
+    { return *m_rng; }
 
     inline const std::string & name() const { return m_name; }
 
@@ -84,7 +84,7 @@ private: /* Fields: */
     ExecutionProfiler & m_profiler;
 
     std::unique_ptr<ExecutionModelEvaluator> m_modelEvaluator;
-    std::unique_ptr<IRandom> m_randomFacility;
+    std::unique_ptr<IRandom> m_rng;
 
 }; /* class Shared3pPD { */
 

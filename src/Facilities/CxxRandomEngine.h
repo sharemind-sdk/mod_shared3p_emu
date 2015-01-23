@@ -17,15 +17,15 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
-#ifndef MOD_SHARED3P_EMU_RANDOMFACILITY_H
-#define MOD_SHARED3P_EMU_RANDOMFACILITY_H
+#ifndef MOD_SHARED3P_EMU_CXXRANDOMENGINE_H
+#define MOD_SHARED3P_EMU_CXXRANDOMENGINE_H
 
 #include <random>
 #include <sharemind/Random/IRandom.h>
 
 namespace sharemind {
 
-class RandomFacility : public IRandom {
+class CxxRandomEngine : public IRandom {
 public: /* Methods */
 
     virtual void Seed() noexcept;
@@ -35,10 +35,11 @@ public: /* Methods */
     virtual void fillBytes (void* memptr, size_t size) noexcept;
 
 private: /* Fields */
+
     std::default_random_engine m_rng;
     std::uniform_int_distribution<uint8_t> m_dist;
 
-}; /* class RandomFacility { */
+}; /* class CxxRandomEngine { */
 
 } /* namespace sharemind { */
 

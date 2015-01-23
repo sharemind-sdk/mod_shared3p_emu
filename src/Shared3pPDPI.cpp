@@ -29,7 +29,7 @@ Shared3pPDPI::Shared3pPDPI(Shared3pPD & pd)
     , m_pdConfiguration(pd.configuration())
     , m_modelEvaluator(pd.modelEvaluator())
     , m_profiler(pd.profiler())
-    , m_rng(pd.randomFacility())
+    , m_rng(pd.rng())
 {}
 
 } /* namespace sharemind { */

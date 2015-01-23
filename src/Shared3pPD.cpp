@@ -18,8 +18,8 @@
  */
 
 #include <sharemind/ExecutionProfiler.h>
+#include "Facilities/CxxRandomEngine.h"
 #include "Facilities/ExecutionModelEvaluator.h"
-#include "Facilities/RandomFacility.h"
 #include "Shared3pModule.h"
 #include "Shared3pPD.h"
 
@@ -44,8 +44,8 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
         throw ConfigurationException();
     }
 
-    m_randomFacility.reset(new RandomFacility);
-    m_randomFacility->Seed();
+    m_rng.reset(new CxxRandomEngine);
+    m_rng->Seed();
 }
 
 Shared3pPD::~Shared3pPD() = default;
