@@ -48,6 +48,6 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
     m_rng->Seed();
 }
 
-Shared3pPD::~Shared3pPD() = default;
+Shared3pPD::~Shared3pPD() noexcept = default;
 
 } /* namespace sharemind { */

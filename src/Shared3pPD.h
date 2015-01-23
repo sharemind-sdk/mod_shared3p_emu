@@ -48,7 +48,7 @@ public: /* Methods: */
     Shared3pPD(const std::string & pdName,
                const std::string & pdConfiguration,
                Shared3pModule & module);
-    ~Shared3pPD();
+    ~Shared3pPD() noexcept;
 
     inline Shared3pConfiguration & configuration() noexcept
     { return m_configuration; }
