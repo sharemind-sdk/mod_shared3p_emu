@@ -177,8 +177,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(set_shares,
 
         typedef typename value_traits<T>::share_type share_type;
         const share_type* src = static_cast<const share_type*>(crefs[0u].pData);
-        // TODO: the following is a workaround!We are always allocating one
-        // byte too much as VM does not allow us to allocate 0 sized memory block.
+        /** \todo the following is a workaround! We are always allocating
+             one byte too much (for arrays) as VM does not allow us to allocate
+             0 sized memory block. */
         const size_t num_elems = (crefs[0u].size - 1) / sizeof(share_type);
 
         if (num_args == 2) {
@@ -238,13 +239,13 @@ SHAREMIND_MODULE_API_0x1_SYSCALL(get_shares,
         const size_t num_bytes = src.size() * sizeof(share_type);
 
         if (refs) {
-            // TODO: the following is a workaround!We are always allocating one
-            // byte too much as VM does not allow us to allocate 0 sized memory block.
+            /** \todo the following is a workaround! We are always allocating
+                 one byte too much (for arrays) as VM does not allow us to
+                 allocate 0 sized memory block. */
             if (num_bytes != refs[0u].size - 1)
                 return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-            /// \todo
-            share_type * dest = static_cast<share_type*>(refs[0u].pData);
+            share_type * const dest = static_cast<share_type *>(refs[0u].pData);
             copy_shares (src, dest);
         }
 
@@ -937,7 +938,6 @@ SHAREMIND_MODULE_API_MODULE_INFO("shared3p",
                                  0x00010000,   /* Version 0.1.0.0 */
                                  0x1);         /* Support API version 1. */
 
-/* Should I change the name of this function? */
 SHAREMIND_MODULE_API_0x1_INITIALIZER(c) __attribute__ ((visibility("default")));
 SHAREMIND_MODULE_API_0x1_INITIALIZER(c) {
     assert(c);
@@ -971,20 +971,16 @@ SHAREMIND_MODULE_API_0x1_INITIALIZER(c) {
     }
 }
 
-/* Should I change the name of this function? */
 SHAREMIND_MODULE_API_0x1_DEINITIALIZER(c) __attribute__ ((visibility("default")));
 SHAREMIND_MODULE_API_0x1_DEINITIALIZER(c) {
     assert(c);
     assert(c->moduleHandle);
 
-    try {
-        delete static_cast<sharemind::Shared3pModule *>(c->moduleHandle);
-        #ifndef NDEBUG
-        c->moduleHandle = nullptr; // Not needed, but may help debugging.
-        #endif
-    } catch (...) {
-        /// \todo log message or noexcept module destructor
-    }
+    SHAREMIND_STATIC_ASSERT(std::is_nothrow_destructible<sharemind::Shared3pModule>::value);
+    delete static_cast<sharemind::Shared3pModule *>(c->moduleHandle);
+    #ifndef NDEBUG
+    c->moduleHandle = nullptr; // Not needed, but may help debugging.
+    #endif
 }
 
 /*
@@ -2295,14 +2291,11 @@ SHAREMIND_MODULE_API_0x1_PD_SHUTDOWN(shared3p_emu_shutdown, w) {
     assert(w->pdHandle);
     assert(w->moduleHandle);
 
-    try {
-        delete static_cast<sharemind::Shared3pPD *>(w->pdHandle);
-        #ifndef NDEBUG
-        w->pdHandle = nullptr; // Not needed, but may help debugging.
-        #endif
-    } catch (...) {
-        /// \todo log message or noexcept PD destructor
-    }
+    SHAREMIND_STATIC_ASSERT(std::is_nothrow_destructible<sharemind::Shared3pPD>::value);
+    delete static_cast<sharemind::Shared3pPD *>(w->pdHandle);
+    #ifndef NDEBUG
+    w->pdHandle = nullptr; // Not needed, but may help debugging.
+    #endif
 }
 
 SHAREMIND_MODULE_API_0x1_PDPI_STARTUP(shared3p_emu_PDPI_startup, w) __attribute__ ((visibility("hidden")));

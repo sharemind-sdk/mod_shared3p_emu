@@ -20,9 +20,9 @@
 #ifndef MOD_SHARED3P_EMU_PROTOCOLS_AES_H
 #define MOD_SHARED3P_EMU_PROTOCOLS_AES_H
 
+#include <algorithm>
 #include <cryptopp/aes.h>
 #include "../Shared3pValueTraits.h"
-#include <algorithm>
 
 namespace sharemind {
 

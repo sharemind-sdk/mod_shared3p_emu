@@ -38,28 +38,28 @@ public: /* Methods: */
     Shared3pPDPI(Shared3pPD & pd);
     inline ~Shared3pPDPI() noexcept {}
 
-    inline const std::string & pdName() const
+    inline const std::string & pdName() const noexcept
     { return m_pd.name(); }
 
-    inline const Shared3pConfiguration & pdConfiguration() const
+    inline const Shared3pConfiguration & pdConfiguration() const noexcept
     { return m_pd.configuration(); }
 
-    inline ExecutionModelEvaluator & modelEvaluator()
+    inline ExecutionModelEvaluator & modelEvaluator() noexcept
     { return m_modelEvaluator; }
 
-    inline const ExecutionModelEvaluator & modelEvaluator() const
+    inline const ExecutionModelEvaluator & modelEvaluator() const noexcept
     { return m_modelEvaluator; }
 
-    inline ExecutionProfiler & profiler()
+    inline ExecutionProfiler & profiler() noexcept
     { return m_profiler; }
 
-    inline const ExecutionProfiler & profiler() const
+    inline const ExecutionProfiler & profiler() const noexcept
     { return m_profiler; }
 
-    inline IRandom & rng()
+    inline IRandom & rng() noexcept
     { return m_rng; }
 
-    inline const IRandom & rng() const
+    inline const IRandom & rng() const noexcept
     { return m_rng; }
 
     template <typename T>

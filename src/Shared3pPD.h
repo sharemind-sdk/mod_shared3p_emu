@@ -50,31 +50,32 @@ public: /* Methods: */
                Shared3pModule & module);
     ~Shared3pPD();
 
-    inline Shared3pConfiguration & configuration()
+    inline Shared3pConfiguration & configuration() noexcept
     { return m_configuration; }
 
-    inline const Shared3pConfiguration & configuration() const
+    inline const Shared3pConfiguration & configuration() const noexcept
     { return m_configuration; }
 
-    inline ExecutionModelEvaluator & modelEvaluator()
+    inline ExecutionModelEvaluator & modelEvaluator() noexcept
     { return *m_modelEvaluator; }
 
-    inline const ExecutionModelEvaluator & modelEvaluator() const
+    inline const ExecutionModelEvaluator & modelEvaluator() const noexcept
     { return *m_modelEvaluator; }
 
-    inline ExecutionProfiler & profiler()
+    inline ExecutionProfiler & profiler() noexcept
     { return m_profiler; }
 
-    inline const ExecutionProfiler & profiler() const
+    inline const ExecutionProfiler & profiler() const noexcept
     { return m_profiler; }
 
-    inline IRandom & rng()
+    inline IRandom & rng() noexcept
     { return *m_rng; }
 
-    inline const IRandom & rng() const
+    inline const IRandom & rng() const noexcept
     { return *m_rng; }
 
-    inline const std::string & name() const { return m_name; }
+    inline const std::string & name() const noexcept
+    { return m_name; }
 
 private: /* Fields: */
 

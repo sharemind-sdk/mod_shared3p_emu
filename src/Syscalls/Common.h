@@ -35,23 +35,54 @@ namespace sharemind {
 /**
  * Template to get stack value given shared value type.
  */
-template <typename T> inline typename T::public_type getStack (const SharemindCodeBlock& arg);
+template <typename T>
+inline typename T::public_type getStack(const SharemindCodeBlock & arg);
 
-template <> inline uint8_t getStack<s3p_bool_t>(const SharemindCodeBlock& arg) { return arg.uint8[0]; }
-template <> inline uint8_t getStack<s3p_uint8_t>(const SharemindCodeBlock& arg) { return arg.uint8[0]; }
-template <> inline uint16_t getStack<s3p_uint16_t>(const SharemindCodeBlock& arg) { return arg.uint16[0]; }
-template <> inline uint32_t getStack<s3p_uint32_t>(const SharemindCodeBlock& arg) { return arg.uint32[0]; }
-template <> inline uint64_t getStack<s3p_uint64_t>(const SharemindCodeBlock& arg) { return arg.uint64[0]; }
-template <> inline int8_t getStack<s3p_int8_t>(const SharemindCodeBlock& arg) { return arg.int8[0]; }
-template <> inline int16_t getStack<s3p_int16_t>(const SharemindCodeBlock& arg) { return arg.int16[0]; }
-template <> inline int32_t getStack<s3p_int32_t>(const SharemindCodeBlock& arg) { return arg.int32[0]; }
-template <> inline int64_t getStack<s3p_int64_t>(const SharemindCodeBlock& arg) { return arg.int64[0]; }
-template <> inline uint8_t getStack<s3p_xor_uint8_t>(const SharemindCodeBlock& arg) { return arg.uint8[0]; }
-template <> inline uint16_t getStack<s3p_xor_uint16_t>(const SharemindCodeBlock& arg) { return arg.uint16[0]; }
-template <> inline uint32_t getStack<s3p_xor_uint32_t>(const SharemindCodeBlock& arg) { return arg.uint32[0]; }
-template <> inline uint64_t getStack<s3p_xor_uint64_t>(const SharemindCodeBlock& arg) { return arg.uint64[0]; }
-template <> inline sf_float32 getStack<s3p_float32_t>(const SharemindCodeBlock& arg) { return arg.float32[0]; }
-template <> inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock& arg) { return arg.float64[0]; }
+template <>
+inline uint8_t getStack<s3p_bool_t>(const SharemindCodeBlock & arg)
+{ return arg.uint8[0]; }
+template <>
+inline uint8_t getStack<s3p_uint8_t>(const SharemindCodeBlock & arg)
+{ return arg.uint8[0]; }
+template <>
+inline uint16_t getStack<s3p_uint16_t>(const SharemindCodeBlock & arg)
+{ return arg.uint16[0]; }
+template <>
+inline uint32_t getStack<s3p_uint32_t>(const SharemindCodeBlock & arg)
+{ return arg.uint32[0]; }
+template <>
+inline uint64_t getStack<s3p_uint64_t>(const SharemindCodeBlock & arg)
+{ return arg.uint64[0]; }
+template <>
+inline int8_t getStack<s3p_int8_t>(const SharemindCodeBlock & arg)
+{ return arg.int8[0]; }
+template <>
+inline int16_t getStack<s3p_int16_t>(const SharemindCodeBlock & arg)
+{ return arg.int16[0]; }
+template <>
+inline int32_t getStack<s3p_int32_t>(const SharemindCodeBlock & arg)
+{ return arg.int32[0]; }
+template <>
+inline int64_t getStack<s3p_int64_t>(const SharemindCodeBlock & arg)
+{ return arg.int64[0]; }
+template <>
+inline uint8_t getStack<s3p_xor_uint8_t>(const SharemindCodeBlock & arg)
+{ return arg.uint8[0]; }
+template <>
+inline uint16_t getStack<s3p_xor_uint16_t>(const SharemindCodeBlock & arg)
+{ return arg.uint16[0]; }
+template <>
+inline uint32_t getStack<s3p_xor_uint32_t>(const SharemindCodeBlock & arg)
+{ return arg.uint32[0]; }
+template <>
+inline uint64_t getStack<s3p_xor_uint64_t>(const SharemindCodeBlock & arg)
+{ return arg.uint64[0]; }
+template <>
+inline sf_float32 getStack<s3p_float32_t>(const SharemindCodeBlock & arg)
+{ return arg.float32[0]; }
+template <>
+inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
+{ return arg.float64[0]; }
 
 /**
  * Basic syscall parameter verification.
@@ -98,9 +129,11 @@ struct __attribute__ ((visibility("internal"))) SyscallArgs {
 /**
  * Virtual machine handle representation. Validates that the handle is correct.
  */
-class __attribute__ ((visibility("internal"))) VMHandles: public SharemindModuleApi0x1PdpiInfo {
+class __attribute__ ((visibility("internal"))) VMHandles
+        : public SharemindModuleApi0x1PdpiInfo
+{
 public: /* Methods: */
-    VMHandles () {
+    VMHandles() {
         pdpiHandle = 0;
         pdHandle = 0;
         pdkIndex = 0u;
@@ -108,20 +141,26 @@ public: /* Methods: */
     }
 
 
-    inline bool get (SharemindModuleApi0x1SyscallContext* c, SharemindCodeBlock* args, size_t index = 0) {
-        assert (c != 0 && args != 0);
+    inline bool get(SharemindModuleApi0x1SyscallContext * c,
+                    SharemindCodeBlock * args, size_t index = 0)
+    {
+        assert(c != 0 && args != 0);
 
         const size_t SHARED3P_INDEX = 0u;
 
-        const SharemindModuleApi0x1PdpiInfo * pdpiInfo = (*(c->get_pdpi_info))(c, args[index].uint64[0]);
+        const SharemindModuleApi0x1PdpiInfo * pdpiInfo =
+                (*(c->get_pdpi_info))(c, args[index].uint64[0]);
         if (!pdpiInfo) {
-            fprintf (stderr, "get_pd_process_instance_handle (%" PRIu64 ")\n", args[index].uint64[0]);
+            fprintf(stderr, "get_pd_process_instance_handle (%" PRIu64 ")\n",
+                    args[index].uint64[0]);
             return false;
         }
 
-        if (pdpiInfo->pdkIndex != SHARED3P_INDEX       // or wrong pdk is returned
-            || pdpiInfo->moduleHandle != c->moduleHandle) // or module handle pointers mismatch
+        if (pdpiInfo->pdkIndex != SHARED3P_INDEX            // or wrong pdk is returned
+            || pdpiInfo->moduleHandle != c->moduleHandle)   // or module handle pointers mismatch
+        {
             return false;
+        }
 
         assert(pdpiInfo->pdpiHandle);
 
