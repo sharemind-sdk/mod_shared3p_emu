@@ -23,10 +23,6 @@
 #include <cryptopp/aes.h>
 #include "../Shared3pValueTraits.h"
 #include <algorithm>
-#if DEBUG_AES
-#include <iostream>
-#include <iterator>
-#endif
 
 namespace sharemind {
 
@@ -92,10 +88,6 @@ void AesProtocol<Nk_, Nb_, Nr_>::expandAesKey(const AES_share_vec_t & inKey,
                                               AES_share_vec_t & outKey)
 {
     std::copy(inKey.begin(), inKey.end(), outKey.begin());
-#if DEBUG_AES
-    std::copy(outKey.begin(), outKey.end(), std::ostream_iterator<AES_share_t>(std::cout, " "));
-    std::cout << "\n";
-#endif
 }
 
 template<size_t Nk_, size_t Nb_, size_t Nr_>
@@ -107,12 +99,6 @@ void AesProtocol<Nk_, Nb_, Nr_>::processWithExpandedKey(const AES_share_vec_t & 
     uint8_t key[KEYSIZE];
     std::memcpy(key, preExpandedKey.data(), KEYSIZE);
     std::transform(preExpandedKey.begin(), preExpandedKey.begin() + Nk_, (uint32_t*)key, EndianessSwap);
-#if DEBUG_AES
-    std::cout << "Key!\n";
-    std::cout << std::hex;
-    std::copy(key, key+KEYSIZE, std::ostream_iterator<AES_share_t>(std::cout, " "));
-    std::cout << "\n";
-#endif
 
     uint8_t pt[Nb_ * 4];
     uint8_t ct[Nb_ * 4];
@@ -126,13 +112,6 @@ void AesProtocol<Nk_, Nb_, Nr_>::processWithExpandedKey(const AES_share_vec_t & 
         i += Nb_;
         j += Nb_;
     } while (i != plainText.end() && j != cipherText.end());
-
-#if DEBUG_AES
-    std::cout << "Ciphertext:\n";
-    std::memcpy(pt, cipherText.data(), 16);
-    std::copy(pt, pt+16, std::ostream_iterator<AES_share_t>(std::cout, " "));
-    std::cout << "\n";
-#endif
 }
 
 } /* namespace sharemind { */
