@@ -91,6 +91,7 @@ SET(SHARED3P_EMU_HEADERS
     "src/Protocols/AESProtocol.h"
     "src/Protocols/Binary.h"
     "src/Protocols/CRCProtocol.h"
+    "src/Protocols/Nullary.h"
     "src/Protocols/Randomize.h"
     "src/Protocols/SoftFloatUtility.h"
     "src/Protocols/Ternary.h"

@@ -26,25 +26,6 @@
 
 namespace sharemind {
 
-class __attribute__ ((visibility("internal"))) RandomizeProtocol {
-public: /* Methods: */
-
-    RandomizeProtocol (Shared3pPDPI &pdpi)
-        : m_pdpi(pdpi)
-    { }
-
-    template <typename T>
-    bool invoke (s3p_vec<T>& result, any_value_tag = typename value_traits<T>::value_category ()) {
-        result.randomize(m_pdpi.rng());
-        return true;
-    }
-
-private: /* Fields: */
-
-    Shared3pPDPI & m_pdpi;
-
-}; /* class RandomizeProtocol { */
-
 class __attribute__ ((visibility("internal"))) MatrixShufflingProtocol {
 public: /* Methods: */
 
