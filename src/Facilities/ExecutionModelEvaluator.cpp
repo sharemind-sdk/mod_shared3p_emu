@@ -21,7 +21,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <exprtk.hpp>
 #include <LogHard/Logger.h>
+#include <sharemind/static_assert.h>
 #include <sstream>
+
 #include "ExecutionModelEvaluator.h"
 
 
@@ -50,14 +52,14 @@ public: /* Methods: */
     inline ~ExprTkModel() noexcept {}
 
     inline double evaluate(size_t inputSize) const final override {
+        SHAREMIND_STATIC_ASSERT(std::numeric_limits<double>::radix == 2);
+        SHAREMIND_STATIC_ASSERT(std::numeric_limits<double>::digits >= 1);
         constexpr const size_t max =
             sizeof(size_t) >= (std::numeric_limits<double>::digits % 8u == 0
                               ? std::numeric_limits<double>::digits / 8u
                               : std::numeric_limits<double>::digits / 8u + 1u)
-            ? static_cast<size_t>(
-                        std::pow(std::numeric_limits<double>::radix,
-                                 std::numeric_limits<double>::digits - 1u)
-                        - 1u)
+            ? static_cast<size_t>(( static_cast<size_t>(2) << (std::numeric_limits<double>::digits - 1u) )
+                                  - 1u)
             : std::numeric_limits<size_t>::max();
 
         if (inputSize > max)
