@@ -102,7 +102,7 @@ struct __attribute__ ((visibility("internal"))) s3p_bool_t {
     typedef bool_value_tag value_category;
     typedef bool share_type;
     typedef uint8_t public_type;
-    static constexpr uint8_t heap_type_id = 0x5u;
+    static constexpr uint8_t heap_type_id = 0x1u;
     static constexpr size_t num_of_bits = 1u;
     static constexpr size_t log_of_bits = 0u;
 };
@@ -111,7 +111,7 @@ struct __attribute__ ((visibility("internal"))) s3p_uint8_t {
     typedef unsigned_value_tag value_category;
     typedef uint8_t share_type;
     typedef uint8_t public_type;
-    static constexpr uint8_t heap_type_id = 0x1u;
+    static constexpr uint8_t heap_type_id = 0x2u;
     static constexpr size_t num_of_bits = 8u;
     static constexpr size_t log_of_bits = 3u;
 };
@@ -120,7 +120,7 @@ struct __attribute__ ((visibility("internal"))) s3p_uint16_t {
     typedef unsigned_value_tag value_category;
     typedef uint16_t share_type;
     typedef uint16_t public_type;
-    static constexpr uint8_t heap_type_id = 0x2u;
+    static constexpr uint8_t heap_type_id = 0x3u;
     static constexpr size_t num_of_bits = 16u;
     static constexpr size_t log_of_bits = 4u;
 };
@@ -129,7 +129,7 @@ struct __attribute__ ((visibility("internal"))) s3p_uint32_t {
     typedef unsigned_value_tag value_category;
     typedef uint32_t share_type;
     typedef uint32_t public_type;
-    static constexpr uint8_t heap_type_id = 0x3u;
+    static constexpr uint8_t heap_type_id = 0x4u;
     static constexpr size_t num_of_bits = 32u;
     static constexpr size_t log_of_bits = 5u;
 };
@@ -138,7 +138,7 @@ struct __attribute__ ((visibility("internal"))) s3p_uint64_t {
     typedef unsigned_value_tag value_category;
     typedef uint64_t share_type;
     typedef uint64_t public_type;
-    static constexpr uint8_t heap_type_id = 0x4u;
+    static constexpr uint8_t heap_type_id = 0x5u;
     static constexpr size_t num_of_bits = 64u;
     static constexpr size_t log_of_bits = 6u;
 };
@@ -147,7 +147,7 @@ struct __attribute__ ((visibility("internal"))) s3p_uint128_t {
     typedef unsigned_value_tag value_category;
     typedef uint128_t share_type;
     typedef uint128_t public_type;
-    static constexpr uint8_t heap_type_id = 0xcu;
+    static constexpr uint8_t heap_type_id = 0x6u;
     static constexpr size_t num_of_bits = 128u;
     static constexpr size_t log_of_bits = 7u;
 };
@@ -156,7 +156,7 @@ struct __attribute__ ((visibility("internal"))) s3p_uint256_t {
     typedef unsigned_value_tag value_category;
     typedef uint_t<256> share_type;
     typedef uint_t<256> public_type;
-    static constexpr uint8_t heap_type_id = 0xdu;
+    static constexpr uint8_t heap_type_id = 0x7u;
     static constexpr size_t num_of_bits = 256u;
     static constexpr size_t log_of_bits = 8u;
 };
@@ -166,7 +166,7 @@ struct __attribute__ ((visibility("internal"))) s3p_int8_t {
     typedef signed_value_tag value_category;
     typedef int8_t share_type;
     typedef int8_t public_type;
-    static constexpr uint8_t heap_type_id = 0xdu;
+    static constexpr uint8_t heap_type_id = 0x8u;
     static constexpr size_t num_of_bits = 8u;
     static constexpr size_t log_of_bits = 3u;
 };
@@ -175,7 +175,7 @@ struct __attribute__ ((visibility("internal"))) s3p_int16_t {
     typedef signed_value_tag value_category;
     typedef int16_t share_type;
     typedef int16_t public_type;
-    static constexpr uint8_t heap_type_id = 0xeu;
+    static constexpr uint8_t heap_type_id = 0x9u;
     static constexpr size_t num_of_bits = 16u;
     static constexpr size_t log_of_bits = 4u;
 };
@@ -184,7 +184,7 @@ struct __attribute__ ((visibility("internal"))) s3p_int32_t {
     typedef signed_value_tag value_category;
     typedef int32_t share_type;
     typedef int32_t public_type;
-    static constexpr uint8_t heap_type_id = 0xfu;
+    static constexpr uint8_t heap_type_id = 0xau;
     static constexpr size_t num_of_bits = 32u;
     static constexpr size_t log_of_bits = 5u;
 };
@@ -193,7 +193,7 @@ struct __attribute__ ((visibility("internal"))) s3p_int64_t {
     typedef signed_value_tag value_category;
     typedef int64_t share_type;
     typedef int64_t public_type;
-    static constexpr uint8_t heap_type_id = 0x10u;
+    static constexpr uint8_t heap_type_id = 0xbu;
     static constexpr size_t num_of_bits = 64u;
     static constexpr size_t log_of_bits = 6u;
 };
@@ -203,7 +203,7 @@ struct __attribute__ ((visibility("internal"))) s3p_xor_uint8_t {
     typedef xored_numeric_value_tag value_category;
     typedef uint8_t share_type;
     typedef uint8_t public_type;
-    static constexpr uint8_t heap_type_id = 0x6u;
+    static constexpr uint8_t heap_type_id = 0xcu;
     static constexpr size_t num_of_bits = 8u;
     static constexpr size_t log_of_bits = 3u;
 };
@@ -212,7 +212,7 @@ struct __attribute__ ((visibility("internal"))) s3p_xor_uint16_t {
     typedef xored_numeric_value_tag value_category;
     typedef uint16_t share_type;
     typedef uint16_t public_type;
-    static constexpr uint8_t heap_type_id = 0x7u;
+    static constexpr uint8_t heap_type_id = 0xdu;
     static constexpr size_t num_of_bits = 16u;
     static constexpr size_t log_of_bits = 4u;
 };
@@ -221,7 +221,7 @@ struct __attribute__ ((visibility("internal"))) s3p_xor_uint32_t {
     typedef xored_numeric_value_tag value_category;
     typedef uint32_t share_type;
     typedef uint32_t public_type;
-    static constexpr uint8_t heap_type_id = 0x8u;
+    static constexpr uint8_t heap_type_id = 0xeu;
     static constexpr size_t num_of_bits = 32u;
     static constexpr size_t log_of_bits = 5u;
 };
@@ -230,7 +230,7 @@ struct __attribute__ ((visibility("internal"))) s3p_xor_uint64_t {
     typedef xored_numeric_value_tag value_category;
     typedef uint64_t share_type;
     typedef uint64_t public_type;
-    static constexpr uint8_t heap_type_id = 0x9u;
+    static constexpr uint8_t heap_type_id = 0xfu;
     static constexpr size_t num_of_bits = 64u;
     static constexpr size_t log_of_bits = 6u;
 };
@@ -240,7 +240,7 @@ struct __attribute__ ((visibility("internal"))) s3p_float32_t {
     typedef float32_numeric_value_tag value_category;
     typedef sf_float32 share_type;
     typedef sf_float32 public_type;
-    static constexpr uint8_t heap_type_id = 0xcu;
+    static constexpr uint8_t heap_type_id = 0x10u;
     static constexpr size_t num_of_bits = 32u;
     static constexpr size_t log_of_bits = 5u;
     static constexpr size_t bias = (1u << 7u) - 1u;
@@ -250,7 +250,7 @@ struct __attribute__ ((visibility("internal"))) s3p_float64_t {
     typedef float64_numeric_value_tag value_category;
     typedef sf_float64 share_type;
     typedef sf_float64 public_type;
-    static constexpr uint8_t heap_type_id = 0xdu;
+    static constexpr uint8_t heap_type_id = 0x11u;
     static constexpr size_t num_of_bits = 64u;
     static constexpr size_t log_of_bits = 6u;
     static constexpr size_t bias = (1u << 10u) - 1u;
