@@ -17,9 +17,9 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
+#include <sharemind/ExecutionModelEvaluator.h>
 #include <sharemind/ExecutionProfiler.h>
 #include "Facilities/CxxRandomEngine.h"
-#include "Facilities/ExecutionModelEvaluator.h"
 #include "Shared3pModule.h"
 #include "Shared3pPD.h"
 

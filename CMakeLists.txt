@@ -40,6 +40,7 @@ FIND_PACKAGE(Cryptopp REQUIRED)
 FIND_PACKAGE(LogHard REQUIRED)
 FIND_PACKAGE(SharemindCHeaders REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders REQUIRED)
+FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
 FIND_PACKAGE(SharemindLibmodapi REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloat REQUIRED)
@@ -51,6 +52,7 @@ INCLUDE_DIRECTORIES(
     ${LogHard_INCLUDE_DIRS}
     ${SharemindCHeaders_INCLUDE_DIRS}
     ${SharemindCxxHeaders_INCLUDE_DIRS}
+    ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
     ${SharemindLibmodapi_INCLUDE_DIRS}
     ${SharemindLibsoftfloat_INCLUDE_DIRS}
@@ -61,6 +63,7 @@ ADD_DEFINITIONS(
     ${LogHard_DEFINITIONS}
     ${SharemindCHeaders_DEFINITIONS}
     ${SharemindCxxHeaders_DEFINITIONS}
+    ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
     ${SharemindLibExecutionProfiler_DEFINITIONS}
     ${SharemindLibmodapi_DEFINITIONS}
     ${SharemindLibsoftfloat_DEFINITIONS}
@@ -79,7 +82,6 @@ ENDIF(SHAREMIND_NETWORK_STATISTICS)
 
 SET(SHARED3P_EMU_SOURCES
     "src/Facilities/CxxRandomEngine.cpp"
-    "src/Facilities/ExecutionModelEvaluator.cpp"
     "src/mod_shared3p_emu.cpp"
     "src/Shared3pConfiguration.cpp"
     "src/Shared3pModule.cpp"
@@ -91,7 +93,6 @@ SET(SHARED3P_EMU_SOURCES
 SET(SHARED3P_EMU_HEADERS
     "src/BitVector.h"
     "src/Facilities/CxxRandomEngine.h"
-    "src/Facilities/ExecutionModelEvaluator.h"
     "src/Protocols/AESProtocol.h"
     "src/Protocols/Binary.h"
     "src/Protocols/CRCProtocol.h"
@@ -119,6 +120,7 @@ TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
     ${LogHard_LIBRARIES}
     ${SharemindCHeaders_LIBRARIES}
     ${SharemindCxxHeaders_LIBRARIES}
+    ${SharemindLibExecutionModelEvaluator_LIBRARIES}
     ${SharemindLibExecutionProfiler_LIBRARIES}
     ${SharemindLibsoftfloat_LIBRARIES}
     ${SharemindLibsoftfloatMath_LIBRARIES}
