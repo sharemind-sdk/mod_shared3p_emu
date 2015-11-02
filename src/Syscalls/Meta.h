@@ -20,8 +20,8 @@
 #ifndef MOD_SHARED3P_EMU_SYSCALLS_META_H
 #define MOD_SHARED3P_EMU_SYSCALLS_META_H
 
-#include <sharemind/libemulator_protocols/VmVector.h>
 #include <sharemind/libmodapi/api_0x1.h>
+#include <sharemind/VmVector.h>
 
 #include "Common.h"
 #include "../Shared3pPDPI.h"
@@ -69,9 +69,9 @@ NAMED_SYSCALL(binary_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const share_vec<T1> & param1 = *static_cast<share_vec<T1>*>(lhsHandle);
-        const share_vec<T2> & param2 = *static_cast<share_vec<T2>*>(rhsHandle);
-        share_vec<T3> & result = *static_cast<share_vec<T3>*>(resultHandle);
+        const ShareVec<T1> & param1 = *static_cast<ShareVec<T1>*>(lhsHandle);
+        const ShareVec<T2> & param2 = *static_cast<ShareVec<T2>*>(rhsHandle);
+        ShareVec<T3> & result = *static_cast<ShareVec<T3>*>(resultHandle);
 
         Protocol protocol(*pdpi);
         if (!protocol.invoke(param1, param2, result))
@@ -119,9 +119,9 @@ NAMED_SYSCALL(binary_public_vec, name, args, num_args, refs, crefs, returnValue,
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const share_vec<T1> & param1 = *static_cast<share_vec<T1>*>(lhsHandle);
-        const immutable_vm_vec<T2> param2(crefs[0u]);
-        share_vec<T3> & result = *static_cast<share_vec<T3>*>(resultHandle);
+        const ShareVec<T1> & param1 = *static_cast<ShareVec<T1>*>(lhsHandle);
+        const ImmutableVmVec<T2> param2(crefs[0u]);
+        ShareVec<T3> & result = *static_cast<ShareVec<T3>*>(resultHandle);
 
         Protocol protocol(*pdpi);
         if (!protocol.invoke(param1, param2, result))
@@ -200,8 +200,8 @@ NAMED_SYSCALL(unary_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const share_vec<T>& param = *static_cast<share_vec<T>*>(paramHandle);
-        share_vec<L>& result = *static_cast<share_vec<L>*>(resultHandle);
+        const ShareVec<T>& param = *static_cast<ShareVec<T>*>(paramHandle);
+        ShareVec<L>& result = *static_cast<ShareVec<L>*>(resultHandle);
 
         Protocol protocol(*pdpi);
         if (!protocol.invoke(param, result))
@@ -258,7 +258,7 @@ NAMED_SYSCALL(nullary_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        share_vec<T> & result = *static_cast<share_vec<T>*>(resultHandle);
+        ShareVec<T> & result = *static_cast<ShareVec<T>*>(resultHandle);
 
         if (!Protocol(*pdpi).invoke(result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
@@ -312,10 +312,10 @@ NAMED_SYSCALL(ternary_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const share_vec<T1> & param1 = *static_cast<share_vec<T1>*>(param1Handle);
-        const share_vec<T2> & param2 = *static_cast<share_vec<T2>*>(param2Handle);
-        const share_vec<T3> & param3 = *static_cast<share_vec<T3>*>(param3Handle);
-        share_vec<T4> & result = *static_cast<share_vec<T4>*>(resultHandle);
+        const ShareVec<T1> & param1 = *static_cast<ShareVec<T1>*>(param1Handle);
+        const ShareVec<T2> & param2 = *static_cast<ShareVec<T2>*>(param2Handle);
+        const ShareVec<T3> & param3 = *static_cast<ShareVec<T3>*>(param3Handle);
+        ShareVec<T4> & result = *static_cast<ShareVec<T4>*>(resultHandle);
 
         Protocol protocol(*pdpi);
         if (!protocol.invoke(param1, param2, param3, result))

@@ -20,9 +20,10 @@
 #ifndef MOD_SHARED3P_EMU_SHARED3PPDPI_H
 #define MOD_SHARED3P_EMU_SHARED3PPDPI_H
 
-#include <sharemind/libemulator_protocols/ValueHeap.h>
+#include <sharemind/SharedValueHeap.h>
+
 #include "Shared3pPD.h"
-#include "ShareVector.h"
+#include "Shared3pVector.h"
 
 namespace sharemind {
 
@@ -68,12 +69,12 @@ public: /* Methods: */
     }
 
     template <typename T>
-    inline bool registerVector(share_vec<T> * vec) {
+    inline bool registerVector(ShareVec<T> * vec) {
         return m_heap.insert(vec);
     }
 
     template <typename T>
-    inline bool freeRegisteredVector(share_vec<T> * vec) {
+    inline bool freeRegisteredVector(ShareVec<T> * vec) {
         return m_heap.erase(vec);
     }
 
@@ -87,7 +88,7 @@ private: /* Fields: */
 
     RandomEngine & m_rng;
 
-    value_heap m_heap;
+    SharedValueHeap m_heap;
 
 }; /* class Shared3pPDPI { */
 

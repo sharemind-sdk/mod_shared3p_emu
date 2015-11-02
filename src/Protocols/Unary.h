@@ -23,8 +23,8 @@
 #include <algorithm>
 #include <sharemind/libemulator_protocols/Unary.h>
 #include <type_traits>
-#include "../ShareVector.h"
-#include "../ValueTraits.h"
+#include "../Shared3pValueTraits.h"
+#include "../Shared3pVector.h"
 
 
 namespace sharemind {
@@ -36,8 +36,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_integral_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<typename respective_unsigned_type<T>::type> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<typename respective_unsigned_type<T>::type> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -50,8 +50,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -72,8 +72,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_xor_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -93,8 +93,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_any_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<s3p_bool_t> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<s3p_bool_t> & result)
     {
         static_assert(T::num_of_bits > 0u, "");
         if (result.size () % T::num_of_bits != 0u)
@@ -122,8 +122,8 @@ public: /* Methods: */
         is_any_value_tag<U>::value &&
         ! is_float_value_tag<U>::value
     , bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<U> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<U> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -136,8 +136,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_any_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<s3p_float32_t> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<s3p_float32_t> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -150,20 +150,20 @@ public: /* Methods: */
 
     template <typename U>
     typename std::enable_if<is_any_value_tag<U>::value, bool>::type
-    invoke(const share_vec<s3p_float32_t> & param,
-           share_vec<U> & result)
+    invoke(const ShareVec<s3p_float32_t> & param,
+           ShareVec<U> & result)
     {
         if (param.size() != result.size())
             return false;
 
         for (size_t i = 0u; i < param.size(); ++i)
-            result[i] = sf_float32_to_val<typename share_vec<U>::value_type>(param[i]).result;
+            result[i] = sf_float32_to_val<typename ShareVec<U>::value_type>(param[i]).result;
 
         return true;
     }
 
-    bool invoke(const share_vec<s3p_float32_t> & param,
-                share_vec<s3p_float64_t> & result)
+    bool invoke(const ShareVec<s3p_float32_t> & param,
+                ShareVec<s3p_float64_t> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -176,8 +176,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_any_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<s3p_float64_t> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<s3p_float64_t> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -190,20 +190,20 @@ public: /* Methods: */
 
     template <typename U>
     typename std::enable_if<is_any_value_tag<U>::value, bool>::type
-    invoke(const share_vec<s3p_float64_t> & param,
-           share_vec<U> & result)
+    invoke(const ShareVec<s3p_float64_t> & param,
+           ShareVec<U> & result)
     {
         if (param.size() != result.size())
             return false;
 
         for (size_t i = 0u; i < param.size(); ++i)
-            result[i] = sf_float64_to_val<typename share_vec<U>::value_type>(param[i]).result;
+            result[i] = sf_float64_to_val<typename ShareVec<U>::value_type>(param[i]).result;
 
         return true;
     }
 
-    bool invoke(const share_vec<s3p_float64_t> & param,
-                share_vec<s3p_float32_t> & result)
+    bool invoke(const ShareVec<s3p_float64_t> & param,
+                ShareVec<s3p_float32_t> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -223,8 +223,8 @@ public: /* Methods: */
 
     template <typename T, typename U>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<U> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<U> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -246,8 +246,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -266,8 +266,8 @@ public: /* Methods: */
 
     template <typename T, typename U>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<U> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<U> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -289,8 +289,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -310,8 +310,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<s3p_bool_t> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<s3p_bool_t> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -332,8 +332,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -352,8 +352,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -372,8 +372,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -392,8 +392,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -416,8 +416,8 @@ public: /* Methods: */
         is_any_value_tag<T>::value &&
         ! is_float_value_tag<T>::value
     , bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         const size_t result_size = result.size();
         const size_t param_size = param.size();
@@ -446,8 +446,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         const size_t result_size = result.size();
         const size_t param_size = param.size();
@@ -460,8 +460,8 @@ public: /* Methods: */
 
         const size_t subarr_len = param_size / result_size;
 
-        auto comp = [](typename share_vec<T>::value_type const & a,
-                       typename share_vec<T>::value_type const & b)
+        auto comp = [](typename ShareVec<T>::value_type const & a,
+                       typename ShareVec<T>::value_type const & b)
             { return sf_float_lt(a, b).result != 0u; };
 
         auto offset = param.cbegin();
@@ -489,13 +489,13 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_xor_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
 
-        typedef typename value_traits<T>::share_type share_type;
+        typedef typename ValueTraits<T>::share_type share_type;
 
         for (size_t i = 0u; i < param.size(); ++i) {
             share_type value = param[i];
@@ -531,8 +531,8 @@ public: /* Methods: */
         is_any_value_tag<T>::value &&
         ! is_float_value_tag<T>::value
     , bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<U> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<U> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -545,8 +545,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         if (param.size() != result.size())
             return false;
@@ -570,8 +570,8 @@ public: /* Methods: */
         is_any_value_tag<T>::value &&
         ! is_float_value_tag<T>::value
     , bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<U> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<U> & result)
     {
         const size_t param_size = param.size ();
         const size_t result_size = result.size ();
@@ -595,8 +595,8 @@ public: /* Methods: */
 
     template <typename T>
     typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    invoke(const share_vec<T> & param,
-           share_vec<T> & result)
+    invoke(const ShareVec<T> & param,
+           ShareVec<T> & result)
     {
         const size_t param_size = param.size ();
         const size_t result_size = result.size ();

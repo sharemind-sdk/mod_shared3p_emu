@@ -22,7 +22,7 @@
 #include "Common.h"
 #include "../Protocols/AESProtocol.h"
 #include "../Shared3pPDPI.h"
-#include "../ShareVector.h"
+#include "../Shared3pVector.h"
 
 
 namespace sharemind {
@@ -51,9 +51,9 @@ NAMED_SYSCALL(aes_xor_uint32_vec, name, args, num_args, refs, crefs, returnValue
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const share_vec<s3p_xor_uint32_t> & inputVec = *static_cast<share_vec<s3p_xor_uint32_t> *>(inputVecHandle);
-        const share_vec<s3p_xor_uint32_t> & keyVec = *static_cast<share_vec<s3p_xor_uint32_t> *>(keyVecHandle);
-        share_vec<s3p_xor_uint32_t> & outputVec = *static_cast<share_vec<s3p_xor_uint32_t> *>(outputVecHandle);
+        const ShareVec<s3p_xor_uint32_t> & inputVec = *static_cast<ShareVec<s3p_xor_uint32_t> *>(inputVecHandle);
+        const ShareVec<s3p_xor_uint32_t> & keyVec = *static_cast<ShareVec<s3p_xor_uint32_t> *>(keyVecHandle);
+        ShareVec<s3p_xor_uint32_t> & outputVec = *static_cast<ShareVec<s3p_xor_uint32_t> *>(outputVecHandle);
 
         // Check whether input and output vectors have proper size:
         if (inputVec.empty()
@@ -99,8 +99,8 @@ NAMED_SYSCALL(aes_xor_uint32_vec_expand_key, name, args, num_args, refs, crefs, 
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const share_vec<s3p_xor_uint32_t> & inputVec = *static_cast<share_vec<s3p_xor_uint32_t> *>(inputVecHandle);
-        share_vec<s3p_xor_uint32_t> & outputVec = *static_cast<share_vec<s3p_xor_uint32_t> *>(outputVecHandle);
+        const ShareVec<s3p_xor_uint32_t> & inputVec = *static_cast<ShareVec<s3p_xor_uint32_t> *>(inputVecHandle);
+        ShareVec<s3p_xor_uint32_t> & outputVec = *static_cast<ShareVec<s3p_xor_uint32_t> *>(outputVecHandle);
 
         // Check whether input and output vectors have proper size:
         if (inputVec.empty()

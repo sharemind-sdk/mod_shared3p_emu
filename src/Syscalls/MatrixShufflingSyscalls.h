@@ -24,7 +24,7 @@
 #include "Common.h"
 #include "../Protocols/MatrixShufflingProtocol.h"
 #include "../Shared3pPDPI.h"
-#include "../ShareVector.h"
+#include "../Shared3pVector.h"
 
 namespace sharemind {
 
@@ -55,7 +55,7 @@ NAMED_SYSCALL(vector_shuffle, name, args, num_args, refs, crefs, returnValue, c)
         if (!pdpi->isValidHandle<T>(vectorHandle))
             return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
 
-        share_vec<T> & vec = * static_cast<share_vec<T> *>(vectorHandle);
+        ShareVec<T> & vec = * static_cast<ShareVec<T> *>(vectorHandle);
 
         MatrixShufflingProtocol msp(*pdpi);
         if (NeedKey) {
@@ -63,7 +63,7 @@ NAMED_SYSCALL(vector_shuffle, name, args, num_args, refs, crefs, returnValue, c)
             if (!pdpi->isValidHandle<s3p_uint8_t>(randHandle))
                 return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
 
-            const share_vec<s3p_uint8_t> & rand = * static_cast<share_vec<s3p_uint8_t> *>(randHandle);
+            const ShareVec<s3p_uint8_t> & rand = * static_cast<ShareVec<s3p_uint8_t> *>(randHandle);
             if (rand.size() != 32u) {
                 return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
             }
@@ -122,19 +122,19 @@ NAMED_SYSCALL(matrix_shuffle, name, args, num_args, refs, crefs, returnValue, c)
         if (!pdpi->isValidHandle<T>(matrixHandle))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-        const share_vec<s3p_uint8_t>* rand = 0;
+        const ShareVec<s3p_uint8_t>* rand = 0;
         if (NeedKey) {
             void * const randHandle = args[3u].p[0u];
             if (!pdpi->isValidHandle<s3p_uint8_t>(randHandle))
                 return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
 
-            rand = static_cast<share_vec<s3p_uint8_t> *>(randHandle);
+            rand = static_cast<ShareVec<s3p_uint8_t> *>(randHandle);
             if (rand->size() != 32u) {
                 return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
             }
         }
 
-        share_vec<T> & matrix = * static_cast<share_vec<T> *>(matrixHandle);
+        ShareVec<T> & matrix = * static_cast<ShareVec<T> *>(matrixHandle);
         if (matrix.empty())
             return SHAREMIND_MODULE_API_0x1_OK;
 

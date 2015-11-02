@@ -46,6 +46,7 @@ FIND_PACKAGE(SharemindLibRandom REQUIRED)
 FIND_PACKAGE(SharemindLibmodapi REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloat REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloatMath REQUIRED)
+FIND_PACKAGE(SharemindPdkHeaders REQUIRED)
 INCLUDE_DIRECTORIES(
     ${Boost_INCLUDE_DIRS}
     ${CRYPTOPP_INCLUDE_DIRS}
@@ -59,6 +60,7 @@ INCLUDE_DIRECTORIES(
     ${SharemindLibmodapi_INCLUDE_DIRS}
     ${SharemindLibsoftfloat_INCLUDE_DIRS}
     ${SharemindLibsoftfloatMath_INCLUDE_DIRS}
+    ${SharemindPdkHeaders_INCLUDE_DIRS}
 )
 
 ADD_DEFINITIONS(
@@ -72,6 +74,7 @@ ADD_DEFINITIONS(
     ${SharemindLibmodapi_DEFINITIONS}
     ${SharemindLibsoftfloat_DEFINITIONS}
     ${SharemindLibsoftfloatMath_DEFINITIONS}
+    ${SharemindPdkHeaders_DEFINITIONS}
     "-D__STDC_LIMIT_MACROS"
     "-D__STDC_CONSTANT_MACROS"
     "-D__STDC_FORMAT_MACROS"
@@ -103,15 +106,15 @@ SET(SHARED3P_EMU_HEADERS
     "src/Shared3pConfiguration.h"
     "src/Shared3pModule.h"
     "src/Shared3pPD.h"
-    "src/Shared3pPDPI.h"
-    "src/ShareVector.h"
+    "src/Shared3pPDPI.h"    
+    "src/Shared3pValueTraits.h"
+    "src/Shared3pVector.h"
     "src/Syscalls/AESSyscalls.h"
     "src/Syscalls/BaseSyscalls.h"
     "src/Syscalls/Common.h"
     "src/Syscalls/CRCSyscalls.h"
     "src/Syscalls/MatrixShufflingSyscalls.h"
     "src/Syscalls/Meta.h"
-    "src/ValueTraits.h"
 )
 
 ADD_LIBRARY(sharemind_mod_shared3p_emu MODULE ${SHARED3P_EMU_SOURCES} ${SHARED3P_EMU_HEADERS})
@@ -124,6 +127,7 @@ TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
     ${SharemindLibExecutionProfiler_LIBRARIES}
     ${SharemindLibsoftfloat_LIBRARIES}
     ${SharemindLibsoftfloatMath_LIBRARIES}
+    ${SharemindPdkHeaders_LIBRARIES}
 )
 
 INSTALL(TARGETS sharemind_mod_shared3p_emu LIBRARY DESTINATION "lib")

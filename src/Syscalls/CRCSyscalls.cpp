@@ -22,7 +22,7 @@
 #include "Common.h"
 #include "../Protocols/CRCProtocol.h"
 #include "../Shared3pPDPI.h"
-#include "../ShareVector.h"
+#include "../Shared3pVector.h"
 
 
 namespace sharemind {
@@ -89,8 +89,8 @@ NAMED_SYSCALL(crc_xor_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const share_vec<s3p_xor_uint8_t> & inputVec = *static_cast<share_vec<s3p_xor_uint8_t> *>(inputVecHandle);
-        share_vec<value_t> & output = *static_cast<share_vec<value_t> *>(outputHandle);
+        const ShareVec<s3p_xor_uint8_t> & inputVec = *static_cast<ShareVec<s3p_xor_uint8_t> *>(inputVecHandle);
+        ShareVec<value_t> & output = *static_cast<ShareVec<value_t> *>(outputHandle);
         if (output.size () != 1) {
             return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
         }

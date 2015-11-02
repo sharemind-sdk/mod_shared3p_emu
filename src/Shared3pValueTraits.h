@@ -17,14 +17,14 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
-#ifndef MOD_SHARED3P_EMU_VALUETRAITS_H
-#define MOD_SHARED3P_EMU_VALUETRAITS_H
+#ifndef MOD_SHARED3P_EMU_SHARED3PVALUETRAITS_H
+#define MOD_SHARED3P_EMU_SHARED3PVALUETRAITS_H
 
 #include <cstdint>
 #include <sharemind/3rdparty/libsoftfloat/softfloat.h>
-#include <sharemind/libemulator_protocols/ValueTraits.h>
 #include <sharemind/uint128_t.h>
 #include <sharemind/uint_t.h>
+#include <sharemind/ValueTraits.h>
 #include <type_traits>
 
 
@@ -44,17 +44,17 @@ struct __attribute__ ((visibility("internal"))) unsigned_value_tag : public nume
 
 template <typename T>
 struct __attribute__ ((visibility("internal"))) is_bool_value_tag :
-    std::is_base_of<bool_value_tag, typename value_traits<T>::value_category>
+    std::is_base_of<bool_value_tag, typename ValueTraits<T>::value_category>
 { };
 
 template <typename T>
 struct __attribute__ ((visibility("internal"))) is_unsigned_value_tag :
-    std::is_base_of<unsigned_value_tag, typename value_traits<T>::value_category>
+    std::is_base_of<unsigned_value_tag, typename ValueTraits<T>::value_category>
 { };
 
 template <typename T>
 struct __attribute__ ((visibility("internal"))) is_signed_value_tag :
-    std::is_base_of<signed_value_tag, typename value_traits<T>::value_category>
+    std::is_base_of<signed_value_tag, typename ValueTraits<T>::value_category>
 { };
 
 template <typename T>
@@ -64,12 +64,12 @@ struct __attribute__ ((visibility("internal"))) is_integral_value_tag :
 
 template <typename T>
 struct __attribute__ ((visibility("internal"))) is_xor_value_tag :
-    std::is_base_of<xored_numeric_value_tag, typename value_traits<T>::value_category>
+    std::is_base_of<xored_numeric_value_tag, typename ValueTraits<T>::value_category>
 { };
 
 template <typename T>
 struct __attribute__ ((visibility("internal"))) is_float_value_tag :
-    std::is_base_of<float_numeric_value_tag, typename value_traits<T>::value_category>
+    std::is_base_of<float_numeric_value_tag, typename ValueTraits<T>::value_category>
 { };
 
 struct __attribute__ ((visibility("internal"))) s3p_bool_t {
@@ -282,4 +282,4 @@ DEFINE_TYPE_IN(respective_xor_type, s3p_int64_t, s3p_xor_uint64_t)
 
 } /* namespace sharemind */
 
-#endif /* MOD_SHARED3P_EMU_VALUETRAITS_H */
+#endif /* MOD_SHARED3P_EMU_SHARED3PVALUETRAITS_H */

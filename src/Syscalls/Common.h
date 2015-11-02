@@ -26,10 +26,18 @@
 #include <sharemind/ExecutionModelEvaluator.h>
 #include <sharemind/ExecutionProfiler.h>
 #include <sharemind/libmodapi/api_0x1.h>
+#include <sharemind/SyscallsCommon.h>
 #include <sstream>
-#include "../ValueTraits.h"
+#include "../Shared3pValueTraits.h"
 
 namespace sharemind {
+
+/**
+ * \todo maintain unique indexes for all PDKs
+ */
+static constexpr size_t SHARED3P_EMU_INDEX = 0u;
+
+using VMHandles = PdpiVmHandles<SHARED3P_EMU_INDEX>;
 
 /**
  * Template to get stack value given shared value type.
@@ -82,112 +90,6 @@ inline sf_float32 getStack<s3p_float32_t>(const SharemindCodeBlock & arg)
 template <>
 inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
 { return arg.float64[0]; }
-
-/**
- * Basic syscall parameter verification.
- */
-template < const size_t NumArgs
-         , const bool   NeedReturnValue = false
-         , const size_t NumRefs = 0u
-         , const size_t NumCRefs = 0u
-         >
-struct __attribute__ ((visibility("internal"))) SyscallArgs {
-    template <class T>
-    static inline size_t countRefs(const T * refs) {
-        if (!refs)
-            return 0u;
-
-        assert(refs->pData);
-        size_t r = 1u;
-        while ((++refs)->pData)
-            r++;
-        return r;
-    }
-
-    static inline bool check(const size_t num_args,
-                             const SharemindModuleApi0x1Reference * const refs,
-                             const SharemindModuleApi0x1CReference * const crefs,
-                             const SharemindCodeBlock * const returnValue)
-    {
-        if (num_args != NumArgs)
-            return false;
-
-        if (NeedReturnValue && !returnValue)
-            return false;
-
-        if (countRefs(refs) != NumRefs)
-            return false;
-
-        if (countRefs(crefs) != NumCRefs)
-            return false;
-
-        return true;
-    }
-};
-
-/**
- * Virtual machine handle representation. Validates that the handle is correct.
- */
-class __attribute__ ((visibility("internal"))) VMHandles
-        : public SharemindModuleApi0x1PdpiInfo
-{
-public: /* Methods: */
-    VMHandles() {
-        pdpiHandle = 0;
-        pdHandle = 0;
-        pdkIndex = 0u;
-        moduleHandle = 0;
-    }
-
-
-    inline bool get(SharemindModuleApi0x1SyscallContext * c,
-                    SharemindCodeBlock * args, size_t index = 0)
-    {
-        assert(c != 0 && args != 0);
-
-        const size_t SHARED3P_INDEX = 0u;
-
-        const SharemindModuleApi0x1PdpiInfo * pdpiInfo =
-                (*(c->get_pdpi_info))(c, args[index].uint64[0]);
-        if (!pdpiInfo) {
-            fprintf(stderr, "get_pd_process_instance_handle (%" PRIu64 ")\n",
-                    args[index].uint64[0]);
-            return false;
-        }
-
-        if (pdpiInfo->pdkIndex != SHARED3P_INDEX            // or wrong pdk is returned
-            || pdpiInfo->moduleHandle != c->moduleHandle)   // or module handle pointers mismatch
-        {
-            return false;
-        }
-
-        assert(pdpiInfo->pdpiHandle);
-
-        SharemindModuleApi0x1PdpiInfo::operator = (*pdpiInfo);
-
-        return true;
-    }
-};
-
-/**
- * Centralized exception handling.
- */
-inline SharemindModuleApi0x1Error catchModuleApiErrors() noexcept
-        __attribute__ ((visibility("internal")));
-
-inline SharemindModuleApi0x1Error catchModuleApiErrors() noexcept {
-    try {
-        if (const auto eptr = std::current_exception()) {
-            std::rethrow_exception(eptr);
-        } else {
-            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-        }
-    } catch (const std::bad_alloc &) {
-        return SHAREMIND_MODULE_API_0x1_OUT_OF_MEMORY;
-    } catch (...) {
-        return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
-    }
-}
 
 /**
  * Macros for defining named syscalls and their wrappers
