@@ -32,6 +32,7 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
     : m_configuration(module.logger())
     , m_name(pdName)
     , m_profiler(module.profiler())
+    , m_rng {make_cxx_random_engine()}
 {
     if (!m_configuration.load(pdConfiguration))
         throw ConfigurationException();
@@ -43,9 +44,6 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
     } catch (const ExecutionModelEvaluator::ConfigurationException &) {
         throw ConfigurationException();
     }
-
-    m_rng.reset(new CxxRandomEngine);
-    m_rng->Seed();
 }
 
 Shared3pPD::~Shared3pPD() noexcept = default;

@@ -24,7 +24,7 @@
 #include <cstdint>
 #include <iterator>
 #include <sharemind/static_assert.h>
-#include <sharemind/Random/IRandom.h>
+#include <sharemind/Random/RandomEngine.h>
 #include <vector>
 #include "BitVector.h"
 #include "Shared3pValueTraits.h"
@@ -397,7 +397,7 @@ public: /* Methods: */
     }
 
 
-    inline void randomize(IRandom & rng) {
+    inline void randomize(RandomEngine & rng) {
         if (!empty()) {
             rng.fillBlock(begin_ptr (), end_ptr ());
         }
@@ -488,7 +488,7 @@ public: /* Methods: */
         m_vector.clear_and_release ();
     }
 
-    inline void randomize (IRandom& rng) { m_vector.randomize (rng); }
+    inline void randomize (RandomEngine& rng) { m_vector.randomize (rng); }
 
     s3p_vec& operator &= (const s3p_vec& other) { m_vector &= other.m_vector; return *this; }
     s3p_vec& operator ^= (const s3p_vec& other) { m_vector ^= other.m_vector; return *this; }

@@ -22,6 +22,7 @@
 
 #include <memory>
 #include <sharemind/Exception.h>
+#include <sharemind/Random/RandomEngine.h>
 #include "Shared3pConfiguration.h"
 
 
@@ -29,7 +30,6 @@ namespace sharemind {
 
 class ExecutionProfiler;
 class ExecutionModelEvaluator;
-class IRandom;
 class Shared3pModule;
 
 class __attribute__ ((visibility("internal"))) Shared3pPD {
@@ -68,11 +68,11 @@ public: /* Methods: */
     inline const ExecutionProfiler & profiler() const noexcept
     { return m_profiler; }
 
-    inline IRandom & rng() noexcept
-    { return *m_rng; }
+    inline RandomEngine & rng() noexcept
+    { return m_rng; }
 
-    inline const IRandom & rng() const noexcept
-    { return *m_rng; }
+    inline const RandomEngine & rng() const noexcept
+    { return m_rng; }
 
     inline const std::string & name() const noexcept
     { return m_name; }
@@ -85,7 +85,7 @@ private: /* Fields: */
     ExecutionProfiler & m_profiler;
 
     std::unique_ptr<ExecutionModelEvaluator> m_modelEvaluator;
-    std::unique_ptr<IRandom> m_rng;
+    RandomEngine m_rng;
 
 }; /* class Shared3pPD { */
 

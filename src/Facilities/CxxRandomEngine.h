@@ -20,26 +20,11 @@
 #ifndef MOD_SHARED3P_EMU_CXXRANDOMENGINE_H
 #define MOD_SHARED3P_EMU_CXXRANDOMENGINE_H
 
-#include <random>
-#include <sharemind/Random/IRandom.h>
+#include <sharemind/Random/librandom.h>
 
 namespace sharemind {
 
-class CxxRandomEngine : public IRandom {
-public: /* Methods */
-
-    virtual void Seed() noexcept;
-
-    virtual void Seed (const void* memptr, size_t size) noexcept;
-
-    virtual void fillBytes (void* memptr, size_t size) noexcept;
-
-private: /* Fields */
-
-    std::default_random_engine m_rng;
-    std::uniform_int_distribution<uint8_t> m_dist;
-
-}; /* class CxxRandomEngine { */
+SharemindRandomEngine* make_cxx_random_engine();
 
 } /* namespace sharemind { */
 

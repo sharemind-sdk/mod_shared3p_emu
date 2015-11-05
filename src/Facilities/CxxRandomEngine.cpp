@@ -17,27 +17,66 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
+#include <cassert>
 #include <random>
+
 #include "CxxRandomEngine.h"
+
+using namespace sharemind;
+
+namespace /* anonymouse */ {
+
+extern "C" {
+void CxxRandomEngine_fill_bytes(SharemindRandomEngine* rng_, void * memptr_, size_t size);
+void CxxRandomEngine_free(SharemindRandomEngine* rng_);
+}
+
+class CxxRandomEngine : public SharemindRandomEngine {
+public: /* Methods */
+
+    inline CxxRandomEngine()
+        : SharemindRandomEngine {
+              CxxRandomEngine_fill_bytes,
+              CxxRandomEngine_free
+          }
+    {
+        std::random_device rd;
+        m_rng.seed(rd());
+    }
+
+    inline static CxxRandomEngine& fromWrapper(SharemindRandomEngine& base) noexcept {
+        return static_cast<CxxRandomEngine&>(base);
+    }
+
+public: /* Fields */
+    std::default_random_engine m_rng;
+    std::uniform_int_distribution<uint8_t> m_dist;
+}; /* class CxxRandomEngine { */
+
+extern "C"
+void CxxRandomEngine_fill_bytes(SharemindRandomEngine* rng_, void * memptr_, size_t size) {
+    assert (rng_ != nullptr);
+    auto& rng = CxxRandomEngine::fromWrapper(*rng_).m_rng;
+    auto& dist = CxxRandomEngine::fromWrapper(*rng_).m_dist;
+    auto mem = static_cast<uint8_t*>(memptr_);
+    for (size_t i = 0; i < size; ++i) {
+        mem[i] = dist(rng);
+    }
+}
+
+extern "C"
+void CxxRandomEngine_free(SharemindRandomEngine* rng_) {
+    if (rng_ != nullptr) {
+        delete &CxxRandomEngine::fromWrapper(*rng_);
+    }
+}
+
+} /* namespace anonymous { */
 
 namespace sharemind {
 
-void CxxRandomEngine::Seed () noexcept {
-    std::random_device rd;
-    m_rng.seed(rd());
-}
-
-void CxxRandomEngine::Seed (const void* memptr, size_t size) noexcept {
-    const uint8_t *mem = static_cast<const uint8_t*>(memptr);
-    std::seed_seq seed(mem, mem + size);
-    m_rng.seed(seed);
-}
-
-void CxxRandomEngine::fillBytes (void* memptr, size_t size) noexcept {
-    uint8_t *mem = static_cast<uint8_t*>(memptr);
-    for (size_t i = 0; i < size; ++i) {
-        mem[i] = m_dist(m_rng);
-    }
+SharemindRandomEngine* make_cxx_random_engine() {
+    return new CxxRandomEngine {};
 }
 
 } /* namespace sharemind { */
