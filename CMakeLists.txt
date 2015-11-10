@@ -39,6 +39,7 @@ FIND_PACKAGE(Cryptopp REQUIRED)
 FIND_PACKAGE(LogHard REQUIRED)
 FIND_PACKAGE(SharemindCHeaders REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders REQUIRED)
+FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
 FIND_PACKAGE(SharemindLibmodapi REQUIRED)
@@ -50,6 +51,7 @@ INCLUDE_DIRECTORIES(
     ${LogHard_INCLUDE_DIRS}
     ${SharemindCHeaders_INCLUDE_DIRS}
     ${SharemindCxxHeaders_INCLUDE_DIRS}
+    ${SharemindLibEmulatorProtocols_INCLUDE_DIRS}
     ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
     ${SharemindLibmodapi_INCLUDE_DIRS}
@@ -61,6 +63,7 @@ ADD_DEFINITIONS(
     ${LogHard_DEFINITIONS}
     ${SharemindCHeaders_DEFINITIONS}
     ${SharemindCxxHeaders_DEFINITIONS}
+    ${SharemindLibEmulatorProtocols_DEFINITIONS}
     ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
     ${SharemindLibExecutionProfiler_DEFINITIONS}
     ${SharemindLibmodapi_DEFINITIONS}
@@ -95,9 +98,11 @@ SET(SHARED3P_EMU_HEADERS
     "src/Shared3pModule.h"
     "src/Shared3pPD.h"
     "src/Shared3pPDPI.h"
+    "src/ShareVector.h"
     "src/Syscalls/Common.h"
     "src/Syscalls/CRCSyscalls.h"
     "src/Syscalls/Meta.h"
+    "src/ValueTraits.h"
 )
 
 ADD_LIBRARY(sharemind_mod_shared3p_emu MODULE ${SHARED3P_EMU_SOURCES} ${SHARED3P_EMU_HEADERS})
