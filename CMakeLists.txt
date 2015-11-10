@@ -35,7 +35,6 @@ ADD_COMPILE_OPTIONS(
 )
 
 FIND_PACKAGE(Boost REQUIRED)
-FIND_PACKAGE(ExprTk REQUIRED)
 FIND_PACKAGE(Cryptopp REQUIRED)
 FIND_PACKAGE(LogHard REQUIRED)
 FIND_PACKAGE(SharemindCHeaders REQUIRED)
@@ -47,7 +46,6 @@ FIND_PACKAGE(SharemindLibsoftfloat REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloatMath REQUIRED)
 INCLUDE_DIRECTORIES(
     ${Boost_INCLUDE_DIRS}
-    ${ExprTk_INCLUDE_DIRS}
     ${CRYPTOPP_INCLUDE_DIRS}
     ${LogHard_INCLUDE_DIRS}
     ${SharemindCHeaders_INCLUDE_DIRS}
@@ -68,9 +66,6 @@ ADD_DEFINITIONS(
     ${SharemindLibmodapi_DEFINITIONS}
     ${SharemindLibsoftfloat_DEFINITIONS}
     ${SharemindLibsoftfloatMath_DEFINITIONS}
-    "-Dexprtk_disable_comments"
-    "-Dexprtk_disable_break_continue"
-    "-Dexprtk_disable_enhanced_features"
     "-D__STDC_LIMIT_MACROS"
     "-D__STDC_CONSTANT_MACROS"
     "-D__STDC_FORMAT_MACROS"
