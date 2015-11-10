@@ -242,22 +242,26 @@ inline SharemindModuleApi0x1Error catchModuleApiErrors() noexcept {
 #ifdef SHAREMIND_NETWORK_STATISTICS_ENABLE
 #define PROFILE_SYSCALL(profiler,evaluator,name,parameter) \
     do { \
+        static const uint32_t sectionTypeId = \
+            (profiler).newSectionType((name)); \
         sharemind::ExecutionModelEvaluator::Model * const timeModel = \
-            evaluator.model("TimeModel", name); \
+            (evaluator).model("TimeModel", (name)); \
         if (timeModel) \
-            (profiler).addSection((name), (parameter), 0u, \
-                    timeModel->evaluate(parameter), \
+            (profiler).addSection(sectionTypeId, (parameter), 0u, \
+                    timeModel->evaluate((parameter)), \
                     sharemind::MinerNetworkStatistics(), \
                     sharemind::MinerNetworkStatistics()); \
     } while (false)
 #else
 #define PROFILE_SYSCALL(profiler,evaluator,name,parameter) \
     do { \
+        static const uint32_t sectionTypeId = \
+            (profiler).newSectionType((name)); \
         sharemind::ExecutionModelEvaluator::Model * const timeModel = \
-            evaluator.model("TimeModel", name); \
+            (evaluator).model("TimeModel", (name)); \
         if (timeModel) \
-            (profiler).addSection((name), (parameter), 0u, \
-                    timeModel->evaluate(parameter)); \
+            (profiler).addSection(sectionTypeId, (parameter), 0u, \
+                    timeModel->evaluate((parameter))); \
     } while (false)
 #endif
 
