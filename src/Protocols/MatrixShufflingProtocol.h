@@ -23,33 +23,37 @@
 #include <algorithm>
 #include <numeric>
 #include <random>
+#include "../ShareVector.h"
+#include "../Shared3pPDPI.h"
+#include "../ValueTraits.h"
+
 
 namespace sharemind {
 
 class __attribute__ ((visibility("internal"))) MatrixShufflingProtocol {
 public: /* Methods: */
 
-    MatrixShufflingProtocol(Shared3pPDPI &pdpi)
+    MatrixShufflingProtocol(Shared3pPDPI & pdpi)
         : m_pdpi(pdpi)
     { }
 
     template <typename T>
-    void invoke(s3p_vec<T> & inOut, const size_t rowSize,
-                const s3p_vec<s3p_uint8_t> & rand)
+    void invoke(share_vec<T> & inOut, const size_t rowSize,
+                const share_vec<s3p_uint8_t> & rand)
     {
         invoke(inOut, rowSize, rand, true);
     }
 
     template <typename T>
-    void invokeInverse(s3p_vec<T> & inOut, const size_t rowSize,
-                       const s3p_vec<s3p_uint8_t> & rand)
+    void invokeInverse(share_vec<T> & inOut, const size_t rowSize,
+                       const share_vec<s3p_uint8_t> & rand)
     {
         invoke(inOut, rowSize, rand, false);
     }
 
     template <typename T>
-    void invoke(s3p_vec<T> & inOut, const size_t rowSize) {
-        s3p_vec<s3p_uint8_t> rand(32);
+    void invoke(share_vec<T> & inOut, const size_t rowSize) {
+        share_vec<s3p_uint8_t> rand(32);
         rand.randomize(m_pdpi.rng());
         invoke(inOut, rowSize, rand, false);
     }
@@ -57,8 +61,8 @@ public: /* Methods: */
 private: /* Methods: */
 
     template <typename T>
-    void invoke(s3p_vec<T> & inOut, const size_t rowSize,
-                 const s3p_vec<s3p_uint8_t> & rand, bool dir)
+    void invoke(share_vec<T> & inOut, const size_t rowSize,
+                 const share_vec<s3p_uint8_t> & rand, bool dir)
     {
         std::vector<size_t> permut(inOut.size() / rowSize);
         getPermutationMatrix(permut, rand);
@@ -66,7 +70,7 @@ private: /* Methods: */
     }
 
     void getPermutationMatrix(std::vector<size_t> & perm,
-                              const s3p_vec<s3p_uint8_t> & key)
+                              const share_vec<s3p_uint8_t> & key)
     {
         std::default_random_engine rng;
         std::seed_seq seed(key.begin(), key.end());
@@ -76,10 +80,10 @@ private: /* Methods: */
     }
 
     template <typename T>
-    void shuffle(s3p_vec<T> & inOut, const size_t rowSize,
+    void shuffle(share_vec<T> & inOut, const size_t rowSize,
                  const std::vector<size_t> & perm, bool dir)
     {
-        s3p_vec<T> copy;
+        share_vec<T> copy;
         copy.assign(inOut);
         for (size_t i = 0; i < perm.size(); ++i) {
             size_t to, from;

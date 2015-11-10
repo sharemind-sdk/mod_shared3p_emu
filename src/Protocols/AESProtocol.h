@@ -22,12 +22,14 @@
 
 #include <algorithm>
 #include <cryptopp/aes.h>
-#include "../Shared3pValueTraits.h"
+#include "../ShareVector.h"
+#include "../ValueTraits.h"
+
 
 namespace sharemind {
 
 typedef s3p_xor_uint32_t::share_type AES_share_t;
-typedef s3p_vec<s3p_xor_uint32_t> AES_share_vec_t;
+typedef share_vec<s3p_xor_uint32_t> AES_share_vec_t;
 
 /** Endianess swapping routine. */
 static inline AES_share_t EndianessSwap(const AES_share_t v) {

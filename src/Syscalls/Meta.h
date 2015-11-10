@@ -20,11 +20,11 @@
 #ifndef MOD_SHARED3P_EMU_SYSCALLS_META_H
 #define MOD_SHARED3P_EMU_SYSCALLS_META_H
 
+#include <sharemind/libemulator_protocols/VmVector.h>
 #include <sharemind/libmodapi/api_0x1.h>
 
 #include "Common.h"
 #include "../Shared3pPDPI.h"
-#include "../VMReferences.h"
 
 
 /**
@@ -69,12 +69,12 @@ NAMED_SYSCALL(binary_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const s3p_vec<T1> & param1 = *static_cast<s3p_vec<T1>*>(lhsHandle);
-        const s3p_vec<T2> & param2 = *static_cast<s3p_vec<T2>*>(rhsHandle);
-        s3p_vec<T3> & result = *static_cast<s3p_vec<T3>*>(resultHandle);
+        const share_vec<T1> & param1 = *static_cast<share_vec<T1>*>(lhsHandle);
+        const share_vec<T2> & param2 = *static_cast<share_vec<T2>*>(rhsHandle);
+        share_vec<T3> & result = *static_cast<share_vec<T3>*>(resultHandle);
 
         Protocol protocol(*pdpi);
-        if (!protocol.invoke(param1, param2, result, typename value_traits<T1>::value_category()))
+        if (!protocol.invoke(param1, param2, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
         PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
@@ -119,12 +119,12 @@ NAMED_SYSCALL(binary_public_vec, name, args, num_args, refs, crefs, returnValue,
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const s3p_vec<T1> & param1 = *static_cast<s3p_vec<T1>*>(lhsHandle);
+        const share_vec<T1> & param1 = *static_cast<share_vec<T1>*>(lhsHandle);
         const immutable_vm_vec<T2> param2(crefs[0u]);
-        s3p_vec<T3> & result = *static_cast<s3p_vec<T3>*>(resultHandle);
+        share_vec<T3> & result = *static_cast<share_vec<T3>*>(resultHandle);
 
         Protocol protocol(*pdpi);
-        if (!protocol.invoke(param1, param2, result, typename value_traits<T1>::value_category()))
+        if (!protocol.invoke(param1, param2, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
         PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
@@ -200,11 +200,11 @@ NAMED_SYSCALL(unary_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const s3p_vec<T>& param = *static_cast<s3p_vec<T>*>(paramHandle);
-        s3p_vec<L>& result = *static_cast<s3p_vec<L>*>(resultHandle);
+        const share_vec<T>& param = *static_cast<share_vec<T>*>(paramHandle);
+        share_vec<L>& result = *static_cast<share_vec<L>*>(resultHandle);
 
         Protocol protocol(*pdpi);
-        if (!protocol.invoke(param, result, typename value_traits<T>::value_category()))
+        if (!protocol.invoke(param, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
         PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
@@ -258,7 +258,7 @@ NAMED_SYSCALL(nullary_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        s3p_vec<T> & result = *static_cast<s3p_vec<T>*>(resultHandle);
+        share_vec<T> & result = *static_cast<share_vec<T>*>(resultHandle);
 
         if (!Protocol(*pdpi).invoke(result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
@@ -312,13 +312,13 @@ NAMED_SYSCALL(ternary_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        const s3p_vec<T1> & param1 = *static_cast<s3p_vec<T1>*>(param1Handle);
-        const s3p_vec<T2> & param2 = *static_cast<s3p_vec<T2>*>(param2Handle);
-        const s3p_vec<T3> & param3 = *static_cast<s3p_vec<T3>*>(param3Handle);
-        s3p_vec<T4> & result = *static_cast<s3p_vec<T4>*>(resultHandle);
+        const share_vec<T1> & param1 = *static_cast<share_vec<T1>*>(param1Handle);
+        const share_vec<T2> & param2 = *static_cast<share_vec<T2>*>(param2Handle);
+        const share_vec<T3> & param3 = *static_cast<share_vec<T3>*>(param3Handle);
+        share_vec<T4> & result = *static_cast<share_vec<T4>*>(resultHandle);
 
         Protocol protocol(*pdpi);
-        if (!protocol.invoke(param1, param2, param3, result, typename value_traits<T1>::value_category()))
+        if (!protocol.invoke(param1, param2, param3, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
         PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,

@@ -20,8 +20,9 @@
 #ifndef MOD_SHARED3P_EMU_PROTOCOLS_CRCPROTOCOL_H
 #define MOD_SHARED3P_EMU_PROTOCOLS_CRCPROTOCOL_H
 
-#include "../Shared3pValueTraits.h"
-#include "../Shared3pVector.h"
+#include "../ShareVector.h"
+#include "../ValueTraits.h"
+
 
 namespace sharemind {
 
@@ -52,7 +53,7 @@ class __attribute__ ((visibility("internal"))) CRCProtocolBase {
 
 public: /* Methods: */
 
-    bool invoke(const s3p_vec<s3p_xor_uint8_t> & src,
+    bool invoke(const share_vec<s3p_xor_uint8_t> & src,
                 typename CRCModeInfo<mode>::share_type & dest)
     {
         typedef typename CRCModeInfo<mode>::share_type share_type;
