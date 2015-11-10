@@ -85,6 +85,7 @@ SET(SHARED3P_EMU_SOURCES
     "src/Shared3pModule.cpp"
     "src/Shared3pPD.cpp"
     "src/Shared3pPDPI.cpp"
+    "src/Syscalls/AESSyscalls.cpp"
     "src/Syscalls/CRCSyscalls.cpp"
 )
 
@@ -101,8 +102,11 @@ SET(SHARED3P_EMU_HEADERS
     "src/Shared3pPD.h"
     "src/Shared3pPDPI.h"
     "src/ShareVector.h"
+    "src/Syscalls/AESSyscalls.h"
+    "src/Syscalls/BaseSyscalls.h"
     "src/Syscalls/Common.h"
     "src/Syscalls/CRCSyscalls.h"
+    "src/Syscalls/MatrixShufflingSyscalls.h"
     "src/Syscalls/Meta.h"
     "src/ValueTraits.h"
 )
