@@ -88,13 +88,9 @@ SET(SHARED3P_EMU_SOURCES
 SET(SHARED3P_EMU_HEADERS
     "src/Facilities/CxxRandomEngine.h"
     "src/Protocols/AESProtocol.h"
-    "src/Protocols/Binary.h"
     "src/Protocols/CRCProtocol.h"
     "src/Protocols/MatrixShufflingProtocol.h"
-    "src/Protocols/Nullary.h"
     "src/Protocols/SoftFloatUtility.h"
-    "src/Protocols/Ternary.h"
-    "src/Protocols/Unary.h"
     "src/Shared3pConfiguration.h"
     "src/Shared3pModule.h"
     "src/Shared3pPD.h"
