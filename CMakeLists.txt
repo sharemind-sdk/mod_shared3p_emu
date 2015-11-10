@@ -86,7 +86,6 @@ SET(SHARED3P_EMU_SOURCES
 )
 
 SET(SHARED3P_EMU_HEADERS
-    "src/BitVector.h"
     "src/Facilities/CxxRandomEngine.h"
     "src/Protocols/AESProtocol.h"
     "src/Protocols/Binary.h"
@@ -100,13 +99,9 @@ SET(SHARED3P_EMU_HEADERS
     "src/Shared3pModule.h"
     "src/Shared3pPD.h"
     "src/Shared3pPDPI.h"
-    "src/Shared3pValueHeap.h"
-    "src/Shared3pValueTraits.h"
-    "src/Shared3pVector.h"
     "src/Syscalls/Common.h"
     "src/Syscalls/CRCSyscalls.h"
     "src/Syscalls/Meta.h"
-    "src/VMReferences.h"
 )
 
 ADD_LIBRARY(sharemind_mod_shared3p_emu MODULE ${SHARED3P_EMU_SOURCES} ${SHARED3P_EMU_HEADERS})
