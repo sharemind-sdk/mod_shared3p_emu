@@ -17,8 +17,8 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
-#ifndef MOD_ADDITIVE3P_CRCPROTOCOL_H
-#define MOD_ADDITIVE3P_CRCPROTOCOL_H
+#ifndef MOD_SHARED3P_EMU_PROTOCOLS_CRCPROTOCOL_H
+#define MOD_SHARED3P_EMU_PROTOCOLS_CRCPROTOCOL_H
 
 #include "../Shared3pValueTraits.h"
 #include "../Shared3pVector.h"
@@ -86,4 +86,4 @@ public: /* Methods: */
 
 } /* namespace sharemind */
 
-#endif /* MOD_ADDITIVE3P_CRCPROTOCOL_H */
+#endif /* MOD_SHARED3P_EMU_PROTOCOLS_CRCPROTOCOL_H */

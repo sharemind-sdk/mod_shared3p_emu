@@ -17,8 +17,8 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
-#ifndef MOD_ADDITIVE3P_SYSCALLS_CRCSYSCALLS_H
-#define MOD_ADDITIVE3P_SYSCALLS_CRCSYSCALLS_H
+#ifndef MOD_SHARED3P_EMU_SYSCALLS_CRCSYSCALLS_H
+#define MOD_SHARED3P_EMU_SYSCALLS_CRCSYSCALLS_H
 
 #include <sharemind/libmodapi/api_0x1.h>
 #include "Common.h"
@@ -43,4 +43,4 @@ NAMED_SYSCALL(crc_xor_vec, name, args, num_args, refs, crefs, returnValue, c)
 
 } /* namespace sharemind */
 
-#endif /* MOD_ADDITIVE3P_SYSCALLS_CRCSYSCALLS_H */
+#endif /* MOD_SHARED3P_EMU_SYSCALLS_CRCSYSCALLS_H */

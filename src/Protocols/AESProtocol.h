@@ -17,8 +17,8 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
-#ifndef MOD_SHARED3P_EMU_PROTOCOLS_AES_H
-#define MOD_SHARED3P_EMU_PROTOCOLS_AES_H
+#ifndef MOD_SHARED3P_EMU_PROTOCOLS_AESPROTOCOL_H
+#define MOD_SHARED3P_EMU_PROTOCOLS_AESPROTOCOL_H
 
 #include <algorithm>
 #include <cryptopp/aes.h>
@@ -116,4 +116,4 @@ void AesProtocol<Nk_, Nb_, Nr_>::processWithExpandedKey(const AES_share_vec_t & 
 
 } /* namespace sharemind { */
 
-#endif /* MOD_SHARED3P_EMU_PROTOCOLS_AES_H */
+#endif /* MOD_SHARED3P_EMU_PROTOCOLS_AESPROTOCOL_H */

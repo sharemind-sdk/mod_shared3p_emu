@@ -17,8 +17,8 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
-#ifndef MOD_ADDITIVE3P_SYSCALLS_COMMON_H
-#define MOD_ADDITIVE3P_SYSCALLS_COMMON_H
+#ifndef MOD_SHARED3P_EMU_SYSCALLS_COMMON_H
+#define MOD_SHARED3P_EMU_SYSCALLS_COMMON_H
 
 #include <inttypes.h>
 #include <sharemind/compiler-support/GccPR55015.h>
@@ -264,4 +264,4 @@ inline SharemindModuleApi0x1Error catchModuleApiErrors() noexcept {
 
 } /* namespace sharemind */
 
-#endif /* MOD_ADDITIVE3P_SYSCALLS_COMMON_H */
+#endif /* MOD_SHARED3P_EMU_SYSCALLS_COMMON_H */
