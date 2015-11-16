@@ -117,10 +117,10 @@ public: /* Methods: */
 
     template <typename T, typename U>
     typename std::enable_if<
-        is_any_value_tag<T>::value &&
-        ! is_float_value_tag<T>::value ||
-        is_any_value_tag<U>::value &&
-        ! is_float_value_tag<U>::value
+        (is_any_value_tag<T>::value &&
+        ! is_float_value_tag<T>::value) ||
+        (is_any_value_tag<U>::value &&
+        ! is_float_value_tag<U>::value)
     , bool>::type
     invoke(const ShareVec<T> & param,
            ShareVec<U> & result)
