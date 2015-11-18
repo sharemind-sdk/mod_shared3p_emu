@@ -114,7 +114,7 @@ inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
         SharemindCodeBlock * retVal, \
         SharemindModuleApi0x1SyscallContext * c) \
     { \
-        return __VA_ARGS__((#name), args, argc, refs, crefs, retVal, c); \
+        return __VA_ARGS__(("shared3p::" #name), args, argc, refs, crefs, retVal, c); \
     }
 
 #define NAMED_SYSCALL_DEFINITION(signature,fptr) \
@@ -129,7 +129,7 @@ inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
        SharemindModuleApi0x1SyscallContext * c) \
             -> SharemindModuleApi0x1Error \
     { \
-        return __VA_ARGS__((#name), args, argc, refs, crefs, retVal, c); \
+        return __VA_ARGS__(("shared3p::" #name), args, argc, refs, crefs, retVal, c); \
     };
 
 #define NAMED_SYSCALL_DEFINITION(signature,fptr) \
