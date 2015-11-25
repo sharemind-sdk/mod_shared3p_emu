@@ -42,7 +42,6 @@ FIND_PACKAGE(SharemindCxxHeaders REQUIRED)
 FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
-FIND_PACKAGE(SharemindLibRandom REQUIRED)
 FIND_PACKAGE(SharemindLibmodapi REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloat REQUIRED)
 FIND_PACKAGE(SharemindLibsoftfloatMath REQUIRED)
@@ -56,7 +55,6 @@ INCLUDE_DIRECTORIES(
     ${SharemindLibEmulatorProtocols_INCLUDE_DIRS}
     ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
-    ${SharemindLibRandom_INCLUDE_DIRS}
     ${SharemindLibmodapi_INCLUDE_DIRS}
     ${SharemindLibsoftfloat_INCLUDE_DIRS}
     ${SharemindLibsoftfloatMath_INCLUDE_DIRS}
@@ -70,7 +68,6 @@ ADD_DEFINITIONS(
     ${SharemindLibEmulatorProtocols_DEFINITIONS}
     ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
     ${SharemindLibExecutionProfiler_DEFINITIONS}
-    ${SharemindLibRandom_DEFINITIONS}
     ${SharemindLibmodapi_DEFINITIONS}
     ${SharemindLibsoftfloat_DEFINITIONS}
     ${SharemindLibsoftfloatMath_DEFINITIONS}
@@ -85,7 +82,6 @@ IF(SHAREMIND_NETWORK_STATISTICS)
 ENDIF(SHAREMIND_NETWORK_STATISTICS)
 
 SET(SHARED3P_EMU_SOURCES
-    "src/Facilities/CxxRandomEngine.cpp"
     "src/mod_shared3p_emu.cpp"
     "src/Shared3pConfiguration.cpp"
     "src/Shared3pModule.cpp"

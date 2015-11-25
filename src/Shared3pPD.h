@@ -22,7 +22,7 @@
 
 #include <memory>
 #include <sharemind/Exception.h>
-#include <sharemind/Random/RandomEngine.h>
+#include "Facilities/CxxRandomEngine.h"
 #include "Shared3pConfiguration.h"
 
 
@@ -68,10 +68,10 @@ public: /* Methods: */
     inline const ExecutionProfiler & profiler() const noexcept
     { return m_profiler; }
 
-    inline RandomEngine & rng() noexcept
+    inline CxxRandomEngine & rng() noexcept
     { return m_rng; }
 
-    inline const RandomEngine & rng() const noexcept
+    inline const CxxRandomEngine & rng() const noexcept
     { return m_rng; }
 
     inline const std::string & name() const noexcept
@@ -85,7 +85,7 @@ private: /* Fields: */
     ExecutionProfiler & m_profiler;
 
     std::unique_ptr<ExecutionModelEvaluator> m_modelEvaluator;
-    RandomEngine m_rng;
+    CxxRandomEngine m_rng;
 
 }; /* class Shared3pPD { */
 

@@ -29,7 +29,7 @@ namespace sharemind {
 
 class ExecutionModelEvaluator;
 class ExecutionProfiler;
-class RandomEngine;
+class CxxRandomEngine;
 class Shared3pConfiguration;
 
 class __attribute__ ((visibility("internal"))) Shared3pPDPI {
@@ -57,10 +57,10 @@ public: /* Methods: */
     inline const ExecutionProfiler & profiler() const noexcept
     { return m_profiler; }
 
-    inline RandomEngine & rng() noexcept
+    inline CxxRandomEngine & rng() noexcept
     { return m_rng; }
 
-    inline const RandomEngine & rng() const noexcept
+    inline const CxxRandomEngine & rng() const noexcept
     { return m_rng; }
 
     template <typename T>
@@ -86,7 +86,7 @@ private: /* Fields: */
     ExecutionModelEvaluator & m_modelEvaluator;
     ExecutionProfiler & m_profiler;
 
-    RandomEngine & m_rng;
+    CxxRandomEngine & m_rng;
 
     SharedValueHeap m_heap;
 
