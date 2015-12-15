@@ -230,9 +230,7 @@ public: /* Methods: */
             return false;
 
         for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_ceil(param[i]);
-            const auto iv = sf_float_to_int(rv.result);
-            result[i] = iv.result;
+            result[i] = sf_float_ceil(param[i]).result;
         }
 
         return true;
@@ -273,9 +271,7 @@ public: /* Methods: */
             return false;
 
         for (size_t i = 0u; i < param.size(); ++i) {
-            const auto rv = sf_float_floor(param[i]);
-            const auto iv = sf_float_to_int(rv.result);
-            result[i] = iv.result;
+            result[i] = sf_float_floor(param[i]).result;
         }
 
         return true;
