@@ -35,8 +35,8 @@ class __attribute__ ((visibility("internal"))) ShareVec <s3p_bool_t> : public Bi
 public: /* Methods: */
 
     SHAREMIND_GCC_INHERITED_CONSTRUCTOR(ShareVec,
-                                        BitShareVec<s3p_bool_t>,
-                                        BitShareVec)
+                                        BitShareVec,
+                                        BitShareVec<s3p_bool_t>)
 
     template <typename T>
     inline void assignBits (const ShareVec<T>& vec) {
