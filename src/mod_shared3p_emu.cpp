@@ -36,6 +36,7 @@
 #include "Syscalls/BaseSyscalls.h"
 #include "Syscalls/Common.h"
 #include "Syscalls/CRCSyscalls.h"
+#include "Syscalls/MatrixMultiplicationSyscalls.h"
 #include "Syscalls/MatrixShufflingSyscalls.h"
 #include "Syscalls/Meta.h"
 
@@ -801,6 +802,14 @@ NAMED_SYSCALL_WRAPPER(matshufkey_float32_vec, matrix_shuffle<s3p_float32_t, true
 NAMED_SYSCALL_WRAPPER(matshufkey_float64_vec, matrix_shuffle<s3p_float64_t, true, false>)
 NAMED_SYSCALL_WRAPPER(matshufinv_float32_vec, matrix_shuffle<s3p_float32_t, true, true>)
 NAMED_SYSCALL_WRAPPER(matshufinv_float64_vec, matrix_shuffle<s3p_float64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(mat_mult_uint8_t, mat_mult<s3p_uint8_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_uint16_t, mat_mult<s3p_uint16_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_uint32_t, mat_mult<s3p_uint32_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_uint64_t, mat_mult<s3p_uint64_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_int8_t, mat_mult<s3p_uint8_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_int16_t, mat_mult<s3p_uint16_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_int32_t, mat_mult<s3p_uint32_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_int64_t, mat_mult<s3p_uint64_t>)
 
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
@@ -1576,6 +1585,15 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_float64_vec", matshufkey_float64_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_float32_vec", matshufinv_float32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_float64_vec", matshufinv_float64_vec)
+
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_uint8_vec", mat_mult_uint8_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_uint16_vec", mat_mult_uint16_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_uint32_vec", mat_mult_uint32_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_uint64_vec", mat_mult_uint64_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_int8_vec", mat_mult_int8_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_int16_vec", mat_mult_int16_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_int32_vec", mat_mult_int32_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_int64_vec", mat_mult_int64_t)
 
   /**
    *  Other functions

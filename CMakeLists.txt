@@ -96,6 +96,7 @@ SET(SHARED3P_EMU_HEADERS
     "src/Protocols/AESProtocol.h"
     "src/Protocols/Binary.h"
     "src/Protocols/CRCProtocol.h"
+    "src/Protocols/MatrixMultiplicationProtocol.h"
     "src/Protocols/MatrixShufflingProtocol.h"
     "src/Protocols/SoftFloatUtility.h"
     "src/Protocols/Unary.h"
@@ -109,6 +110,7 @@ SET(SHARED3P_EMU_HEADERS
     "src/Syscalls/BaseSyscalls.h"
     "src/Syscalls/Common.h"
     "src/Syscalls/CRCSyscalls.h"
+    "src/Syscalls/MatrixMultiplicationSyscalls.h"
     "src/Syscalls/MatrixShufflingSyscalls.h"
     "src/Syscalls/Meta.h"
 )
