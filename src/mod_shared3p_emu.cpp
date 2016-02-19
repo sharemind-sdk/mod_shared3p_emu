@@ -806,10 +806,10 @@ NAMED_SYSCALL_WRAPPER(mat_mult_uint8_t, mat_mult<s3p_uint8_t>)
 NAMED_SYSCALL_WRAPPER(mat_mult_uint16_t, mat_mult<s3p_uint16_t>)
 NAMED_SYSCALL_WRAPPER(mat_mult_uint32_t, mat_mult<s3p_uint32_t>)
 NAMED_SYSCALL_WRAPPER(mat_mult_uint64_t, mat_mult<s3p_uint64_t>)
-NAMED_SYSCALL_WRAPPER(mat_mult_int8_t, mat_mult<s3p_uint8_t>)
-NAMED_SYSCALL_WRAPPER(mat_mult_int16_t, mat_mult<s3p_uint16_t>)
-NAMED_SYSCALL_WRAPPER(mat_mult_int32_t, mat_mult<s3p_uint32_t>)
-NAMED_SYSCALL_WRAPPER(mat_mult_int64_t, mat_mult<s3p_uint64_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_int8_t, mat_mult<s3p_int8_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_int16_t, mat_mult<s3p_int16_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_int32_t, mat_mult<s3p_int32_t>)
+NAMED_SYSCALL_WRAPPER(mat_mult_int64_t, mat_mult<s3p_int64_t>)
 
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
