@@ -29,7 +29,6 @@ FIND_PATH(
 FIND_LIBRARY(
     CRYPTOPP_LIBRARY
     NAMES
-        libcrypto++.a
         cryptopp
         crypto++
     HINTS
