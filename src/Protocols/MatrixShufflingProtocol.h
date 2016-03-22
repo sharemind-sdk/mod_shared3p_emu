@@ -83,7 +83,7 @@ private: /* Methods: */
     void shuffle(ShareVec<T> & inOut, const size_t rowSize,
                  const std::vector<size_t> & perm, bool dir)
     {
-        ShareVec<T> copy;
+        ShareVec<T> copy (inOut.size());
         copy.assign(inOut);
         for (size_t i = 0; i < perm.size(); ++i) {
             size_t to, from;
