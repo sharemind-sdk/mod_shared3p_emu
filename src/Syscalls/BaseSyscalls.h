@@ -632,6 +632,93 @@ NAMED_SYSCALL(store_vec, name, args, num_args, refs, crefs, returnValue, c)
     }
 }
 
+template <typename T>
+NAMED_SYSCALL(scatter, name, args, num_args, refs, crefs, returnValue, c)
+{
+    VMHandles handles;
+    if (!SyscallArgs<3, false, 0, 1>::check(num_args, refs, crefs, returnValue) ||
+        !handles.get(c, args))
+    {
+        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
+    }
+    
+    try {
+        Shared3pPDPI* const pdpi = static_cast<Shared3pPDPI*>(handles.pdpiHandle);
+        void* const srcHandle = args[1].p[0];
+        void* const destHandle = args[2].p[0];
+
+        if (! pdpi->isValidHandle<T>(srcHandle) ||
+                ! pdpi->isValidHandle<T>(destHandle)) {
+            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+        }
+
+        const ShareVec<T>& src = *static_cast<const ShareVec<T> *>(srcHandle);
+        ShareVec<T>& dest = *static_cast<ShareVec<T> *>(destHandle);
+        const ImmutableVmVec<s3p_uint64_t> indices (crefs[0]);
+
+        if (src.size() != indices.size())
+            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+
+        const size_t resultSize = dest.size();
+        for (size_t i = 0; i < src.size(); ++ i) {
+            if (indices[i] < resultSize)
+                dest[indices[i]] = src[i];
+            else
+                return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+        }
+
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name, src.size());
+
+        return SHAREMIND_MODULE_API_0x1_OK;
+    } catch (...) {
+        return catchModuleApiErrors ();
+    }
+}
+
+template <typename T>
+NAMED_SYSCALL(gather, name, args, num_args, refs, crefs, returnValue, c)
+{
+    VMHandles handles;
+    if (!SyscallArgs<3, false, 0, 1>::check(num_args, refs, crefs, returnValue) ||
+        !handles.get(c, args))
+    {
+        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
+    }
+
+    try {
+        Shared3pPDPI* const pdpi = static_cast<Shared3pPDPI*>(handles.pdpiHandle);
+        void* const srcHandle = args[1].p[0];
+        void* const destHandle = args[2].p[0];
+
+        if (! pdpi->isValidHandle<T>(srcHandle) ||
+                ! pdpi->isValidHandle<T>(destHandle)) {
+            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+        }
+
+        const ShareVec<T>& src = *static_cast<const ShareVec<T> *>(srcHandle);
+        ShareVec<T>& dest = *static_cast<ShareVec<T> *>(destHandle);
+        const ImmutableVmVec<s3p_uint64_t> indices (crefs[0]);
+
+        if (dest.size() != indices.size())
+            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+
+        const size_t vecSize = src.size();
+        for (size_t i = 0; i < dest.size(); ++ i) {
+            if (indices[i] < vecSize)
+                dest[i] = src[indices[i]];
+            else
+                return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+        }
+
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name, dest.size());
+
+        return SHAREMIND_MODULE_API_0x1_OK;
+    } catch (...) {
+        return catchModuleApiErrors ();
+    }
+}
+
+
 } /* namespace sharemind */
 
 #endif /* MOD_SHARED3P_EMU_SYSCALLS_CORESYSCALLS_H */
