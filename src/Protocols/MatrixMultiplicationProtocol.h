@@ -33,10 +33,6 @@ namespace sharemind {
 class __attribute__ ((visibility("internal"))) MatrixMultiplicationProtocol {
 public: /* Methods: */
 
-    MatrixMultiplicationProtocol(Shared3pPDPI & pdpi)
-        : m_pdpi(pdpi)
-    { }
-
     template <typename T>
     typename std::enable_if<is_integral_value_tag<T>::value, bool>::type
     invoke (const ShareVec<T>& mat1,
@@ -83,10 +79,6 @@ public: /* Methods: */
 
         return true;
     }
-
-private: /* Fields: */
-
-    Shared3pPDPI & m_pdpi;
 
 }; /* class MatrixMultiplicationProtocol { */
 

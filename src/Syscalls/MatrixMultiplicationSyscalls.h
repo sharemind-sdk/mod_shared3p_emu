@@ -77,7 +77,7 @@ NAMED_SYSCALL(mat_mult, name, args, num_args, refs, crefs, returnValue, c)
         if (mat1.size() != l1 || mat2.size() != l2 || result.size() != l3)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-        if (! MatrixMultiplicationProtocol(*pdpi).invoke(mat1, mat2, dim1, dim2, dim3, result))
+        if (! MatrixMultiplicationProtocol().invoke(mat1, mat2, dim1, dim2, dim3, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
         PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name, l1 + l2);
