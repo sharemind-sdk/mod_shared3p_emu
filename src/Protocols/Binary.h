@@ -430,7 +430,98 @@ public: /* Methods: */
         return true;
     }
 
+    template <typename T>
+    typename std::enable_if<is_integral_value_tag<T>::value, bool>::type
+    invoke(const ShareVec<T> & param1,
+           const ShareVec<T> & param2,
+           ShareVec<T> & result)
+    {
+        if (param1.size() > param2.size() || param1.size() != result.size())
+            return false;
+
+        constexpr const size_t n =
+            8u * sizeof(typename ValueTraits<T>::share_type);
+
+        for (size_t i = 0u; i < param1.size(); ++i) {
+            const auto val = param1[i];
+            const auto k = param2[i];
+
+            if (k < 0) {
+                if (static_cast<size_t>(-k) < n)
+                    result[i] = val >> (-k);
+            } else {
+                if (static_cast<size_t>(k) < n)
+                    result[i] = val << k;
+            }
+        }
+
+        return true;
+    }
+
 }; /* class LeftShiftProtocol { */
+
+class __attribute__ ((visibility("internal"))) RightShiftProtocol {
+public: /* Methods: */
+
+    RightShiftProtocol(Shared3pPDPI & pdpi) { (void) pdpi; }
+
+    template <typename T>
+    typename std::enable_if<is_integral_value_tag<T>::value, bool>::type
+    invoke(const ShareVec<T> & param1,
+           const ImmutableVmVec<s3p_int64_t> & param2,
+           ShareVec<T> & result)
+    {
+        if (param1.size() > param2.size() || param1.size() != result.size())
+            return false;
+
+        constexpr const size_t n =
+            8u * sizeof(typename ValueTraits<T>::share_type);
+
+        for (size_t i = 0u; i < param1.size(); ++i) {
+            const auto val = param1[i];
+            const auto k = param2[i];
+
+            if (k < 0) {
+                if (static_cast<size_t>(-k) < n)
+                    result[i] = val << (-k);
+            } else {
+                if (static_cast<size_t>(k) < n)
+                    result[i] = val >> k;
+            }
+        }
+
+        return true;
+    }
+
+    template <typename T>
+    typename std::enable_if<is_integral_value_tag<T>::value, bool>::type
+    invoke(const ShareVec<T> & param1,
+           const ShareVec<T> & param2,
+           ShareVec<T> & result)
+    {
+        if (param1.size() > param2.size() || param1.size() != result.size())
+            return false;
+
+        constexpr const size_t n =
+            8u * sizeof(typename ValueTraits<T>::share_type);
+
+        for (size_t i = 0u; i < param1.size(); ++i) {
+            const auto val = param1[i];
+            const auto k = param2[i];
+
+            if (k < 0) {
+                if (static_cast<size_t>(-k) < n)
+                    result[i] = val << (-k);
+            } else {
+                if (static_cast<size_t>(k) < n)
+                    result[i] = val >> k;
+            }
+        }
+
+        return true;
+    }
+
+}; /* class RightShiftProtocol { */
 
 template<>
 class __attribute__ ((visibility("internal"))) LessThanProtocol<Shared3pPDPI> {
