@@ -483,6 +483,10 @@ NAMED_SYSCALL_WRAPPER(mulc_int8_vec, binary_arith_public_vec<s3p_int8_t, Multipl
 NAMED_SYSCALL_WRAPPER(mulc_int16_vec, binary_arith_public_vec<s3p_int16_t, MultiplicationProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(mulc_int32_vec, binary_arith_public_vec<s3p_int32_t, MultiplicationProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(mulc_int64_vec, binary_arith_public_vec<s3p_int64_t, MultiplicationProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(sum_int8_sub_vec, binary_public_vec<s3p_int8_t, s3p_uint64_t, s3p_int8_t, SumProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(sum_int16_sub_vec, binary_public_vec<s3p_int16_t, s3p_uint64_t, s3p_int16_t, SumProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(sum_int32_sub_vec, binary_public_vec<s3p_int32_t, s3p_uint64_t, s3p_int32_t, SumProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(sum_int64_sub_vec, binary_public_vec<s3p_int64_t, s3p_uint64_t, s3p_int64_t, SumProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(eq_int8_vec, binary_vec<s3p_int8_t, s3p_int8_t, s3p_bool_t, EqualityProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(eq_int16_vec, binary_vec<s3p_int16_t, s3p_int16_t, s3p_bool_t, EqualityProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(eq_int32_vec, binary_vec<s3p_int32_t, s3p_int32_t, s3p_bool_t, EqualityProtocol<Shared3pPDPI>>)
@@ -1276,6 +1280,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::mulc_int16_vec", mulc_int16_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::mulc_int32_vec", mulc_int32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::mulc_int64_vec", mulc_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_int8_sub_vec", sum_int8_sub_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_int16_sub_vec", sum_int16_sub_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_int32_sub_vec", sum_int32_sub_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_int64_sub_vec", sum_int64_sub_vec)
 
   // Comparisons
   , NAMED_SYSCALL_DEFINITION("shared3p::eq_int8_vec",  eq_int8_vec)
