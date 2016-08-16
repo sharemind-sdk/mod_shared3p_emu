@@ -256,6 +256,10 @@ NAMED_SYSCALL_WRAPPER(modc_uint8_vec, binary_arith_public_vec<s3p_uint8_t, Remai
 NAMED_SYSCALL_WRAPPER(modc_uint16_vec, binary_arith_public_vec<s3p_uint16_t, RemainderProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(modc_uint32_vec, binary_arith_public_vec<s3p_uint32_t, RemainderProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(modc_uint64_vec, binary_arith_public_vec<s3p_uint64_t, RemainderProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(sum_uint8_sub_vec, binary_public_vec<s3p_uint8_t, s3p_uint64_t, s3p_uint8_t, SumProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(sum_uint16_sub_vec, binary_public_vec<s3p_uint16_t, s3p_uint64_t, s3p_uint16_t, SumProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(sum_uint32_sub_vec, binary_public_vec<s3p_uint32_t, s3p_uint64_t, s3p_uint32_t, SumProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(sum_uint64_sub_vec, binary_public_vec<s3p_uint64_t, s3p_uint64_t, s3p_uint64_t, SumProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(shift_left_uint8_vec, binary_arith_vec<s3p_uint8_t, LeftShiftProtocol>)
 NAMED_SYSCALL_WRAPPER(shift_left_uint16_vec, binary_arith_vec<s3p_uint16_t, LeftShiftProtocol>)
 NAMED_SYSCALL_WRAPPER(shift_left_uint32_vec, binary_arith_vec<s3p_uint32_t, LeftShiftProtocol>)
@@ -1023,6 +1027,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::modc_uint16_vec", modc_uint16_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::modc_uint32_vec", modc_uint32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::modc_uint64_vec", modc_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_uint8_sub_vec", sum_uint8_sub_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_uint16_sub_vec", sum_uint16_sub_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_uint32_sub_vec", sum_uint32_sub_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sum_uint64_sub_vec", sum_uint64_sub_vec)
 
     // Bitwise operations
   , NAMED_SYSCALL_DEFINITION("shared3p::shift_left_uint8_vec", shift_left_uint8_vec)

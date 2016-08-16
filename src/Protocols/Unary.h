@@ -612,6 +612,39 @@ public: /* Methods: */
         return true;
     }
 
+    template <typename T>
+    typename std::enable_if<is_integral_value_tag<T>::value, bool>::type
+    invoke(const ShareVec<T>& param,
+           const ImmutableVmVec<s3p_uint64_t>& ks,
+           ShareVec<T>& result)
+    {
+        if (result.size () != ks.size ())
+            return false;
+
+        size_t lenSum = 0u;
+
+        for (size_t k : ks)
+            lenSum += k;
+
+        if (lenSum != param.size ())
+            return false;
+
+        size_t off = 0;
+        typename ValueTraits<T>::share_type sum = 0;
+
+        for (size_t i = 0; i < ks.size (); i++) {
+            sum = 0;
+
+            for (size_t j = 0; j < ks[i]; j++) {
+                sum += param[off++];
+            }
+
+            result[i] = sum;
+        }
+
+        return true;
+    }
+
 }; /* class SumProtocol { */
 
 } /* namespace sharemind { */
