@@ -162,8 +162,10 @@ NAMED_SYSCALL_WRAPPER(conv_bool_to_float64_vec, unary_vec<s3p_bool_t, s3p_float6
 NAMED_SYSCALL_WRAPPER(randomize_bool_vec, nullary_vec<s3p_bool_t, RandomizeProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(vecshuf_bool_vec, vector_shuffle<s3p_bool_t, false, false>)
 NAMED_SYSCALL_WRAPPER(vecshufkey_bool_vec, vector_shuffle<s3p_bool_t, true, false>)
+NAMED_SYSCALL_WRAPPER(vecshufinv_bool_vec, vector_shuffle<s3p_bool_t, true, true>)
 NAMED_SYSCALL_WRAPPER(matshuf_bool_vec, matrix_shuffle<s3p_bool_t, false, false>)
 NAMED_SYSCALL_WRAPPER(matshufkey_bool_vec, matrix_shuffle<s3p_bool_t, true, false>)
+NAMED_SYSCALL_WRAPPER(matshufinv_bool_vec, matrix_shuffle<s3p_bool_t, true, true>)
 NAMED_SYSCALL_WRAPPER(new_uint8_vec, new_vec<s3p_uint8_t>)
 NAMED_SYSCALL_WRAPPER(new_uint16_vec, new_vec<s3p_uint16_t>)
 NAMED_SYSCALL_WRAPPER(new_uint32_vec, new_vec<s3p_uint32_t>)
@@ -351,6 +353,7 @@ NAMED_SYSCALL_WRAPPER(conv_uint16_to_float64_vec, unary_vec<s3p_uint16_t, s3p_fl
 NAMED_SYSCALL_WRAPPER(conv_uint32_to_float32_vec, unary_vec<s3p_uint32_t, s3p_float32_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_uint32_to_float64_vec, unary_vec<s3p_uint32_t, s3p_float64_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_uint64_to_float64_vec, unary_vec<s3p_uint64_t, s3p_float64_t, ConversionProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(conv_uint64_to_float32_vec, unary_vec<s3p_uint64_t, s3p_float32_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(bit_extract_xor_uint8_vec, unary_vec<s3p_xor_uint8_t, s3p_bool_t, BitExtractionProtocol>)
 NAMED_SYSCALL_WRAPPER(bit_extract_xor_uint16_vec, unary_vec<s3p_xor_uint16_t, s3p_bool_t, BitExtractionProtocol>)
 NAMED_SYSCALL_WRAPPER(bit_extract_xor_uint32_vec, unary_vec<s3p_xor_uint32_t, s3p_bool_t, BitExtractionProtocol>)
@@ -546,6 +549,7 @@ NAMED_SYSCALL_WRAPPER(conv_int16_to_float64_vec, unary_vec<s3p_int16_t, s3p_floa
 NAMED_SYSCALL_WRAPPER(conv_int32_to_float32_vec, unary_vec<s3p_int32_t, s3p_float32_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_int32_to_float64_vec, unary_vec<s3p_int32_t, s3p_float64_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_int64_to_float64_vec, unary_vec<s3p_int64_t, s3p_float64_t, ConversionProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(conv_int64_to_float32_vec, unary_vec<s3p_int64_t, s3p_float32_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(randomize_int8_vec, nullary_vec<s3p_int8_t, RandomizeProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(randomize_int16_vec, nullary_vec<s3p_int16_t, RandomizeProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(randomize_int32_vec, nullary_vec<s3p_int32_t, RandomizeProtocol<Shared3pPDPI>>)
@@ -638,6 +642,10 @@ NAMED_SYSCALL_WRAPPER(reshare_uint8_to_xor_uint8_vec, unary_vec<s3p_uint8_t, s3p
 NAMED_SYSCALL_WRAPPER(reshare_uint16_to_xor_uint16_vec, unary_vec<s3p_uint16_t, s3p_xor_uint16_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(reshare_uint32_to_xor_uint32_vec, unary_vec<s3p_uint32_t, s3p_xor_uint32_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(reshare_uint64_to_xor_uint64_vec, unary_vec<s3p_uint64_t, s3p_xor_uint64_t, ConversionProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(reshare_int8_to_xor_uint8_vec, unary_vec<s3p_int8_t, s3p_xor_uint8_t, ConversionProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(reshare_int16_to_xor_uint16_vec, unary_vec<s3p_int16_t, s3p_xor_uint16_t, ConversionProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(reshare_int32_to_xor_uint32_vec, unary_vec<s3p_int32_t, s3p_xor_uint32_t, ConversionProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(reshare_int64_to_xor_uint64_vec, unary_vec<s3p_int64_t, s3p_xor_uint64_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(xor_xor_uint8_vec, binary_arith_vec<s3p_xor_uint8_t, BitwiseXorProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(xor_xor_uint16_vec, binary_arith_vec<s3p_xor_uint16_t, BitwiseXorProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(xor_xor_uint32_vec, binary_arith_vec<s3p_xor_uint32_t, BitwiseXorProtocol<Shared3pPDPI>>)
@@ -929,8 +937,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
    // Database functions
    , NAMED_SYSCALL_DEFINITION("shared3p::vecshuf_bool_vec", vecshuf_bool_vec)
    , NAMED_SYSCALL_DEFINITION("shared3p::vecshufkey_bool_vec", vecshufkey_bool_vec)
+   , NAMED_SYSCALL_DEFINITION("shared3p::vecshufinv_bool_vec", vecshufinv_bool_vec)
    , NAMED_SYSCALL_DEFINITION("shared3p::matshuf_bool_vec", matshuf_bool_vec)
    , NAMED_SYSCALL_DEFINITION("shared3p::matshufkey_bool_vec", matshufkey_bool_vec)
+   , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_bool_vec", matshufinv_bool_vec)
 
   /**
    *  Additively shared unsigned integers
@@ -1133,6 +1143,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_float32_vec", conv_uint32_to_float32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint32_to_float64_vec", conv_uint32_to_float64_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_float64_vec", conv_uint64_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_uint64_to_float32_vec", conv_uint64_to_float32_vec)
 
   , NAMED_SYSCALL_DEFINITION("shared3p::bit_extract_xor_uint8_vec",  bit_extract_xor_uint8_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::bit_extract_xor_uint16_vec", bit_extract_xor_uint16_vec)
@@ -1350,6 +1361,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_float32_vec", conv_int32_to_float32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_int32_to_float64_vec", conv_int32_to_float64_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_float64_vec", conv_int64_to_float64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::conv_int64_to_float32_vec", conv_int64_to_float32_vec)
 
   // Utilities
   , NAMED_SYSCALL_DEFINITION("shared3p::randomize_int8_vec",  randomize_int8_vec)
@@ -1455,6 +1467,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::reshare_uint16_to_xor_uint16_vec", reshare_uint16_to_xor_uint16_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::reshare_uint32_to_xor_uint32_vec", reshare_uint32_to_xor_uint32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::reshare_uint64_to_xor_uint64_vec", reshare_uint64_to_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_int8_to_xor_uint8_vec", reshare_int8_to_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_int16_to_xor_uint16_vec", reshare_int16_to_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_int32_to_xor_uint32_vec", reshare_int32_to_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::reshare_int64_to_xor_uint64_vec", reshare_int64_to_xor_uint64_vec)
 
     // Bitwise operations on xor shared data
   , NAMED_SYSCALL_DEFINITION("shared3p::xor_xor_uint8_vec",  xor_xor_uint8_vec)
