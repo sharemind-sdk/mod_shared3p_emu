@@ -225,7 +225,7 @@ public: /* Methods: */
         if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param2.size(); ++i) {
+        for (size_t i = 0u; i < param1.size(); ++i) {
             if (param2[i] == 0x0)
                 return false;
         }
