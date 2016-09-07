@@ -165,13 +165,10 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param2.size(); ++i) {
-            if (param2[i] == 0)
-                return false;
+        for (size_t i = 0u; i < param1.size(); ++i) {
+            if (param2[i] != 0)
+                result[i] = param1[i] / param2[i];
         }
-
-        for (size_t i = 0u; i < param1.size(); ++i)
-            result[i] = param1[i] / param2[i];
 
         return true;
     }
@@ -185,13 +182,10 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param2.size(); ++i) {
-            if (param2[i] == 0x0)
-                return false;
+        for (size_t i = 0u; i < param1.size(); ++i) {
+            if (param2[i] != 0)
+                result[i] = sf_float_div(param1[i], param2[i]).result;
         }
-
-        for (size_t i = 0u; i < param1.size(); ++i)
-            result[i] = sf_float_div(param1[i], param2[i]).result;
 
         return true;
     }
@@ -769,13 +763,10 @@ public: /* Methods: */
         if (param1.size() != param2.size() || param1.size() != result.size())
             return false;
 
-        for (size_t i = 0u; i < param2.size(); ++i) {
-            if (param2[i] == 0)
-                return false;
+        for (size_t i = 0u; i < param1.size(); ++i) {
+            if (param2[i] != 0)
+                result[i] = param1[i] % param2[i];
         }
-
-        for (size_t i = 0u; i < param1.size(); ++i)
-            result[i] = param1[i] % param2[i];
 
         return true;
     }
