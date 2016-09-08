@@ -96,50 +96,50 @@ struct sf_result {
 template <typename T>
 sf_result<T> sf_float32_to_val(sf_float32 a, sf_fpu_state fpu = sf_fpu_state_default)
 {
-    auto rv = sf_float32_to_int32(a, fpu);
+    auto rv = sf_float32_to_int32_round_to_zero(a, fpu);
     return { static_cast<T>(rv.result), rv.fpu_state };
 }
 template <>
 sf_result<int64_t> sf_float32_to_val<int64_t>(sf_float32 a, sf_fpu_state fpu)
 {
-    auto rv = sf_float32_to_int64(a, fpu);
+    auto rv = sf_float32_to_int64_round_to_zero(a, fpu);
     return { rv.result, rv.fpu_state };
 }
 template <>
 sf_result<uint32_t> sf_float32_to_val<uint32_t>(sf_float32 a, sf_fpu_state fpu)
 {
-    auto rv = sf_float32_to_int64(a, fpu);
+    auto rv = sf_float32_to_int64_round_to_zero(a, fpu);
     return { static_cast<uint32_t>(rv.result), rv.fpu_state };
 }
 template <>
 sf_result<uint64_t> sf_float32_to_val<uint64_t>(sf_float32 a, sf_fpu_state fpu)
 {
-    auto rv = sf_float32_to_int64(a, fpu);
+    auto rv = sf_float32_to_int64_round_to_zero(a, fpu);
     return { static_cast<uint64_t>(rv.result), rv.fpu_state };
 }
 
 template <typename T>
 sf_result<T> sf_float64_to_val(sf_float64 a, sf_fpu_state fpu = sf_fpu_state_default)
 {
-    auto rv = sf_float64_to_int32(a, fpu);
+    auto rv = sf_float64_to_int64_round_to_zero(a, fpu);
     return { static_cast<T>(rv.result), rv.fpu_state };
 }
 template <>
 sf_result<int64_t> sf_float64_to_val(sf_float64 a, sf_fpu_state fpu)
 {
-    auto rv = sf_float64_to_int64(a, fpu);
+    auto rv = sf_float64_to_int64_round_to_zero(a, fpu);
     return { rv.result, rv.fpu_state };
 }
 template <>
 sf_result<uint32_t> sf_float64_to_val(sf_float64 a, sf_fpu_state fpu)
 {
-    auto rv = sf_float64_to_int64(a, fpu);
+    auto rv = sf_float64_to_int64_round_to_zero(a, fpu);
     return { static_cast<uint32_t>(rv.result), fpu };
 }
 template <>
 sf_result<uint64_t> sf_float64_to_val(sf_float64 a, sf_fpu_state fpu)
 {
-    auto rv = sf_float64_to_int64(a, fpu);
+    auto rv = sf_float64_to_int64_round_to_zero(a, fpu);
     return { static_cast<uint64_t>(rv.result), fpu };
 }
 
@@ -339,13 +339,13 @@ sf_result64f sf_float_sqrt(sf_float64 a,
 sf_result32i sf_float_to_int(sf_float32 a,
                              sf_fpu_state fpu = sf_fpu_state_default)
 {
-    return sf_float32_to_int32(a, fpu);
+    return sf_float32_to_int32_round_to_zero(a, fpu);
 }
 
 sf_result64i sf_float_to_int(sf_float64 a,
                              sf_fpu_state fpu = sf_fpu_state_default)
 {
-    return sf_float64_to_int64(a, fpu);
+    return sf_float64_to_int64_round_to_zero(a, fpu);
 }
 
 } /* namespace sharemind { */
