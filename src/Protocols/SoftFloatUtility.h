@@ -100,6 +100,11 @@ sf_result<T> sf_float32_to_val(sf_float32 a, sf_fpu_state fpu = sf_fpu_state_def
     return { static_cast<T>(rv.result), rv.fpu_state };
 }
 template <>
+sf_result<bool> sf_float32_to_val<bool>(sf_float32 a, sf_fpu_state fpu)
+{
+    return { (a & 0x7fffffff) != 0, fpu };
+}
+template <>
 sf_result<int64_t> sf_float32_to_val<int64_t>(sf_float32 a, sf_fpu_state fpu)
 {
     auto rv = sf_float32_to_int64_round_to_zero(a, fpu);
@@ -123,6 +128,11 @@ sf_result<T> sf_float64_to_val(sf_float64 a, sf_fpu_state fpu = sf_fpu_state_def
 {
     auto rv = sf_float64_to_int64_round_to_zero(a, fpu);
     return { static_cast<T>(rv.result), rv.fpu_state };
+}
+template <>
+sf_result<bool> sf_float64_to_val<bool>(sf_float64 a, sf_fpu_state fpu)
+{
+    return { (a & 0x7fffffffffffffff) != 0, fpu };
 }
 template <>
 sf_result<int64_t> sf_float64_to_val(sf_float64 a, sf_fpu_state fpu)
