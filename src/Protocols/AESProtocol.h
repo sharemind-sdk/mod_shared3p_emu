@@ -21,6 +21,7 @@
 #define MOD_SHARED3P_EMU_PROTOCOLS_AESPROTOCOL_H
 
 #include <algorithm>
+#include <array>
 #include <cryptopp/aes.h>
 #include "../Shared3pValueTraits.h"
 #include "../Shared3pVector.h"
@@ -105,16 +106,25 @@ protected: /* Types: */
 public: /* Methods: */
 
     /**
-      \brief Encrypts or decrypts the given data with the given pre-expanded key.
+      \brief Encrypts or decrypts the given data with the multiple given
+      pre-expanded keys.
       \param[in] plainText the input data.
-      \param[in] preExpandedKey the pre-expanded encryption/decryption key.
+      \param[in] preExpandedKey the pre-expanded encryption/decryption keys.
       \param[out] cipherText the output data.
-
-      \returns whether the encryption or decryption was successful.
     */
     void processWithExpandedKey(const AES_share_vec_t & plainText,
                                 const AES_share_vec_t & preExpandedKey,
                                 AES_share_vec_t & cipherText);
+
+    /**
+      \brief Encrypts or decrypts the given data with the given pre-expanded key.
+      \param[in] plainText the input data.
+      \param[in] preExpandedKey the pre-expanded encryption/decryption key.
+      \param[out] cipherText the output data.
+    */
+    void processWithSingleExpandedKey(const AES_share_vec_t & plainText,
+                                      const AES_share_vec_t & preExpandedKey,
+                                      AES_share_vec_t & cipherText);
 
     /**
       Expands the given AES key.
@@ -143,47 +153,55 @@ void AesProtocol<Nk_, Nb_, Nr_>::expandAesKey(const AES_share_vec_t & inKey,
     assert((outKey.size() % (Nb_ * (Nr_ + 1u))) == 0u);
     assert((inKey.size() / Nk_) == (outKey.size() / (Nb_ * (Nr_ + 1u))));
 
+    const size_t nkeys = inKey.size() / Nk_;
+
     // Based on: https://github.com/kokke/tiny-AES128-C
 
-    // The first round key is the key itself.
-    for (size_t i = 0u; i < Nk_; ++i) {
-        outKey[i] = inKey[i];
-    }
+    auto outIndex = [](size_t nkeys, size_t n, size_t i) noexcept {
+        return n * Nb_ + (i / Nb_) * Nb_ * nkeys + i % Nb_;
+    };
 
-    // All other round keys are found from the previous round keys.
-    for (size_t i = Nk_; i < (Nb_ * (Nr_ + 1)); ++i) {
-        uint32_t tmp = outKey[i - 1u];
-        if (i % Nk_ == 0u) {
-            // This function rotates the 4 bytes in a word to the left once.
-            // [a0,a1,a2,a3] becomes [a1,a2,a3,a0]
-
-            // Function RotWord()
-            {
-                tmp = ((tmp << 8u) & 0xffffff00) | ((tmp >> 24u) & 0xff);
-            }
-
-            // SubWord() is a function that takes a four-byte input word and
-            // applies the S-box to each of the four bytes to produce an output word.
-
-            // Function Subword()
-            {
-                tmp = static_cast<uint32_t>(sbox[static_cast<uint8_t>(tmp & 0xff)]) |
-                        static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 8u) & 0xff)]) << 8u |
-                        static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 16u) & 0xff)]) << 16u |
-                        static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 24u) & 0xff)]) << 24u;
-            }
-
-            tmp ^= 0xff000000 & static_cast<uint32_t>(rcon[i / Nk_]) << 24u;
-        } else if (Nk_ > 6u && i % Nk_ == 4u) {
-            // Function Subword()
-            {
-                tmp = static_cast<uint32_t>(sbox[static_cast<uint8_t>(tmp & 0xff)]) |
-                        static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 8u) & 0xff)]) << 8u |
-                        static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 16u) & 0xff)]) << 16u |
-                        static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 24u) & 0xff)]) << 24u;
-            }
+    for (size_t n = 0u; n < nkeys; ++n) {
+        // The first round key is the key itself.
+        for (size_t i = 0u; i < Nk_; ++i) {
+            outKey[outIndex(nkeys, n, i)] = inKey[n * Nk_ + i];
         }
-        outKey[i] = outKey[i - Nk_] ^ tmp;
+
+        // All other round keys are found from the previous round keys.
+        for (size_t i = Nk_; i < (Nb_ * (Nr_ + 1u)); ++i) {
+            uint32_t tmp = outKey[outIndex(nkeys, n, i - 1u)];
+            if (i % Nk_ == 0u) {
+                // This function rotates the 4 bytes in a word to the left once.
+                // [a0,a1,a2,a3] becomes [a1,a2,a3,a0]
+
+                // Function RotWord()
+                {
+                    tmp = ((tmp << 8u) & 0xffffff00) | ((tmp >> 24u) & 0xff);
+                }
+
+                // SubWord() is a function that takes a four-byte input word and
+                // applies the S-box to each of the four bytes to produce an output word.
+
+                // Function Subword()
+                {
+                    tmp = static_cast<uint32_t>(sbox[static_cast<uint8_t>(tmp & 0xff)]) |
+                            static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 8u) & 0xff)]) << 8u |
+                            static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 16u) & 0xff)]) << 16u |
+                            static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 24u) & 0xff)]) << 24u;
+                }
+
+                tmp ^= 0xff000000 & static_cast<uint32_t>(rcon[i / Nk_]) << 24u;
+            } else if (Nk_ > 6u && i % Nk_ == 4u) {
+                // Function Subword()
+                {
+                    tmp = static_cast<uint32_t>(sbox[static_cast<uint8_t>(tmp & 0xff)]) |
+                            static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 8u) & 0xff)]) << 8u |
+                            static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 16u) & 0xff)]) << 16u |
+                            static_cast<uint32_t>(sbox[static_cast<uint8_t>((tmp >> 24u) & 0xff)]) << 24u;
+                }
+            }
+            outKey[outIndex(nkeys, n, i)] = outKey[outIndex(nkeys, n, i - Nk_)] ^ tmp;
+        }
     }
 }
 
@@ -192,23 +210,69 @@ void AesProtocol<Nk_, Nb_, Nr_>::processWithExpandedKey(const AES_share_vec_t & 
                                                         const AES_share_vec_t & preExpandedKey,
                                                         AES_share_vec_t & cipherText)
 {
-    constexpr size_t KEYSIZE = Nk_ * 4;
-    uint8_t key[KEYSIZE];
-    std::memcpy(key, preExpandedKey.data(), KEYSIZE);
-    std::transform(preExpandedKey.begin(), preExpandedKey.begin() + Nk_, (uint32_t*)key, EndianessSwap);
+    assert(plainText.size() == cipherText.size());
+    assert(plainText.size() % Nb_ == 0u);
+    assert(preExpandedKey.size() % (Nb_ * (Nr_ + 1u)) == 0u);
+    assert(plainText.size() / Nb_ == preExpandedKey.size() / (Nb_ * (Nr_ + 1u)));
 
-    uint8_t pt[Nb_ * 4];
-    uint8_t ct[Nb_ * 4];
-    CryptoPP::AESEncryption enc(key, KEYSIZE);
-    auto i = plainText.begin();
-    auto j = cipherText.begin();
+    const size_t nblocks = plainText.size() / Nb_;
+    auto pit = plainText.cbegin();
+    auto cit = cipherText.begin();
+
+    auto keyIndex = [](size_t nblocks, size_t n, size_t i) noexcept {
+        return n * Nb_ + (i / Nb_) * Nb_ * nblocks + i % Nb_;
+    };
+
+    for (size_t n = 0u; n < nblocks; ++n) {
+        std::array<AES_share_vec_t::value_type, Nk_> key;
+        for (size_t i = 0u; i < Nk_; ++i) {
+            key[i] = preExpandedKey[keyIndex(nblocks, n, i)];
+        }
+        std::transform(key.cbegin(), key.cend(), key.begin(), EndianessSwap);
+
+        std::array<AES_share_vec_t::value_type, Nb_> pt;
+        std::array<AES_share_vec_t::value_type, Nb_> ct;
+        CryptoPP::AESEncryption enc(reinterpret_cast<uint8_t*>(key.data()),
+                                    Nk_ * sizeof(AES_share_vec_t::value_type));
+        std::transform(pit, pit + Nb_, pt.begin(), EndianessSwap);
+        enc.ProcessBlock(reinterpret_cast<uint8_t*>(pt.data()),
+                         reinterpret_cast<uint8_t*>(ct.data()));
+        std::transform(ct.cbegin(), ct.cend(), cit, EndianessSwap);
+
+        pit += Nb_;
+        cit += Nb_;
+    }
+}
+
+template<size_t Nk_, size_t Nb_, size_t Nr_>
+void AesProtocol<Nk_, Nb_, Nr_>::processWithSingleExpandedKey(const AES_share_vec_t & plainText,
+                                                              const AES_share_vec_t & preExpandedKey,
+                                                              AES_share_vec_t & cipherText)
+{
+    assert(plainText.size() == cipherText.size());
+    assert(plainText.size() % Nb_ == 0u);
+    assert(preExpandedKey.size() == (Nb_ * (Nr_ + 1u)));
+
+    std::array<AES_share_vec_t::value_type, Nk_> key;
+    std::transform(preExpandedKey.cbegin(), preExpandedKey.cend(), key.begin(),
+            EndianessSwap);
+
+    std::array<AES_share_vec_t::value_type, Nb_> pt;
+    std::array<AES_share_vec_t::value_type, Nb_> ct;
+    CryptoPP::AESEncryption enc(reinterpret_cast<uint8_t*>(key.data()),
+                                Nk_ * sizeof(AES_share_vec_t::value_type));
+
+    auto pit = plainText.cbegin();
+    auto cit = cipherText.begin();
     do {
-        std::transform(i, i+Nb_, (uint32_t*)pt, EndianessSwap);
-        enc.ProcessBlock(pt, ct);
-        std::transform((uint32_t*)ct, ((uint32_t*)ct)+Nb_, j, EndianessSwap);
-        i += Nb_;
-        j += Nb_;
-    } while (i != plainText.end() && j != cipherText.end());
+        std::transform(pit, pit + Nb_, pt.begin(), EndianessSwap);
+        enc.ProcessBlock(reinterpret_cast<uint8_t*>(pt.data()),
+                         reinterpret_cast<uint8_t*>(ct.data()));
+        std::transform(ct.cbegin(), ct.cend(), cit, EndianessSwap);
+
+        pit += Nb_;
+        cit += Nb_;
+    } while (pit != plainText.end() && cit != cipherText.end());
 }
 
 } /* namespace sharemind { */

@@ -48,6 +48,26 @@ NAMED_SYSCALL(aes_xor_uint32_vec, name, args, num_args, refs, crefs, returnValue
     __attribute__ ((visibility("internal")));
 
 /**
+ * SysCall: aes_single_key_xor_uint32_vec
+ * Args:
+ *      0) uint64[0]     pd index
+ *      1) p[0]          input text vector handle
+ *      2) p[0]          preexpanded key vector handle
+ *      3) p[0]          handle of the output vector for the output text
+ *
+ * \pre All handles are valid vectors of type a3pp_xor_uint32_t.
+ * \pre Both input and output vectors contain a multiple of Nb values, where Nb
+ *      is an AES constant from FIPS 197 (with the value 4).
+ * \pre The preexpanded key vector contains exactly (Nb * (Nr + 1)) elements.
+ * \post The input vector is not modified.
+ * \post The preexpanded key vector is not modified.
+ * \post If successful, the output vector contains the encrypted/decrypted result.
+ */
+template <class Protocol>
+NAMED_SYSCALL(aes_single_key_xor_uint32_vec, name, args, num_args, refs, crefs, returnValue, c)
+    __attribute__ ((visibility("internal")));
+
+/**
  * SysCall: aes_xor_uint32_vec_expand_key
  * Args:
  *      0) uint64[0u]     pd index

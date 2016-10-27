@@ -78,6 +78,54 @@ NAMED_SYSCALL(aes_xor_uint32_vec, name, args, num_args, refs, crefs, returnValue
 }
 
 template <class Protocol>
+NAMED_SYSCALL(aes_single_key_xor_uint32_vec, name, args, num_args, refs, crefs, returnValue, c)
+{
+    VMHandles handles;
+    if (!SyscallArgs<4>::check(num_args, refs, crefs, returnValue) ||
+        !handles.get(c, args))
+    {
+        return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
+    }
+
+    try {
+        Shared3pPDPI * const pdpi = static_cast<Shared3pPDPI *>(handles.pdpiHandle);
+
+        void * const inputVecHandle = args[1].p[0];
+        void * const keyVecHandle = args[2].p[0];
+        void * const outputVecHandle = args[3].p[0];
+
+        if (!pdpi->isValidHandle<s3p_xor_uint32_t>(inputVecHandle) ||
+            !pdpi->isValidHandle<s3p_xor_uint32_t>(keyVecHandle) ||
+            !pdpi->isValidHandle<s3p_xor_uint32_t>(outputVecHandle))
+        {
+            return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
+        }
+
+        const ShareVec<s3p_xor_uint32_t> & inputVec = *static_cast<ShareVec<s3p_xor_uint32_t> *>(inputVecHandle);
+        const ShareVec<s3p_xor_uint32_t> & keyVec = *static_cast<ShareVec<s3p_xor_uint32_t> *>(keyVecHandle);
+        ShareVec<s3p_xor_uint32_t> & outputVec = *static_cast<ShareVec<s3p_xor_uint32_t> *>(outputVecHandle);
+
+        // Check whether input and output vectors have proper size:
+        if (inputVec.empty()
+            || (inputVec.size() % Protocol::Nb) != 0u
+            || inputVec.size() != outputVec.size()
+            || (keyVec.size() != Protocol::Nb * (Protocol::Nr + 1u)))
+        {
+            return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
+        }
+
+        Protocol().processWithSingleExpandedKey(inputVec, keyVec, outputVec);
+
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+                        inputVec.size());
+
+        return SHAREMIND_MODULE_API_0x1_OK;
+    } catch (...) {
+        return catchModuleApiErrors ();
+    }
+}
+
+template <class Protocol>
 NAMED_SYSCALL(aes_xor_uint32_vec_expand_key, name, args, num_args, refs, crefs, returnValue, c)
 {
     VMHandles handles;
@@ -132,6 +180,13 @@ template NAMED_SYSCALL(aes_xor_uint32_vec<Aes128Protocol>,
 template NAMED_SYSCALL(aes_xor_uint32_vec<Aes192Protocol>,
                        name, args, num_args, refs, crefs, returnValue, c);
 template NAMED_SYSCALL(aes_xor_uint32_vec<Aes256Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+
+template NAMED_SYSCALL(aes_single_key_xor_uint32_vec<Aes128Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+template NAMED_SYSCALL(aes_single_key_xor_uint32_vec<Aes192Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+template NAMED_SYSCALL(aes_single_key_xor_uint32_vec<Aes256Protocol>,
                        name, args, num_args, refs, crefs, returnValue, c);
 
 template NAMED_SYSCALL(aes_xor_uint32_vec_expand_key<Aes128Protocol>,
