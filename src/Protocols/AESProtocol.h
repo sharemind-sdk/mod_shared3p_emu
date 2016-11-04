@@ -254,8 +254,8 @@ void AesProtocol<Nk_, Nb_, Nr_>::processWithSingleExpandedKey(const AES_share_ve
     assert(preExpandedKey.size() == (Nb_ * (Nr_ + 1u)));
 
     std::array<AES_share_vec_t::value_type, Nk_> key;
-    std::transform(preExpandedKey.cbegin(), preExpandedKey.cend(), key.begin(),
-            EndianessSwap);
+    std::transform(preExpandedKey.cbegin(), preExpandedKey.cbegin() + Nk_,
+            key.begin(), EndianessSwap);
 
     std::array<AES_share_vec_t::value_type, Nb_> pt;
     std::array<AES_share_vec_t::value_type, Nb_> ct;
