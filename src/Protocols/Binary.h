@@ -369,7 +369,7 @@ public: /* Methods: */
         if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
-        constexpr const size_t n =
+        constexpr std::size_t n =
             8u * sizeof(typename ValueTraits<T>::share_type);
 
         for (size_t i = 0u; i < param1.size(); ++i) {
@@ -404,7 +404,7 @@ public: /* Methods: */
         if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
-        constexpr const size_t n =
+        constexpr std::size_t n =
             8u * sizeof(typename ValueTraits<T>::share_type);
 
         for (size_t i = 0u; i < param1.size(); ++i) {
@@ -432,7 +432,7 @@ public: /* Methods: */
         if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
-        constexpr const size_t n =
+        constexpr std::size_t n =
             8u * sizeof(typename ValueTraits<T>::share_type);
 
         for (size_t i = 0u; i < param1.size(); ++i) {
@@ -467,7 +467,7 @@ public: /* Methods: */
         if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
-        constexpr const size_t n =
+        constexpr std::size_t n =
             8u * sizeof(typename ValueTraits<T>::share_type);
 
         for (size_t i = 0u; i < param1.size(); ++i) {
@@ -495,7 +495,7 @@ public: /* Methods: */
         if (param1.size() > param2.size() || param1.size() != result.size())
             return false;
 
-        constexpr const size_t n =
+        constexpr std::size_t n =
             8u * sizeof(typename ValueTraits<T>::share_type);
 
         for (size_t i = 0u; i < param1.size(); ++i) {
