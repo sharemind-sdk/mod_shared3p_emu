@@ -29,6 +29,7 @@
 #include <vector>
 #include "Protocols/AESProtocol.h"
 #include "Protocols/Binary.h"
+#include "Protocols/SortingProtocol.h"
 #include "Protocols/Unary.h"
 #include "Shared3pModule.h"
 #include "Shared3pPDPI.h"
@@ -39,6 +40,7 @@
 #include "Syscalls/MatrixMultiplicationSyscalls.h"
 #include "Syscalls/MatrixShufflingSyscalls.h"
 #include "Syscalls/Meta.h"
+#include "Syscalls/SortingSyscalls.h"
 
 
 namespace {
@@ -888,6 +890,18 @@ NAMED_SYSCALL_WRAPPER(gather_int32_t, gather<s3p_int32_t>)
 NAMED_SYSCALL_WRAPPER(gather_int64_t, gather<s3p_int64_t>)
 NAMED_SYSCALL_WRAPPER(gather_float32_t, gather<s3p_float32_t>)
 NAMED_SYSCALL_WRAPPER(gather_float64_t, gather<s3p_float64_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_xor_uint8_vec, stable_sort<s3p_xor_uint8_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_xor_uint16_vec, stable_sort<s3p_xor_uint16_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_xor_uint32_vec, stable_sort<s3p_xor_uint32_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_xor_uint64_vec, stable_sort<s3p_xor_uint64_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_uint8_vec, stable_sort<s3p_uint8_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_uint16_vec, stable_sort<s3p_uint16_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_uint32_vec, stable_sort<s3p_uint32_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_uint64_vec, stable_sort<s3p_uint64_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_int8_vec, stable_sort<s3p_int8_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_int16_vec, stable_sort<s3p_int16_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_int32_vec, stable_sort<s3p_int32_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_int64_vec, stable_sort<s3p_int64_t>)
 
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
@@ -1211,6 +1225,19 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_uint16_vec", matshufinv_uint16_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_uint32_vec", matshufinv_uint32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::matshufinv_uint64_vec", matshufinv_uint64_vec)
+
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_xor_uint8_vec", stable_sort_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_xor_uint16_vec", stable_sort_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_xor_uint32_vec", stable_sort_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_xor_uint64_vec", stable_sort_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_uint8_vec", stable_sort_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_uint16_vec", stable_sort_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_uint32_vec", stable_sort_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_uint64_vec", stable_sort_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_int8_vec", stable_sort_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_int16_vec", stable_sort_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_int32_vec", stable_sort_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_int64_vec", stable_sort_int64_vec)
 
   /**
    *  Additively shared signed integers

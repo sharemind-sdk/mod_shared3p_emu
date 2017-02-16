@@ -89,6 +89,7 @@ SET(SHARED3P_EMU_SOURCES
     "src/Shared3pPDPI.cpp"
     "src/Syscalls/AESSyscalls.cpp"
     "src/Syscalls/CRCSyscalls.cpp"
+    "src/Syscalls/SortingSyscalls.cpp"
 )
 
 SET(SHARED3P_EMU_HEADERS
@@ -99,11 +100,12 @@ SET(SHARED3P_EMU_HEADERS
     "src/Protocols/MatrixMultiplicationProtocol.h"
     "src/Protocols/MatrixShufflingProtocol.h"
     "src/Protocols/SoftFloatUtility.h"
+    "src/Protocols/SortingProtocol.h"
     "src/Protocols/Unary.h"
     "src/Shared3pConfiguration.h"
     "src/Shared3pModule.h"
     "src/Shared3pPD.h"
-    "src/Shared3pPDPI.h"    
+    "src/Shared3pPDPI.h"
     "src/Shared3pValueTraits.h"
     "src/Shared3pVector.h"
     "src/Syscalls/AESSyscalls.h"
@@ -113,6 +115,7 @@ SET(SHARED3P_EMU_HEADERS
     "src/Syscalls/MatrixMultiplicationSyscalls.h"
     "src/Syscalls/MatrixShufflingSyscalls.h"
     "src/Syscalls/Meta.h"
+    "src/Syscalls/SortingSyscalls.h"
 )
 
 ADD_LIBRARY(sharemind_mod_shared3p_emu MODULE ${SHARED3P_EMU_SOURCES} ${SHARED3P_EMU_HEADERS})
