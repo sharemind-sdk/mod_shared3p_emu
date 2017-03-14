@@ -30,9 +30,6 @@ namespace sharemind {
 template<typename T>
 NAMED_SYSCALL(stable_sort, name, args, num_args, refs, crefs, returnValue, c)
 {
-    // todo: profiling
-    (void) name;
-
     bool haveBlocks = false;
 
     if (num_args != 4)
@@ -91,6 +88,8 @@ NAMED_SYSCALL(stable_sort, name, args, num_args, refs, crefs, returnValue, c)
                 return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
             }
         }
+
+        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name, vec.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {
