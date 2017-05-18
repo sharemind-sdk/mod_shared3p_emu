@@ -17,11 +17,14 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
+#include <boost/filesystem.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <LogHard/Logger.h>
 #include "Shared3pConfiguration.h"
 
+
+namespace fs = boost::filesystem;
 
 namespace sharemind {
 
@@ -37,8 +40,12 @@ bool Shared3pConfiguration::load(const std::string & filename) {
 
     try {
         boost::property_tree::read_ini(filename, config);
+
+        fs::path parent(fs::path(filename).parent_path());
         m_modelEvaluatorConfiguration =
             config.get<std::string>("ProtectionDomain.ModelEvaluatorConfiguration");
+        m_modelEvaluatorConfiguration =
+            fs::absolute(m_modelEvaluatorConfiguration, parent).string();
     } catch (const boost::property_tree::ini_parser_error & e) {
         m_logger.error() << "Error while parsing configuration file. "
             << e.message() << " [" << e.filename() << ":"
