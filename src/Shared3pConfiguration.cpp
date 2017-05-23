@@ -24,8 +24,6 @@
 #include "Shared3pConfiguration.h"
 
 
-namespace fs = boost::filesystem;
-
 namespace sharemind {
 
 Shared3pConfiguration::Shared3pConfiguration(const LogHard::Logger & logger)
@@ -40,12 +38,10 @@ bool Shared3pConfiguration::load(const std::string & filename) {
 
     try {
         boost::property_tree::read_ini(filename, config);
-
-        fs::path parent(fs::path(filename).parent_path());
+        m_interpolate.addVar("CurrentFileDirectory",
+                             boost::filesystem::path(filename).parent_path().string());
         m_modelEvaluatorConfiguration =
-            config.get<std::string>("ProtectionDomain.ModelEvaluatorConfiguration");
-        m_modelEvaluatorConfiguration =
-            fs::absolute(m_modelEvaluatorConfiguration, parent).string();
+            m_interpolate(config.get<std::string>("ProtectionDomain.ModelEvaluatorConfiguration"));
     } catch (const boost::property_tree::ini_parser_error & e) {
         m_logger.error() << "Error while parsing configuration file. "
             << e.message() << " [" << e.filename() << ":"

@@ -20,6 +20,7 @@
 #ifndef MOD_SHARED3P_EMU_SHARED3PCONFIGURATION_H
 #define MOD_SHARED3P_EMU_SHARED3PCONFIGURATION_H
 
+#include <sharemind/ConfigurationInterpolation.h>
 #include <string>
 
 
@@ -40,8 +41,8 @@ public: /* Methods: */
 
 private: /* Fields: */
 
+    ConfigurationInterpolation m_interpolate;
     const LogHard::Logger & m_logger;
-
     std::string m_modelEvaluatorConfiguration;
 
 }; /* class Shared3pConfiguration { */
