@@ -23,7 +23,6 @@
 #include <memory>
 #include <sharemind/Exception.h>
 #include "Facilities/CxxRandomEngine.h"
-#include "Shared3pConfiguration.h"
 
 
 namespace sharemind {
@@ -50,12 +49,6 @@ public: /* Methods: */
                Shared3pModule & module);
     ~Shared3pPD() noexcept;
 
-    inline Shared3pConfiguration & configuration() noexcept
-    { return m_configuration; }
-
-    inline const Shared3pConfiguration & configuration() const noexcept
-    { return m_configuration; }
-
     inline ExecutionModelEvaluator & modelEvaluator() noexcept
     { return *m_modelEvaluator; }
 
@@ -79,7 +72,6 @@ public: /* Methods: */
 
 private: /* Fields: */
 
-    Shared3pConfiguration m_configuration;
     std::string m_name;
 
     ExecutionProfiler & m_profiler;

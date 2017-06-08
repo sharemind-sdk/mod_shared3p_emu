@@ -19,6 +19,8 @@
 
 #include <sharemind/ExecutionModelEvaluator.h>
 #include <sharemind/ExecutionProfiler.h>
+#include <sharemind/MakeUnique.h>
+#include "Shared3pConfiguration.h"
 #include "Shared3pModule.h"
 #include "Shared3pPD.h"
 
@@ -28,17 +30,18 @@ namespace sharemind {
 Shared3pPD::Shared3pPD(const std::string & pdName,
                        const std::string & pdConfiguration,
                        Shared3pModule & module)
-    : m_configuration(module.logger())
-    , m_name(pdName)
+    : m_name(pdName)
     , m_profiler(module.profiler())
 {
-    if (!m_configuration.load(pdConfiguration))
+    Shared3pConfiguration config(module.logger());
+    if (!config.load(pdConfiguration))
         throw ConfigurationException();
 
     try {
-        m_modelEvaluator.reset(
-                new ExecutionModelEvaluator(module.logger(),
-                    m_configuration.modelEvaluatorConfiguration()));
+        m_modelEvaluator =
+                makeUnique<ExecutionModelEvaluator>(
+                    module.logger(),
+                    config.modelEvaluatorConfiguration());
     } catch (const ExecutionModelEvaluator::ConfigurationException &) {
         throw ConfigurationException();
     }
