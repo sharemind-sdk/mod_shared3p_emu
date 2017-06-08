@@ -17,49 +17,17 @@
  * For further information, please contact us at sharemind@cyber.ee.
  */
 
-#include <boost/filesystem.hpp>
-#include <boost/property_tree/ini_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <LogHard/Logger.h>
 #include "Shared3pConfiguration.h"
 
+#include <sharemind/Configuration.h>
 
-namespace fs = boost::filesystem;
 
 namespace sharemind {
 
-Shared3pConfiguration::Shared3pConfiguration(const LogHard::Logger & logger)
-    : m_logger(logger)
+Shared3pConfiguration::Shared3pConfiguration(std::string const & filename)
+    : m_modelEvaluatorConfiguration(
+          Configuration(filename).get<std::string>(
+              "ProtectionDomain.ModelEvaluatorConfiguration"))
 {}
-
-bool Shared3pConfiguration::load(const std::string & filename) {
-
-    using boost::property_tree::ptree;
-
-    ptree config;
-
-    try {
-        boost::property_tree::read_ini(filename, config);
-        m_interpolate.addVar("CurrentFileDirectory",
-                             fs::canonical(fs::path(filename)).parent_path().string());
-        m_modelEvaluatorConfiguration =
-            m_interpolate(config.get<std::string>("ProtectionDomain.ModelEvaluatorConfiguration"));
-    } catch (const boost::property_tree::ini_parser_error & e) {
-        m_logger.error() << "Error while parsing configuration file. "
-            << e.message() << " [" << e.filename() << ":"
-            << e.line() << "].";
-        return false;
-    } catch (const boost::property_tree::ptree_bad_data & e) {
-        m_logger.error() << "Error while parsing configuration file. Bad data: "
-            << e.what();
-        return false;
-    } catch (const boost::property_tree::ptree_bad_path & e) {
-        m_logger.error() << "Error while parsing configuration file. Bad path: "
-            << e.what();
-        return false;
-    }
-
-    return true;
-}
 
 } /* namespace sharemind { */

@@ -39,6 +39,7 @@ FIND_PACKAGE(Cryptopp REQUIRED)
 FIND_PACKAGE(LogHard REQUIRED)
 FIND_PACKAGE(SharemindCHeaders REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders REQUIRED)
+FIND_PACKAGE(SharemindLibConfiguration REQUIRED)
 FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
@@ -52,6 +53,7 @@ INCLUDE_DIRECTORIES(
     ${LogHard_INCLUDE_DIRS}
     ${SharemindCHeaders_INCLUDE_DIRS}
     ${SharemindCxxHeaders_INCLUDE_DIRS}
+    ${SharemindLibConfiguration_INCLUDE_DIRS}
     ${SharemindLibEmulatorProtocols_INCLUDE_DIRS}
     ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
@@ -65,6 +67,7 @@ ADD_DEFINITIONS(
     ${LogHard_DEFINITIONS}
     ${SharemindCHeaders_DEFINITIONS}
     ${SharemindCxxHeaders_DEFINITIONS}
+    ${SharemindLibConfiguration_DEFINITIONS}
     ${SharemindLibEmulatorProtocols_DEFINITIONS}
     ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
     ${SharemindLibExecutionProfiler_DEFINITIONS}
@@ -125,6 +128,7 @@ TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
     ${LogHard_LIBRARIES}
     ${SharemindCHeaders_LIBRARIES}
     ${SharemindCxxHeaders_LIBRARIES}
+    ${SharemindLibConfiguration_LIBRARIES}
     ${SharemindLibExecutionModelEvaluator_LIBRARIES}
     ${SharemindLibExecutionProfiler_LIBRARIES}
     ${SharemindLibsoftfloat_LIBRARIES}

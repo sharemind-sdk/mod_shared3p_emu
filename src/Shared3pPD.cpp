@@ -33,16 +33,13 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
     : m_name(pdName)
     , m_profiler(module.profiler())
 {
-    Shared3pConfiguration config(module.logger());
-    if (!config.load(pdConfiguration))
-        throw ConfigurationException();
-
     try {
+        Shared3pConfiguration const config(pdConfiguration);
         m_modelEvaluator =
                 makeUnique<ExecutionModelEvaluator>(
                     module.logger(),
                     config.modelEvaluatorConfiguration());
-    } catch (const ExecutionModelEvaluator::ConfigurationException &) {
+    } catch (ExecutionModelEvaluator::ConfigurationException const &) {
         throw ConfigurationException();
     }
 }

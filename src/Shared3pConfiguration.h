@@ -20,11 +20,8 @@
 #ifndef MOD_SHARED3P_EMU_SHARED3PCONFIGURATION_H
 #define MOD_SHARED3P_EMU_SHARED3PCONFIGURATION_H
 
-#include <sharemind/ConfigurationInterpolation.h>
 #include <string>
 
-
-namespace LogHard { class Logger; }
 
 namespace sharemind {
 
@@ -32,17 +29,13 @@ class __attribute__ ((visibility("internal"))) Shared3pConfiguration {
 
 public: /* Methods: */
 
-    Shared3pConfiguration(const LogHard::Logger & logger);
-
-    bool load(const std::string & filename);
+    Shared3pConfiguration(std::string const & filename);
 
     const std::string & modelEvaluatorConfiguration() const noexcept
     { return m_modelEvaluatorConfiguration; }
 
 private: /* Fields: */
 
-    ConfigurationInterpolation m_interpolate;
-    const LogHard::Logger & m_logger;
     std::string m_modelEvaluatorConfiguration;
 
 }; /* class Shared3pConfiguration { */
