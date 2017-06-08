@@ -42,9 +42,6 @@ public: /* Methods: */
     inline const std::string & pdName() const noexcept
     { return m_pd.name(); }
 
-    inline const Shared3pConfiguration & pdConfiguration() const noexcept
-    { return m_pd.configuration(); }
-
     inline ExecutionModelEvaluator & modelEvaluator() noexcept
     { return m_modelEvaluator; }
 
@@ -81,7 +78,6 @@ public: /* Methods: */
 private: /* Fields: */
 
     Shared3pPD & m_pd;
-    Shared3pConfiguration & m_pdConfiguration;
 
     ExecutionModelEvaluator & m_modelEvaluator;
     ExecutionProfiler & m_profiler;
