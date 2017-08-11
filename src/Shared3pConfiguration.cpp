@@ -19,7 +19,7 @@
 
 #include "Shared3pConfiguration.h"
 
-#include <sharemind/Configuration.h>
+#include <sharemind/libconfiguration/Configuration.h>
 
 
 namespace sharemind {
