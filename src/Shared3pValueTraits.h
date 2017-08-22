@@ -21,7 +21,7 @@
 #define MOD_SHARED3P_EMU_SHARED3PVALUETRAITS_H
 
 #include <cstdint>
-#include <sharemind/3rdparty/libsoftfloat/softfloat.h>
+#include <sharemind/libsoftfloat/softfloat.h>
 #include <sharemind/uint128_t.h>
 #include <sharemind/uint_t.h>
 #include <sharemind/ValueTraits.h>

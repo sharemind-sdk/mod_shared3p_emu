@@ -44,8 +44,8 @@ FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
 FIND_PACKAGE(SharemindLibmodapi REQUIRED)
-FIND_PACKAGE(SharemindLibsoftfloat REQUIRED)
-FIND_PACKAGE(SharemindLibsoftfloatMath REQUIRED)
+FIND_PACKAGE(SharemindLibSoftfloat REQUIRED)
+FIND_PACKAGE(SharemindLibSoftfloatMath REQUIRED)
 FIND_PACKAGE(SharemindPdkHeaders REQUIRED)
 INCLUDE_DIRECTORIES(
     ${Boost_INCLUDE_DIRS}
@@ -58,8 +58,8 @@ INCLUDE_DIRECTORIES(
     ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
     ${SharemindLibmodapi_INCLUDE_DIRS}
-    ${SharemindLibsoftfloat_INCLUDE_DIRS}
-    ${SharemindLibsoftfloatMath_INCLUDE_DIRS}
+    ${SharemindLibSoftfloat_INCLUDE_DIRS}
+    ${SharemindLibSoftfloatMath_INCLUDE_DIRS}
     ${SharemindPdkHeaders_INCLUDE_DIRS}
 )
 
@@ -72,8 +72,8 @@ ADD_DEFINITIONS(
     ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
     ${SharemindLibExecutionProfiler_DEFINITIONS}
     ${SharemindLibmodapi_DEFINITIONS}
-    ${SharemindLibsoftfloat_DEFINITIONS}
-    ${SharemindLibsoftfloatMath_DEFINITIONS}
+    ${SharemindLibSoftfloat_DEFINITIONS}
+    ${SharemindLibSoftfloatMath_DEFINITIONS}
     ${SharemindPdkHeaders_DEFINITIONS}
     "-D__STDC_LIMIT_MACROS"
     "-D__STDC_CONSTANT_MACROS"
@@ -131,8 +131,8 @@ TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
     ${SharemindLibConfiguration_LIBRARIES}
     ${SharemindLibExecutionModelEvaluator_LIBRARIES}
     ${SharemindLibExecutionProfiler_LIBRARIES}
-    ${SharemindLibsoftfloat_LIBRARIES}
-    ${SharemindLibsoftfloatMath_LIBRARIES}
+    ${SharemindLibSoftfloat_LIBRARIES}
+    ${SharemindLibSoftfloatMath_LIBRARIES}
     ${SharemindPdkHeaders_LIBRARIES}
 )
 

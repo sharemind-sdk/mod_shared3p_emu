@@ -21,14 +21,14 @@
 #define MOD_SHARED3P_EMU_PROTOCOLS_SOFTFLOATURILITY_H
 
 #include <sharemind/static_assert.h>
-#include <sharemind/3rdparty/libsoftfloat/softfloat.h>
-#include <sharemind/3rdparty/libsoftfloat_math/sf_abs.h>
-#include <sharemind/3rdparty/libsoftfloat_math/sf_ceil.h>
-#include <sharemind/3rdparty/libsoftfloat_math/sf_erf.h>
-#include <sharemind/3rdparty/libsoftfloat_math/sf_exp.h>
-#include <sharemind/3rdparty/libsoftfloat_math/sf_floor.h>
-#include <sharemind/3rdparty/libsoftfloat_math/sf_log.h>
-#include <sharemind/3rdparty/libsoftfloat_math/sf_sin.h>
+#include <sharemind/libsoftfloat/softfloat.h>
+#include <sharemind/libsoftfloat_math/sf_abs.h>
+#include <sharemind/libsoftfloat_math/sf_ceil.h>
+#include <sharemind/libsoftfloat_math/sf_erf.h>
+#include <sharemind/libsoftfloat_math/sf_exp.h>
+#include <sharemind/libsoftfloat_math/sf_floor.h>
+#include <sharemind/libsoftfloat_math/sf_log.h>
+#include <sharemind/libsoftfloat_math/sf_sin.h>
 
 
 namespace sharemind {
