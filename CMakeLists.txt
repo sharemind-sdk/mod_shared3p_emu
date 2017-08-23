@@ -43,7 +43,7 @@ FIND_PACKAGE(SharemindLibConfiguration REQUIRED)
 FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
-FIND_PACKAGE(SharemindLibmodapi REQUIRED)
+FIND_PACKAGE(SharemindLibModapi REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloat REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloatMath REQUIRED)
 FIND_PACKAGE(SharemindPdkHeaders REQUIRED)
@@ -57,7 +57,7 @@ INCLUDE_DIRECTORIES(
     ${SharemindLibEmulatorProtocols_INCLUDE_DIRS}
     ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
     ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
-    ${SharemindLibmodapi_INCLUDE_DIRS}
+    ${SharemindLibModapi_INCLUDE_DIRS}
     ${SharemindLibSoftfloat_INCLUDE_DIRS}
     ${SharemindLibSoftfloatMath_INCLUDE_DIRS}
     ${SharemindPdkHeaders_INCLUDE_DIRS}
@@ -71,7 +71,7 @@ ADD_DEFINITIONS(
     ${SharemindLibEmulatorProtocols_DEFINITIONS}
     ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
     ${SharemindLibExecutionProfiler_DEFINITIONS}
-    ${SharemindLibmodapi_DEFINITIONS}
+    ${SharemindLibModapi_DEFINITIONS}
     ${SharemindLibSoftfloat_DEFINITIONS}
     ${SharemindLibSoftfloatMath_DEFINITIONS}
     ${SharemindPdkHeaders_DEFINITIONS}
