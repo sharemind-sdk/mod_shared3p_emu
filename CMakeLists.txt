@@ -17,22 +17,19 @@
 # For further information, please contact us at sharemind@cyber.ee.
 #
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
-PROJECT(SHAREMIND_MOD_SHARED3P_EMU CXX)
-
-SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeIncludes/"
-                      ${CMAKE_MODULE_PATH})
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+PROJECT(SharemindModShared3pEmu VERSION 1.0.0 LANGUAGES CXX)
 
 INCLUDE("${CMAKE_CURRENT_SOURCE_DIR}/config.local" OPTIONAL)
 INCLUDE("${CMAKE_CURRENT_BINARY_DIR}/config.local" OPTIONAL)
 
-ADD_COMPILE_OPTIONS(
-  "-std=c++11" "-Wall" "-Wextra" "-O2" "-fPIC"
-  "$<$<NOT:$<STREQUAL:$<CONFIGURATION>,Release>>:-ggdb>"
-  "$<$<NOT:$<STREQUAL:$<CONFIGURATION>,Release>>:-fno-omit-frame-pointer>"
-  "$<$<STREQUAL:$<CONFIGURATION>,Release>:-DNDEBUG>"
-  "$<$<STREQUAL:$<CONFIGURATION>,Release>:-fomit-frame-pointer>"
-)
+FIND_PACKAGE(SharemindCMakeHelpers REQUIRED)
+
+SharemindSetProjectVersion()
+
+SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeIncludes/"
+                      ${CMAKE_MODULE_PATH})
+
 
 FIND_PACKAGE(Boost COMPONENTS filesystem REQUIRED)
 FIND_PACKAGE(Cryptopp REQUIRED)
@@ -47,93 +44,92 @@ FIND_PACKAGE(SharemindLibModapi REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloat REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloatMath REQUIRED)
 FIND_PACKAGE(SharemindPdkHeaders REQUIRED)
-INCLUDE_DIRECTORIES(
-    ${Boost_INCLUDE_DIRS}
-    ${CRYPTOPP_INCLUDE_DIRS}
-    ${LogHard_INCLUDE_DIRS}
-    ${SharemindCHeaders_INCLUDE_DIRS}
-    ${SharemindCxxHeaders_INCLUDE_DIRS}
-    ${SharemindLibConfiguration_INCLUDE_DIRS}
-    ${SharemindLibEmulatorProtocols_INCLUDE_DIRS}
-    ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
-    ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
-    ${SharemindLibModapi_INCLUDE_DIRS}
-    ${SharemindLibSoftfloat_INCLUDE_DIRS}
-    ${SharemindLibSoftfloatMath_INCLUDE_DIRS}
-    ${SharemindPdkHeaders_INCLUDE_DIRS}
-)
 
-ADD_DEFINITIONS(
-    ${LogHard_DEFINITIONS}
-    ${SharemindCHeaders_DEFINITIONS}
-    ${SharemindCxxHeaders_DEFINITIONS}
-    ${SharemindLibConfiguration_DEFINITIONS}
-    ${SharemindLibEmulatorProtocols_DEFINITIONS}
-    ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
-    ${SharemindLibExecutionProfiler_DEFINITIONS}
-    ${SharemindLibModapi_DEFINITIONS}
-    ${SharemindLibSoftfloat_DEFINITIONS}
-    ${SharemindLibSoftfloatMath_DEFINITIONS}
-    ${SharemindPdkHeaders_DEFINITIONS}
-    "-D__STDC_LIMIT_MACROS"
-    "-D__STDC_CONSTANT_MACROS"
-    "-D__STDC_FORMAT_MACROS"
-)
 
+SharemindSetCxx11CompileOptions()
 IF(SHAREMIND_NETWORK_STATISTICS)
-    ADD_DEFINITIONS("-DSHAREMIND_NETWORK_STATISTICS_ENABLE")
-ENDIF(SHAREMIND_NETWORK_STATISTICS)
-
-SET(SHARED3P_EMU_SOURCES
-    "src/mod_shared3p_emu.cpp"
-    "src/Shared3pConfiguration.cpp"
-    "src/Shared3pModule.cpp"
-    "src/Shared3pPD.cpp"
-    "src/Shared3pPDPI.cpp"
-    "src/Syscalls/AESSyscalls.cpp"
-    "src/Syscalls/CRCSyscalls.cpp"
-    "src/Syscalls/SortingSyscalls.cpp"
+    SharemindNewList(SharemindModShared3pEmu_EXTRA_DEFINITIONS
+        "SHAREMIND_NETWORK_STATISTICS_ENABLE"
+    )
+ELSE()
+    SharemindNewList(SharemindModShared3pEmu_EXTRA_DEFINITIONS)
+ENDIF()
+FILE(GLOB_RECURSE SharemindModShared3pEmu_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+FILE(GLOB_RECURSE SharemindModShared3pEmu_HEADERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
+SharemindAddSharedLibrary("sharemind_mod_shared3p_emu"
+    MODULE
+    SOURCES
+        ${SharemindModShared3pEmu_SOURCES}
+        ${SharemindModShared3pEmu_HEADERS}
+    INCLUDE_DIRECTORIES
+        ${Boost_INCLUDE_DIRS}
+        ${CRYPTOPP_INCLUDE_DIRS}
+        ${LogHard_INCLUDE_DIRS}
+        ${SharemindCHeaders_INCLUDE_DIRS}
+        ${SharemindCxxHeaders_INCLUDE_DIRS}
+        ${SharemindLibConfiguration_INCLUDE_DIRS}
+        ${SharemindLibEmulatorProtocols_INCLUDE_DIRS}
+        ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
+        ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
+        ${SharemindLibModapi_INCLUDE_DIRS}
+        ${SharemindLibSoftfloat_INCLUDE_DIRS}
+        ${SharemindLibSoftfloatMath_INCLUDE_DIRS}
+        ${SharemindPdkHeaders_INCLUDE_DIRS}
+    COMPILE_DEFINITIONS
+        ${SharemindModShared3pEmu_EXTRA_DEFINITIONS}
+    LEGACY_DEFINITIONS
+        ${LogHard_DEFINITIONS}
+        ${SharemindCHeaders_DEFINITIONS}
+        ${SharemindCxxHeaders_DEFINITIONS}
+        ${SharemindLibConfiguration_DEFINITIONS}
+        ${SharemindLibEmulatorProtocols_DEFINITIONS}
+        ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
+        ${SharemindLibExecutionProfiler_DEFINITIONS}
+        ${SharemindLibModapi_DEFINITIONS}
+        ${SharemindLibSoftfloat_DEFINITIONS}
+        ${SharemindLibSoftfloatMath_DEFINITIONS}
+        ${SharemindPdkHeaders_DEFINITIONS}
+    LINK_LIBRARIES
+        ${Boost_LIBRARIES}
+        ${CRYPTOPP_LIBRARIES}
+        ${LogHard_LIBRARIES}
+        ${SharemindCHeaders_LIBRARIES}
+        ${SharemindCxxHeaders_LIBRARIES}
+        ${SharemindLibConfiguration_LIBRARIES}
+        ${SharemindLibExecutionModelEvaluator_LIBRARIES}
+        ${SharemindLibExecutionProfiler_LIBRARIES}
+        ${SharemindLibSoftfloat_LIBRARIES}
+        ${SharemindLibSoftfloatMath_LIBRARIES}
+        ${SharemindPdkHeaders_LIBRARIES}
 )
 
-SET(SHARED3P_EMU_HEADERS
-    "src/Facilities/CxxRandomEngine.h"
-    "src/Protocols/AESProtocol.h"
-    "src/Protocols/Binary.h"
-    "src/Protocols/CRCProtocol.h"
-    "src/Protocols/MatrixMultiplicationProtocol.h"
-    "src/Protocols/MatrixShufflingProtocol.h"
-    "src/Protocols/SoftFloatUtility.h"
-    "src/Protocols/SortingProtocol.h"
-    "src/Protocols/Unary.h"
-    "src/Shared3pConfiguration.h"
-    "src/Shared3pModule.h"
-    "src/Shared3pPD.h"
-    "src/Shared3pPDPI.h"
-    "src/Shared3pValueTraits.h"
-    "src/Shared3pVector.h"
-    "src/Syscalls/AESSyscalls.h"
-    "src/Syscalls/BaseSyscalls.h"
-    "src/Syscalls/Common.h"
-    "src/Syscalls/CRCSyscalls.h"
-    "src/Syscalls/MatrixMultiplicationSyscalls.h"
-    "src/Syscalls/MatrixShufflingSyscalls.h"
-    "src/Syscalls/Meta.h"
-    "src/Syscalls/SortingSyscalls.h"
-)
 
-ADD_LIBRARY(sharemind_mod_shared3p_emu MODULE ${SHARED3P_EMU_SOURCES} ${SHARED3P_EMU_HEADERS})
-TARGET_LINK_LIBRARIES(sharemind_mod_shared3p_emu
-    ${Boost_LIBRARIES}
-    ${CRYPTOPP_LIBRARIES}
-    ${LogHard_LIBRARIES}
-    ${SharemindCHeaders_LIBRARIES}
-    ${SharemindCxxHeaders_LIBRARIES}
-    ${SharemindLibConfiguration_LIBRARIES}
-    ${SharemindLibExecutionModelEvaluator_LIBRARIES}
-    ${SharemindLibExecutionProfiler_LIBRARIES}
-    ${SharemindLibSoftfloat_LIBRARIES}
-    ${SharemindLibSoftfloatMath_LIBRARIES}
-    ${SharemindPdkHeaders_LIBRARIES}
+# Packaging:
+SharemindSetupPackaging()
+SET(BV "${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.0")
+SharemindAddComponentPackage("lib"
+    NAME "libsharemind-mod-shared3p-emu"
+    DESCRIPTION "Sharemind Shared3p emulation module"
+    DEB_SECTION "libs"
+    DEB_DEPENDS
+        "libboost-filesystem${BV}"
+        "libcrypto++6"
+        "libloghard (>= 0.1.0)"
+        "libsharemind-configuration (>= 0.1.0)"
+        "libsharemind-executionmodelevaluator (>= 0.1.0)"
+        "libsharemind-executionprofiler (>= 0.1.0)"
+        "libsharemind-softfloat (>= 0.1.0)"
+        "libsharemind-softfloat-math (>= 0.1.0)"
+        "libstdc++6 (>= 4.8.0)"
+        "libc6 (>= 2.19)"
 )
-
-INSTALL(TARGETS sharemind_mod_shared3p_emu LIBRARY DESTINATION "lib")
+SharemindAddComponentPackage("debug"
+    NAME "libsharemind-mod-shared3p-emu-dbg"
+    DESCRIPTION "Sharemind Shared3p emulation module debug symbols"
+    DEB_SECTION "debug"
+    DEB_DEPENDS
+        "libsharemind-mod-shared3p-emu (= ${SharemindModShared3pEmu_VERSION})"
+)
+SharemindPackagingFinalize()
