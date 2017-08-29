@@ -122,7 +122,7 @@ NAMED_SYSCALL(matrix_shuffle, name, args, num_args, refs, crefs, returnValue, c)
         if (!pdpi->isValidHandle<T>(matrixHandle))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-        const ShareVec<s3p_uint8_t>* rand = 0;
+        ShareVec<s3p_uint8_t> const * rand = nullptr;
         if (NeedKey) {
             void * const randHandle = args[3u].p[0u];
             if (!pdpi->isValidHandle<s3p_uint8_t>(randHandle))

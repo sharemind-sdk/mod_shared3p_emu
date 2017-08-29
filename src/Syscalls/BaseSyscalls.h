@@ -74,7 +74,7 @@ NAMED_SYSCALL(new_vec, name, args, num_args, refs, crefs, returnValue, c)
 
     // Check if the size result would overflow
     if (std::numeric_limits<size_t>::max() / sizeof(T) < args[1u].uint64[0u]) {
-        returnValue->p[0u] = 0;
+        returnValue->p[0u] = nullptr;
         return SHAREMIND_MODULE_API_0x1_INVALID_CALL;
     }
 
