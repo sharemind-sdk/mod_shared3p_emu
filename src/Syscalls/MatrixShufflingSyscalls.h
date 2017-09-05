@@ -20,7 +20,7 @@
 #ifndef MOD_SHARED3P_EMU_SYSCALLS_MATRIXSHUFFLINGSYSCALLS_H
 #define MOD_SHARED3P_EMU_SYSCALLS_MATRIXSHUFFLINGSYSCALLS_H
 
-#include <sharemind/libmodapi/api_0x1.h>
+#include <sharemind/module-apis/api_0x1.h>
 #include "Common.h"
 #include "../Protocols/MatrixShufflingProtocol.h"
 #include "../Shared3pPDPI.h"

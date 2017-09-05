@@ -23,7 +23,7 @@
 #include <sharemind/ExecutionProfiler.h>
 #include <sharemind/libemulator_protocols/Nullary.h>
 #include <sharemind/libemulator_protocols/Ternary.h>
-#include <sharemind/libmodapi/api_0x1.h>
+#include <sharemind/module-apis/api_0x1.h>
 #include <sharemind/static_assert.h>
 #include <type_traits>
 #include <vector>

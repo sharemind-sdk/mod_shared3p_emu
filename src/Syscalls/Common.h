@@ -25,7 +25,7 @@
 #include <sharemind/Concat.h>
 #include <sharemind/ExecutionModelEvaluator.h>
 #include <sharemind/ExecutionProfiler.h>
-#include <sharemind/libmodapi/api_0x1.h>
+#include <sharemind/module-apis/api_0x1.h>
 #include <sharemind/SyscallsCommon.h>
 #include <sstream>
 #include "../Shared3pValueTraits.h"

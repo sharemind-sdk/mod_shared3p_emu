@@ -40,9 +40,9 @@ FIND_PACKAGE(SharemindLibConfiguration REQUIRED)
 FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
-FIND_PACKAGE(SharemindLibModapi REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloat REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloatMath REQUIRED)
+FIND_PACKAGE(SharemindModuleApis REQUIRED)
 FIND_PACKAGE(SharemindPdkHeaders REQUIRED)
 
 
@@ -73,9 +73,9 @@ SharemindAddSharedLibrary("sharemind_mod_shared3p_emu"
         ${SharemindLibEmulatorProtocols_INCLUDE_DIRS}
         ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
         ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
-        ${SharemindLibModapi_INCLUDE_DIRS}
         ${SharemindLibSoftfloat_INCLUDE_DIRS}
         ${SharemindLibSoftfloatMath_INCLUDE_DIRS}
+        ${SharemindModuleApis_INCLUDE_DIRS}
         ${SharemindPdkHeaders_INCLUDE_DIRS}
     COMPILE_DEFINITIONS
         ${SharemindModShared3pEmu_EXTRA_DEFINITIONS}
@@ -87,7 +87,6 @@ SharemindAddSharedLibrary("sharemind_mod_shared3p_emu"
         ${SharemindLibEmulatorProtocols_DEFINITIONS}
         ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
         ${SharemindLibExecutionProfiler_DEFINITIONS}
-        ${SharemindLibModapi_DEFINITIONS}
         ${SharemindLibSoftfloat_DEFINITIONS}
         ${SharemindLibSoftfloatMath_DEFINITIONS}
         ${SharemindPdkHeaders_DEFINITIONS}

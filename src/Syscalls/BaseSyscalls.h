@@ -20,7 +20,7 @@
 #ifndef MOD_SHARED3P_EMU_SYSCALLS_CORESYSCALLS_H
 #define MOD_SHARED3P_EMU_SYSCALLS_CORESYSCALLS_H
 
-#include <sharemind/libmodapi/api_0x1.h>
+#include <sharemind/module-apis/api_0x1.h>
 #include <sharemind/VmVector.h>
 #include "Common.h"
 #include "../Shared3pPDPI.h"
