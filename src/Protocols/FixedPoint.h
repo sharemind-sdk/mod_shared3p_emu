@@ -82,16 +82,19 @@ class __attribute__ ((visibility("internal"))) FloatToFixProtocol {
 
 public: /* Methods: */
 
+    FloatToFixProtocol(const Shared3pPDPI& pdpi) { (void) pdpi; }
+
     template<typename Float, typename Uint>
     typename std::enable_if<is_unsigned_value_tag<Uint>::value &&
                             is_float_value_tag<Float>::value, bool>::type
     invoke(const ShareVec<Float>& param,
-           ShareVec<Uint>& result,
-           uint64_t radix_point)
+           ShareVec<Uint>& result)
     {
         if (param.size() != result.size())
             return false;
 
+        static constexpr uint64_t radix_point =
+            Radix<typename Uint::share_type>::value;
         using Int = typename respective_signed_type<Uint>::type::share_type;
         using SFloat = typename Float::share_type;
 
@@ -111,16 +114,19 @@ class __attribute__ ((visibility("internal"))) FixToFloatProtocol {
 
 public: /* Methods: */
 
+    FixToFloatProtocol(const Shared3pPDPI& pdpi) { (void) pdpi; }
+
     template<typename Float, typename Uint>
     typename std::enable_if<is_unsigned_value_tag<Uint>::value &&
                             is_float_value_tag<Float>::value, bool>::type
     invoke(const ShareVec<Uint>& param,
-           ShareVec<Float>& result,
-           uint64_t radix_point)
+           ShareVec<Float>& result)
     {
         if (param.size() != result.size())
             return false;
 
+        static constexpr uint64_t radix_point =
+            Radix<typename Uint::share_type>::value;
         using SFloat = typename Float::share_type;
 
         for (size_t i = 0u; i < param.size(); ++i) {
@@ -166,7 +172,7 @@ private: /* Methods: */
 
 public: /* Methods: */
 
-    FixMultiplicationProtocol(Shared3pPDPI& pdpi) { (void) pdpi; }
+    FixMultiplicationProtocol(const Shared3pPDPI& pdpi) { (void) pdpi; }
 
     template<typename T>
     typename std::enable_if<is_unsigned_value_tag<T>::value, bool>::type
@@ -197,7 +203,8 @@ class __attribute__ ((visibility("internal"))) FixInverseProtocol {
 
 public: /* Methods: */
 
-    FixInverseProtocol(Shared3pPDPI& pdpi) { (void) pdpi; }
+    FixInverseProtocol(const Shared3pPDPI& pdpi)
+        : m_pdpi(pdpi) {}
 
     template<typename Uint>
     typename std::enable_if<is_unsigned_value_tag<Uint>::value, bool>::type
@@ -207,29 +214,32 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        static constexpr uint64_t radix_point =
-            Radix<typename Uint::share_type>::value;
         using Float = typename respective_float_type<Uint>::type;
 
         ShareVec<Float> floats(param.size());
 
-        FixToFloatProtocol().invoke(param, floats, radix_point);
+        FixToFloatProtocol(m_pdpi).invoke(param, floats);
 
         for (size_t i = 0u; i < param.size(); ++i) {
             floats[i] = sf_float_inv(floats[i]).result;
         }
 
-        FloatToFixProtocol().invoke(floats, result, radix_point);
+        FloatToFixProtocol(m_pdpi).invoke(floats, result);
 
         return true;
     }
+
+private: /* Fields: */
+
+    const Shared3pPDPI& m_pdpi;
 };
 
 class __attribute__ ((visibility("internal"))) FixSquareRootProtocol {
 
 public: /* Methods: */
 
-    FixSquareRootProtocol(Shared3pPDPI& pdpi) { (void) pdpi; }
+    FixSquareRootProtocol(const Shared3pPDPI& pdpi)
+        : m_pdpi(pdpi) {}
 
     template<typename Uint>
     typename std::enable_if<is_unsigned_value_tag<Uint>::value, bool>::type
@@ -239,22 +249,25 @@ public: /* Methods: */
         if (param.size() != result.size())
             return false;
 
-        static constexpr uint64_t radix_point =
-            Radix<typename Uint::share_type>::value;
         using Float = typename respective_float_type<Uint>::type;
 
         ShareVec<Float> floats(param.size());
 
-        FixToFloatProtocol().invoke(param, floats, radix_point);
+        FixToFloatProtocol(m_pdpi).invoke(param, floats);
 
         for (size_t i = 0u; i < param.size(); ++i) {
             floats[i] = sf_float_sqrt(floats[i]).result;
         }
 
-        FloatToFixProtocol().invoke(floats, result, radix_point);
+        FloatToFixProtocol(m_pdpi).invoke(floats, result);
 
         return true;
     }
+
+private: /* Fields: */
+
+    const Shared3pPDPI& m_pdpi;
+
 };
 
 } /* namespace sharemind { */
