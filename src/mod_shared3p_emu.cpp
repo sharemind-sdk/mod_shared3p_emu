@@ -29,14 +29,16 @@
 #include <vector>
 #include "Protocols/AESProtocol.h"
 #include "Protocols/Binary.h"
+#include "Protocols/FixedPoint.h"
 #include "Protocols/SortingProtocol.h"
 #include "Protocols/Unary.h"
 #include "Shared3pModule.h"
 #include "Shared3pPDPI.h"
 #include "Syscalls/AESSyscalls.h"
 #include "Syscalls/BaseSyscalls.h"
-#include "Syscalls/Common.h"
 #include "Syscalls/CRCSyscalls.h"
+#include "Syscalls/Common.h"
+#include "Syscalls/FixedPoint.h"
 #include "Syscalls/MatrixMultiplicationSyscalls.h"
 #include "Syscalls/MatrixShufflingSyscalls.h"
 #include "Syscalls/Meta.h"
@@ -306,6 +308,8 @@ NAMED_SYSCALL_WRAPPER(conv_float32_to_int8_vec, unary_vec<s3p_float32_t, s3p_int
 NAMED_SYSCALL_WRAPPER(conv_float32_to_int16_vec, unary_vec<s3p_float32_t, s3p_int16_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_float32_to_int32_vec, unary_vec<s3p_float32_t, s3p_int32_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_float32_to_int64_vec, unary_vec<s3p_float32_t, s3p_int64_t, ConversionProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(float32_to_fix32, float_to_fix<s3p_float32_t, s3p_uint32_t>)
+NAMED_SYSCALL_WRAPPER(fix32_to_float32, fix_to_float<s3p_uint32_t, s3p_float32_t>)
 NAMED_SYSCALL_WRAPPER(conv_float64_to_float32_vec, unary_vec<s3p_float64_t, s3p_float32_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_float64_to_uint8_vec, unary_vec<s3p_float64_t, s3p_uint8_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_float64_to_uint16_vec, unary_vec<s3p_float64_t, s3p_uint16_t, ConversionProtocol<Shared3pPDPI>>)
@@ -316,6 +320,8 @@ NAMED_SYSCALL_WRAPPER(conv_float64_to_int16_vec, unary_vec<s3p_float64_t, s3p_in
 NAMED_SYSCALL_WRAPPER(conv_float64_to_int32_vec, unary_vec<s3p_float64_t, s3p_int32_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_float64_to_int64_vec, unary_vec<s3p_float64_t, s3p_int64_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_float64_to_bool_vec, unary_vec<s3p_float64_t, s3p_bool_t, ConversionProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(float64_to_fix64, float_to_fix<s3p_float64_t, s3p_uint64_t>)
+NAMED_SYSCALL_WRAPPER(fix64_to_float64, fix_to_float<s3p_uint64_t, s3p_float64_t>)
 NAMED_SYSCALL_WRAPPER(conv_uint8_to_bool_vec, unary_vec<s3p_uint8_t, s3p_bool_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_uint16_to_bool_vec, unary_vec<s3p_uint16_t, s3p_bool_t, ConversionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(conv_uint32_to_bool_vec, unary_vec<s3p_uint32_t, s3p_bool_t, ConversionProtocol<Shared3pPDPI>>)
@@ -802,8 +808,12 @@ NAMED_SYSCALL_WRAPPER(sub_float32_vec, binary_arith_vec<s3p_float32_t, Subtracti
 NAMED_SYSCALL_WRAPPER(sub_float64_vec, binary_arith_vec<s3p_float64_t, SubtractionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(mul_float32_vec, binary_arith_vec<s3p_float32_t, MultiplicationProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(mul_float64_vec, binary_arith_vec<s3p_float64_t, MultiplicationProtocol<Shared3pPDPI>>)
+NAMED_SYSCALL_WRAPPER(mul_fix32_vec, binary_arith_vec<s3p_uint32_t, FixMultiplicationProtocol>)
+NAMED_SYSCALL_WRAPPER(mul_fix64_vec, binary_arith_vec<s3p_uint64_t, FixMultiplicationProtocol>)
 NAMED_SYSCALL_WRAPPER(inv_float32_vec, unary_arith_vec<s3p_float32_t, FloatInverseProtocol>)
 NAMED_SYSCALL_WRAPPER(inv_float64_vec, unary_arith_vec<s3p_float64_t, FloatInverseProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_fix32_vec, unary_arith_vec<s3p_uint32_t, FixInverseProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_fix64_vec, unary_arith_vec<s3p_uint64_t, FixInverseProtocol>)
 NAMED_SYSCALL_WRAPPER(div_float32_vec, binary_arith_vec<s3p_float32_t, DivisionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(div_float64_vec, binary_arith_vec<s3p_float64_t, DivisionProtocol<Shared3pPDPI>>)
 NAMED_SYSCALL_WRAPPER(mulc_float32_vec, binary_arith_public_vec<s3p_float32_t, MultiplicationProtocol<Shared3pPDPI>>)
@@ -840,6 +850,8 @@ NAMED_SYSCALL_WRAPPER(sin_float32_vec, unary_arith_vec<s3p_float32_t, FloatSineP
 NAMED_SYSCALL_WRAPPER(sin_float64_vec, unary_arith_vec<s3p_float64_t, FloatSineProtocol>)
 NAMED_SYSCALL_WRAPPER(sqrt_float32_vec, unary_arith_vec<s3p_float32_t, FloatSquareRootProtocol>)
 NAMED_SYSCALL_WRAPPER(sqrt_float64_vec, unary_arith_vec<s3p_float64_t, FloatSquareRootProtocol>)
+NAMED_SYSCALL_WRAPPER(sqrt_fix32_vec, unary_arith_vec<s3p_uint32_t, FixSquareRootProtocol>)
+NAMED_SYSCALL_WRAPPER(sqrt_fix64_vec, unary_arith_vec<s3p_uint64_t, FixSquareRootProtocol>)
 NAMED_SYSCALL_WRAPPER(vecshuf_float32_vec, vector_shuffle<s3p_float32_t, false, false>)
 NAMED_SYSCALL_WRAPPER(vecshuf_float64_vec, vector_shuffle<s3p_float64_t, false, false>)
 NAMED_SYSCALL_WRAPPER(vecshufkey_float32_vec, vector_shuffle<s3p_float32_t, true, false>)
@@ -1172,6 +1184,18 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::randomize_uint16_vec", randomize_uint16_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::randomize_uint32_vec", randomize_uint32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::randomize_uint64_vec", randomize_uint64_vec)
+
+    // Fixed-point numbers
+  , NAMED_SYSCALL_DEFINITION("shared3p::float32_to_fix32", float32_to_fix32)
+  , NAMED_SYSCALL_DEFINITION("shared3p::fix32_to_float32", fix32_to_float32)
+  , NAMED_SYSCALL_DEFINITION("shared3p::float64_to_fix64", float64_to_fix64)
+  , NAMED_SYSCALL_DEFINITION("shared3p::fix64_to_float64", fix64_to_float64)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_fix32_vec", mul_fix32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mul_fix64_vec", mul_fix64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_fix32_vec", inv_fix32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_fix64_vec", inv_fix64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sqrt_fix32_vec", sqrt_fix32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::sqrt_fix64_vec", sqrt_fix64_vec)
 
     // Special functions
   , NAMED_SYSCALL_DEFINITION("shared3p::min_uint8_vec",  min_uint8_vec)
