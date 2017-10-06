@@ -26,7 +26,7 @@
 #include "SoftFloatUtility.h"
 
 
-namespace sharemind {
+namespace FixedPointHelper {
 
 template<typename T>
 sf_float32 val_to_float(T x, sharemind::float32_numeric_value_tag) {
@@ -49,9 +49,7 @@ T float_to_val(sf_float64 x) {
 }
 
 template<typename T>
-struct __attribute__ ((visibility("internal"))) Radix {
-    static constexpr uint64_t value = 0;
-};
+struct __attribute__ ((visibility("internal"))) Radix;
 
 template<>
 struct __attribute__ ((visibility("internal"))) Radix<uint32_t> {
@@ -64,9 +62,7 @@ struct __attribute__ ((visibility("internal"))) Radix<uint64_t> {
 };
 
 template<typename T>
-struct __attribute__ ((visibility("internal"))) respective_float_type {
-    using type = sharemind::s3p_float32_t;
-};
+struct __attribute__ ((visibility("internal"))) respective_float_type;
 
 template<>
 struct __attribute__ ((visibility("internal"))) respective_float_type<sharemind::s3p_uint32_t> {
@@ -77,6 +73,10 @@ template<>
 struct __attribute__ ((visibility("internal"))) respective_float_type<sharemind::s3p_uint64_t> {
     using type = sharemind::s3p_float64_t;
 };
+
+} /* namespace FixedPointHelper */
+
+namespace sharemind {
 
 class __attribute__ ((visibility("internal"))) FloatToFixProtocol {
 
@@ -90,6 +90,8 @@ public: /* Methods: */
     invoke(const ShareVec<Float>& param,
            ShareVec<Uint>& result)
     {
+        using namespace FixedPointHelper;
+
         if (param.size() != result.size())
             return false;
 
@@ -122,6 +124,8 @@ public: /* Methods: */
     invoke(const ShareVec<Uint>& param,
            ShareVec<Float>& result)
     {
+        using namespace FixedPointHelper;
+
         if (param.size() != result.size())
             return false;
 
@@ -180,6 +184,8 @@ public: /* Methods: */
            const ShareVec<T>& param2,
            ShareVec<T>& result)
     {
+        using namespace FixedPointHelper;
+
         if (param1.size() != result.size() || param2.size() != result.size())
             return false;
 
@@ -211,6 +217,8 @@ public: /* Methods: */
     invoke(const ShareVec<Uint>& param,
            ShareVec<Uint>& result)
     {
+        using namespace FixedPointHelper;
+
         if (param.size() != result.size())
             return false;
 
@@ -246,6 +254,8 @@ public: /* Methods: */
     invoke(const ShareVec<Uint>& param,
            ShareVec<Uint>& result)
     {
+        using namespace FixedPointHelper;
+
         if (param.size() != result.size())
             return false;
 
