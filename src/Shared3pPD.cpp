@@ -27,6 +27,15 @@
 
 namespace sharemind {
 
+SHAREMIND_DEFINE_EXCEPTION_NOINLINE(std::exception, Shared3pPD::, Exception);
+
+SHAREMIND_DEFINE_EXCEPTION_CONST_MSG_NOINLINE(
+        Exception,
+        Shared3pPD::,
+        ConfigurationException,
+        "Error in protection domain configuration!");
+
+
 Shared3pPD::Shared3pPD(const std::string & pdName,
                        const std::string & pdConfiguration,
                        Shared3pModule & module)

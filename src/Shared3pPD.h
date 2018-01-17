@@ -35,12 +35,9 @@ class __attribute__ ((visibility("internal"))) Shared3pPD {
 
 public: /* Types: */
 
-    SHAREMIND_DEFINE_EXCEPTION(std::exception, Exception);
-
-    SHAREMIND_DEFINE_EXCEPTION_CONST_MSG(
-            Exception,
-            ConfigurationException,
-            "Error in protection domain configuration!");
+    SHAREMIND_DECLARE_EXCEPTION_NOINLINE(std::exception, Exception);
+    SHAREMIND_DECLARE_EXCEPTION_CONST_MSG_NOINLINE(Exception,
+                                                   ConfigurationException);
 
 public: /* Methods: */
 
