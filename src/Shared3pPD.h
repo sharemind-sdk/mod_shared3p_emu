@@ -22,6 +22,7 @@
 
 #include <memory>
 #include <sharemind/Exception.h>
+#include <sharemind/ExceptionMacros.h>
 #include "Facilities/CxxRandomEngine.h"
 
 
