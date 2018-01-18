@@ -27,8 +27,9 @@
 
 namespace sharemind {
 
-SHAREMIND_DEFINE_EXCEPTION_NOINLINE(std::exception, Shared3pPD::, Exception);
-
+SHAREMIND_DEFINE_EXCEPTION_NOINLINE(sharemind::Exception,
+                                    Shared3pPD::,
+                                    Exception);
 SHAREMIND_DEFINE_EXCEPTION_CONST_MSG_NOINLINE(
         Exception,
         Shared3pPD::,
