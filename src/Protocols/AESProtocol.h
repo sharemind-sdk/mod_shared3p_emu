@@ -157,8 +157,8 @@ void AesProtocol<Nk_, Nb_, Nr_>::expandAesKey(const AES_share_vec_t & inKey,
 
     // Based on: https://github.com/kokke/tiny-AES128-C
 
-    auto outIndex = [](size_t nkeys, size_t n, size_t i) noexcept {
-        return n * Nb_ + (i / Nb_) * Nb_ * nkeys + i % Nb_;
+    auto outIndex = [](size_t nkeys_, size_t n, size_t i) noexcept {
+        return n * Nb_ + (i / Nb_) * Nb_ * nkeys_ + i % Nb_;
     };
 
     for (size_t n = 0u; n < nkeys; ++n) {
@@ -219,8 +219,8 @@ void AesProtocol<Nk_, Nb_, Nr_>::processWithExpandedKey(const AES_share_vec_t & 
     auto pit = plainText.cbegin();
     auto cit = cipherText.begin();
 
-    auto keyIndex = [](size_t nblocks, size_t n, size_t i) noexcept {
-        return n * Nb_ + (i / Nb_) * Nb_ * nblocks + i % Nb_;
+    auto keyIndex = [](size_t nblocks_, size_t n, size_t i) noexcept {
+        return n * Nb_ + (i / Nb_) * Nb_ * nblocks_ + i % Nb_;
     };
 
     for (size_t n = 0u; n < nblocks; ++n) {
