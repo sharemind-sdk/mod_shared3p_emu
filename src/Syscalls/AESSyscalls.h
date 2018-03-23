@@ -21,7 +21,9 @@
 #define MOD_SHARED3P_EMU_SYSCALLS_AESSYSCALLS_H
 
 #include <sharemind/module-apis/api_0x1.h>
+#include "../Protocols/AESProtocol.h"
 #include "Common.h"
+
 
 namespace sharemind {
 
@@ -85,6 +87,36 @@ NAMED_SYSCALL(aes_single_key_xor_uint32_vec, name, args, num_args, refs, crefs, 
 template <class Protocol>
 NAMED_SYSCALL(aes_xor_uint32_vec_expand_key, name, args, num_args, refs, crefs, returnValue, c)
     __attribute__ ((visibility("internal")));
+
+extern
+template NAMED_SYSCALL(aes_xor_uint32_vec<Aes128Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+extern
+template NAMED_SYSCALL(aes_xor_uint32_vec<Aes192Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+extern
+template NAMED_SYSCALL(aes_xor_uint32_vec<Aes256Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+
+extern
+template NAMED_SYSCALL(aes_single_key_xor_uint32_vec<Aes128Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+extern
+template NAMED_SYSCALL(aes_single_key_xor_uint32_vec<Aes192Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+extern
+template NAMED_SYSCALL(aes_single_key_xor_uint32_vec<Aes256Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+
+extern
+template NAMED_SYSCALL(aes_xor_uint32_vec_expand_key<Aes128Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+extern
+template NAMED_SYSCALL(aes_xor_uint32_vec_expand_key<Aes192Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+extern
+template NAMED_SYSCALL(aes_xor_uint32_vec_expand_key<Aes256Protocol>,
+                       name, args, num_args, refs, crefs, returnValue, c);
 
 } /* namespace sharemind */
 
