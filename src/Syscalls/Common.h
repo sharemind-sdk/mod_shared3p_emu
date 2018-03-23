@@ -110,6 +110,13 @@ inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
         const SharemindModuleApi0x1Reference * refs, \
         const SharemindModuleApi0x1CReference * crefs, \
         SharemindCodeBlock * retVal, \
+        SharemindModuleApi0x1SyscallContext * c); \
+    SharemindModuleApi0x1Error name( \
+        SharemindCodeBlock * args, \
+        size_t argc, \
+        const SharemindModuleApi0x1Reference * refs, \
+        const SharemindModuleApi0x1CReference * crefs, \
+        SharemindCodeBlock * retVal, \
         SharemindModuleApi0x1SyscallContext * c) \
     { \
         return __VA_ARGS__(("shared3p::" #name), args, argc, refs, crefs, retVal, c); \
