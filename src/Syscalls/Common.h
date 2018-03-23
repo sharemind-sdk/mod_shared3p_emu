@@ -139,7 +139,7 @@ inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
             (evaluator).model("TimeModel", (name)); \
         if (timeModel) \
             (profiler).addSection(sectionTypeId, (parameter), 0u, \
-                    timeModel->evaluate((parameter)), \
+                    static_cast<UsTime>(timeModel->evaluate((parameter))), \
                     sharemind::MinerNetworkStatistics(), \
                     sharemind::MinerNetworkStatistics()); \
     } while (false)
@@ -152,7 +152,7 @@ inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
             (evaluator).model("TimeModel", (name)); \
         if (timeModel) \
             (profiler).addSection(sectionTypeId, (parameter), 0u, \
-                    timeModel->evaluate((parameter))); \
+                    static_cast<UsTime>(timeModel->evaluate((parameter)))); \
     } while (false)
 #endif
 
