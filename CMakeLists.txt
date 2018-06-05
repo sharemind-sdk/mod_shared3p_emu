@@ -104,6 +104,15 @@ SharemindAddSharedLibrary("sharemind_mod_shared3p_emu"
         ${SharemindPdkHeaders_LIBRARIES}
 )
 
+FILE(GLOB_RECURSE SharemindModShared3pEmu_DEBUG_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/debug_files/*.cfg")
+ADD_CUSTOM_TARGET("include_SharemindModShared3pEmu_DEBUG_FILES_in_IDE" SOURCES
+                  ${SharemindModShared3pEmu_DEBUG_FILES})
+IF(NOT (CMAKE_BUILD_TYPE STREQUAL "Release"))
+    INSTALL(FILES ${SharemindModShared3pEmu_DEBUG_FILES}
+            DESTINATION "bin"
+            COMPONENT "debugconf")
+ENDIF()
 
 # Packaging:
 SharemindSetupPackaging()
