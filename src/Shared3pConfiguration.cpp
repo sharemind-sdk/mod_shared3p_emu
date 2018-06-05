@@ -24,10 +24,15 @@
 
 namespace sharemind {
 
+SHAREMIND_DEFINE_EXCEPTION_NOINLINE(sharemind::Exception,
+                                    Shared3pConfiguration::,
+                                    Exception);
+
 Shared3pConfiguration::Shared3pConfiguration(std::string const & filename)
+    try
     : m_modelEvaluatorConfiguration(
           Configuration(filename).get<std::string>(
               "ProtectionDomain.ModelEvaluatorConfiguration"))
-{}
+    {} catch (Configuration::Exception const &) { throw Exception(); }
 
 } /* namespace sharemind { */

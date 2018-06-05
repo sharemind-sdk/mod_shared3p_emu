@@ -20,12 +20,18 @@
 #ifndef MOD_SHARED3P_EMU_SHARED3PCONFIGURATION_H
 #define MOD_SHARED3P_EMU_SHARED3PCONFIGURATION_H
 
+#include <sharemind/Exception.h>
+#include <sharemind/ExceptionMacros.h>
 #include <string>
 
 
 namespace sharemind {
 
 class __attribute__ ((visibility("internal"))) Shared3pConfiguration {
+
+public: /* Types: */
+
+    SHAREMIND_DECLARE_EXCEPTION_NOINLINE(sharemind::Exception, Exception);
 
 public: /* Methods: */
 

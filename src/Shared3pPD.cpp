@@ -49,6 +49,8 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
                 makeUnique<ExecutionModelEvaluator>(
                     module.logger(),
                     config.modelEvaluatorConfiguration());
+    } catch (Shared3pConfiguration::Exception const &) {
+        throw ConfigurationException();
     } catch (ExecutionModelEvaluator::ConfigurationException const &) {
         throw ConfigurationException();
     }
