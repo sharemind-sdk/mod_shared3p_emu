@@ -27,12 +27,18 @@ namespace sharemind {
 SHAREMIND_DEFINE_EXCEPTION_NOINLINE(sharemind::Exception,
                                     Shared3pConfiguration::,
                                     Exception);
+SHAREMIND_DEFINE_EXCEPTION_CONST_MSG_NOINLINE(
+        Exception,
+        Shared3pConfiguration::,
+        ConfigurationException,
+        "Error in module configuration!");
 
 Shared3pConfiguration::Shared3pConfiguration(std::string const & filename)
     try
     : m_modelEvaluatorConfiguration(
           Configuration(filename).get<std::string>(
               "ProtectionDomain.ModelEvaluatorConfiguration"))
-    {} catch (Configuration::Exception const &) { throw Exception(); }
+    {} catch (Configuration::Exception const &)
+    { std::throw_with_nested(ConfigurationException()); }
 
 } /* namespace sharemind { */

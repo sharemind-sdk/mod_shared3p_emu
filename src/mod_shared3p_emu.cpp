@@ -1830,9 +1830,8 @@ SHAREMIND_MODULE_API_0x1_PD_STARTUP(shared3p_emu_startup, w) {
                                      : "",
                                      *m);
         return SHAREMIND_MODULE_API_0x1_OK;
-    } catch (const Shared3pPD::ConfigurationException & e) {
-        m->logger().error() << "Error on protection domain '"
-            << w->conf->pd_name << "' startup: " << e.what();
+    } catch (const Shared3pPD::ConfigurationException &) {
+        m->logger().printCurrentException();
         return SHAREMIND_MODULE_API_0x1_INVALID_PD_CONFIGURATION;
     } catch (...) {
         return catchModuleApiErrors ();
