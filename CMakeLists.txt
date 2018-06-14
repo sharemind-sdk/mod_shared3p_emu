@@ -116,7 +116,10 @@ ENDIF()
 
 # Packaging:
 SharemindSetupPackaging()
-SET(BV "${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.0")
+SET(BV
+    "${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}"
+)
+
 SharemindAddComponentPackage("lib"
     NAME "libsharemind-mod-shared3p-emu"
     DESCRIPTION "Sharemind Shared3p emulation module"
