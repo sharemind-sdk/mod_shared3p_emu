@@ -141,6 +141,6 @@ SharemindAddComponentPackage("debug"
     DESCRIPTION "Sharemind Shared3p emulation module debug symbols"
     DEB_SECTION "debug"
     DEB_DEPENDS
-        "libsharemind-mod-shared3p-emu (= ${SharemindModShared3pEmu_VERSION})"
+        "libsharemind-mod-shared3p-emu (= ${SharemindModShared3pEmu_DEB_lib_PACKAGE_VERSION})"
 )
 SharemindPackagingFinalize()
