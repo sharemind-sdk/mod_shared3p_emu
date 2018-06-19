@@ -23,7 +23,7 @@ PROJECT(SharemindModShared3pEmu VERSION 1.1.0 LANGUAGES CXX)
 INCLUDE("${CMAKE_CURRENT_SOURCE_DIR}/config.local" OPTIONAL)
 INCLUDE("${CMAKE_CURRENT_BINARY_DIR}/config.local" OPTIONAL)
 
-FIND_PACKAGE(SharemindCMakeHelpers REQUIRED)
+FIND_PACKAGE(SharemindCMakeHelpers 1.2 REQUIRED)
 
 SharemindSetProjectVersion()
 
