@@ -40,7 +40,7 @@ FIND_PACKAGE(SharemindLibConfiguration REQUIRED)
 FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
-FIND_PACKAGE(SharemindLibSoftfloat REQUIRED)
+FIND_PACKAGE(SharemindLibSoftfloat 0.2.0 REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloatMath REQUIRED)
 FIND_PACKAGE(SharemindModuleApis REQUIRED)
 FIND_PACKAGE(SharemindPdkHeaders REQUIRED)
@@ -131,7 +131,7 @@ SharemindAddComponentPackage("lib"
         "libsharemind-configuration (>= 0.1.0)"
         "libsharemind-executionmodelevaluator (>= 0.1.0)"
         "libsharemind-executionprofiler (>= 0.1.0)"
-        "libsharemind-softfloat (>= 0.1.0)"
+        "libsharemind-softfloat (>= 0.2.0)"
         "libsharemind-softfloat-math (>= 0.1.0)"
         "libstdc++6 (>= 4.8.0)"
         "libc6 (>= 2.19)"
