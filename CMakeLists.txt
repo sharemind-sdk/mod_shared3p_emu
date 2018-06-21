@@ -36,7 +36,7 @@ FIND_PACKAGE(Cryptopp REQUIRED)
 FIND_PACKAGE(LogHard 0.3.0 REQUIRED)
 FIND_PACKAGE(SharemindCHeaders 1.1.0 REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders 0.4.0 REQUIRED)
-FIND_PACKAGE(SharemindLibConfiguration REQUIRED)
+FIND_PACKAGE(SharemindLibConfiguration 0.2.0 REQUIRED)
 FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator 0.2.0 REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler 0.2.0 REQUIRED)
@@ -128,7 +128,7 @@ SharemindAddComponentPackage("lib"
         "libboost-filesystem${BV}"
         "libcrypto++6"
         "libloghard (>= 0.3.0)"
-        "libsharemind-configuration (>= 0.1.0)"
+        "libsharemind-configuration (>= 0.2.0)"
         "libsharemind-executionmodelevaluator (>= 0.2.0)"
         "libsharemind-executionprofiler (>= 0.2.0)"
         "libsharemind-softfloat (>= 0.2.0)"
