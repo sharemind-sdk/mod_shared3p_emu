@@ -43,7 +43,7 @@ FIND_PACKAGE(SharemindLibExecutionProfiler 0.2.0 REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloat 0.2.0 REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloatMath REQUIRED)
 FIND_PACKAGE(SharemindModuleApis 1.0.0 REQUIRED)
-FIND_PACKAGE(SharemindPdkHeaders REQUIRED)
+FIND_PACKAGE(SharemindPdkHeaders 0.2.0 REQUIRED)
 
 
 SharemindSetCxx11CompileOptions()
