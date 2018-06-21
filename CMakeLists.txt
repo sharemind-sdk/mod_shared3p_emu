@@ -38,7 +38,7 @@ FIND_PACKAGE(SharemindCHeaders 1.1.0 REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders 0.4.0 REQUIRED)
 FIND_PACKAGE(SharemindLibConfiguration REQUIRED)
 FIND_PACKAGE(SharemindLibEmulatorProtocols REQUIRED)
-FIND_PACKAGE(SharemindLibExecutionModelEvaluator REQUIRED)
+FIND_PACKAGE(SharemindLibExecutionModelEvaluator 0.2.0 REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloat 0.2.0 REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloatMath REQUIRED)
@@ -129,7 +129,7 @@ SharemindAddComponentPackage("lib"
         "libcrypto++6"
         "libloghard (>= 0.3.0)"
         "libsharemind-configuration (>= 0.1.0)"
-        "libsharemind-executionmodelevaluator (>= 0.1.0)"
+        "libsharemind-executionmodelevaluator (>= 0.2.0)"
         "libsharemind-executionprofiler (>= 0.1.0)"
         "libsharemind-softfloat (>= 0.2.0)"
         "libsharemind-softfloat-math (>= 0.1.0)"
