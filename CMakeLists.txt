@@ -33,7 +33,7 @@ SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeIncludes/"
 
 FIND_PACKAGE(Boost COMPONENTS filesystem REQUIRED)
 FIND_PACKAGE(Cryptopp REQUIRED)
-FIND_PACKAGE(LogHard REQUIRED)
+FIND_PACKAGE(LogHard 0.3.0 REQUIRED)
 FIND_PACKAGE(SharemindCHeaders 1.1.0 REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders 0.4.0 REQUIRED)
 FIND_PACKAGE(SharemindLibConfiguration REQUIRED)
@@ -127,7 +127,7 @@ SharemindAddComponentPackage("lib"
     DEB_DEPENDS
         "libboost-filesystem${BV}"
         "libcrypto++6"
-        "libloghard (>= 0.1.0)"
+        "libloghard (>= 0.3.0)"
         "libsharemind-configuration (>= 0.1.0)"
         "libsharemind-executionmodelevaluator (>= 0.1.0)"
         "libsharemind-executionprofiler (>= 0.1.0)"
