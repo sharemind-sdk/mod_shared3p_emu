@@ -913,6 +913,8 @@ NAMED_SYSCALL_WRAPPER(stable_sort_int8_vec, stable_sort<s3p_int8_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_int16_vec, stable_sort<s3p_int16_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_int32_vec, stable_sort<s3p_int32_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_int64_vec, stable_sort<s3p_int64_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_float32_vec, stable_sort<s3p_float32_t>)
+NAMED_SYSCALL_WRAPPER(stable_sort_float64_vec, stable_sort<s3p_float64_t>)
 
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
@@ -1261,6 +1263,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_int16_vec", stable_sort_int16_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_int32_vec", stable_sort_int32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_int64_vec", stable_sort_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_float32_vec", stable_sort_float32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::stable_sort_float64_vec", stable_sort_float64_vec)
 
   /**
    *  Additively shared signed integers

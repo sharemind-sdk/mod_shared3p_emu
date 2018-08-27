@@ -125,5 +125,9 @@ template NAMED_SYSCALL(stable_sort<s3p_int32_t>,
                        name, args, num_args, refs, crefs, returnValue, c);
 template NAMED_SYSCALL(stable_sort<s3p_int64_t>,
                        name, args, num_args, refs, crefs, returnValue, c);
+template NAMED_SYSCALL(stable_sort<s3p_float32_t>,
+                       name, args, num_args, refs, crefs, returnValue, c);
+template NAMED_SYSCALL(stable_sort<s3p_float64_t>,
+                       name, args, num_args, refs, crefs, returnValue, c);
 
 } /* namespace sharemind */
