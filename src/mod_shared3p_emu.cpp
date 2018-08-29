@@ -37,6 +37,7 @@
 #include "Syscalls/AESSyscalls.h"
 #include "Syscalls/BaseSyscalls.h"
 #include "Syscalls/CRCSyscalls.h"
+#include "Syscalls/CarterWegmanSyscall.h"
 #include "Syscalls/Common.h"
 #include "Syscalls/MatrixMultiplicationSyscalls.h"
 #include "Syscalls/MatrixShufflingSyscalls.h"
@@ -915,6 +916,7 @@ NAMED_SYSCALL_WRAPPER(stable_sort_int32_vec, stable_sort<s3p_int32_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_int64_vec, stable_sort<s3p_int64_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_float32_vec, stable_sort<s3p_float32_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_float64_vec, stable_sort<s3p_float64_t>)
+NAMED_SYSCALL_WRAPPER(carter_wegman128_vec, carter_wegman128)
 
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
@@ -1808,6 +1810,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_int64_vec", gather_int64_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_float32_vec", gather_float32_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_float64_vec", gather_float64_t)
+
+  , NAMED_SYSCALL_DEFINITION("shared3p::cw128_xor_uint8_vec", carter_wegman128_vec)
 
   /**
    *  Other functions
