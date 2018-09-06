@@ -358,6 +358,70 @@ inline sf_result64i sf_float_to_int(sf_float64 a,
     return sf_float64_to_int64_round_to_zero(a, fpu);
 }
 
+inline sf_float32 sf_int_to_float (uint32_t x, sf_fpu_state fpuState) {
+    return sf_int32_to_float32(x, fpuState).result;
+}
+
+inline sf_float64 sf_int_to_float (uint64_t x, sf_fpu_state fpuState) {
+    return sf_int64_to_float64(x, fpuState).result;
+}
+
+inline sf_float32 sf_int_to_float (int32_t x, sf_fpu_state fpuState) {
+    return sf_int32_to_float32(x, fpuState).result;
+}
+
+inline sf_float64 sf_int_to_float (int64_t x, sf_fpu_state fpuState) {
+    return sf_int64_to_float64(x, fpuState).result;
+}
+
+inline sf_float32 sf_float_pow (sf_float32 base, int power) {
+    // TODO Is there something to check here about the state?
+    sf_fpu_state state = 0;
+    sf_float32 x = sf_float32_one;
+
+    while (power > 0) {
+        while (power & 1) {
+            sf_result32f p = sf_float32_mul(x, base, state);
+            x = p.result;
+            power--;
+        }
+        sf_result32f bb = sf_float32_mul (base, base, state);
+        base = bb.result;
+        power /= 2;
+    }
+    return x;
+}
+
+inline sf_float64 sf_float_pow (sf_float64 base, int power) {
+    // TODO Is there something to check here about the state?
+    sf_fpu_state state = 0;
+    sf_float64 x = sf_float64_one;
+
+    while (power > 0) {
+        while (power & 1) {
+            sf_result64f p = sf_float64_mul(x, base, state);
+            x = p.result;
+            power--;
+        }
+        sf_result64f bb = sf_float64_mul (base, base, state);
+        base = bb.result;
+        power /= 2;
+    }
+    return x;
+}
+
+inline int32_t sf_float_round (sf_float32 val) {
+    sf_fpu_state state = 0;
+    return static_cast<int32_t>(sf_float32_to_int32_round_to_zero(val, state).result);
+
+}
+
+inline int64_t sf_float_round (sf_float64 val) {
+    sf_fpu_state state = 0;
+    return static_cast<int64_t>(sf_float64_to_int64_round_to_zero(val, state).result);
+
+}
+
 } /* namespace sharemind { */
 
 #endif /* MOD_SHARED3P_EMU_PROTOCOLS_SOFTFLOATURILITY_H */

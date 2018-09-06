@@ -43,6 +43,7 @@
 #include "Syscalls/MatrixShufflingSyscalls.h"
 #include "Syscalls/Meta.h"
 #include "Syscalls/SortingSyscalls.h"
+#include "Syscalls/FixSyscalls.h"
 
 
 namespace {
@@ -864,6 +865,12 @@ NAMED_SYSCALL_WRAPPER(matshufkey_float32_vec, matrix_shuffle<s3p_float32_t, true
 NAMED_SYSCALL_WRAPPER(matshufkey_float64_vec, matrix_shuffle<s3p_float64_t, true, false>)
 NAMED_SYSCALL_WRAPPER(matshufinv_float32_vec, matrix_shuffle<s3p_float32_t, true, true>)
 NAMED_SYSCALL_WRAPPER(matshufinv_float64_vec, matrix_shuffle<s3p_float64_t, true, true>)
+NAMED_SYSCALL_WRAPPER(classify_fix32_vec, classify_fix_vec<s3p_uint32_t, s3p_float32_t>)
+NAMED_SYSCALL_WRAPPER(classify_fix64_vec, classify_fix_vec<s3p_uint64_t, s3p_float64_t>)
+NAMED_SYSCALL_WRAPPER(declassify_fix32_vec, declassify_fix_vec<s3p_uint32_t, s3p_float32_t>)
+NAMED_SYSCALL_WRAPPER(declassify_fix64_vec, declassify_fix_vec<s3p_uint64_t, s3p_float64_t>)
+NAMED_SYSCALL_WRAPPER(init_fix32_vec, init_fix_vec<s3p_uint32_t, s3p_float32_t>)
+NAMED_SYSCALL_WRAPPER(init_fix64_vec, init_fix_vec<s3p_uint64_t, s3p_float64_t>)
 NAMED_SYSCALL_WRAPPER(mat_mult_uint8_t, mat_mult<s3p_uint8_t>)
 NAMED_SYSCALL_WRAPPER(mat_mult_uint16_t, mat_mult<s3p_uint16_t>)
 NAMED_SYSCALL_WRAPPER(mat_mult_uint32_t, mat_mult<s3p_uint32_t>)
@@ -1189,6 +1196,30 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::randomize_uint64_vec", randomize_uint64_vec)
 
     // Fixed-point numbers
+  , NAMED_SYSCALL_DEFINITION("shared3p::new_fix32_vec", new_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::new_fix64_vec", new_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::delete_fix32_vec", delete_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::delete_fix64_vec", delete_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::assign_fix32_vec", assign_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::assign_fix64_vec", delete_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::set_shares_fix32_vec", set_shares_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::set_shares_fix64_vec", set_shares_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::get_shares_fix32_vec", get_shares_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::get_shares_fix64_vec", get_shares_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::get_type_size_fix32", get_type_size_uint32)
+  , NAMED_SYSCALL_DEFINITION("shared3p::get_type_size_fix64", get_type_size_uint32)
+  , NAMED_SYSCALL_DEFINITION("shared3p::load_fix32_vec", load_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::load_fix64_vec", load_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::store_fix32_vec", store_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::store_fix64_vec", store_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::fill_fix32_vec", fill_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::fill_fix64_vec", fill_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::classify_fix32_vec", classify_fix32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::classify_fix64_vec", classify_fix64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::declassify_fix32_vec", declassify_fix32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::declassify_fix64_vec", declassify_fix64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::init_fix32_vec", init_fix32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::init_fix64_vec", init_fix64_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_float32_to_fix32_vec", conv_float32_to_fix32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_fix32_to_float32_vec", conv_fix32_to_float32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::conv_float64_to_fix64_vec", conv_float64_to_fix64_vec)
