@@ -280,6 +280,44 @@ private: /* Fields: */
 
 };
 
+template<typename Uint, typename Float>
+typename Float::public_type pubFixToFloat(typename Uint::public_type fix) {
+    using namespace FixedPointHelper;
+    using PubFloat = typename Float::public_type;
+    using PubUint = typename Uint::public_type;
+    using PubInt = typename respective_signed_type<Uint>::type::public_type;
+    PubInt fixI = *reinterpret_cast<PubInt*>(&fix);
+    static uint64_t radix = Radix<typename Uint::share_type>::value;
+
+    sf_fpu_state state = 0;
+    PubFloat two = sf_int_to_float(static_cast<PubUint>(2), state);
+    PubFloat fixF = sf_int_to_float(fixI, state);
+    // 2^-radix
+    PubFloat tmp = sf_float_pow(two, static_cast<int>(radix));
+    // fix * 2^-radix
+    PubFloat res = sf_float_div(fixF, tmp, state).result;
+
+    return res;
+}
+
+template<typename Uint, typename Float>
+typename Uint::public_type pubFloatToFix(typename Float::public_type x) {
+    using namespace FixedPointHelper;
+    using PubUint = typename Uint::public_type;
+    using PubFloat = typename Float::public_type;
+    using PubInt = typename respective_signed_type<Uint>::type::public_type;
+    static uint64_t radix = Radix<typename Uint::share_type>::value;
+
+    sf_fpu_state state = 0;
+    PubFloat two = sf_int_to_float(static_cast<PubUint>(2), state);
+    // round(float * 2^radix)
+    PubInt resI =
+        sf_float_round(
+            sf_float_mul(x, sf_float_pow(two, static_cast<int>(radix)), state).result);
+
+    return *reinterpret_cast<PubUint*>(&resI);
+}
+
 } /* namespace sharemind { */
 
 #endif /* MOD_SHARED3P_EMU_PROTOCOLS_FIXEDPOINT_H */

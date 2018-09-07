@@ -19,6 +19,7 @@
 
 #include "FixSyscalls.h"
 
+#include "../Protocols/FixedPoint.h"
 #include "../Shared3pPDPI.h"
 #include "../Shared3pVector.h"
 
