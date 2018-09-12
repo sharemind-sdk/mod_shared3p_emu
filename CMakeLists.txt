@@ -141,4 +141,13 @@ SharemindAddComponentPackage("debug"
     DEB_DEPENDS
         "libsharemind-mod-shared3p-emu (= ${SharemindModShared3pEmu_DEB_lib_PACKAGE_VERSION})"
 )
+IF(NOT (CMAKE_BUILD_TYPE STREQUAL "Release"))
+    SharemindAddComponentPackage("debugconf"
+        NAME "libsharemind-mod-shared3p-emu-dbgconf"
+        DESCRIPTION "Sharemind Shared3p emulation module debug symbols"
+        DEB_SECTION "debug"
+        DEB_DEPENDS
+            "libsharemind-mod-shared3p-emu (= ${SharemindModShared3pEmu_DEB_lib_PACKAGE_VERSION})"
+    )
+ENDIF()
 SharemindPackagingFinalize()
