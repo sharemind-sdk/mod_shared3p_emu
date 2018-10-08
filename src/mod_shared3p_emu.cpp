@@ -1829,6 +1829,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::scatter_int64_vec", scatter_int64_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::scatter_float32_vec", scatter_float32_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::scatter_float64_vec", scatter_float64_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::scatter_fix32_vec", scatter_fix32_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::scatter_fix64_vec", scatter_fix64_t)
 
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_bool_vec", gather_bool_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_uint8_vec", gather_uint8_t)
@@ -1845,6 +1847,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_int64_vec", gather_int64_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_float32_vec", gather_float32_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_float64_vec", gather_float64_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gather_fix32_vec", gather_fix32_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gather_fix64_vec", gather_fix64_t)
 
   , NAMED_SYSCALL_DEFINITION("shared3p::cw128_xor_uint8_vec", carter_wegman128_vec)
 
