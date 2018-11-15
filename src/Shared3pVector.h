@@ -20,7 +20,6 @@
 #ifndef MOD_SHARED3P_EMU_SHARED3PVECTOR_H
 #define MOD_SHARED3P_EMU_SHARED3PVECTOR_H
 
-#include <sharemind/compiler-support/GccInheritConstructor.h>
 #include <sharemind/ShareVector.h>
 
 #include "Shared3pValueTraits.h"
@@ -34,9 +33,7 @@ class __attribute__ ((visibility("internal"))) ShareVec <s3p_bool_t> : public Bi
 
 public: /* Methods: */
 
-    SHAREMIND_GCC_INHERITED_CONSTRUCTOR(ShareVec,
-                                        BitShareVec,
-                                        BitShareVec<s3p_bool_t>)
+    using BitShareVec<s3p_bool_t>::BitShareVec;
 
     template <typename T>
     inline void assignBits (const ShareVec<T>& vec) {

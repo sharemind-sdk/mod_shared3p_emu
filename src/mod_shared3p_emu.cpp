@@ -19,7 +19,6 @@
 
 #include <cassert>
 #include <LogHard/Logger.h>
-#include <sharemind/compiler-support/GccIsNothrowDestructible.h>
 #include <sharemind/ExecutionProfiler.h>
 #include <sharemind/libemulator_protocols/Nullary.h>
 #include <sharemind/libemulator_protocols/Ternary.h>
@@ -124,8 +123,9 @@ SHAREMIND_MODULE_API_0x1_DEINITIALIZER(c) {
     assert(c);
     assert(c->moduleHandle);
 
-    static_assert(sharemind::is_nothrow_destructible<sharemind::Shared3pModule>::value,
-            "Shared3pModule is not noexcept!");
+    static_assert(
+                std::is_nothrow_destructible<sharemind::Shared3pModule>::value,
+                "");
     delete static_cast<sharemind::Shared3pModule *>(c->moduleHandle);
     #ifndef NDEBUG
     c->moduleHandle = nullptr; // Not needed, but may help debugging.
