@@ -1891,8 +1891,8 @@ SHAREMIND_MODULE_API_0x1_PD_SHUTDOWN(shared3p_emu_shutdown, w) {
     assert(w->pdHandle);
     assert(w->moduleHandle);
 
-    static_assert(sharemind::is_nothrow_destructible<sharemind::Shared3pPD>::value,
-            "Shared3pPD is not noexcept!");
+    static_assert(
+                std::is_nothrow_destructible<sharemind::Shared3pPD>::value, "");
     delete static_cast<sharemind::Shared3pPD *>(w->pdHandle);
     #ifndef NDEBUG
     w->pdHandle = nullptr; // Not needed, but may help debugging.
@@ -1920,8 +1920,8 @@ SHAREMIND_MODULE_API_0x1_PDPI_SHUTDOWN(shared3p_emu_PDPI_shutdown, w) {
     assert(w->pdHandle);
     assert(w->pdProcessHandle);
 
-    static_assert(sharemind::is_nothrow_destructible<sharemind::Shared3pPDPI>::value,
-            "Shared3pPDPI is not noexcept");
+    static_assert(std::is_nothrow_destructible<sharemind::Shared3pPDPI>::value,
+                  "");
     delete static_cast<sharemind::Shared3pPDPI *>(w->pdProcessHandle);
     #ifndef NDEBUG
     w->pdProcessHandle = nullptr; // Not needed, but may help debugging.
