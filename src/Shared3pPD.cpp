@@ -19,7 +19,6 @@
 
 #include <sharemind/ExecutionModelEvaluator.h>
 #include <sharemind/ExecutionProfiler.h>
-#include <sharemind/MakeUnique.h>
 #include "Shared3pConfiguration.h"
 #include "Shared3pModule.h"
 #include "Shared3pPD.h"
@@ -46,7 +45,7 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
     try {
         Shared3pConfiguration const config(pdConfiguration);
         m_modelEvaluator =
-                makeUnique<ExecutionModelEvaluator>(
+                std::make_unique<ExecutionModelEvaluator>(
                     module.logger(),
                     config.modelEvaluatorConfiguration());
     } catch (Shared3pConfiguration::ConfigurationException const &) {
