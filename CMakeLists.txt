@@ -44,7 +44,7 @@ FIND_PACKAGE(SharemindModuleApis 1.0.0 REQUIRED)
 FIND_PACKAGE(SharemindPdkHeaders 0.2.0 REQUIRED)
 
 
-SharemindSetCxx11CompileOptions()
+SharemindSetCxx14CompileOptions()
 IF(SHAREMIND_NETWORK_STATISTICS)
     SharemindNewList(SharemindModShared3pEmu_EXTRA_DEFINITIONS
         "SHAREMIND_NETWORK_STATISTICS_ENABLE"
