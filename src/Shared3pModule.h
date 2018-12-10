@@ -27,28 +27,18 @@ namespace LogHard { class Logger; }
 
 namespace sharemind {
 
-class ExecutionProfiler;
-
 class __attribute__ ((visibility("internal"))) Shared3pModule {
 
 public: /* Methods: */
 
-    Shared3pModule(const LogHard::Logger & logger,
-                   ExecutionProfiler & m_profiler);
+    Shared3pModule(const LogHard::Logger & logger);
 
     const LogHard::Logger & logger() const noexcept
     { return m_logger; }
 
-    inline ExecutionProfiler & profiler() noexcept
-    { return m_profiler; }
-
-    inline const ExecutionProfiler & profiler() const noexcept
-    { return m_profiler; }
-
 private:
 
     const LogHard::Logger & m_logger;
-    ExecutionProfiler & m_profiler;
 
 }; /* class Shared3pModule { */
 

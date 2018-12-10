@@ -89,7 +89,7 @@ NAMED_SYSCALL(stable_sort, name, args, num_args, refs, crefs, returnValue, c)
             }
         }
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name, vec.size());
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name, vec.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
     } catch (...) {

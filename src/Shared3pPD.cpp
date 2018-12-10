@@ -18,7 +18,6 @@
  */
 
 #include <sharemind/ExecutionModelEvaluator.h>
-#include <sharemind/ExecutionProfiler.h>
 #include "Shared3pConfiguration.h"
 #include "Shared3pModule.h"
 #include "Shared3pPD.h"
@@ -40,7 +39,6 @@ Shared3pPD::Shared3pPD(const std::string & pdName,
                        const std::string & pdConfiguration,
                        Shared3pModule & module)
     : m_name(pdName)
-    , m_profiler(module.profiler())
 {
     try {
         Shared3pConfiguration const config(pdConfiguration);

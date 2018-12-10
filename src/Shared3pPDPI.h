@@ -28,7 +28,6 @@
 namespace sharemind {
 
 class ExecutionModelEvaluator;
-class ExecutionProfiler;
 class CxxRandomEngine;
 class Shared3pConfiguration;
 
@@ -47,12 +46,6 @@ public: /* Methods: */
 
     inline const ExecutionModelEvaluator & modelEvaluator() const noexcept
     { return m_modelEvaluator; }
-
-    inline ExecutionProfiler & profiler() noexcept
-    { return m_profiler; }
-
-    inline const ExecutionProfiler & profiler() const noexcept
-    { return m_profiler; }
 
     inline CxxRandomEngine & rng() noexcept
     { return m_rng; }
@@ -78,12 +71,8 @@ public: /* Methods: */
 private: /* Fields: */
 
     Shared3pPD & m_pd;
-
     ExecutionModelEvaluator & m_modelEvaluator;
-    ExecutionProfiler & m_profiler;
-
     CxxRandomEngine & m_rng;
-
     SharedValueHeap m_heap;
 
 }; /* class Shared3pPDPI { */

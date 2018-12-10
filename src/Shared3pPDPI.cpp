@@ -18,7 +18,6 @@
  */
 
 #include <sharemind/ExecutionModelEvaluator.h>
-#include <sharemind/ExecutionProfiler.h>
 #include "Shared3pPDPI.h"
 
 
@@ -27,7 +26,6 @@ namespace sharemind {
 Shared3pPDPI::Shared3pPDPI(Shared3pPD & pd)
     : m_pd(pd)
     , m_modelEvaluator(pd.modelEvaluator())
-    , m_profiler(pd.profiler())
     , m_rng(pd.rng())
 {}
 

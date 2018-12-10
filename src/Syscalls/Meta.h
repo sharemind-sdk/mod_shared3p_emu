@@ -77,7 +77,7 @@ NAMED_SYSCALL(binary_vec, name, args, num_args, refs, crefs, returnValue, c)
         if (!protocol.invoke(param1, param2, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         param1.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
@@ -127,7 +127,7 @@ NAMED_SYSCALL(binary_public_vec, name, args, num_args, refs, crefs, returnValue,
         if (!protocol.invoke(param1, param2, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         param1.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
@@ -207,7 +207,7 @@ NAMED_SYSCALL(unary_vec, name, args, num_args, refs, crefs, returnValue, c)
         if (!protocol.invoke(param, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         param.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
@@ -263,7 +263,7 @@ NAMED_SYSCALL(nullary_vec, name, args, num_args, refs, crefs, returnValue, c)
         if (!Protocol(*pdpi).invoke(result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         result.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
@@ -321,7 +321,7 @@ NAMED_SYSCALL(ternary_vec, name, args, num_args, refs, crefs, returnValue, c)
         if (!protocol.invoke(param1, param2, param3, result))
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         param1.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;

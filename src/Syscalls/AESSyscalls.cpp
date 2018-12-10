@@ -67,7 +67,7 @@ NAMED_SYSCALL(aes_xor_uint32_vec, name, args, num_args, refs, crefs, returnValue
 
         Protocol().processWithExpandedKey(inputVec, keyVec, outputVec);
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         inputVec.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
@@ -116,7 +116,7 @@ NAMED_SYSCALL(aes_single_key_xor_uint32_vec, name, args, num_args, refs, crefs, 
 
         Protocol().processWithSingleExpandedKey(inputVec, keyVec, outputVec);
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         inputVec.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
@@ -161,7 +161,7 @@ NAMED_SYSCALL(aes_xor_uint32_vec_expand_key, name, args, num_args, refs, crefs, 
 
         Protocol().expandAesKey(inputVec, outputVec);
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         inputVec.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;

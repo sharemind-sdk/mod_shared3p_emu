@@ -18,16 +18,13 @@
  */
 
 #include <LogHard/Logger.h>
-#include <sharemind/ExecutionProfiler.h>
 #include "Shared3pModule.h"
 
 
 namespace sharemind {
 
-Shared3pModule::Shared3pModule(const LogHard::Logger & logger,
-                               ExecutionProfiler & profiler)
+Shared3pModule::Shared3pModule(const LogHard::Logger & logger)
     : m_logger(logger)
-    , m_profiler(profiler)
 { }
 
 } /* namespace sharemind { */

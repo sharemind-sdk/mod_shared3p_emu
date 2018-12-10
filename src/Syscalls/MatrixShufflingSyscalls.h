@@ -84,7 +84,7 @@ NAMED_SYSCALL(vector_shuffle, name, args, num_args, refs, crefs, returnValue, c)
             msp.invoke(vec,  1);
         }
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         vec.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;
@@ -159,7 +159,7 @@ NAMED_SYSCALL(matrix_shuffle, name, args, num_args, refs, crefs, returnValue, c)
             msp.invoke(matrix, elementsPerRow);
         }
 
-        PROFILE_SYSCALL(pdpi->profiler(), pdpi->modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi->modelEvaluator(), name,
                         matrix.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;

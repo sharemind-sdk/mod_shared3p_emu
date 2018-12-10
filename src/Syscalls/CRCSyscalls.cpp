@@ -99,7 +99,7 @@ NAMED_SYSCALL(crc_xor_vec, name, args, num_args, refs, crefs, returnValue, c)
             return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
         }
 
-        PROFILE_SYSCALL(pdpi.profiler(), pdpi.modelEvaluator(), name,
+        PROFILE_SYSCALL(c, pdpi.modelEvaluator(), name,
                         inputVec.size());
 
         return SHAREMIND_MODULE_API_0x1_OK;

@@ -131,8 +131,10 @@ inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
  */
 /// \todo evaluate() returns double. Make sure we can cast it to UsTime.
 #ifdef SHAREMIND_NETWORK_STATISTICS_ENABLE
-#define PROFILE_SYSCALL(profiler,evaluator,name,parameter) \
+#define PROFILE_SYSCALL(ctx,evaluator,name,parameter) \
     do { \
+        auto & profiler = *static_cast<ExecutionProfiler *>( \
+                ctx->processFacility(ctx, "Profiler")); \
         static const uint32_t sectionTypeId = \
             (profiler).newSectionType((name)); \
         sharemind::ExecutionModelEvaluator::Model * const timeModel = \
@@ -144,8 +146,10 @@ inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
                     sharemind::MinerNetworkStatistics()); \
     } while (false)
 #else
-#define PROFILE_SYSCALL(profiler,evaluator,name,parameter) \
+#define PROFILE_SYSCALL(ctx,evaluator,name,parameter) \
     do { \
+        auto & profiler = *static_cast<ExecutionProfiler *>( \
+                ctx->processFacility(ctx, "Profiler")); \
         static const uint32_t sectionTypeId = \
             (profiler).newSectionType((name)); \
         sharemind::ExecutionModelEvaluator::Model * const timeModel = \
