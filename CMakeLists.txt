@@ -133,6 +133,9 @@ SharemindAddComponentPackage("lib"
     DEB_CONFLICTS
         "libsharemind-mod-shared3p"
         "libsharemind-mod-shared3pdev"
+    DEB_EXTRA_CONTROL_FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/packaging/debian/conffiles"
+
 )
 SharemindAddComponentPackage("debug"
     NAME "libsharemind-mod-shared3p-emu-dbg"
