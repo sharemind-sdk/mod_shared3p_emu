@@ -130,6 +130,9 @@ SharemindAddComponentPackage("lib"
         "libsharemind-softfloat-math (>= 0.1.0)"
         "libstdc++6 (>= 4.8.0)"
         "libc6 (>= 2.19)"
+    DEB_CONFLICTS
+        "libsharemind-mod-shared3p"
+        "libsharemind-mod-shared3pdev"
 )
 SharemindAddComponentPackage("debug"
     NAME "libsharemind-mod-shared3p-emu-dbg"
