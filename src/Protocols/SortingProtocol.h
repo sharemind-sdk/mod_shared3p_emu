@@ -88,20 +88,6 @@ struct Compare {
             return lt<T>(b, a) || (eq<T>(a, b) && i < j);
     }
 
-    /*
-    typename std::enable_if<is_float_value_tag<T>::value, bool>::type
-    operator()(const Triple<T>& atrip, const Triple<T>& btrip) {
-        using Value = typename sharemind::ValueTraits<T>::share_type;
-        using Idx = typename sharemind::ValueTraits<sharemind::s3p_xor_uint64_t>::share_type;
-        Value a = std::get<0>(atrip), b = std::get<0>(btrip);
-        Idx i = std::get<1>(atrip), j = std::get<1>(btrip);
-        if (m_ascending)
-            return sf_float_lt(a, b).result || (sf_float_eq(a, b).result && i < j);
-        else
-            return sf_float_gt(a, b).result || (sf_float_eq(a, b).result && i < j);
-    }
-    */
-
     const bool m_ascending;
 };
 
