@@ -27,8 +27,43 @@
 #include "../Shared3pPDPI.h"
 #include "../Shared3pValueTraits.h"
 #include "../Shared3pVector.h"
+#include "SoftFloatUtility.h"
+
+namespace sharemind {
 
 namespace {
+
+template<typename T>
+typename std::enable_if<! is_float_value_tag<T>::value, bool>::type
+lt(const typename sharemind::ValueTraits<T>::share_type & a,
+   const typename sharemind::ValueTraits<T>::share_type & b)
+{
+    return a < b;
+}
+
+template<typename T>
+typename std::enable_if<is_float_value_tag<T>::value, bool>::type
+lt(const typename sharemind::ValueTraits<T>::share_type & a,
+   const typename sharemind::ValueTraits<T>::share_type & b)
+{
+    return sf_float_lt(a, b).result;
+}
+
+template<typename T>
+typename std::enable_if<! is_float_value_tag<T>::value, bool>::type
+eq(const typename sharemind::ValueTraits<T>::share_type & a,
+   const typename sharemind::ValueTraits<T>::share_type & b)
+{
+    return a == b;
+}
+
+template<typename T>
+typename std::enable_if<is_float_value_tag<T>::value, bool>::type
+eq(const typename sharemind::ValueTraits<T>::share_type & a,
+   const typename sharemind::ValueTraits<T>::share_type & b)
+{
+    return sf_float_eq(a, b).result;
+}
 
 template<typename T>
 using Triple =
@@ -48,17 +83,29 @@ struct Compare {
         Value a = std::get<0>(atrip), b = std::get<0>(btrip);
         Idx i = std::get<1>(atrip), j = std::get<1>(btrip);
         if (m_ascending)
-            return a < b || (a == b && i < j);
+            return lt<T>(a, b) || (eq<T>(a, b) && i < j);
         else
-            return a > b || (a == b && i < j);
+            return lt<T>(b, a) || (eq<T>(a, b) && i < j);
     }
+
+    /*
+    typename std::enable_if<is_float_value_tag<T>::value, bool>::type
+    operator()(const Triple<T>& atrip, const Triple<T>& btrip) {
+        using Value = typename sharemind::ValueTraits<T>::share_type;
+        using Idx = typename sharemind::ValueTraits<sharemind::s3p_xor_uint64_t>::share_type;
+        Value a = std::get<0>(atrip), b = std::get<0>(btrip);
+        Idx i = std::get<1>(atrip), j = std::get<1>(btrip);
+        if (m_ascending)
+            return sf_float_lt(a, b).result || (sf_float_eq(a, b).result && i < j);
+        else
+            return sf_float_gt(a, b).result || (sf_float_eq(a, b).result && i < j);
+    }
+    */
 
     const bool m_ascending;
 };
 
 } /* anonymous namespace */
-
-namespace sharemind {
 
 class __attribute__ ((visibility("internal"))) StableSortingProtocol {
 public: /* Methods: */
