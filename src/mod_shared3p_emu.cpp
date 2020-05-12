@@ -37,11 +37,12 @@
 #include "Syscalls/CRCSyscalls.h"
 #include "Syscalls/CarterWegmanSyscall.h"
 #include "Syscalls/Common.h"
+#include "Syscalls/FixSyscalls.h"
+#include "Syscalls/GenRandomPublicPermSyscall.h"
 #include "Syscalls/MatrixMultiplicationSyscalls.h"
 #include "Syscalls/MatrixShufflingSyscalls.h"
 #include "Syscalls/Meta.h"
 #include "Syscalls/SortingSyscalls.h"
-#include "Syscalls/FixSyscalls.h"
 
 
 namespace {
@@ -918,6 +919,7 @@ NAMED_SYSCALL_WRAPPER(stable_sort_int64_vec, stable_sort<s3p_int64_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_float32_vec, stable_sort<s3p_float32_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_float64_vec, stable_sort<s3p_float64_t>)
 NAMED_SYSCALL_WRAPPER(carter_wegman128_vec, carter_wegman128)
+NAMED_SYSCALL_WRAPPER(gen_random_public_perm_wrapper, gen_random_public_perm)
 
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
@@ -1841,6 +1843,7 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_fix64_vec", gather_fix64_t)
 
   , NAMED_SYSCALL_DEFINITION("shared3p::cw128_xor_uint8_vec", carter_wegman128_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::gen_rand_pub_perm", gen_random_public_perm_wrapper)
 
   /**
    *  Other functions
