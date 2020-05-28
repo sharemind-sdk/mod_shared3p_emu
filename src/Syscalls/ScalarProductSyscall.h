@@ -10,6 +10,7 @@
 #ifndef MOD_SHARED3P_EMU_SCALARPRODUCTSYSCALL_H
 #define MOD_SHARED3P_EMU_SCALARPRODUCTSYSCALL_H
 
+#include "../SecretSharing.h"
 #include "../Shared3pValueTraits.h"
 #include "Common.h"
 #include <sharemind/module-apis/api_0x1.h>
@@ -17,20 +18,6 @@
 namespace sharemind {
 
 namespace {
-
-template <typename Share >
-static Share combine (const Share& value, const Share& share, numeric_value_tag) {
-    return value + share;
-}
-
-static bool combine (bool value, bool share, bool_value_tag) {
-    return value ^ share;
-}
-
-template <typename Share >
-static Share combine (const Share& value, const Share& share, xored_numeric_value_tag) {
-    return value ^ share;
-}
 
 template <typename T>
 static T constMultShare(const T& v1, const T& v2, numeric_value_tag) {
@@ -86,7 +73,7 @@ NAMED_SYSCALL(parallel_const_scalar_product, name, args, num_args, refs, crefs, 
             for (size_t j = 0; j < m; ++j) {
                 auto const mul = constMultShare(
                     src[i + j], coeffs[j], typename ValueTraits<T>::value_category{});
-                dest[i] = combine(
+                dest[i] = SecretSharing::combine(
                     dest[i], mul, typename ValueTraits<T>::value_category{});
             }
         }

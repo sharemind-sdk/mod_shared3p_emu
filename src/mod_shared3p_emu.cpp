@@ -28,6 +28,7 @@
 #include "Protocols/AESProtocol.h"
 #include "Protocols/Binary.h"
 #include "Protocols/FixedPoint.h"
+#include "Protocols/PrefixSumProtocols.h"
 #include "Protocols/SortingProtocol.h"
 #include "Protocols/Unary.h"
 #include "Shared3pModule.h"
@@ -933,6 +934,22 @@ NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_int16_vec, parallel_const_sc
 NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_int32_vec, parallel_const_scalar_product<s3p_int32_t>)
 NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_int64_vec, parallel_const_scalar_product<s3p_int64_t>)
 NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_bool_vec, parallel_const_scalar_product<s3p_bool_t>)
+NAMED_SYSCALL_WRAPPER(prefix_sum_uint8_vec, unary_arith_vec<s3p_uint8_t, PrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(prefix_sum_uint16_vec, unary_arith_vec<s3p_uint16_t, PrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(prefix_sum_uint32_vec, unary_arith_vec<s3p_uint32_t, PrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(prefix_sum_uint64_vec, unary_arith_vec<s3p_uint64_t, PrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(prefix_sum_int8_vec, unary_arith_vec<s3p_int8_t, PrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(prefix_sum_int16_vec, unary_arith_vec<s3p_int16_t, PrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(prefix_sum_int32_vec, unary_arith_vec<s3p_int32_t, PrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(prefix_sum_int64_vec, unary_arith_vec<s3p_int64_t, PrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_prefix_sum_uint8_vec, unary_arith_vec<s3p_uint8_t, InvPrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_prefix_sum_uint16_vec, unary_arith_vec<s3p_uint16_t, InvPrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_prefix_sum_uint32_vec, unary_arith_vec<s3p_uint32_t, InvPrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_prefix_sum_uint64_vec, unary_arith_vec<s3p_uint64_t, InvPrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_prefix_sum_int8_vec, unary_arith_vec<s3p_int8_t, InvPrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_prefix_sum_int16_vec, unary_arith_vec<s3p_int16_t, InvPrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_prefix_sum_int32_vec, unary_arith_vec<s3p_int32_t, InvPrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(inv_prefix_sum_int64_vec, unary_arith_vec<s3p_int64_t, InvPrefixSumProtocol>)
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 
@@ -1855,7 +1872,9 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::gather_fix64_vec", gather_fix64_t)
 
   , NAMED_SYSCALL_DEFINITION("shared3p::cw128_xor_uint8_vec", carter_wegman128_vec)
+
   , NAMED_SYSCALL_DEFINITION("shared3p::gen_rand_pub_perm", gen_random_public_perm_wrapper)
+
   , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_uint8_vec", parallel_const_scalar_product_uint8_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_uint16_vec", parallel_const_scalar_product_uint16_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_uint32_vec", parallel_const_scalar_product_uint32_vec)
@@ -1869,6 +1888,24 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_int32_vec", parallel_const_scalar_product_int32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_int64_vec", parallel_const_scalar_product_int64_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_bool_vec", parallel_const_scalar_product_bool_vec)
+
+  , NAMED_SYSCALL_DEFINITION("shared3p::prefix_sum_uint8_vec", prefix_sum_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::prefix_sum_uint16_vec", prefix_sum_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::prefix_sum_uint32_vec", prefix_sum_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::prefix_sum_uint64_vec", prefix_sum_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::prefix_sum_int8_vec", prefix_sum_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::prefix_sum_int16_vec", prefix_sum_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::prefix_sum_int32_vec", prefix_sum_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::prefix_sum_int64_vec", prefix_sum_int64_vec)
+
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_uint8_vec", inv_prefix_sum_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_uint16_vec", inv_prefix_sum_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_uint32_vec", inv_prefix_sum_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_uint64_vec", inv_prefix_sum_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_int8_vec", inv_prefix_sum_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_int16_vec", inv_prefix_sum_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_int32_vec", inv_prefix_sum_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_int64_vec", inv_prefix_sum_int64_vec)
 
   /**
    *  Other functions
