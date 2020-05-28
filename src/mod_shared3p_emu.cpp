@@ -42,8 +42,8 @@
 #include "Syscalls/MatrixMultiplicationSyscalls.h"
 #include "Syscalls/MatrixShufflingSyscalls.h"
 #include "Syscalls/Meta.h"
+#include "Syscalls/ScalarProductSyscall.h"
 #include "Syscalls/SortingSyscalls.h"
-
 
 namespace {
 
@@ -920,7 +920,19 @@ NAMED_SYSCALL_WRAPPER(stable_sort_float32_vec, stable_sort<s3p_float32_t>)
 NAMED_SYSCALL_WRAPPER(stable_sort_float64_vec, stable_sort<s3p_float64_t>)
 NAMED_SYSCALL_WRAPPER(carter_wegman128_vec, carter_wegman128)
 NAMED_SYSCALL_WRAPPER(gen_random_public_perm_wrapper, gen_random_public_perm)
-
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_uint8_vec, parallel_const_scalar_product<s3p_uint8_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_uint16_vec, parallel_const_scalar_product<s3p_uint16_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_uint32_vec, parallel_const_scalar_product<s3p_uint32_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_uint64_vec, parallel_const_scalar_product<s3p_uint64_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_xor_uint8_vec, parallel_const_scalar_product<s3p_xor_uint8_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_xor_uint16_vec, parallel_const_scalar_product<s3p_xor_uint16_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_xor_uint32_vec, parallel_const_scalar_product<s3p_xor_uint32_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_xor_uint64_vec, parallel_const_scalar_product<s3p_xor_uint64_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_int8_vec, parallel_const_scalar_product<s3p_int8_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_int16_vec, parallel_const_scalar_product<s3p_int16_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_int32_vec, parallel_const_scalar_product<s3p_int32_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_int64_vec, parallel_const_scalar_product<s3p_int64_t>)
+NAMED_SYSCALL_WRAPPER(parallel_const_scalar_product_bool_vec, parallel_const_scalar_product<s3p_bool_t>)
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 
@@ -1844,6 +1856,19 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 
   , NAMED_SYSCALL_DEFINITION("shared3p::cw128_xor_uint8_vec", carter_wegman128_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::gen_rand_pub_perm", gen_random_public_perm_wrapper)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_uint8_vec", parallel_const_scalar_product_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_uint16_vec", parallel_const_scalar_product_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_uint32_vec", parallel_const_scalar_product_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_uint64_vec", parallel_const_scalar_product_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_xor_uint8_vec", parallel_const_scalar_product_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_xor_uint16_vec", parallel_const_scalar_product_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_xor_uint32_vec", parallel_const_scalar_product_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_xor_uint64_vec", parallel_const_scalar_product_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_int8_vec", parallel_const_scalar_product_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_int16_vec", parallel_const_scalar_product_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_int32_vec", parallel_const_scalar_product_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_int64_vec", parallel_const_scalar_product_int64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::par_scalar_product_by_const_bool_vec", parallel_const_scalar_product_bool_vec)
 
   /**
    *  Other functions
