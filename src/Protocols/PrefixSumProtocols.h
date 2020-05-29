@@ -95,6 +95,56 @@ public: /* Methods: */
 
 }; /* class PrefixSumProtocol */
 
+class __attribute__ ((visibility("internal"))) MatPrefixSumProtocol {
+public: /* Methods: */
+
+    MatPrefixSumProtocol(Shared3pPDPI& pdpi) { (void) pdpi; }
+
+    template <typename T>
+    bool invoke(ShareVec<T>& vec,
+                const ImmutableVmVec<s3p_uint32_t>& start,
+                const ImmutableVmVec<s3p_uint32_t>& step,
+                const ImmutableVmVec<s3p_uint32_t>& count,
+                bool direction)
+    {
+        if (start.size() != step.size() ||
+            start.size() != count.size())
+        {
+            return false;
+        }
+
+        for (size_t i = 0; i < start.size(); ++i) {
+            ShareVec<T> w(count[i]);
+            ShareVec<T> out(count[i]);
+
+            for (size_t j = 0; j < count[i]; ++j) {
+                size_t idx = start[i] + j * step[i];
+                if (idx >= vec.size()) {
+                    return false;
+                }
+                w[j] = vec[idx];
+            }
+
+            if (direction) {
+                if (!freePrefixSum(w, out)) {
+                    return false;
+                }
+            } else {
+                if (!freeInvPrefixSum(w, out)) {
+                    return false;
+                }
+            }
+
+            for (size_t j = 0; j < count[i]; ++j) {
+                vec[start[i] + j * step[i]] = out[j];
+            }
+        }
+
+        return true;
+    }
+
+}; /* class PrefixSumProtocol */
+
 } /* namespace sharemind { */
 
 #endif // MOD_SHARED3P_EMU_PREFIXSUMSYSCALLS_H

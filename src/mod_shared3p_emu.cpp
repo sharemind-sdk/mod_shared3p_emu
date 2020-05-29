@@ -40,6 +40,7 @@
 #include "Syscalls/Common.h"
 #include "Syscalls/FixSyscalls.h"
 #include "Syscalls/GenRandomPublicPermSyscall.h"
+#include "Syscalls/ManyPrefixSumSyscall.h"
 #include "Syscalls/MatrixMultiplicationSyscalls.h"
 #include "Syscalls/MatrixShufflingSyscalls.h"
 #include "Syscalls/Meta.h"
@@ -950,6 +951,18 @@ NAMED_SYSCALL_WRAPPER(inv_prefix_sum_int8_vec, unary_arith_vec<s3p_int8_t, InvPr
 NAMED_SYSCALL_WRAPPER(inv_prefix_sum_int16_vec, unary_arith_vec<s3p_int16_t, InvPrefixSumProtocol>)
 NAMED_SYSCALL_WRAPPER(inv_prefix_sum_int32_vec, unary_arith_vec<s3p_int32_t, InvPrefixSumProtocol>)
 NAMED_SYSCALL_WRAPPER(inv_prefix_sum_int64_vec, unary_arith_vec<s3p_int64_t, InvPrefixSumProtocol>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_uint8_vec, many_prefix_sum<s3p_uint8_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_uint16_vec, many_prefix_sum<s3p_uint16_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_uint32_vec, many_prefix_sum<s3p_uint32_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_uint64_vec, many_prefix_sum<s3p_uint64_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_xor_uint8_vec, many_prefix_sum<s3p_xor_uint8_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_xor_uint16_vec, many_prefix_sum<s3p_xor_uint16_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_xor_uint32_vec, many_prefix_sum<s3p_xor_uint32_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_xor_uint64_vec, many_prefix_sum<s3p_xor_uint64_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_int8_vec, many_prefix_sum<s3p_int8_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_int16_vec, many_prefix_sum<s3p_int16_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_int32_vec, many_prefix_sum<s3p_int32_t, true>)
+NAMED_SYSCALL_WRAPPER(many_prefix_sum_int64_vec, many_prefix_sum<s3p_int64_t, true>)
 
 SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
 
@@ -1906,6 +1919,19 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_int16_vec", inv_prefix_sum_int16_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_int32_vec", inv_prefix_sum_int32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::inv_prefix_sum_int64_vec", inv_prefix_sum_int64_vec)
+
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_uint8_vec", many_prefix_sum_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_uint16_vec", many_prefix_sum_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_uint32_vec", many_prefix_sum_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_uint64_vec", many_prefix_sum_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_xor_uint8_vec", many_prefix_sum_xor_uint8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_xor_uint16_vec", many_prefix_sum_xor_uint16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_xor_uint32_vec", many_prefix_sum_xor_uint32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_xor_uint64_vec", many_prefix_sum_xor_uint64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_int8_vec", many_prefix_sum_int8_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_int16_vec", many_prefix_sum_int16_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_int32_vec", many_prefix_sum_int32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::many_prefix_sum_int64_vec", many_prefix_sum_int64_vec)
 
   /**
    *  Other functions
