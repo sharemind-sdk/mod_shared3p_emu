@@ -40,7 +40,8 @@ public: /* Methods: */
             const ImmutableVmVec<s3p_uint64_t>& dim1,
             const ImmutableVmVec<s3p_uint64_t>& dim2,
             const ImmutableVmVec<s3p_uint64_t>& dim3,
-            ShareVec<T>& result)
+            ShareVec<T>& result,
+            numeric_value_tag)
     {
         // Transpose mat2 for better memory access later.
         ShareVec<T> mat2T (mat2.size());
@@ -68,6 +69,58 @@ public: /* Methods: */
                         const size_t t1 = s1 + j * dim2[i] + l;
                         const size_t t2 = s2 + k * dim2[i] + l;
                         result[t3] += mat1[t1] * mat2T[t2];
+                    }
+                }
+            }
+
+            s1 += dim1[i] * dim2[i];
+            s2 += dim2[i] * dim3[i];
+            s3 += dim1[i] * dim3[i];
+        }
+
+        return true;
+    }
+
+    /*
+     * Does not perform normal algebraic matrix multiplication!
+     * Addition is replaced by xor and multiplication by bitwise and.
+     */
+    template <typename T>
+    typename std::enable_if<is_xor_value_tag<T>::value, bool>::type
+    invoke (const ShareVec<T>& mat1,
+            const ShareVec<T>& mat2,
+            const ImmutableVmVec<s3p_uint64_t>& dim1,
+            const ImmutableVmVec<s3p_uint64_t>& dim2,
+            const ImmutableVmVec<s3p_uint64_t>& dim3,
+            ShareVec<T>& result,
+            xored_numeric_value_tag)
+    {
+        // Transpose mat2 for better memory access later.
+        ShareVec<T> mat2T (mat2.size());
+
+        size_t s = 0;
+        for (size_t i = 0; i < dim1.size(); ++ i) {
+            for (size_t j = 0; j < dim2[i]; ++ j) {
+                for (size_t k = 0; k < dim3[i]; ++ k) {
+                    mat2T[s + k * dim2[i] + j] = mat2[s + j * dim3[i] + k];
+                }
+            }
+
+            s += dim2[i] * dim3[i];
+        }
+
+        size_t s1 = 0;
+        size_t s2 = 0;
+        size_t s3 = 0;
+        for (size_t i = 0; i < dim1.size(); ++ i) {
+            for (size_t j = 0; j < dim1[i]; ++ j) {
+                for (size_t k = 0; k < dim3[i]; ++ k) {
+                    const size_t t3 = s3 + j * dim3[i] + k;
+                    result[t3] = 0;
+                    for (size_t l = 0; l < dim2[i]; ++ l) {
+                        const size_t t1 = s1 + j * dim2[i] + l;
+                        const size_t t2 = s2 + k * dim2[i] + l;
+                        result[t3] ^= mat1[t1] & mat2T[t2];
                     }
                 }
             }
