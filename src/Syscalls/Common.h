@@ -133,30 +133,34 @@ inline sf_float64 getStack<s3p_float64_t>(const SharemindCodeBlock & arg)
 #ifdef SHAREMIND_NETWORK_STATISTICS_ENABLE
 #define PROFILE_SYSCALL(ctx,evaluator,name,parameter) \
     do { \
-        auto & profiler = *static_cast<ExecutionProfiler *>( \
-                ctx->processFacility(ctx, "Profiler")); \
-        static const uint32_t sectionTypeId = \
-            (profiler).newSectionType((name)); \
-        sharemind::ExecutionModelEvaluator::Model * const timeModel = \
-            (evaluator).model("TimeModel", (name)); \
-        if (timeModel) \
-            (profiler).addSection(sectionTypeId, (parameter), 0u, \
-                    static_cast<UsTime>(timeModel->evaluate((parameter))), \
-                    sharemind::MinerNetworkStatistics(), \
-                    sharemind::MinerNetworkStatistics()); \
+        if (auto * const profiler = static_cast<ExecutionProfiler *>( \
+                ctx->processFacility(ctx, "Profiler"))) \
+        { \
+            static const uint32_t sectionTypeId = \
+                profiler->newSectionType((name)); \
+            sharemind::ExecutionModelEvaluator::Model * const timeModel = \
+                (evaluator).model("TimeModel", (name)); \
+            if (timeModel) \
+                profiler->addSection(sectionTypeId, (parameter), 0u, \
+                        static_cast<UsTime>(timeModel->evaluate((parameter))), \
+                        sharemind::MinerNetworkStatistics(), \
+                        sharemind::MinerNetworkStatistics()); \
+        } \
     } while (false)
 #else
 #define PROFILE_SYSCALL(ctx,evaluator,name,parameter) \
     do { \
-        auto & profiler = *static_cast<ExecutionProfiler *>( \
-                ctx->processFacility(ctx, "Profiler")); \
-        static const uint32_t sectionTypeId = \
-            (profiler).newSectionType((name)); \
-        sharemind::ExecutionModelEvaluator::Model * const timeModel = \
-            (evaluator).model("TimeModel", (name)); \
-        if (timeModel) \
-            (profiler).addSection(sectionTypeId, (parameter), 0u, \
-                    static_cast<UsTime>(timeModel->evaluate((parameter)))); \
+        if (auto * const profiler = static_cast<ExecutionProfiler *>( \
+                ctx->processFacility(ctx, "Profiler"))) \
+        { \
+            static const uint32_t sectionTypeId = \
+                profiler->newSectionType((name)); \
+            sharemind::ExecutionModelEvaluator::Model * const timeModel = \
+                (evaluator).model("TimeModel", (name)); \
+            if (timeModel) \
+                profiler->addSection(sectionTypeId, (parameter), 0u, \
+                        static_cast<UsTime>(timeModel->evaluate((parameter))));\
+        } \
     } while (false)
 #endif
 
