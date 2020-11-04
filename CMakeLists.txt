@@ -23,7 +23,7 @@ PROJECT(SharemindModShared3pEmu VERSION 1.3.1 LANGUAGES CXX)
 INCLUDE("${CMAKE_CURRENT_SOURCE_DIR}/config.local" OPTIONAL)
 INCLUDE("${CMAKE_CURRENT_BINARY_DIR}/config.local" OPTIONAL)
 
-FIND_PACKAGE(SharemindCMakeHelpers 1.4 REQUIRED)
+FIND_PACKAGE(SharemindCMakeHelpers 1.6 REQUIRED)
 
 SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeIncludes/"
                       ${CMAKE_MODULE_PATH})
@@ -31,76 +31,53 @@ SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeIncludes/"
 
 FIND_PACKAGE(Boost 1.62 COMPONENTS filesystem REQUIRED)
 FIND_PACKAGE(Cryptopp REQUIRED)
-FIND_PACKAGE(LogHard 0.3.0 REQUIRED)
-FIND_PACKAGE(SharemindCHeaders 1.1.0 REQUIRED)
-FIND_PACKAGE(SharemindCxxHeaders 0.5.0 REQUIRED)
-FIND_PACKAGE(SharemindLibConfiguration 0.2.0 REQUIRED)
-FIND_PACKAGE(SharemindLibEmulatorProtocols 0.1.1 REQUIRED)
-FIND_PACKAGE(SharemindLibExecutionModelEvaluator 0.2.0 REQUIRED)
-FIND_PACKAGE(SharemindLibExecutionProfiler 0.2.0 REQUIRED)
-FIND_PACKAGE(SharemindLibSoftfloat 0.2.0 REQUIRED)
-FIND_PACKAGE(SharemindLibSoftfloatMath 0.1.0 REQUIRED)
-FIND_PACKAGE(SharemindModuleApis 1.0.0 REQUIRED)
-FIND_PACKAGE(SharemindPdkHeaders 0.2.0 REQUIRED)
+FIND_PACKAGE(LogHard 0.5.0 REQUIRED)
+FIND_PACKAGE(SharemindCHeaders 1.3.0 REQUIRED)
+FIND_PACKAGE(SharemindCxxHeaders 0.8.0 REQUIRED)
+FIND_PACKAGE(SharemindLibConfiguration 0.5.0 REQUIRED)
+FIND_PACKAGE(SharemindLibEmulatorProtocols 0.2.0 REQUIRED)
+FIND_PACKAGE(SharemindLibExecutionModelEvaluator 0.3.0 REQUIRED)
+FIND_PACKAGE(SharemindLibExecutionProfiler 0.4.0 REQUIRED)
+FIND_PACKAGE(SharemindLibSoftfloat 0.3.0 REQUIRED)
+FIND_PACKAGE(SharemindLibSoftfloatMath 0.2.0 REQUIRED)
+FIND_PACKAGE(SharemindModuleApis 1.1.0 REQUIRED)
+FIND_PACKAGE(SharemindPdkHeaders 0.5.0 REQUIRED)
 
 
 SharemindSetCxx14CompileOptions()
-IF(SHAREMIND_NETWORK_STATISTICS)
-    SharemindNewList(SharemindModShared3pEmu_EXTRA_DEFINITIONS
-        "SHAREMIND_NETWORK_STATISTICS_ENABLE"
-    )
-ELSE()
-    SharemindNewList(SharemindModShared3pEmu_EXTRA_DEFINITIONS)
-ENDIF()
 FILE(GLOB_RECURSE SharemindModShared3pEmu_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 FILE(GLOB_RECURSE SharemindModShared3pEmu_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
-SharemindAddSharedLibrary("sharemind_mod_shared3p_emu"
+SharemindAddSharedLibrary(ModShared3pEmu
     MODULE
+    OUTPUT_NAME "sharemind_mod_shared3p_emu"
     SOURCES
         ${SharemindModShared3pEmu_SOURCES}
         ${SharemindModShared3pEmu_HEADERS}
-    INCLUDE_DIRECTORIES
-        ${Boost_INCLUDE_DIRS}
-        ${CRYPTOPP_INCLUDE_DIRS}
-        ${LogHard_INCLUDE_DIRS}
-        ${SharemindCHeaders_INCLUDE_DIRS}
-        ${SharemindCxxHeaders_INCLUDE_DIRS}
-        ${SharemindLibConfiguration_INCLUDE_DIRS}
-        ${SharemindLibEmulatorProtocols_INCLUDE_DIRS}
-        ${SharemindLibExecutionModelEvaluator_INCLUDE_DIRS}
-        ${SharemindLibExecutionProfiler_INCLUDE_DIRS}
-        ${SharemindLibSoftfloat_INCLUDE_DIRS}
-        ${SharemindLibSoftfloatMath_INCLUDE_DIRS}
-        ${SharemindModuleApis_INCLUDE_DIRS}
-        ${SharemindPdkHeaders_INCLUDE_DIRS}
-    COMPILE_DEFINITIONS
-        ${SharemindModShared3pEmu_EXTRA_DEFINITIONS}
-    LEGACY_DEFINITIONS
-        ${LogHard_DEFINITIONS}
-        ${SharemindCHeaders_DEFINITIONS}
-        ${SharemindCxxHeaders_DEFINITIONS}
-        ${SharemindLibConfiguration_DEFINITIONS}
-        ${SharemindLibEmulatorProtocols_DEFINITIONS}
-        ${SharemindLibExecutionModelEvaluator_DEFINITIONS}
-        ${SharemindLibExecutionProfiler_DEFINITIONS}
-        ${SharemindLibSoftfloat_DEFINITIONS}
-        ${SharemindLibSoftfloatMath_DEFINITIONS}
-        ${SharemindPdkHeaders_DEFINITIONS}
-    LINK_LIBRARIES
-        ${Boost_LIBRARIES}
-        ${CRYPTOPP_LIBRARIES}
-        ${LogHard_LIBRARIES}
-        ${SharemindCHeaders_LIBRARIES}
-        ${SharemindCxxHeaders_LIBRARIES}
-        ${SharemindLibConfiguration_LIBRARIES}
-        ${SharemindLibExecutionModelEvaluator_LIBRARIES}
-        ${SharemindLibExecutionProfiler_LIBRARIES}
-        ${SharemindLibSoftfloat_LIBRARIES}
-        ${SharemindLibSoftfloatMath_LIBRARIES}
-        ${SharemindPdkHeaders_LIBRARIES}
 )
+TARGET_INCLUDE_DIRECTORIES(ModShared3pEmu PRIVATE "${CRYPTOPP_INCLUDE_DIR}")
+IF(SHAREMIND_NETWORK_STATISTICS)
+    TARGET_COMPILE_DEFINITIONS(ModShared3pEmu
+        PRIVATE "SHAREMIND_NETWORK_STATISTICS_ENABLE")
+ENDIF()
+TARGET_LINK_LIBRARIES(ModShared3pEmu
+    PRIVATE
+        Boost::boost
+        Boost::filesystem
+        ${CRYPTOPP_LIBRARIES}
+        LogHard::LogHard
+        Sharemind::CHeaders
+        Sharemind::CxxHeaders
+        Sharemind::LibConfiguration
+        Sharemind::LibEmulatorProtocols
+        Sharemind::LibExecutionModelEvaluator
+        Sharemind::LibExecutionProfiler
+        Sharemind::LibSoftfloat
+        Sharemind::LibSoftfloatMath
+        Sharemind::ModuleApis
+        Sharemind::PdkHeaders
+    )
 
 # Configuration files:
 INSTALL(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/packaging/configs/sharemind/"
@@ -122,12 +99,12 @@ SharemindAddComponentPackage("lib"
         "libboost-filesystem${BV}"
         "libcrypto++6"
         "| libcrypto++9v5"
-        "libloghard (>= 0.3.0)"
-        "libsharemind-configuration (>= 0.2.0)"
-        "libsharemind-executionmodelevaluator (>= 0.2.0)"
-        "libsharemind-executionprofiler (>= 0.2.0)"
-        "libsharemind-softfloat (>= 0.2.0)"
-        "libsharemind-softfloat-math (>= 0.1.0)"
+        "libloghard (>= 0.5.0)"
+        "libsharemind-configuration (>= 0.5.0)"
+        "libsharemind-executionmodelevaluator (>= 0.3.0)"
+        "libsharemind-executionprofiler (>= 0.4.0)"
+        "libsharemind-softfloat (>= 0.3.0)"
+        "libsharemind-softfloat-math (>= 0.2.0)"
         "libstdc++6 (>= 4.8.0)"
         "libc6 (>= 2.19)"
     DEB_CONFLICTS
