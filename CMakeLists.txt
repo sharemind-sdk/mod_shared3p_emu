@@ -44,7 +44,6 @@ FIND_PACKAGE(SharemindModuleApis 1.1.0 REQUIRED)
 FIND_PACKAGE(SharemindPdkHeaders 0.5.0 REQUIRED)
 
 
-SharemindSetCxx14CompileOptions()
 FILE(GLOB_RECURSE SharemindModShared3pEmu_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 FILE(GLOB_RECURSE SharemindModShared3pEmu_HEADERS
