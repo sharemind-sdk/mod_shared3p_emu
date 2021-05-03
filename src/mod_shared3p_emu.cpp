@@ -1869,9 +1869,8 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::mat_multx_xor_uint16_vec", mat_multx_xor_uint16_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::mat_multx_xor_uint32_vec", mat_multx_xor_uint32_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::mat_multx_xor_uint64_vec", mat_multx_xor_uint64_t)
-
-  , NAMED_SYSCALL_DEFINITION("shared3p::fix_mat_mult_fix32_vec", fix_mat_mult_uint32_t)
-  , NAMED_SYSCALL_DEFINITION("shared3p::fix_mat_mult_fix64_vec", fix_mat_mult_uint64_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_fix32_vec", fix_mat_mult_uint32_t)
+  , NAMED_SYSCALL_DEFINITION("shared3p::mat_mult_fix64_vec", fix_mat_mult_uint64_t)
 
   , NAMED_SYSCALL_DEFINITION("shared3p::scatter_bool_vec", scatter_bool_t)
   , NAMED_SYSCALL_DEFINITION("shared3p::scatter_uint8_vec", scatter_uint8_t)

@@ -179,17 +179,17 @@ public: /* Methods: */
             s += dim2[i] * dim3[i];
         }
 
-        ShareVec<BigT> mat1Big (mat1.size());
+        ShareVec<BigT> mat1_big (mat1.size());
 
         for (size_t i = 0; i < mat1.size(); ++ i) {
-            mat1Big[i] = mat1_biased[i];
+            mat1_big[i] = mat1_biased[i];
         }
 
         for (size_t i = 0; i < mat1.size(); ++ i) {
-            mat1Big[i] = mat1Big[i]-big_bias;
+            mat1_big[i] = mat1_big[i] - big_bias;
         }
         for (size_t i = 0; i < mat2.size(); ++ i) {
-            mat2T[i] = mat2T[i]-big_bias;
+            mat2T[i] = mat2T[i] - big_bias;
         }
 
         ShareVec<BigT> big_result(result.size());
@@ -205,7 +205,7 @@ public: /* Methods: */
                     for (size_t l = 0; l < dim2[i]; ++ l) {
                         const size_t t1 = s1 + j * dim2[i] + l;
                         const size_t t2 = s2 + k * dim2[i] + l;
-                        big_result[t3] += mat1Big[t1] * mat2T[t2];
+                        big_result[t3] += mat1_big[t1] * mat2T[t2];
                     }
                 }
             }
@@ -219,7 +219,6 @@ public: /* Methods: */
             big_result[i] >>= radix_point;
             result[i] = demote_integer<typename T::share_type> (big_result[i]);
         }
-        //ConversionProtocol<const Shared3pPDPI>(m_pdpi).invoke(big_result, result);
 
         return true;
     }
