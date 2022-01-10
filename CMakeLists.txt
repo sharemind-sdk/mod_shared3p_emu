@@ -97,7 +97,7 @@ SharemindAddComponentPackage("lib"
     DEB_DEPENDS
         "libboost-filesystem${BV}"
         "libcrypto++6"
-        "| libcrypto++9v5"
+        "| libcrypto++8"
         "libloghard (>= 0.5.0)"
         "libsharemind-configuration (>= 0.5.0)"
         "libsharemind-executionmodelevaluator (>= 0.3.0)"
