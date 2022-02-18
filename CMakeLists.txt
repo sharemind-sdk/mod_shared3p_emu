@@ -41,7 +41,7 @@ FIND_PACKAGE(SharemindLibExecutionProfiler 0.5.0 REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloat 0.3.0 REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloatMath 0.2.0 REQUIRED)
 FIND_PACKAGE(SharemindModuleApis 1.1.0 REQUIRED)
-FIND_PACKAGE(SharemindPdkHeaders 0.5.0 REQUIRED)
+FIND_PACKAGE(SharemindPdkHeaders 0.6.0 REQUIRED)
 
 
 FILE(GLOB_RECURSE SharemindModShared3pEmu_SOURCES
