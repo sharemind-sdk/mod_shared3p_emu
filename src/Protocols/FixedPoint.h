@@ -280,6 +280,82 @@ private: /* Fields: */
 
 };
 
+class __attribute__ ((visibility("internal"))) FixExponentProtocol {
+
+public: /* Methods: */
+
+    FixExponentProtocol(const Shared3pPDPI& pdpi)
+        : m_pdpi(pdpi) {}
+
+    template<typename Uint>
+    typename std::enable_if<is_unsigned_value_tag<Uint>::value, bool>::type
+    invoke(const ShareVec<Uint>& param,
+           ShareVec<Uint>& result)
+    {
+        using namespace FixedPointHelper;
+
+        if (param.size() != result.size())
+            return false;
+
+        using Float = typename respective_float_type<Uint>::type;
+
+        ShareVec<Float> floats(param.size());
+
+        FixToFloatProtocol(m_pdpi).invoke(param, floats);
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            floats[i] = sf_float_exp(floats[i]).result;
+        }
+
+        FloatToFixProtocol(m_pdpi).invoke(floats, result);
+
+        return true;
+    }
+
+private: /* Fields: */
+
+    const Shared3pPDPI& m_pdpi;
+
+};
+
+class __attribute__ ((visibility("internal"))) FixNaturalLogarithmProtocol {
+
+public: /* Methods: */
+
+    FixNaturalLogarithmProtocol(const Shared3pPDPI& pdpi)
+        : m_pdpi(pdpi) {}
+
+    template<typename Uint>
+    typename std::enable_if<is_unsigned_value_tag<Uint>::value, bool>::type
+    invoke(const ShareVec<Uint>& param,
+           ShareVec<Uint>& result)
+    {
+        using namespace FixedPointHelper;
+
+        if (param.size() != result.size())
+            return false;
+
+        using Float = typename respective_float_type<Uint>::type;
+
+        ShareVec<Float> floats(param.size());
+
+        FixToFloatProtocol(m_pdpi).invoke(param, floats);
+
+        for (size_t i = 0u; i < param.size(); ++i) {
+            floats[i] = sf_float_log(floats[i]).result;
+        }
+
+        FloatToFixProtocol(m_pdpi).invoke(floats, result);
+
+        return true;
+    }
+
+private: /* Fields: */
+
+    const Shared3pPDPI& m_pdpi;
+
+};
+
 template<typename Uint, typename Float>
 typename Float::public_type pubFixToFloat(typename Uint::public_type fix) {
     using namespace FixedPointHelper;
