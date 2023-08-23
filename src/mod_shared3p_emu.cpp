@@ -838,8 +838,12 @@ NAMED_SYSCALL_WRAPPER(erf_float32_vec, unary_arith_vec<s3p_float32_t, FloatError
 NAMED_SYSCALL_WRAPPER(erf_float64_vec, unary_arith_vec<s3p_float64_t, FloatErrorFunctionProtocol>)
 NAMED_SYSCALL_WRAPPER(exp_float32_vec, unary_arith_vec<s3p_float32_t, FloatPowerOfEProtocol>)
 NAMED_SYSCALL_WRAPPER(exp_float64_vec, unary_arith_vec<s3p_float64_t, FloatPowerOfEProtocol>)
+NAMED_SYSCALL_WRAPPER(exp_fix32_vec, unary_arith_vec<a3pp_uint32_t, FixExponentProtocol>)
+NAMED_SYSCALL_WRAPPER(exp_fix64_vec, unary_arith_vec<a3pp_uint64_t, FixExponentProtocol>)
 NAMED_SYSCALL_WRAPPER(ln_float32_vec, unary_arith_vec<s3p_float32_t, FloatNaturalLogarithmProtocol>)
 NAMED_SYSCALL_WRAPPER(ln_float64_vec, unary_arith_vec<s3p_float64_t, FloatNaturalLogarithmProtocol>)
+NAMED_SYSCALL_WRAPPER(ln_fix32_vec, unary_arith_vec<a3pp_uint32_t, FixNaturalLogarithmProtocol>)
+NAMED_SYSCALL_WRAPPER(ln_fix64_vec, unary_arith_vec<a3pp_uint64_t, FixNaturalLogarithmProtocol>)
 NAMED_SYSCALL_WRAPPER(sin_float32_vec, unary_arith_vec<s3p_float32_t, FloatSineProtocol>)
 NAMED_SYSCALL_WRAPPER(sin_float64_vec, unary_arith_vec<s3p_float64_t, FloatSineProtocol>)
 NAMED_SYSCALL_WRAPPER(sqrt_float32_vec, unary_arith_vec<s3p_float32_t, FloatSquareRootProtocol>)
@@ -1286,6 +1290,10 @@ SHAREMIND_MODULE_API_0x1_SYSCALL_DEFINITIONS(
   , NAMED_SYSCALL_DEFINITION("shared3p::inv_fix64_vec", inv_fix64_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::sqrt_fix32_vec", sqrt_fix32_vec)
   , NAMED_SYSCALL_DEFINITION("shared3p::sqrt_fix64_vec", sqrt_fix64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::exp_fix32_vec", exp_fix32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::exp_fix64_vec", exp_fix64_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::ln_fix32_vec", ln_fix32_vec)
+  , NAMED_SYSCALL_DEFINITION("shared3p::ln_fix64_vec", ln_fix64_vec)
 
     // Special functions
   , NAMED_SYSCALL_DEFINITION("shared3p::min_uint8_vec",  min_uint8_vec)
