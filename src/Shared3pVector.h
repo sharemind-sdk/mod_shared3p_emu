@@ -49,7 +49,20 @@ private: /* Methods: */
 
     template <typename T>
     void assignBits_ (const ShareVec<T>& vec, xored_numeric_value_tag) {
-        m_vector.assignBits (vec.begin (), vec.end ());
+        const size_t input_size = vec.size();
+        const size_t bits_per_input_element = ValueTraits<T>::num_of_bits;
+        const size_t total_bits = input_size * bits_per_input_element;
+
+        resize(total_bits);
+
+        for (size_t i = 0; i < input_size; ++i) {
+            const auto& input_element = vec[i];
+            for (size_t bit_pos = 0; bit_pos < bits_per_input_element; ++bit_pos) {
+                const bool bit_value = (input_element & (static_cast<typename T::share_type>(1) << bit_pos)) != 0;
+                const size_t output_index = i * bits_per_input_element + bit_pos;
+                (*this)[output_index] = bit_value;
+            }
+        }
     }
 
 }; /* class ShareVec <s3p_bool_t> { */

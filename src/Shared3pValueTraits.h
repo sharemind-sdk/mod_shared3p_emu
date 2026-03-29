@@ -74,7 +74,7 @@ struct __attribute__ ((visibility("internal"))) is_float_value_tag :
 
 struct __attribute__ ((visibility("internal"))) s3p_bool_t {
     using value_category = bool_value_tag;
-    using share_type = bool;
+    using share_type = uint8_t; // because vector<bool> is cursed
     using public_type = uint8_t;
     static constexpr uint8_t heap_type_id = 0x5u;
     static constexpr size_t num_of_bits = 1u;
