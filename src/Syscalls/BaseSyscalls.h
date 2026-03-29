@@ -165,10 +165,7 @@ NAMED_SYSCALL(set_shares, name, args, num_args, refs, crefs, returnValue, c)
 
         typedef typename ValueTraits<T>::share_type share_type;
         const share_type* src = static_cast<const share_type*>(crefs[0u].pData);
-        /** \todo the following is a workaround! We are always allocating
-             one byte too much (for arrays) as VM does not allow us to allocate
-             0 sized memory block. */
-        const size_t num_elems = (crefs[0u].size - 1) / sizeof(share_type);
+        const size_t num_elems = crefs[0u].size / sizeof(share_type);
 
         if (num_args == 2) {
             if (!pdpi->isValidHandle<T>(args[1u].p[0u]))
@@ -228,10 +225,7 @@ NAMED_SYSCALL(get_shares, name, args, num_args, refs, crefs, returnValue, c)
         const size_t num_bytes = src.size() * sizeof(share_type);
 
         if (refs) {
-            /** \todo the following is a workaround! We are always allocating
-                 one byte too much (for arrays) as VM does not allow us to
-                 allocate 0 sized memory block. */
-            if (num_bytes != refs[0u].size - 1)
+            if (num_bytes != refs[0u].size)
                 return SHAREMIND_MODULE_API_0x1_GENERAL_ERROR;
 
             share_type * const dest = static_cast<share_type *>(refs[0u].pData);
