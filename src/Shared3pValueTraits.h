@@ -22,7 +22,6 @@
 
 #include <cstdint>
 #include <sharemind/libsoftfloat/softfloat.h>
-#include <sharemind/uint128_t.h>
 #include <sharemind/uint_t.h>
 #include <sharemind/ValueTraits.h>
 #include <type_traits>

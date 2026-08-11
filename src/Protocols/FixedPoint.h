@@ -20,7 +20,6 @@
 #ifndef MOD_SHARED3P_EMU_PROTOCOLS_FIXEDPOINT_H
 #define MOD_SHARED3P_EMU_PROTOCOLS_FIXEDPOINT_H
 
-#include <sharemind/uint128_t.h>
 #include "../Shared3pPDPI.h"
 #include "../Shared3pValueTraits.h"
 #include "SoftFloatUtility.h"
@@ -167,7 +166,7 @@ private: /* Methods: */
     }
 
     uint64_t demote(sharemind::uint128_t x) {
-        return x.lower();
+        return static_cast<uint64_t>(x);
     }
 
     uint32_t demote(uint64_t x) {

@@ -139,6 +139,15 @@ public: /* Methods: */
 class __attribute__ ((visibility("internal"))) FixMatrixMultiplicationProtocol {
 public: /* Methods: */
 
+
+    uint64_t demote(sharemind::uint128_t x) {
+        return static_cast<uint64_t>(x);
+    }
+
+    uint32_t demote(uint64_t x) {
+        return static_cast<uint32_t>(x);
+    }
+
     template <typename T>
     typename std::enable_if<is_unsigned_value_tag<T>::value, bool>::type
     invoke (const ShareVec<T>& mat1,
@@ -217,7 +226,7 @@ public: /* Methods: */
 
         for (size_t i = 0; i < result.size(); ++ i){
             big_result[i] >>= radix_point;
-            result[i] = demote_integer<typename T::share_type> (big_result[i]);
+            result[i] = demote(big_result[i]);
         }
 
         return true;
