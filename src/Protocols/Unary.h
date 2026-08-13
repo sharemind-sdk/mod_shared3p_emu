@@ -21,8 +21,10 @@
 #define MOD_SHARED3P_EMU_PROTOCOLS_UNARY_H
 
 #include <algorithm>
+#include <sharemind/VmVector.h>
 #include <sharemind/libemulator_protocols/Unary.h>
 #include <type_traits>
+#include "../Shared3pPDPI.h"
 #include "../Shared3pValueTraits.h"
 #include "../Shared3pVector.h"
 

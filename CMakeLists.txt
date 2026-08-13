@@ -32,6 +32,8 @@ SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeIncludes/"
 FIND_PACKAGE(Boost 1.62 COMPONENTS filesystem REQUIRED)
 FIND_PACKAGE(Cryptopp REQUIRED)
 FIND_PACKAGE(LogHard 0.6.0 REQUIRED)
+FIND_PACKAGE(Eigen3 REQUIRED)
+FIND_PACKAGE(OpenMP REQUIRED)
 FIND_PACKAGE(SharemindCHeaders 1.3.0 REQUIRED)
 FIND_PACKAGE(SharemindCxxHeaders 0.10.1 REQUIRED)
 FIND_PACKAGE(SharemindLibConfiguration 0.6.0 REQUIRED)
@@ -66,6 +68,8 @@ TARGET_LINK_LIBRARIES(ModShared3pEmu
         Boost::filesystem
         ${CRYPTOPP_LIBRARIES}
         LogHard::LogHard
+        Eigen3::Eigen
+        OpenMP::OpenMP_CXX
         Sharemind::CHeaders
         Sharemind::CxxHeaders
         Sharemind::LibConfiguration

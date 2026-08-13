@@ -20,13 +20,13 @@
 #ifndef MOD_SHARED3P_EMU_PROTOCOLS_MATRIXMULTIPLICATIONPROTOCOL_H
 #define MOD_SHARED3P_EMU_PROTOCOLS_MATRIXMULTIPLICATIONPROTOCOL_H
 
-#include <algorithm>
-#include <numeric>
-#include <random>
 #include "../Shared3pValueTraits.h"
-#include "../Shared3pVector.h"
-#include "../Shared3pPDPI.h"
-#include "Unary.h"
+#include "FixedPoint.h"
+#include "ProtocolHelperMacros.h"
+#include <sharemind/VmVector.h>
+
+#include <Eigen/Dense>
+#include <omp.h>
 
 
 namespace sharemind {
@@ -134,6 +134,52 @@ public: /* Methods: */
         return true;
     }
 
+
+    template <typename T>
+    typename std::enable_if<is_integral_value_tag<T>::value, bool>::type
+    invokeN (const ShareVec<T>& X,
+             const ShareVec<T>& Y,
+             ShareVec<T>& Z,
+             const size_t N, const size_t H, const size_t K, const size_t W)
+    {
+        using share = typename T::share_type;
+
+        using RowMatrixXi = Eigen::Matrix<share, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+
+        if (Z.empty())
+            return true;
+
+        GUARD (X.size() == (N * H * K));
+        GUARD (Y.size() == (N * K * W));
+        GUARD (Z.size() == (N * H * W));
+
+        // If batch size is over 8, parallelize across the batch dimension
+        // Otherwise, let Eigen parallelize at the matrix level.
+
+        bool parallelizeBatch = (N > 8);
+        Eigen::setNbThreads(parallelizeBatch ? 1 : omp_get_max_threads());
+
+        #pragma omp parallel for if(parallelizeBatch)
+        for (size_t i = 0; i < N; ++i) {
+
+            size_t x_offset = i * H * K;
+            size_t y_offset = i * K * W;
+            size_t z_offset = i * H * W;
+
+            // Map data pointers to Eigen matrices (no copy)
+            Eigen::Map<const RowMatrixXi> tX(X.data() + x_offset, H, K);
+            Eigen::Map<const RowMatrixXi> tY(Y.data() + y_offset, K, W);
+            Eigen::Map<RowMatrixXi> tZ(Z.data() + z_offset, H, W);
+
+            // .noalias() tells Eigen the output doesn't overlap with inputs,
+            // preventing it from allocating temporary arrays under the hood.
+            tZ.noalias() = tX * tY;
+        }
+
+        return true;
+    }
+
+
 }; /* class MatrixMultiplicationProtocol { */
 
 class __attribute__ ((visibility("internal"))) FixMatrixMultiplicationProtocol {
@@ -227,6 +273,83 @@ public: /* Methods: */
         for (size_t i = 0; i < result.size(); ++ i){
             big_result[i] >>= radix_point;
             result[i] = demote(big_result[i]);
+        }
+
+        return true;
+    }
+
+    template <typename T>
+    typename std::enable_if<is_unsigned_value_tag<T>::value, bool>::type
+    invokeN (const ShareVec<T>& X,
+             const ShareVec<T>& Y,
+             ShareVec<T>& Z,
+             const size_t N, const size_t H, const size_t K, const size_t W)
+    {
+        static constexpr uint64_t radix_point = FixedPointHelper::Radix<typename T::share_type>::value;
+        typedef typename double_size<T>::type BigT;
+        using share = typename BigT::share_type;
+
+        typename T::public_type bias = 1ul<<(ValueTraits<T>::num_of_bits-1u);
+        typename BigT::public_type big_bias = 1ul<<(ValueTraits<T>::num_of_bits-1u);
+
+
+        ShareVec<T> X_biased (X.size());
+        ShareVec<T> Y_biased (Y.size());
+
+        for (size_t i = 0; i < X.size(); ++ i) {
+            X_biased[i] = X[i]+bias;
+        }
+        for (size_t i = 0; i < Y.size(); ++ i) {
+            Y_biased[i] = Y[i]+bias;
+        }
+        using RowMatrixXi = Eigen::Matrix<share, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+
+        if (Z.empty())
+            return true;
+
+        GUARD (X.size() == (N * H * K));
+        GUARD (Y.size() == (N * K * W));
+        GUARD (Z.size() == (N * H * W));
+
+        ShareVec<BigT> bigX(X.size());
+        ShareVec<BigT> bigY(Y.size());
+        ShareVec<BigT> bigZ(Z.size());
+
+        for (size_t i = 0; i < X.size(); ++ i) {
+            bigX[i] = X_biased[i] - big_bias;
+        }
+
+        for (size_t i = 0; i < Y.size(); ++ i) {
+            bigY[i] = Y_biased[i] - big_bias;
+        }
+
+        // If batch size is over 8, parallelize across the batch dimension
+        // Otherwise, let Eigen parallelize at the matrix level.
+
+        bool parallelizeBatch = (N > 8);
+        Eigen::setNbThreads(parallelizeBatch ? 1 : omp_get_max_threads());
+
+        #pragma omp parallel for if(parallelizeBatch)
+        for (size_t i = 0; i < N; ++i) {
+
+            size_t x_offset = i * H * K;
+            size_t y_offset = i * K * W;
+            size_t z_offset = i * H * W;
+
+            // Map data pointers to Eigen matrices (no copy)
+            Eigen::Map<const RowMatrixXi> tX(bigX.data() + x_offset, H, K);
+            Eigen::Map<const RowMatrixXi> tY(bigY.data() + y_offset, K, W);
+            Eigen::Map<RowMatrixXi> tZ(bigZ.data() + z_offset, H, W);
+
+            // .noalias() tells Eigen the output doesn't overlap with inputs,
+            // preventing it from allocating temporary arrays under the hood.
+            tZ.noalias() = tX * tY;
+        }
+
+
+        for (size_t i = 0; i < Z.size(); ++ i) {
+            bigZ[i] >>= radix_point;
+            Z[i] = demote(bigZ[i]);
         }
 
         return true;
