@@ -18,12 +18,12 @@
 #
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.18)
-PROJECT(SharemindModShared3pEmu VERSION 1.6.0 LANGUAGES CXX)
+PROJECT(SharemindModShared3pEmu VERSION 1.7.0 LANGUAGES CXX)
 
 INCLUDE("${CMAKE_CURRENT_SOURCE_DIR}/config.local" OPTIONAL)
 INCLUDE("${CMAKE_CURRENT_BINARY_DIR}/config.local" OPTIONAL)
 
-FIND_PACKAGE(SharemindCMakeHelpers 1.6 REQUIRED)
+FIND_PACKAGE(SharemindCMakeHelpers 1.8 REQUIRED)
 
 SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeIncludes/"
                       ${CMAKE_MODULE_PATH})
@@ -35,9 +35,9 @@ FIND_PACKAGE(LogHard 0.6.0 REQUIRED)
 FIND_PACKAGE(Eigen3 REQUIRED)
 FIND_PACKAGE(OpenMP REQUIRED)
 FIND_PACKAGE(SharemindCHeaders 1.3.0 REQUIRED)
-FIND_PACKAGE(SharemindCxxHeaders 0.10.1 REQUIRED)
+FIND_PACKAGE(SharemindCxxHeaders 0.11.0 REQUIRED)
 FIND_PACKAGE(SharemindLibConfiguration 0.6.0 REQUIRED)
-FIND_PACKAGE(SharemindLibEmulatorProtocols 0.3.0 REQUIRED)
+FIND_PACKAGE(SharemindLibEmulatorProtocols 1.7.0 REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionModelEvaluator 0.4.0 REQUIRED)
 FIND_PACKAGE(SharemindLibExecutionProfiler 0.5.0 REQUIRED)
 FIND_PACKAGE(SharemindLibSoftfloat 0.3.0 REQUIRED)
@@ -102,10 +102,10 @@ SharemindAddComponentPackage("lib"
         "libboost-filesystem${BV}"
         "libcrypto++6"
         "| libcrypto++8"
-        "libloghard (>= 0.5.0)"
-        "libsharemind-configuration (>= 0.5.0)"
-        "libsharemind-executionmodelevaluator (>= 0.3.0)"
-        "libsharemind-executionprofiler (>= 0.4.0)"
+        "libloghard (>= 0.6.0)"
+        "libsharemind-configuration (>= 0.6.0)"
+        "libsharemind-executionmodelevaluator (>= 0.4.0)"
+        "libsharemind-executionprofiler (>= 0.5.0)"
         "libsharemind-softfloat (>= 0.3.0)"
         "libsharemind-softfloat-math (>= 0.2.0)"
         "libstdc++6 (>= 4.8.0)"
